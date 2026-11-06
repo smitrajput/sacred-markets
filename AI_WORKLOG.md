@@ -78,8 +78,16 @@ The user connected Vercel and approved dedicated Studio testnet wallets, limited
 
 Studio generated the authenticated fixed-pool venue and tests. Codex reviewed the implementation, independently ran 32 unit tests, identified that standard Foundry cannot execute Arc native-USDC precompiles, and directed Studio to use Circle Arc Foundry v0.8.0-4. Studio removed its temporary shim and proved real native-USDC rollback. Codex independently passed all 68 tests across the initial run (65 pass, 3 RPC-rate-limit interruptions) and a serial retry of the affected three. Details: [adapter evidence](docs/checkpoints/00b-adapter.md). Implementation commits: 793db01, f330429, 185566b. No live transaction yet.
 
-The user requested Claude models as bounded helpers. Codex launched a tool-free Opus 5.5 adapter review through the installed, authenticated Claude Code CLI; findings are pending. Studio remains the application writer and Codex verifies accepted findings. [Reviewer workflow](docs/CLAUDE_REVIEW_WORKFLOW.md).
+The user requested Claude models as bounded helpers. Codex launched a tool-free Opus 5.5 adapter review through the installed, authenticated Claude Code CLI; findings were reviewed; two focused regression additions were accepted and independently passed in the live-smoke checkpoint. Studio remains the application writer and Codex verifies accepted findings. [Reviewer workflow](docs/CLAUDE_REVIEW_WORKFLOW.md).
 
 ## Checkpoint 00c and main branch — November 6
 
 Studio created isolated testnet wallets, a read-only health API and Vercel configuration. Codex independently passed eight API tests, lint/typecheck/build, and real local `/api/health` and `/health` requests. Studio CLI did not expose a Vercel deployment tool; hosted deployment is pending. The user explicitly requested merging to main and future direct pushes: Codex fast-forwarded origin/main to e8caa60, preserving all 33 sequential commits without squashing.
+
+## Live swap and vault review — November 6
+
+Studio initialized and seeded the fixed cirBTC/USDC pool, deployed a separate smoke adapter, and completed a 0.20-USDC purchase followed by sale of the acquired 195 cirBTC atoms. Codex independently verified all 12 receipts, decoded both swap calls/events, reconciled native-USDC balances including gas, and ran the two new regression tests. Code and evidence were pushed in six small commits through bd928d1. The scripts retain a documented broadcast/journal crash window that must be addressed before reuse for unattended deployment.
+
+For the vault, Codex rejected two aspects of the first Studio pass despite green tests: equity received before acquisition and position removal at principal zero. Studio corrected both and implemented FIFO, dust handling and claims. Codex reviewed the code and independently passed all 76 vault tests. Protection accounting and the final invariant handler are in progress. The first-pass evidence remains explicitly historical; no chronology was fabricated.
+
+The user requested a themed implementation guide. Claude Haiku 5.5 produced a bounded, tool-free HTML draft using an allowlisted factual brief. Codex corrected reserve-accounting, key-custody and repayment wording and is checking the rendered document. It remains marked as a draft until reconciled with final implementation.
