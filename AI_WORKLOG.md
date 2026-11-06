@@ -91,3 +91,9 @@ Studio initialized and seeded the fixed cirBTC/USDC pool, deployed a separate sm
 For the vault, Codex rejected two aspects of the first Studio pass despite green tests: equity received before acquisition and position removal at principal zero. Studio corrected both and implemented FIFO, dust handling and claims. Codex reviewed the code and independently passed all 76 vault tests. Protection accounting and the final invariant handler are in progress. The first-pass evidence remains explicitly historical; no chronology was fabricated.
 
 The user requested a themed implementation guide. Claude Haiku 5.5 produced a bounded, tool-free HTML draft using an allowlisted factual brief. Codex corrected reserve-accounting, key-custody and repayment wording and is checking the rendered document. It remains marked as a draft until reconciled with final implementation.
+
+## Checkpoint01c and visual guide — November6
+
+Studio implemented cumulative collected-markup allocation, manager reserve replenishment and the final-loss waterfall. Codex synchronized the exact interface/fixtures and Studio’s deletion of the obsolete invariant test, independently passed all98 vault tests, and checked the handler call statistics. A bounded Claude Opus5.5 review found one useful origination-hardening opportunity and a handler error-classification gap; the lead distinguished those from the reviewer’s overly broad reading of the withdrawal-reservation requirement. Dispositions and pending fixes: [vault review](docs/review/OPUS_VAULT_REVIEW.md). No deployment yet.
+
+The user-requested master guide was drafted with Claude Haiku5.5, corrected by Codex and rendered in the browser. The guide includes five reusable SVG diagrams, depositor/trader/keeper journeys and worked accounting examples. Versioned in commit a79cbbf, with an explicit implementation-in-progress status pending final reconciliation. [Guide](docs/MASTER_GUIDE.md).
