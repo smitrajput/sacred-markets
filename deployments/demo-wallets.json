@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "project": "Sacred",
+  "purpose": "Dedicated testnet-only demo wallets. Public addresses only; private keys live in the ignored .env (mode 0600) and are never printed or committed.",
+  "network": {
+    "name": "Arc Testnet",
+    "chainId": 5042002,
+    "explorerUrl": "https://explorer.testnet.arc.io"
+  },
+  "createdAt": "2026-11-06",
+  "limits": {
+    "perWalletTestUsdc": "20",
+    "perWalletTestCirBtc": "0.001",
+    "assets": "faucet assets only",
+    "mainnet": false,
+    "note": "Capped per wallet at the amounts above. Not for mainnet, never reuse these keys elsewhere."
+  },
+  "wallets": [
+    {
+      "role": "deployer",
+      "address": "0xafC5b06665e9b99669027C18E82014916778734E",
+      "secretEnvVar": "SACRED_DEPLOYER_PRIVATE_KEY",
+      "intendedUse": "Deploys Sacred contracts, owns treasury and price-admin roles for the pilot, and seeds the pool as demo liquidity provider.",
+      "authorization": "Deployments, pool initialization and seeding, and demo transactions within the per-wallet cap."
+    },
+    {
+      "role": "trader",
+      "address": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+      "secretEnvVar": "SACRED_TRADER_PRIVATE_KEY",
+      "intendedUse": "Demo trader that opens and closes positions.",
+      "authorization": "Demo trades within the per-wallet cap."
+    },
+    {
+      "role": "keeper",
+      "address": "0x60579fc93E6B7f2377dd952e1FD4c58C2e3Ca373",
+      "secretEnvVar": "SACRED_KEEPER_PRIVATE_KEY",
+      "intendedUse": "Gas-only keeper for the separately run operator process.",
+      "authorization": "Permissionless keeper calls only; holds gas funds, no custody of user funds."
+    }
+  ],
+  "funding": {
+    "faucet": "https://faucet.circle.com/",
+    "note": "Faucet assets only. Funding status is recorded in docs/checkpoints, not here."
+  }
+}

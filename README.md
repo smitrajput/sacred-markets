@@ -3,7 +3,7 @@ Onchain shariah powered earn, leverage trade and borrow.
 
 ## Current build
 
-Arc Testnet MVP: one cirBTC sale-financing market with Earn, Trade and Activity. Checkpoint 00a is implemented: a read-only app shell and verified token manifest. Application contracts are not deployed yet. Next: v4 integration preflight (00b).
+Arc Testnet MVP: one cirBTC sale-financing market with Earn, Trade and Activity. The scaffold and fixed-pool Uniswap v4 adapter are implemented and verified. A read-only health API and Vercel configuration are ready; hosted deployment and vault/engine implementation are in progress. Application contracts are not deployed yet.
 
 - [Plan](PLANS.md) and [specification](docs/spec.md)
 - [Start the Studio checkpoints](docs/README.md)
@@ -32,6 +32,12 @@ bun run verify:onchain
 bun run dev
 ```
 
-The development server prints its local URL. `verify:onchain` makes read-only Arc Testnet calls. Solidity compilation currently covers the starter tooling, not Sacred financial contracts.
+The development server prints its local URL. `verify:onchain` makes read-only Arc Testnet calls. The adapter suite includes real Arc native-USDC fork execution through `bash scripts/test-arc-fork.sh`. On macOS the pinned Arc binary also needs `libusb` (`brew install libusb`).
 
 [Arc Studio workspace](https://studio.arc.io/app/37c6c8dc-b313-49c9-9cbb-fe5f61673ab3) · [00a verification](docs/review/CHECKPOINT_00A.md). Judge-accessible sharing will be verified before submission.
+
+## Read API and hosting
+
+Run `bun run test:api` for handler tests and `bun run build` for the frontend. The Vite development server serves `GET /api/health` and `/health` through the same handlers used by Vercel. The response includes the observed chain/block and explicit contract and external-keeper status. It has no signing endpoint.
+
+Vercel configuration is in `vercel.json`; optional host-side `RPC_URL_Arc_Testnet` selects the read RPC. Studio proxy credentials remain sandbox-only. Keep wallet keys out of the host: signing belongs to the separate testnet operator. A public hosted URL will be recorded after actual deployment verification.

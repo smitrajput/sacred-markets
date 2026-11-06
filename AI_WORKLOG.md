@@ -79,3 +79,7 @@ The user connected Vercel and approved dedicated Studio testnet wallets, limited
 Studio generated the authenticated fixed-pool venue and tests. Codex reviewed the implementation, independently ran 32 unit tests, identified that standard Foundry cannot execute Arc native-USDC precompiles, and directed Studio to use Circle Arc Foundry v0.8.0-4. Studio removed its temporary shim and proved real native-USDC rollback. Codex independently passed all 68 tests across the initial run (65 pass, 3 RPC-rate-limit interruptions) and a serial retry of the affected three. Details: [adapter evidence](docs/checkpoints/00b-adapter.md). Implementation commits: 793db01, f330429, 185566b. No live transaction yet.
 
 The user requested Claude models as bounded helpers. Codex launched a tool-free Opus 5.5 adapter review through the installed, authenticated Claude Code CLI; findings are pending. Studio remains the application writer and Codex verifies accepted findings. [Reviewer workflow](docs/CLAUDE_REVIEW_WORKFLOW.md).
+
+## Checkpoint 00c and main branch — November 6
+
+Studio created isolated testnet wallets, a read-only health API and Vercel configuration. Codex independently passed eight API tests, lint/typecheck/build, and real local `/api/health` and `/health` requests. Studio CLI did not expose a Vercel deployment tool; hosted deployment is pending. The user explicitly requested merging to main and future direct pushes: Codex fast-forwarded origin/main to e8caa60, preserving all 33 sequential commits without squashing.

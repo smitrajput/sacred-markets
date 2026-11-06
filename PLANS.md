@@ -13,7 +13,7 @@ Status: **IMPLEMENTING — 00a scaffold and 00b adapter verified; hosting/wallet
 1. User direction: current Sacred economics, small end-to-end demo, Fable review before implementation and clear sequential commits.
 2. Codex specification and Fable review: complete. Codex incorporated justified findings, corrected review arithmetic and preserved the separate protection waterfall.
 3. Scope: one cirBTC market, existing v4 pool infrastructure, Earn/Trade/Activity, NAV deposits, continuous FIFO, separate admin demo-price fixture, real read API, gas-funded keeper plus manual path. Optional bridge follows a passing core.
-4. Implementation lives in `smitrajput/sacred-markets`, local sibling checkout `sacred-markets`. Codex sends each checkpoint directly through the authenticated Studio CLI, pulls the files, independently checks them, commits and pushes before the next checkpoint. Escalate only user-dependent blockers.
+4. Implementation lives in `smitrajput/sacred-markets`, local sibling checkout `sacred-markets`. Codex sends each checkpoint directly through the authenticated Studio CLI, pulls the files, independently checks them, commits and pushes directly to `main` before the next dependent checkpoint. Escalate only user-dependent blockers.
 5. First preflight proves affordable pool/position sizing, token funding, actual v4 execution and hosting access. Freeze actual amounts/roles in the deployment manifest.
 6. November 6 targets: contracts and live swaps 18:30; deployed app/API and complete flow 20:00; feature freeze/rehearsal 21:00; recording and submission package 22:00; hard finish 22:30. Optional bridge is off the critical path. If a gate slips, prioritize core fixes and state the impact promptly.
 

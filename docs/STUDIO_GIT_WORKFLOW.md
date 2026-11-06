@@ -10,7 +10,7 @@ arc-studio login
 arc-studio apps --json
 export SACRED_APP_ID='REPLACE_WITH_ACTUAL_APP_ID'
 export SACRED_REPO='/Users/smitrajput/Projects/halal-defi/sacred-markets'
-git -C "$SACRED_REPO" switch -c codex/arc-mvp
+git -C "$SACRED_REPO" switch main
 ```
 
 If that branch already exists, switch to it without `-c`. Keep one Studio app. CLI 1.2.2 reports that the first `run --app` creates a new chat with the same workspace files, and subsequent `--app` runs reuse that CLI-created chat. Restate checkpoint context on the first CLI turn. Browser and CLI chats share files; avoid simultaneous edits. `--session` can explicitly continue a known thread.
@@ -40,7 +40,7 @@ git -C "$SACRED_REPO" diff --cached --check
 git -C "$SACRED_REPO" diff --cached --stat
 git -C "$SACRED_REPO" diff --cached
 git -C "$SACRED_REPO" commit -m 'feat(vault): price deposits at current NAV'
-git -C "$SACRED_REPO" push -u origin codex/arc-mvp
+git -C "$SACRED_REPO" push origin main
 ```
 
 5. Record SHA, actual tests and Studio trace in AI_WORKLOG.md, then send the next checkpoint. If one turn produced multiple independent behaviors, stage/commit them separately and keep each checkpoint buildable. Do not manufacture a sequence after the full app has been generated.
@@ -59,7 +59,7 @@ Browser handoff correction: paste the self-contained checkpoint messages without
 
 ## Connected project
 
-App ID: `37c6c8dc-b313-49c9-9cbb-fe5f61673ab3`. CLI continuation thread: `868bf545-07ba-4ecd-a97c-b45762be5d3c`. Code branch: `codex/arc-mvp`.
+App ID: `37c6c8dc-b313-49c9-9cbb-fe5f61673ab3`. CLI continuation thread: `868bf545-07ba-4ecd-a97c-b45762be5d3c`. Code branch: `main`. On November 6 the user requested direct pushes to main; the prior branch was fast-forwarded with all 33 commits preserved.
 
 Codex now sends the checkpoints directly through the CLI, reads compact results, pulls actual files, verifies and commits each completed behavior. No user relay is needed. User input is reserved for unresolved access/funding or consequential product decisions. Ask Studio for a final response of at most 150 words: checkpoint, changed paths, actual checks, blockers.
 
