@@ -3,7 +3,11 @@ USDC liquidity and fixed-markup cirBTC financing on Arc Testnet.
 
 ## Current build
 
-Arc Testnet MVP: one cirBTC sale-financing market with Earn, Trade and Activity. The vault, financing engine, operator price fixture and fixed-pool Uniswap v4 adapter are deployed. Live opening, repayment, BTC release, a keeper coverage sale and FIFO withdrawal claim are independently verified. Frontend integration and public Vercel deployment remain in progress.
+Arc Testnet MVP: one cirBTC sale-financing market with Earn, Trade and Activity. The vault, financing engine, operator price fixture and fixed-pool Uniswap v4 adapter are deployed. The frontend and read API are public at **[sacred-arc-mvp.vercel.app](https://sacred-arc-mvp.vercel.app)**. Live contract opening, repayment, BTC release, a keeper coverage sale and FIFO withdrawal claim are independently verified; the separate browser-wallet rehearsal remains pending.
+
+- [Arc Studio implementation provenance and source hashes](docs/BUILD_PROVENANCE.md): fresh comparison of 78 source/configuration files, 76 byte-identical and two with trailing-whitespace differences only.
+- [Hosted deployment checks](docs/checkpoints/04-hosted.md) and [frontend/API review](docs/review/UI_API_REVIEW.md)
+- [Architecture](docs/ARCHITECTURE.md) and [demo runbook](docs/DEMO.md)
 
 - [Visual implementation guide and reusable diagrams](docs/MASTER_GUIDE.md)
 - [Deployed contracts and live transaction walkthrough](docs/checkpoints/02-live.md)
@@ -19,7 +23,7 @@ External deadline: November 7, 2026, 9:30 AM IST. Build/demo hard finish: Novemb
 
 ## Prior work
 
-The [Sacred website and protocol design](https://sacred.markets/docs) and [prior repository](https://github.com/smitrajput/sacred-protocol) predate this implementation. Planning and review artifacts here are AI-assisted and attributed in AI_WORKLOG.md. MVP implementation is generated, tested and deployed through one Arc Studio app, with independent review, local verification and small Git commits. The Studio URL and actual transaction evidence are linked below. This repository does not claim the historical design/site as newly written code.
+The [Sacred website and protocol design](https://sacred.markets/docs) and [prior repository](https://github.com/smitrajput/sacred-protocol) predate this implementation. Planning and review artifacts here are AI-assisted and attributed in AI_WORKLOG.md. MVP implementation was generated through one Arc Studio app; contracts were deployed there. Codex independently reviewed and verified downloaded code, recorded small Git commits and deployed the frontend/read API using the authenticated Vercel CLI. The Studio URL and actual transaction evidence are linked below. This repository does not claim the historical design/site as newly written code.
 
 ## Run locally
 
@@ -44,4 +48,4 @@ The development server prints its local URL. `verify:onchain` makes read-only Ar
 
 Run `bun run test:api` for handler tests and `bun run build` for the frontend. The Vite development server serves `GET /api/health` and `/health` through the same handlers used by Vercel. The response includes the observed chain/block and explicit contract and external-keeper status. It has no signing endpoint.
 
-Vercel configuration is in `vercel.json`; optional host-side `RPC_URL_Arc_Testnet` selects the read RPC. Studio proxy credentials remain sandbox-only. Keep wallet keys out of the host: signing belongs to the separate testnet operator. A public hosted URL will be recorded after actual deployment verification.
+Vercel configuration is in `vercel.json`; host-side `RPC_URL_Arc_Testnet` selects the read RPC. The public deployment uses the Arc Testnet Blockdaemon endpoint after the default shared endpoint rate-limited Activity. Studio proxy credentials remain sandbox-only. Keep wallet keys out of the host: signing belongs to the separate testnet operator. The hosted API reports the keeper as external and unverified; it is not scheduled by Vercel.
