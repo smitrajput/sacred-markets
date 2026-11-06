@@ -24,3 +24,8 @@ coverage/
 contracts/out/
 contracts/cache/
 contracts/broadcast/
+
+# Arc Studio local sync metadata and runtime logs
+.arc-studio/
+console.jsonl
+.agents/skills/example/
