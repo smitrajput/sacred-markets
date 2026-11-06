@@ -28,7 +28,7 @@ Use reviews at the vault/FIFO boundary, the complete financing/settlement bounda
 
 ## Example invocation after resume
 
-First prepare `/private/tmp/sacred-review-input.md` with the bounded bundle. Run from a temporary directory rather than a repository containing hooks. The following is a **tool-free review**: all required context is stdin; the lead runs tests separately.
+First prepare `/private/tmp/sacred-review-input.md` with the bounded bundle. Run from the dedicated empty `/private/tmp/sacred-claude-quota` directory, not a shared temporary directory or a repository containing hooks. Do not approve broad access to `/private/tmp`. The following is a **tool-free review**: all required context is stdin; the lead runs tests separately.
 
 ```sh
 claude -p \
@@ -66,3 +66,7 @@ If none are found, report the examined paths and specific untested risks. Avoid 
 - [CLI reference](https://code.claude.com/docs/en/cli-reference): tool restriction, auth and structured output flags.
 
 Commands were checked against the installed CLI help. The lead verifies returned model identity and errors for each invocation.
+
+## Context and allowance checkpoints
+
+Check actual allowance at feature checkpoints. The lead prepares a fresh-chat handover at 50% Codex weekly remaining, or earlier if repeated work, missed constraints or inconsistent decisions show context degradation. Finish or record any active Studio run, save exact commit/worktree status, verification evidence, remaining blockers and one next command; never launch a duplicate run during handover. Claude reviews use the existing subscription, one bounded job at a time. No automatic API billing or paid allowance changes.
