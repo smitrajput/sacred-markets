@@ -69,3 +69,5 @@ The 2,305-line generated Bun lockfile is kept in the dependency-only commit. Eve
 ## Automated execution and same-day finish — November 6
 
 The user authorized Codex to prompt Studio directly for all remaining checkpoints and escalate blockers, and moved the hard finish to November 6 at 22:30 IST. Codex revised delivery gates and prompt timing without changing protocol economics. The first automated v4 dependency/interface checkpoint is running in the existing Studio app. Optional bridging is off the critical path.
+
+00b dependency/interface checkpoint: Studio generated pinned dependency manifest, installer and fork checks. Codex independently installed dependencies and ran all eight fork tests successfully; preserved small commits 8c10f3e, a36897b, af609f3. Source-runtime comparison is recorded from Studio evidence in docs/checkpoints/00b-deps.md. No transaction broadcast.
