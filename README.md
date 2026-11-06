@@ -23,6 +23,19 @@ Arc Testnet MVP: one cirBTC sale-financing market with Earn, Trade and Activity.
 
 External deadline: November 7, 2026, 9:30 AM IST. Build/demo hard finish: November 6, 10:30 PM IST; submission package ready by 10:00 PM.
 
+## Uniswap v4 integration
+
+Sacred integrates the existing Uniswap v4 AMM on Arc Testnet (chain 5042002). Its fixed-pool adapter executes real USDC/cirBTC purchases and collateral sales through `PoolManager`; the app uses the v4 Quoter for executable-output checks. The pool has a 0.30% fee, tick spacing 60 and no custom hook. This is an AMM integration under the [Build with Uniswap prize](https://ethglobal.com/events/mumbai/prizes/uniswap-foundation).
+
+- [Purchase and sale entry points](contracts/src/V4SpotVenue.sol#L127), [authenticated unlock callback and swap settlement](contracts/src/V4SpotVenue.sol#L218)
+- [Financed acquisition](contracts/src/TradeEngine.sol#L178), [owner sale and settlement](contracts/src/TradeEngine.sol#L322), [coverage rebalance](contracts/src/TradeEngine.sol#L414)
+- [Live Quoter interface](src/lib/contracts.ts#L30), [actual Arc fork integration tests](contracts/test/fork/TradeEngine.fork.t.sol)
+- [Deployment and pool manifest](deployments/arc-testnet.json), [runtime/source identity checks](docs/checkpoints/00b-deps.md)
+
+The v4 infrastructure already existed; Sacred initialized and seeded this cirBTC/USDC pool inside its PoolManager. [Pool initialization](https://explorer.testnet.arc.io/tx/0x2ff48c1584ef2c6ba20b98cd9ae28d6af80985f41bdb6646dd795a736d2f8773) and [initial liquidity](https://explorer.testnet.arc.io/tx/0xb28fb9412913d4d9fdc26bbd8f3f710baad01a97e14ee20ee25660faf4e4b497) are public receipts. It is a testnet pool, not a claim of an established external market.
+
+[FEEDBACK.md](FEEDBACK.md) records integration feedback. The required [developer feedback form](https://developers.uniswap.org/hackathon-feedback) remains pending; the file alone does not complete that requirement.
+
 ## Prior work
 
 The [Sacred website and protocol design](https://sacred.markets/docs) and [prior repository](https://github.com/smitrajput/sacred-protocol) predate this implementation. Planning and review artifacts here are AI-assisted and attributed in AI_WORKLOG.md. MVP implementation was generated through one Arc Studio app; contracts were deployed there. Codex independently reviewed and verified downloaded code, recorded small Git commits and deployed the frontend/read API using the authenticated Vercel CLI. The Studio URL and actual transaction evidence are linked below. This repository does not claim the historical design/site as newly written code.

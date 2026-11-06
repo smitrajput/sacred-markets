@@ -28,6 +28,8 @@ The strongest technical fit is Arc's **Best DeFi / Onchain Finance App Built End
 
 Actual integrations are Arc Testnet, USDC for settlement and native gas, cirBTC and the real Uniswap v4 PoolManager/Quoter. Circle's Arc-aware Foundry was used for real native-USDC fork checks. The MVP does not claim Gateway, CCTP, Circle Wallets, Marketplace Discovery or Bridge Kit integration.
 
+The Uniswap entry is **Build with Uniswap**, through the v4 AMM integration. Sacred uses existing v4 infrastructure and initialized/seeded the USDC/cirBTC 0.30% pool itself, with no custom hook. [Source pointers and pool receipts](../README.md#uniswap-v4-integration) identify the real integration. The [official requirements](https://ethglobal.com/events/mumbai/prizes/uniswap-foundation) also require public open-source code, FEEDBACK.md and the developer feedback form containing its link. The prepared feedback file is present; form submission remains pending. The separate Continuity prize is not claimed without confirmed track registration.
+
 ## Links for the form
 
 | Field | Link or state |
