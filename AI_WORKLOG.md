@@ -73,3 +73,9 @@ The user authorized Codex to prompt Studio directly for all remaining checkpoint
 00b dependency/interface checkpoint: Studio generated pinned dependency manifest, installer and fork checks. Codex independently installed dependencies and ran all eight fork tests successfully; preserved small commits 8c10f3e, a36897b, af609f3. Source-runtime comparison is recorded from Studio evidence in docs/checkpoints/00b-deps.md. No transaction broadcast.
 
 The user connected Vercel and approved dedicated Studio testnet wallets, limited to Arc Testnet and at most 20 test USDC / 0.001 test cirBTC used per wallet for deployment, seeding and demos. Codex adjusted hosting to Vercel frontend/read functions; continuous keeper execution remains separate.
+
+## Checkpoint 00b adapter — November 6
+
+Studio generated the authenticated fixed-pool venue and tests. Codex reviewed the implementation, independently ran 32 unit tests, identified that standard Foundry cannot execute Arc native-USDC precompiles, and directed Studio to use Circle Arc Foundry v0.8.0-4. Studio removed its temporary shim and proved real native-USDC rollback. Codex independently passed all 68 tests across the initial run (65 pass, 3 RPC-rate-limit interruptions) and a serial retry of the affected three. Details: [adapter evidence](docs/checkpoints/00b-adapter.md). Implementation commits: 793db01, f330429, 185566b. No live transaction yet.
+
+The user requested Claude models as bounded helpers. Codex launched a tool-free Opus 5.5 adapter review through the installed, authenticated Claude Code CLI; findings are pending. Studio remains the application writer and Codex verifies accepted findings. [Reviewer workflow](docs/CLAUDE_REVIEW_WORKFLOW.md).

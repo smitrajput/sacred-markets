@@ -1,6 +1,6 @@
 # Sacred implementation plan
 
-Status: **IMPLEMENTING — 00a scaffold verified; 00b dependencies verified; adapter next.** Arc Studio generated the scaffold; no Sacred financial contracts or deployments yet. External deadline **November 7, 2026, 9:30 AM IST**. Hard finish **November 6, 10:30 PM IST**.
+Status: **IMPLEMENTING — 00a scaffold and 00b adapter verified; hosting/wallet setup in progress.** Arc Studio generated the scaffold; the fixed-pool adapter exists; vault/engine and live deployments remain upcoming. External deadline **November 7, 2026, 9:30 AM IST**. Hard finish **November 6, 10:30 PM IST**.
 
 - [Specification](docs/spec.md)
 - [Prompt instructions](docs/README.md)
