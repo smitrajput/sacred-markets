@@ -1,0 +1,749 @@
+{
+  "checkedAt": "2026-11-06T14:23:53Z",
+  "baseUrl": "https://sacred-arc-mvp.vercel.app",
+  "deploymentId": "dpl_H9Nz4TLBMP7fbfLzEET2hyCB5xFd",
+  "sourceCommit": "1737996",
+  "results": [
+    {
+      "path": "/",
+      "method": "GET",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "seconds": 1.009,
+      "finalUrl": "https://sacred-arc-mvp.vercel.app/",
+      "body": null
+    },
+    {
+      "path": "/api/health",
+      "method": "GET",
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "seconds": 1.359,
+      "finalUrl": "https://sacred-arc-mvp.vercel.app/api/health",
+      "body": {
+        "status": "ok",
+        "service": "sacred-api",
+        "time": "2026-11-06T14:23:45.274Z",
+        "mode": "read-only",
+        "signing": "none",
+        "chain": {
+          "name": "Arc Testnet",
+          "chainId": 5042002,
+          "rpc": {
+            "status": "reachable",
+            "chainId": 5042002,
+            "chainIdMatches": true,
+            "latestBlock": 71042293,
+            "latencyMs": 298
+          }
+        },
+        "contracts": {
+          "source": "deployments/arc-testnet.json",
+          "statuses": {
+            "usdcEarn": "deployed",
+            "cirBtcSpotFinancing": "deployed",
+            "demoPriceGuard": "deployed",
+            "productionVenue": "deployed"
+          }
+        },
+        "scheduler": {
+          "status": "unavailable",
+          "kind": "external",
+          "detail": "The keeper is a separately run operator process, not part of this serverless deployment. Nothing is scheduled here; wallet actions remain permissionless."
+        },
+        "deployment": {
+          "host": "vercel",
+          "environment": "production",
+          "region": "iad1",
+          "commit": "1737996"
+        }
+      }
+    },
+    {
+      "path": "/api/config",
+      "method": "GET",
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "seconds": 1.56,
+      "finalUrl": "https://sacred-arc-mvp.vercel.app/api/config",
+      "body": {
+        "chainId": 5042002,
+        "observedBlock": "71042296",
+        "observedAt": "1793975026",
+        "manifestPolicyHash": "0xb3dc89d6be33479580f5bc183906c6d7d1b67559167252edd086af824733e8b7",
+        "network": {
+          "name": "Arc Testnet",
+          "explorer": "https://explorer.testnet.arc.io",
+          "nativeGasDecimals": 18,
+          "usdcDecimals": 6,
+          "btcDecimals": 8
+        },
+        "contracts": {
+          "vault": "0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450",
+          "engine": "0xac836824231ae77874d0ca293bd749ffe6c0d00f",
+          "guard": "0x4d84bf470b6916d97ec719a5398d534c1adb1d57",
+          "venue": "0x4e733fffbe2acc8b5849fa2cb7c1ac3f4a342519",
+          "usdc": "0x3600000000000000000000000000000000000000",
+          "cirBtc": "0xf0C4a4CE82A5746AbAAd9425360Ab04fbBA432BF"
+        },
+        "deployBlock": "71033361",
+        "deployments": {
+          "vault": {
+            "address": "0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450",
+            "deployTxHash": "0xdb8b3c987ac926e5c076930822bf9a63eea261c4d6f971716377ad59ee7072a1",
+            "deployBlock": 71033370,
+            "codeHash": "0x5e50630020121c4787eb861ad7775ccafcf8ffda329e36bbdbb012c70eae4629"
+          },
+          "engine": {
+            "address": "0xac836824231ae77874d0ca293bd749ffe6c0d00f",
+            "deployTxHash": "0x04dc6505179eac18e73f5e2a0f07b957e8fbf0edb4fc1b6ea4aab89c53e23b71",
+            "deployBlock": 71033391,
+            "codeHash": "0xfe0ba291ca7629d97c59d822b0a9c3ad8a1bd07ac8e3f57fa8d48d2c9e6eff3a"
+          },
+          "guard": {
+            "address": "0x4d84bf470b6916d97ec719a5398d534c1adb1d57",
+            "deployTxHash": "0xab0bba55f9e9d30dc48879249e13195f4cc017ba28fb895a63dd4c283b576d13",
+            "deployBlock": 71033361,
+            "codeHash": "0x9b8f9f58bf7dadcbba931cecdfbf8a491ece64d43fae25780f62857f9b5b403c"
+          },
+          "venue": {
+            "address": "0x4e733fffbe2acc8b5849fa2cb7c1ac3f4a342519",
+            "deployTxHash": "0x19147c9050966415be5ad7e6762bc5d9090bc654fc9a91e5aea16831179ab1bd",
+            "deployBlock": 71033381,
+            "codeHash": "0xeaca07679f2d89ce91b9e3f2bd77fded217a37c620a391153d41e78ddb8db7ed"
+          }
+        },
+        "uniswap": {
+          "quoter": "0x8Dc178eFB8111BB0973Dd9d722ebeFF267c98F94",
+          "stateView": "0xF3334192D15450CdD385c8B70e03f9A6bD9E673b",
+          "poolManager": "0x8366a39CC670B4001A1121B8F6A443A643e40951",
+          "poolId": "0xf4e18ec272549ab0140d43d33a7ba93768ecaec4dee4a7fb4f2c9af00950cde4",
+          "fee": 3000,
+          "tickSpacing": 60
+        },
+        "policy": {
+          "termSeconds": 1209600,
+          "annualMarkupBps": 1000,
+          "lpMarkupBps": 7700,
+          "triggerBps": 16000,
+          "restoreBps": 19000,
+          "initialCoverageBps": 19000,
+          "frictionBps": 300,
+          "dustAtoms": "10000",
+          "earlyRebateBps": 0
+        },
+        "termsHashMatchesChain": true,
+        "gasReserveAtoms": "100000",
+        "keeper": {
+          "status": "external_unverified",
+          "detail": "No heartbeat is published. Manual wallet actions work without any keeper."
+        },
+        "oracle": {
+          "kind": "testnet operator fixture",
+          "note": "Users cannot update it. Opens and sales fail closed when stale."
+        }
+      }
+    },
+    {
+      "path": "/api/vault?owner=0x5B935E09b4749efbE9AA9855ac049d7cacE32659",
+      "method": "GET",
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "seconds": 1.231,
+      "finalUrl": "https://sacred-arc-mvp.vercel.app/api/vault?owner=0x5B935E09b4749efbE9AA9855ac049d7cacE32659",
+      "body": {
+        "chainId": 5042002,
+        "observedBlock": "71042298",
+        "observedAt": "1793975027",
+        "manifestPolicyHash": "0xb3dc89d6be33479580f5bc183906c6d7d1b67559167252edd086af824733e8b7",
+        "vault": {
+          "depositorIdleCash": "840877",
+          "outstandingPrincipal": "59388",
+          "commitments": "0",
+          "pendingGrossCash": "0",
+          "nav": "900265",
+          "totalShares": "900000",
+          "managerCash": "89",
+          "primaryReserve": "4000",
+          "tailReserve": "6000",
+          "pilotBackstop": "0",
+          "claimableWithdrawals": "0",
+          "primaryTarget": "4000",
+          "tailTarget": "6000",
+          "queueHead": "1",
+          "queueTail": "1",
+          "livePositions": "1",
+          "pendingOpens": "0",
+          "activeRequests": "0",
+          "financingCeiling": "1000000",
+          "perAccountCap": "100000",
+          "fundingPaused": false,
+          "engine": "0xac836824231ae77874D0Ca293BD749ffE6c0d00f"
+        },
+        "mandateHash": "0x97250e4278d3490a68e4426ce66f91f87fe348b95483150482e7f71736298d2a",
+        "financingHeadroom": "420438",
+        "fullyBacked": true,
+        "navPerShareE6": "1000294",
+        "queue": [],
+        "account": {
+          "owner": "0x5B935E09b4749efbE9AA9855ac049d7cacE32659",
+          "shares": "0",
+          "lockedShares": "0",
+          "claimable": "0"
+        },
+        "oracle": {
+          "priceMicroUsdcPerBtc": "80000000000",
+          "observedAt": "1793970799",
+          "fresh": true,
+          "maxAgeSeconds": "86400",
+          "expiresAt": "1794057199"
+        },
+        "livePositions": 1,
+        "blockers": {
+          "deposit": [],
+          "financing": []
+        }
+      }
+    },
+    {
+      "path": "/api/positions",
+      "method": "GET",
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "seconds": 1.446,
+      "finalUrl": "https://sacred-arc-mvp.vercel.app/api/positions",
+      "body": {
+        "chainId": 5042002,
+        "observedBlock": "71042301",
+        "observedAt": "1793975028",
+        "manifestPolicyHash": "0xb3dc89d6be33479580f5bc183906c6d7d1b67559167252edd086af824733e8b7",
+        "owner": null,
+        "positions": [
+          {
+            "id": "2",
+            "trader": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+            "status": 1,
+            "openedAt": "1793970729",
+            "maturesAt": "1795180329",
+            "principal0": "100000",
+            "principal": "59388",
+            "markup0": "383",
+            "markup": "383",
+            "debt": "59771",
+            "collateral": "143",
+            "collected": "0",
+            "lpAllocation": "0",
+            "termsHash": "0xb3dc89d6be33479580f5bc183906c6d7d1b67559167252edd086af824733e8b7",
+            "netCollateralValue": "110968",
+            "priceFresh": true,
+            "coverageBps": "19139",
+            "rebalance": {
+              "eligible": false,
+              "partial": false,
+              "sellAtoms": "0",
+              "minUsdc": "0"
+            },
+            "matured": false,
+            "impaired": false
+          }
+        ],
+        "activeTotal": 1,
+        "oracle": {
+          "priceMicroUsdcPerBtc": "80000000000",
+          "observedAt": "1793970799",
+          "fresh": true,
+          "maxAgeSeconds": "86400",
+          "expiresAt": "1794057199"
+        }
+      }
+    },
+    {
+      "path": "/api/activity",
+      "method": "GET",
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "seconds": 1.65,
+      "finalUrl": "https://sacred-arc-mvp.vercel.app/api/activity",
+      "body": {
+        "chainId": 5042002,
+        "observedBlock": "71042303",
+        "observedAt": "1793975029",
+        "manifestPolicyHash": "0xb3dc89d6be33479580f5bc183906c6d7d1b67559167252edd086af824733e8b7",
+        "range": {
+          "fromBlock": "71035000",
+          "toBlock": "71042303",
+          "windows": 8,
+          "maxBlocksPerWindow": 1000
+        },
+        "events": [],
+        "truncated": false,
+        "nextCursor": "eyJiIjoiNzEwMzQ5OTkiLCJsIjo0Mjk0OTY3Mjk1fQ",
+        "explorer": "https://explorer.testnet.arc.io"
+      }
+    },
+    {
+      "path": "/api/activity?cursor=eyJiIjoiNzEwMzQ5OTkiLCJsIjo0Mjk0OTY3Mjk1fQ",
+      "method": "GET",
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "seconds": 1.06,
+      "body": {
+        "chainId": 5042002,
+        "observedBlock": "71042306",
+        "observedAt": "1793975031",
+        "manifestPolicyHash": "0xb3dc89d6be33479580f5bc183906c6d7d1b67559167252edd086af824733e8b7",
+        "range": {
+          "fromBlock": "71033361",
+          "toBlock": "71034999",
+          "windows": 2,
+          "maxBlocksPerWindow": 1000
+        },
+        "events": [
+          {
+            "key": "5042002:0xb4b830b521adcdbae48815d193479531aa48a60669d349faf0502b9c72b9b5f3:30",
+            "event": "Claimed",
+            "contract": "vault",
+            "contractAddress": "0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450",
+            "txHash": "0xb4b830b521adcdbae48815d193479531aa48a60669d349faf0502b9c72b9b5f3",
+            "blockNumber": "71034046",
+            "logIndex": 30,
+            "args": {
+              "owner": "0xafC5b06665e9b99669027C18E82014916778734E",
+              "amount": "100029"
+            },
+            "timestamp": "1793970833"
+          },
+          {
+            "key": "5042002:0x8be5d0517b2ca62e0dc9842ad506533fb3ad67b2c663943f9932750e1f17ed55:19",
+            "event": "WithdrawalFilled",
+            "contract": "vault",
+            "contractAddress": "0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450",
+            "txHash": "0x8be5d0517b2ca62e0dc9842ad506533fb3ad67b2c663943f9932750e1f17ed55",
+            "blockNumber": "71034033",
+            "logIndex": 19,
+            "args": {
+              "requestId": "0",
+              "owner": "0xafC5b06665e9b99669027C18E82014916778734E",
+              "sharesBurned": "100000",
+              "payout": "100029"
+            },
+            "timestamp": "1793970826"
+          },
+          {
+            "key": "5042002:0xfca7f5078cc107233b6f57664c0b7adca50e75e4f4b0c3ab46454f7a539f8e58:7",
+            "event": "WithdrawalRequested",
+            "contract": "vault",
+            "contractAddress": "0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450",
+            "txHash": "0xfca7f5078cc107233b6f57664c0b7adca50e75e4f4b0c3ab46454f7a539f8e58",
+            "blockNumber": "71034025",
+            "logIndex": 7,
+            "args": {
+              "requestId": "0",
+              "owner": "0xafC5b06665e9b99669027C18E82014916778734E",
+              "shares": "100000"
+            },
+            "timestamp": "1793970822"
+          },
+          {
+            "key": "5042002:0xc7afcee5e170601d01468b8acef07f62439b49404a31dbe553b770dd4a783f78:24",
+            "event": "Rebalanced",
+            "contract": "engine",
+            "contractAddress": "0xac836824231ae77874d0ca293bd749ffe6c0d00f",
+            "txHash": "0xc7afcee5e170601d01468b8acef07f62439b49404a31dbe553b770dd4a783f78",
+            "blockNumber": "71033997",
+            "logIndex": 24,
+            "args": {
+              "id": "2",
+              "atomsSold": "52",
+              "proceeds": "40612",
+              "principalAfter": "59388",
+              "markupAfter": "383",
+              "collateralAfter": "143",
+              "dustFallback": "false",
+              "toleranceUsed": "false"
+            },
+            "timestamp": "1793970808"
+          },
+          {
+            "key": "5042002:0xc7afcee5e170601d01468b8acef07f62439b49404a31dbe553b770dd4a783f78:23",
+            "event": "Repaid",
+            "contract": "engine",
+            "contractAddress": "0xac836824231ae77874d0ca293bd749ffe6c0d00f",
+            "txHash": "0xc7afcee5e170601d01468b8acef07f62439b49404a31dbe553b770dd4a783f78",
+            "blockNumber": "71033997",
+            "logIndex": 23,
+            "args": {
+              "id": "2",
+              "payer": "0xac836824231ae77874D0Ca293BD749ffE6c0d00f",
+              "principalPaid": "40612",
+              "markupPaid": "0"
+            },
+            "timestamp": "1793970808"
+          },
+          {
+            "key": "5042002:0xc7afcee5e170601d01468b8acef07f62439b49404a31dbe553b770dd4a783f78:22",
+            "event": "PrincipalRepaid",
+            "contract": "vault",
+            "contractAddress": "0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450",
+            "txHash": "0xc7afcee5e170601d01468b8acef07f62439b49404a31dbe553b770dd4a783f78",
+            "blockNumber": "71033997",
+            "logIndex": 22,
+            "args": {
+              "id": "2",
+              "amount": "40612",
+              "remaining": "59388"
+            },
+            "timestamp": "1793970808"
+          },
+          {
+            "key": "5042002:0x46bb917630154d3a20facd0034692e17b62e6f69caec85f16d156ce40187bd29:30",
+            "event": "Opened",
+            "contract": "engine",
+            "contractAddress": "0xac836824231ae77874d0ca293bd749ffe6c0d00f",
+            "txHash": "0x46bb917630154d3a20facd0034692e17b62e6f69caec85f16d156ce40187bd29",
+            "blockNumber": "71033842",
+            "logIndex": 30,
+            "args": {
+              "id": "2",
+              "trader": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+              "maturesAt": "1795180329"
+            },
+            "timestamp": "1793970729"
+          },
+          {
+            "key": "5042002:0x46bb917630154d3a20facd0034692e17b62e6f69caec85f16d156ce40187bd29:29",
+            "event": "OpenConfirmed",
+            "contract": "vault",
+            "contractAddress": "0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450",
+            "txHash": "0x46bb917630154d3a20facd0034692e17b62e6f69caec85f16d156ce40187bd29",
+            "blockNumber": "71033842",
+            "logIndex": 29,
+            "args": {
+              "id": "2"
+            },
+            "timestamp": "1793970729"
+          },
+          {
+            "key": "5042002:0x46bb917630154d3a20facd0034692e17b62e6f69caec85f16d156ce40187bd29:23",
+            "event": "Pledged",
+            "contract": "engine",
+            "contractAddress": "0xac836824231ae77874d0ca293bd749ffe6c0d00f",
+            "txHash": "0x46bb917630154d3a20facd0034692e17b62e6f69caec85f16d156ce40187bd29",
+            "blockNumber": "71033842",
+            "logIndex": 23,
+            "args": {
+              "id": "2",
+              "trader": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+              "atoms": "195",
+              "termsHash": "0xb3dc89d6be33479580f5bc183906c6d7d1b67559167252edd086af824733e8b7"
+            },
+            "timestamp": "1793970729"
+          },
+          {
+            "key": "5042002:0x46bb917630154d3a20facd0034692e17b62e6f69caec85f16d156ce40187bd29:22",
+            "event": "DisclosedSaleAgreed",
+            "contract": "engine",
+            "contractAddress": "0xac836824231ae77874d0ca293bd749ffe6c0d00f",
+            "txHash": "0x46bb917630154d3a20facd0034692e17b62e6f69caec85f16d156ce40187bd29",
+            "blockNumber": "71033842",
+            "logIndex": 22,
+            "args": {
+              "id": "2",
+              "trader": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+              "equity": "100000",
+              "principal": "100000",
+              "markup": "383",
+              "atoms": "195",
+              "termsHash": "0xb3dc89d6be33479580f5bc183906c6d7d1b67559167252edd086af824733e8b7"
+            },
+            "timestamp": "1793970729"
+          },
+          {
+            "key": "5042002:0x46bb917630154d3a20facd0034692e17b62e6f69caec85f16d156ce40187bd29:21",
+            "event": "AssetAcquired",
+            "contract": "engine",
+            "contractAddress": "0xac836824231ae77874d0ca293bd749ffe6c0d00f",
+            "txHash": "0x46bb917630154d3a20facd0034692e17b62e6f69caec85f16d156ce40187bd29",
+            "blockNumber": "71033842",
+            "logIndex": 21,
+            "args": {
+              "id": "2",
+              "trader": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+              "cost": "200000",
+              "atoms": "195",
+              "referencePrice": "100000000000"
+            },
+            "timestamp": "1793970729"
+          },
+          {
+            "key": "5042002:0x46bb917630154d3a20facd0034692e17b62e6f69caec85f16d156ce40187bd29:10",
+            "event": "OpenReserved",
+            "contract": "vault",
+            "contractAddress": "0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450",
+            "txHash": "0x46bb917630154d3a20facd0034692e17b62e6f69caec85f16d156ce40187bd29",
+            "blockNumber": "71033842",
+            "logIndex": 10,
+            "args": {
+              "id": "2",
+              "account": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+              "principal": "100000"
+            },
+            "timestamp": "1793970729"
+          },
+          {
+            "key": "5042002:0x853aff671d5661b68e902fc506ecec71ad45d039cf915d06e5ef040e005c14c5:25",
+            "event": "Released",
+            "contract": "engine",
+            "contractAddress": "0xac836824231ae77874d0ca293bd749ffe6c0d00f",
+            "txHash": "0x853aff671d5661b68e902fc506ecec71ad45d039cf915d06e5ef040e005c14c5",
+            "blockNumber": "71033777",
+            "logIndex": 25,
+            "args": {
+              "id": "1",
+              "trader": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+              "atomsReturned": "195"
+            },
+            "timestamp": "1793970696"
+          },
+          {
+            "key": "5042002:0x853aff671d5661b68e902fc506ecec71ad45d039cf915d06e5ef040e005c14c5:23",
+            "event": "PositionFinalized",
+            "contract": "vault",
+            "contractAddress": "0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450",
+            "txHash": "0x853aff671d5661b68e902fc506ecec71ad45d039cf915d06e5ef040e005c14c5",
+            "blockNumber": "71033777",
+            "logIndex": 23,
+            "args": {
+              "id": "1"
+            },
+            "timestamp": "1793970696"
+          },
+          {
+            "key": "5042002:0x853aff671d5661b68e902fc506ecec71ad45d039cf915d06e5ef040e005c14c5:22",
+            "event": "Repaid",
+            "contract": "engine",
+            "contractAddress": "0xac836824231ae77874d0ca293bd749ffe6c0d00f",
+            "txHash": "0x853aff671d5661b68e902fc506ecec71ad45d039cf915d06e5ef040e005c14c5",
+            "blockNumber": "71033777",
+            "logIndex": 22,
+            "args": {
+              "id": "1",
+              "payer": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+              "principalPaid": "100000",
+              "markupPaid": "383"
+            },
+            "timestamp": "1793970696"
+          },
+          {
+            "key": "5042002:0x853aff671d5661b68e902fc506ecec71ad45d039cf915d06e5ef040e005c14c5:21",
+            "event": "MarkupCollected",
+            "contract": "vault",
+            "contractAddress": "0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450",
+            "txHash": "0x853aff671d5661b68e902fc506ecec71ad45d039cf915d06e5ef040e005c14c5",
+            "blockNumber": "71033777",
+            "logIndex": 21,
+            "args": {
+              "id": "1",
+              "payment": "383",
+              "lpIncrement": "294",
+              "toPrimary": "0",
+              "toTail": "0",
+              "toManagerCash": "89"
+            },
+            "timestamp": "1793970696"
+          },
+          {
+            "key": "5042002:0x853aff671d5661b68e902fc506ecec71ad45d039cf915d06e5ef040e005c14c5:17",
+            "event": "PrincipalRepaid",
+            "contract": "vault",
+            "contractAddress": "0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450",
+            "txHash": "0x853aff671d5661b68e902fc506ecec71ad45d039cf915d06e5ef040e005c14c5",
+            "blockNumber": "71033777",
+            "logIndex": 17,
+            "args": {
+              "id": "1",
+              "amount": "100000",
+              "remaining": "0"
+            },
+            "timestamp": "1793970696"
+          },
+          {
+            "key": "5042002:0xeebbcf401e8d46112e9062962cd3a4d2a1f2793b756da94ecaa36a5610326e79:45",
+            "event": "Opened",
+            "contract": "engine",
+            "contractAddress": "0xac836824231ae77874d0ca293bd749ffe6c0d00f",
+            "txHash": "0xeebbcf401e8d46112e9062962cd3a4d2a1f2793b756da94ecaa36a5610326e79",
+            "blockNumber": "71033753",
+            "logIndex": 45,
+            "args": {
+              "id": "1",
+              "trader": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+              "maturesAt": "1795180284"
+            },
+            "timestamp": "1793970684"
+          },
+          {
+            "key": "5042002:0xeebbcf401e8d46112e9062962cd3a4d2a1f2793b756da94ecaa36a5610326e79:44",
+            "event": "OpenConfirmed",
+            "contract": "vault",
+            "contractAddress": "0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450",
+            "txHash": "0xeebbcf401e8d46112e9062962cd3a4d2a1f2793b756da94ecaa36a5610326e79",
+            "blockNumber": "71033753",
+            "logIndex": 44,
+            "args": {
+              "id": "1"
+            },
+            "timestamp": "1793970684"
+          },
+          {
+            "key": "5042002:0xeebbcf401e8d46112e9062962cd3a4d2a1f2793b756da94ecaa36a5610326e79:38",
+            "event": "Pledged",
+            "contract": "engine",
+            "contractAddress": "0xac836824231ae77874d0ca293bd749ffe6c0d00f",
+            "txHash": "0xeebbcf401e8d46112e9062962cd3a4d2a1f2793b756da94ecaa36a5610326e79",
+            "blockNumber": "71033753",
+            "logIndex": 38,
+            "args": {
+              "id": "1",
+              "trader": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+              "atoms": "195",
+              "termsHash": "0xb3dc89d6be33479580f5bc183906c6d7d1b67559167252edd086af824733e8b7"
+            },
+            "timestamp": "1793970684"
+          },
+          {
+            "key": "5042002:0xeebbcf401e8d46112e9062962cd3a4d2a1f2793b756da94ecaa36a5610326e79:37",
+            "event": "DisclosedSaleAgreed",
+            "contract": "engine",
+            "contractAddress": "0xac836824231ae77874d0ca293bd749ffe6c0d00f",
+            "txHash": "0xeebbcf401e8d46112e9062962cd3a4d2a1f2793b756da94ecaa36a5610326e79",
+            "blockNumber": "71033753",
+            "logIndex": 37,
+            "args": {
+              "id": "1",
+              "trader": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+              "equity": "100000",
+              "principal": "100000",
+              "markup": "383",
+              "atoms": "195",
+              "termsHash": "0xb3dc89d6be33479580f5bc183906c6d7d1b67559167252edd086af824733e8b7"
+            },
+            "timestamp": "1793970684"
+          },
+          {
+            "key": "5042002:0xeebbcf401e8d46112e9062962cd3a4d2a1f2793b756da94ecaa36a5610326e79:36",
+            "event": "AssetAcquired",
+            "contract": "engine",
+            "contractAddress": "0xac836824231ae77874d0ca293bd749ffe6c0d00f",
+            "txHash": "0xeebbcf401e8d46112e9062962cd3a4d2a1f2793b756da94ecaa36a5610326e79",
+            "blockNumber": "71033753",
+            "logIndex": 36,
+            "args": {
+              "id": "1",
+              "trader": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+              "cost": "200000",
+              "atoms": "195",
+              "referencePrice": "100000000000"
+            },
+            "timestamp": "1793970684"
+          },
+          {
+            "key": "5042002:0xeebbcf401e8d46112e9062962cd3a4d2a1f2793b756da94ecaa36a5610326e79:25",
+            "event": "OpenReserved",
+            "contract": "vault",
+            "contractAddress": "0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450",
+            "txHash": "0xeebbcf401e8d46112e9062962cd3a4d2a1f2793b756da94ecaa36a5610326e79",
+            "blockNumber": "71033753",
+            "logIndex": 25,
+            "args": {
+              "id": "1",
+              "account": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+              "principal": "100000"
+            },
+            "timestamp": "1793970684"
+          },
+          {
+            "key": "5042002:0x7728c79ee18ee27e4c45a5e1df84d1ea45179edd7c781a074b74ae81910878ec:17",
+            "event": "Deposited",
+            "contract": "vault",
+            "contractAddress": "0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450",
+            "txHash": "0x7728c79ee18ee27e4c45a5e1df84d1ea45179edd7c781a074b74ae81910878ec",
+            "blockNumber": "71033541",
+            "logIndex": 17,
+            "args": {
+              "account": "0xafC5b06665e9b99669027C18E82014916778734E",
+              "amount": "1000000",
+              "shares": "1000000",
+              "navBefore": "0"
+            },
+            "timestamp": "1793970576"
+          },
+          {
+            "key": "5042002:0xc51ef0cb6f9d654203ffd46cdba274881ce88bb08ea7fa35acc9669243625724:30",
+            "event": "ProtectionSeeded",
+            "contract": "vault",
+            "contractAddress": "0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450",
+            "txHash": "0xc51ef0cb6f9d654203ffd46cdba274881ce88bb08ea7fa35acc9669243625724",
+            "blockNumber": "71033522",
+            "logIndex": 30,
+            "args": {
+              "kind": "1",
+              "amount": "6000",
+              "bucketAfter": "6000"
+            },
+            "timestamp": "1793970567"
+          },
+          {
+            "key": "5042002:0x93c2fc80a47b7e2c2671a583739be1fa4dcbd0d5e9dcbdd7a3f8e915d936892d:39",
+            "event": "ProtectionSeeded",
+            "contract": "vault",
+            "contractAddress": "0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450",
+            "txHash": "0x93c2fc80a47b7e2c2671a583739be1fa4dcbd0d5e9dcbdd7a3f8e915d936892d",
+            "blockNumber": "71033514",
+            "logIndex": 39,
+            "args": {
+              "kind": "0",
+              "amount": "4000",
+              "bucketAfter": "4000"
+            },
+            "timestamp": "1793970562"
+          },
+          {
+            "key": "5042002:0x1eb45d214e297b7303a87cf4dc5699061ce14c697fbe7ca78e39353a38bc70b6:11",
+            "event": "EngineBound",
+            "contract": "vault",
+            "contractAddress": "0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450",
+            "txHash": "0x1eb45d214e297b7303a87cf4dc5699061ce14c697fbe7ca78e39353a38bc70b6",
+            "blockNumber": "71033410",
+            "logIndex": 11,
+            "args": {
+              "engine": "0xac836824231ae77874D0Ca293BD749ffE6c0d00f"
+            },
+            "timestamp": "1793970509"
+          }
+        ],
+        "truncated": false,
+        "nextCursor": null,
+        "explorer": "https://explorer.testnet.arc.io"
+      }
+    },
+    {
+      "path": "/api/vault",
+      "method": "HEAD",
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "seconds": 1.069,
+      "finalUrl": "https://sacred-arc-mvp.vercel.app/api/vault",
+      "body": null
+    },
+    {
+      "path": "/guide.html",
+      "method": "GET",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "seconds": 0.408,
+      "finalUrl": "https://sacred-arc-mvp.vercel.app/guide.html",
+      "body": null
+    }
+  ]
+}
