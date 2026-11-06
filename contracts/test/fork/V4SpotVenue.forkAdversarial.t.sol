@@ -108,6 +108,55 @@ contract V4SpotVenueForkAdversarialTest is ForkVenueSetup {
         assertEq(a.engBtc - b.engBtc, q);
         assertEq(IERC20(CIRBTC).balanceOf(address(venue)), 7, "donation untouched");
     }
+
+    /// @dev Native-backed USDC has 18 decimals underneath its 6-decimal ERC-20 view. Engine, venue and PoolManager all
+    /// carry fractional native dust, and a third party donates exactly one USDC atom to the venue. Exact-input swaps in
+    /// both directions must succeed, the ERC-20 deltas must be exact, and every fractional remainder and the donation
+    /// must be exactly where they started (nothing absorbed, swept or lost).
+    function test_fractionalNativeDustAndUsdcAtomDonation_doNotAffectExactInputAccounting() public {
+        uint256 dustEngine = 777_777_777; // wei, below one USDC atom (1e12)
+        uint256 dustVenue = 123_456; // wei
+        uint256 dustPm = 424_242;
+        vm.deal(engine, engine.balance + dustEngine);
+        vm.deal(address(venue), 1e12 + dustVenue); // one donated USDC atom plus dust (fork-only fixture)
+        vm.deal(address(POOL_MANAGER), address(POOL_MANAGER).balance + dustPm);
+        assertEq(IERC20(USDC).balanceOf(address(venue)), 1, "one donated USDC atom");
+        assertEq(address(venue).balance % 1e12, dustVenue);
+        assertEq(engine.balance % 1e12, dustEngine);
+
+        uint256 engNative0 = engine.balance;
+        uint256 venueNative0 = address(venue).balance;
+        uint256 pmNative0 = address(POOL_MANAGER).balance;
+        Snap memory b = _snap();
+
+        uint256 qBuy = _quote(key, true, 200_000);
+        vm.prank(engine);
+        uint256 got = venue.buyCirBtc(200_000, qBuy, _deadline());
+        assertEq(got, qBuy);
+        Snap memory m = _snap();
+        assertEq(b.engUsdc - m.engUsdc, 200_000, "ERC-20 USDC paid is exact");
+        assertEq(m.engBtc - b.engBtc, got, "cirBTC received is exact");
+        assertEq(m.pmUsdc - b.pmUsdc, 200_000);
+        assertEq(m.venueUsdc, 1, "donated atom untouched after the buy");
+
+        uint256 qSell = _quote(key, false, got);
+        vm.prank(engine);
+        uint256 back = venue.sellCirBtc(got, qSell, _deadline());
+        assertEq(back, qSell);
+        Snap memory a = _snap();
+        assertEq(a.engBtc, b.engBtc, "all cirBTC sold");
+        assertEq(a.engUsdc, b.engUsdc - 200_000 + back, "ERC-20 USDC delta is exact");
+        assertEq(a.venueUsdc, 1, "donated atom untouched after the sell");
+        assertEq(a.venueBtc, 0);
+
+        // Native view: every wei moved is a whole number of USDC atoms, so the fractional parts are unchanged.
+        assertEq(engine.balance, engNative0 - 200_000 * 1e12 + back * 1e12, "engine native, exact");
+        assertEq(engine.balance % 1e12, dustEngine, "engine fractional dust persists");
+        assertEq(address(venue).balance, venueNative0, "venue native persists (donation and dust)");
+        assertEq(address(venue).balance % 1e12, dustVenue);
+        assertEq(address(POOL_MANAGER).balance, pmNative0 + 200_000 * 1e12 - back * 1e12, "PoolManager native, exact");
+        assertEq(address(POOL_MANAGER).balance % 1e12, pmNative0 % 1e12, "PoolManager fractional dust persists");
+    }
 }
 
 /// @dev Unlocks the PoolManager and records who gets called back.
