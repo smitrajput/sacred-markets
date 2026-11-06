@@ -1,0 +1,67 @@
+{
+  "chainId": 5042002,
+  "source": "https://faucet.circle.com/",
+  "verifiedAt": "2026-11-06T11:48:34.799434+00:00",
+  "balances": [
+    {
+      "role": "deployer",
+      "address": "0xafC5b06665e9b99669027C18E82014916778734E",
+      "nativeUsdcWei": "20000000000000000000",
+      "cirBtcAtoms": "10000"
+    },
+    {
+      "role": "trader",
+      "address": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+      "nativeUsdcWei": "20000000000000000000",
+      "cirBtcAtoms": "10000"
+    },
+    {
+      "role": "keeper",
+      "address": "0x60579fc93E6B7f2377dd952e1FD4c58C2e3Ca373",
+      "nativeUsdcWei": "20000000000000000000",
+      "cirBtcAtoms": "0"
+    }
+  ],
+  "receipts": [
+    {
+      "role": "deployer",
+      "asset": "cirBTC",
+      "amount": "0.0001",
+      "txHash": "0xbb1360fbb91dcd0033dee4e1fae4a25b933fcccdbf97a0410637feac3846c7c6",
+      "status": "0x1",
+      "blockNumber": "0x43bb611"
+    },
+    {
+      "role": "deployer",
+      "asset": "USDC",
+      "amount": "20",
+      "txHash": "0x4cfc1f0ff63faa8aa823713c549c4237f9968b34ef0d5e9fb1c11df007a70894",
+      "status": "0x1",
+      "blockNumber": "0x43bb6bc"
+    },
+    {
+      "role": "trader",
+      "asset": "USDC",
+      "amount": "20",
+      "txHash": "0x7a1ea2d8c73da1cfaae1f783c4df6f60e9123a70b753b99754db1d316e05ef29",
+      "status": "0x1",
+      "blockNumber": "0x43bb93b"
+    },
+    {
+      "role": "keeper",
+      "asset": "USDC",
+      "amount": "20",
+      "txHash": "0x9345d88bb1b8b012609c382977055ee0b0a95ad8ec9af012a80d528fd85b1725",
+      "status": "0x1",
+      "blockNumber": "0x43bba0c"
+    },
+    {
+      "role": "trader",
+      "asset": "cirBTC",
+      "amount": "0.0001",
+      "txHash": "0xb37d18bbc058adc569746c86226bd749e26858176ca5f7b85c53165b1b37593f",
+      "status": "0x1",
+      "blockNumber": "0x43bbb21"
+    }
+  ]
+}
