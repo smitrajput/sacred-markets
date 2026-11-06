@@ -1,6 +1,6 @@
 # Checkpoint 04: public frontend and read API
 
-Public app: **https://sacred-arc-mvp.vercel.app**. Application source checkpoint: `d71ddbd`. Current deployment: `dpl_GycgKGob9QB3PtdAZEMfWc6LeGkz`, built from documentation checkpoint `84dabce`, Vercel project `sacred-arc-mvp` in `smit-rajputs-projects`. Codex deployed the downloaded Studio application through the authenticated Vercel CLI; contract generation/deployment remained in Studio. The final guide redeploy leaves the application bundle byte-identical to the wallet-verified build. These host deployments created no contracts or chain transactions. [Guide and bundle verification](../review/GUIDE_HOSTED_VERIFICATION.json).
+Public app: **https://sacred-arc-mvp.vercel.app**. Current UI implementation checkpoint: `9bf75bd`; wallet-verified financial behavior checkpoint: `d71ddbd`. Current deployment: `dpl_AzbYyczGB3yrEh1KYbq4xLyZLGCi`, built from `9bf75bd`, Vercel project `sacred-arc-mvp` in `smit-rajputs-projects`. Codex deployed the Studio-authored refinement with self-hosted Sacred brand fonts and the updated guide. The public JS/CSS, all eight fonts, logo and guide match the reviewed local bytes; the API reports healthy read-only service with no signing. [Current hosted verification](../review/UI_REFINEMENT_HOSTED_VERIFICATION.json), [UI review](../review/OPUS_UI_REFINEMENT.md). Earlier guide-only deployment evidence below remains historical. These host deployments created no contracts or chain transactions.
 
 ## Verified
 

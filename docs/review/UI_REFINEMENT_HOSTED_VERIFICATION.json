@@ -1,0 +1,150 @@
+{
+  "checkedAt": "2026-11-06T16:43:05.857943+00:00",
+  "url": "https://sacred-arc-mvp.vercel.app",
+  "implementationCommit": "9bf75bd",
+  "checks": [
+    {
+      "path": "/assets/index-CXJHlURS.js",
+      "status": 200,
+      "bytes": 1460884,
+      "sha256": "97164d6ddc954cdce093452d744a8fc4a8ab64562238564f95b70e095dee6edf",
+      "matchesLocal": true
+    },
+    {
+      "path": "/assets/index-Dy_jI75u.css",
+      "status": 200,
+      "bytes": 15661,
+      "sha256": "ad8cdf51846a73c220b9e5630b41eec75e9ef757cd9582b61bcd73eb9c680edb",
+      "matchesLocal": true
+    },
+    {
+      "path": "/guide.html",
+      "status": 200,
+      "bytes": 51669,
+      "sha256": "ee6b81495d04fbcbb0ee48b7d7d0f5ff2f02682de294eae92a03fc4ac29ab7aa",
+      "matchesLocal": true
+    },
+    {
+      "path": "/fonts/LibertinusSans-Regular.ttf",
+      "status": 200,
+      "bytes": 460756,
+      "sha256": "2d261d21add710a08b2ffbd89072d7fd2f29a19582e872da4b8f8f6d622cd78b",
+      "matchesLocal": true
+    },
+    {
+      "path": "/fonts/LibertinusSerif-SemiBold.ttf",
+      "status": 200,
+      "bytes": 497840,
+      "sha256": "1f6d00f88c709b0babeaaf78fdc4da6c8d5ddb619d7799c5f6a1d7ae05576966",
+      "matchesLocal": true
+    },
+    {
+      "path": "/fonts/LibertinusMono-Regular.ttf",
+      "status": 200,
+      "bytes": 153480,
+      "sha256": "98e3326985108f7d427d1f447d4fa00c93f6787bc53b5c15150c115c5b9d9b9a",
+      "matchesLocal": true
+    },
+    {
+      "path": "/brand/sacred-horizontal-primary.svg",
+      "status": 200,
+      "bytes": 10412,
+      "sha256": "4f0266612b7d30bb7474652870174131cead329251776767989c098baf1178de",
+      "matchesLocal": true
+    },
+    {
+      "path": "/api/health",
+      "status": 200,
+      "bytes": 961,
+      "sha256": "3dabc03e05ea9a39eefb5b89ba8386e1e00837e2f4a0828e4726b6149098e19e",
+      "health": {
+        "status": "ok",
+        "service": "sacred-api",
+        "time": "2026-11-06T16:43:05.737Z",
+        "mode": "read-only",
+        "signing": "none",
+        "chain": {
+          "name": "Arc Testnet",
+          "chainId": 5042002,
+          "rpc": {
+            "status": "reachable",
+            "chainId": 5042002,
+            "chainIdMatches": true,
+            "latestBlock": 71058088,
+            "latencyMs": 302
+          }
+        },
+        "contracts": {
+          "source": "deployments/arc-testnet.json",
+          "statuses": {
+            "usdcEarn": "deployed",
+            "cirBtcSpotFinancing": "deployed",
+            "demoPriceGuard": "deployed",
+            "productionVenue": "deployed"
+          }
+        },
+        "scheduler": {
+          "status": "unavailable",
+          "kind": "external",
+          "detail": "The keeper is a separately run operator process, not part of this serverless deployment. Nothing is scheduled here; wallet actions remain permissionless."
+        },
+        "deployment": {
+          "host": "vercel",
+          "environment": "production",
+          "region": "iad1",
+          "commit": "9bf75bd"
+        }
+      }
+    },
+    {
+      "path": "/fonts/LibertinusSans-Bold.ttf",
+      "status": 200,
+      "bytes": 489576,
+      "sha256": "92e1e56b0d949241c400e3bca9a772a5318d3b49de7c5f7ccff0413d1a4cc339",
+      "matchesLocal": true
+    },
+    {
+      "path": "/fonts/LibertinusSans-Italic.ttf",
+      "status": 200,
+      "bytes": 631960,
+      "sha256": "44527ec77f40df4a9f5b306ca4db46d973ddf90929e7e875f8dde0084754ef38",
+      "matchesLocal": true
+    },
+    {
+      "path": "/fonts/LibertinusSerif-Regular.ttf",
+      "status": 200,
+      "bytes": 603444,
+      "sha256": "81ea17858245163742c9f5ddf19e9c54667ee5e026708556fb1bf5dce7f92fae",
+      "matchesLocal": true
+    },
+    {
+      "path": "/fonts/LibertinusSerif-Italic.ttf",
+      "status": 200,
+      "bytes": 605956,
+      "sha256": "c8d62202ff921968c491bbbd05f9794213e98e1317c8cbf5edc1d8043f4a21d6",
+      "matchesLocal": true
+    },
+    {
+      "path": "/fonts/LibertinusSerif-Bold.ttf",
+      "status": 200,
+      "bytes": 510796,
+      "sha256": "dc5c00822f0d248256dbbe9fea8e68153e90c0dd7f95c906ed667b2ce053b415",
+      "matchesLocal": true
+    }
+  ],
+  "deploymentId": "dpl_AzbYyczGB3yrEh1KYbq4xLyZLGCi",
+  "deploymentUrl": "https://sacred-arc-if439hwmv-smit-rajputs-projects.vercel.app",
+  "inspectorUrl": "https://vercel.com/smit-rajputs-projects/sacred-arc-mvp/AzbYyczGB3yrEh1KYbq4xLyZLGCi",
+  "browser": {
+    "viewportWidth": 1342,
+    "documentScrollWidth": 1342,
+    "fontStatus": "loaded",
+    "fontChecks": {
+      "Libertinus Sans": true,
+      "Libertinus Serif": true,
+      "Libertinus Mono": true
+    },
+    "studioBadgePosition": "static",
+    "connectedTrader": "0xAA46220DfD751f915d9c802412eDaBC0aB69dEcC"
+  }
+}
