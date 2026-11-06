@@ -1,0 +1,42 @@
+{
+  "checkedAt": "2026-11-06T16:34:10.039Z",
+  "scope": "Read-only independent verification of real operator prepare, not an owner close or profit claim.",
+  "approval": {
+    "hash": "0x300f733076ae2116d6b8165a87f126ab19b04719648d4ed78e04b1584d74f301",
+    "nonce": 16,
+    "status": "success"
+  },
+  "sale": {
+    "hash": "0x508d5b7cd7182c8e9df52ae52b9d0688507dd2ff7001f95e49b2bd4e77d68fe5",
+    "nonce": 17,
+    "status": "success",
+    "block": "71056993",
+    "call": {
+      "functionName": "sellCirBtc",
+      "args": [
+        "547",
+        "441502",
+        "1793983598"
+      ]
+    },
+    "events": [
+      {
+        "name": "Swapped",
+        "args": {
+          "buy": false,
+          "amountIn": "547",
+          "amountOut": "443721"
+        }
+      }
+    ]
+  },
+  "gasNativeWei": "5165826500000000",
+  "checks": {
+    "chain5042002": true,
+    "exactApprovalAndSale547": true,
+    "minimum441502": true,
+    "actualOutput443721": true,
+    "operatorBtcBalanceReconciled": true,
+    "consecutiveNonces": true
+  }
+}

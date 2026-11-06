@@ -1,0 +1,79 @@
+{
+  "checkedAt": "2026-11-06T16:42:39.057Z",
+  "chainId": 5042002,
+  "block": "71058034",
+  "scope": "Independent read-only verification of real operator market-buy and separate fixture update. Cashout is a quote, not realized profit.",
+  "transactions": [
+    {
+      "hash": "0x84970bbedff5c6296efe345add303e9d3b79fcc241a78db50a2d9d76499429c1",
+      "block": "71057710",
+      "nonce": 18,
+      "status": "success",
+      "call": {
+        "functionName": "approve",
+        "args": [
+          "0x1eaE39A746C49708696FBA57CE4a1948eA4337E4",
+          "2761982"
+        ]
+      },
+      "gasWei": "1385950000000000"
+    },
+    {
+      "hash": "0x1e1a581514c172e13e43fbc693bbae677214d146595a0d226603db141569e4c5",
+      "block": "71057720",
+      "nonce": 19,
+      "status": "success",
+      "call": {
+        "functionName": "buyCirBtc",
+        "args": [
+          "2761982",
+          "3038",
+          "1793984092"
+        ]
+      },
+      "gasWei": "4929225000000000"
+    },
+    {
+      "hash": "0x5e0f52b9689dd658c4991fc4534e29c93ec6fb0f1d5403e13bb0b886093d20d8",
+      "block": "71057730",
+      "nonce": 23,
+      "status": "success",
+      "call": {
+        "functionName": "update",
+        "args": [
+          "100000000000",
+          "1793983199"
+        ]
+      },
+      "gasWei": "839000000000000"
+    }
+  ],
+  "reference": [
+    "100000000000",
+    "1793983199",
+    true
+  ],
+  "poolSpotMicroUsdcPerBtc": "100377571825",
+  "position": {
+    "trader": "0xAA46220DfD751f915d9c802412eDaBC0aB69dEcC",
+    "status": 1,
+    "openedAt": "1793983037",
+    "maturesAt": "1795192637",
+    "grossCost": "200000",
+    "principal0": "100000",
+    "principal": "100000",
+    "markup0": "383",
+    "markup": "383",
+    "collateral": "247",
+    "collected": "0",
+    "lpAllocation": "0",
+    "termsHash": "0xb3dc89d6be33479580f5bc183906c6d7d1b67559167252edd086af824733e8b7"
+  },
+  "quote": {
+    "cirBtcSats": "247",
+    "cashoutMicro": "242270",
+    "debtMicro": "100383",
+    "estimatedPayoutMicro": "141887",
+    "estimatedTradingProfitBeforeGasMicro": "41887"
+  }
+}

@@ -523,6 +523,96 @@
       "gasUsed": "53666",
       "effectiveGasPriceWei": "20250000000",
       "gasCostWei": "1086736500000000"
+    },
+    "profit20261106.prepare.approve": {
+      "label": "approve exact cirBTC to the smoke venue",
+      "role": "trader",
+      "signer": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+      "chainId": 5042002,
+      "nonce": 16,
+      "to": "0xf0C4a4CE82A5746AbAAd9425360Ab04fbBA432BF",
+      "calldataHash": "0xbe6567203c54f10d70df0108dc9d7796b2ab5fd36cb63c1d21d085e4c8c546ee",
+      "gas": "67591",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "1500000000",
+      "txHash": "0x300f733076ae2116d6b8165a87f126ab19b04719648d4ed78e04b1584d74f301",
+      "phase": "confirmed",
+      "blockNumber": "71056983",
+      "gasUsed": "55523",
+      "effectiveGasPriceWei": "21500000000",
+      "gasCostWei": "1193744500000000"
+    },
+    "profit20261106.prepare.sell": {
+      "label": "sell 547 cirBTC to restore the pool toward 80000",
+      "role": "trader",
+      "signer": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+      "chainId": 5042002,
+      "nonce": 17,
+      "to": "0x1eaE39A746C49708696FBA57CE4a1948eA4337E4",
+      "calldataHash": "0x29f10de61b8b2aa1d23c8b79547896722d01d4c4718fed9775d240baf6930c49",
+      "gas": "280410",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "1500000000",
+      "txHash": "0x508d5b7cd7182c8e9df52ae52b9d0688507dd2ff7001f95e49b2bd4e77d68fe5",
+      "phase": "confirmed",
+      "blockNumber": "71056993",
+      "gasUsed": "184748",
+      "effectiveGasPriceWei": "21500000000",
+      "gasCostWei": "3972082000000000"
+    },
+    "profit20261106.raise.buy1.approve": {
+      "label": "approve exact USDC to the smoke venue",
+      "role": "trader",
+      "signer": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+      "chainId": 5042002,
+      "nonce": 18,
+      "to": "0x3600000000000000000000000000000000000000",
+      "calldataHash": "0x0313366d18281a9fa12c54ae8706fdcee4d7bf2d1f05aee33137fa1d4d23a948",
+      "gas": "67489",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "5000000000",
+      "txHash": "0x84970bbedff5c6296efe345add303e9d3b79fcc241a78db50a2d9d76499429c1",
+      "phase": "confirmed",
+      "blockNumber": "71057710",
+      "gasUsed": "55438",
+      "effectiveGasPriceWei": "25000000000",
+      "gasCostWei": "1385950000000000"
+    },
+    "profit20261106.raise.buy1": {
+      "label": "market buy 2761982 micro-USDC of cirBTC",
+      "role": "trader",
+      "signer": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+      "chainId": 5042002,
+      "nonce": 19,
+      "to": "0x1eaE39A746C49708696FBA57CE4a1948eA4337E4",
+      "calldataHash": "0xe9bb5c5b9891f54581c8b72f6b08135ad4e49a32dc05c67d466c5041f4abecb2",
+      "gas": "293722",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "5000000000",
+      "txHash": "0x1e1a581514c172e13e43fbc693bbae677214d146595a0d226603db141569e4c5",
+      "phase": "confirmed",
+      "blockNumber": "71057720",
+      "gasUsed": "197169",
+      "effectiveGasPriceWei": "25000000000",
+      "gasCostWei": "4929225000000000"
+    },
+    "profit20261106.raise.guard": {
+      "label": "guard.update(100000 USDC/BTC) by the price admin",
+      "role": "deployer",
+      "signer": "0xafC5b06665e9b99669027C18E82014916778734E",
+      "chainId": 5042002,
+      "nonce": 23,
+      "to": "0x4d84bf470b6916d97ec719a5398d534c1adb1d57",
+      "calldataHash": "0xcb5337eeb296b734d36b42cb978f0d5c568c9a0db5ca10134858a11552844ac1",
+      "gas": "40700",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "5000000000",
+      "txHash": "0x5e0f52b9689dd658c4991fc4534e29c93ec6fb0f1d5403e13bb0b886093d20d8",
+      "phase": "confirmed",
+      "blockNumber": "71057730",
+      "gasUsed": "33560",
+      "effectiveGasPriceWei": "25000000000",
+      "gasCostWei": "839000000000000"
     }
   },
   "records": {
@@ -1588,6 +1678,9 @@
         "process": "0x8be5d0517b2ca62e0dc9842ad506533fb3ad67b2c663943f9932750e1f17ed55",
         "claim": "0xb4b830b521adcdbae48815d193479531aa48a60669d349faf0502b9c72b9b5f3"
       }
-    }
+    },
+    "param.profit20261106.prepare.deadline": "1793983598",
+    "param.profit20261106.raise.buy1.deadline": "1793984092",
+    "param.profit20261106.raise.guard.ts": "1793983199"
   }
 }

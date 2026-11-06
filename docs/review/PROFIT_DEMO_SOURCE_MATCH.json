@@ -1,0 +1,34 @@
+{
+  "checkedAt": "2026-11-06T16:47:33.791173+00:00",
+  "appId": "37c6c8dc-b313-49c9-9cbb-fe5f61673ab3",
+  "threadId": "868bf545-07ba-4ecd-a97c-b45762be5d3c",
+  "traces": {
+    "authorAndDryRun": "01a1b1ac-a82e-765c-b08b-8a9233ef63f4",
+    "failClosedGasFixAndPrepare": "01a1b1b3-5f10-75eb-acbc-407d67a18deb",
+    "raise": "01a1b1ba-e799-70db-8bee-12c32aa79690"
+  },
+  "files": [
+    {
+      "path": "scripts/core/profit-demo.ts",
+      "sha256": "7b978b3975d6cab165bf459fd8d56baf59b79a8f89211e78532f773b8794663a",
+      "studioByteMatch": true
+    },
+    {
+      "path": "scripts/core/profitMath.ts",
+      "sha256": "5464d44473ff8d358c5f176dbf9eb98717547464a5799d156ad9615221086eb6",
+      "studioByteMatch": true
+    },
+    {
+      "path": "scripts/core/profitMath.test.ts",
+      "sha256": "28d688e5eb745ee9b9a8367a9896b2a2f3dfc5d9017af53f4ed182758b17698d",
+      "studioByteMatch": true
+    }
+  ],
+  "checks": [
+    "Independent read-only Arc fork at71055163 passed full prepare/open/market-buy/fixture-update/owner-close sequence",
+    "Local TypeScript check passed",
+    "Five focused arithmetic checks passed",
+    "Prepare, opening and raise public receipts independently decoded and checked"
+  ],
+  "scope": "Bounded demo operator only. Browser opening/closing signed by founder; no redeployment or keeper restart. Realized profit remains unverified until owner-close receipt."
+}

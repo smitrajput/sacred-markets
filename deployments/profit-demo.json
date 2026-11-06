@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 1,
+  "prefix": "profit20261106",
+  "chainId": 5042002,
+  "dryRuns": {
+    "prepare": {
+      "at": "2026-11-06T16:27:47.971Z",
+      "plan": {
+        "pool": {
+          "priceMicroPerBtc": "82860893346",
+          "deviationFrom80k": "+357 bps",
+          "liquidity": "884452",
+          "tick": -67201
+        },
+        "restore": {
+          "atomsGross": "547",
+          "quoteUsdcMicro": "443721",
+          "minOutUsdcMicro": "441502",
+          "via": "existing smoke venue (dedicated trader)",
+          "approvals": "exact, once"
+        },
+        "guard": {
+          "price": "80000000000",
+          "timestamp": "1793970799",
+          "fresh": true
+        },
+        "browserTraderStartingNativeWei": "19776351500000000000",
+        "operatorTrader": {
+          "block": "71056646",
+          "nativeWei": "21075412607129464853",
+          "usdc": "21075412",
+          "cirBtc": "8616"
+        }
+      }
+    }
+  },
+  "prepare": {
+    "completed": true,
+    "wiringKey": "0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450,0xac836824231ae77874d0ca293bd749ffe6c0d00f,0x4d84bf470b6916d97ec719a5398d534c1adb1d57,0x4e733fffbe2acc8b5849fa2cb7c1ac3f4a342519",
+    "preparedAtBlock": "71057000",
+    "preparedAtTimestamp": "1793982711",
+    "afterPriceMicro": "79997772747",
+    "poolBefore": "82860893346",
+    "poolAfter": {
+      "priceMicroPerBtc": "79997772747",
+      "deviationFrom80k": "+0 bps",
+      "liquidity": "884452"
+    },
+    "restoreAtoms": "547",
+    "quote": "443721",
+    "minOut": "441502",
+    "steps": {
+      "profit20261106.prepare.approve": {
+        "txHash": "0x300f733076ae2116d6b8165a87f126ab19b04719648d4ed78e04b1584d74f301",
+        "block": "71056983",
+        "gasUsed": "55523",
+        "gasCostWei": "1193744500000000"
+      },
+      "profit20261106.prepare.sell": {
+        "txHash": "0x508d5b7cd7182c8e9df52ae52b9d0688507dd2ff7001f95e49b2bd4e77d68fe5",
+        "block": "71056993",
+        "gasUsed": "184748",
+        "gasCostWei": "3972082000000000"
+      }
+    },
+    "operatorBefore": {
+      "block": "71056981",
+      "nativeWei": "21075412607129464853",
+      "usdc": "21075412",
+      "cirBtc": "8616"
+    },
+    "operatorAfter": {
+      "block": "71057000",
+      "nativeWei": "21513967780629464853",
+      "usdc": "21513967",
+      "cirBtc": "8069"
+    },
+    "browserTraderStartingNativeWei": "19776351500000000000",
+    "purchaseCheck": {
+      "quoteAtoms": "247",
+      "referenceAtoms": "250",
+      "referenceFloor": "242",
+      "coverageBps": "19684",
+      "ok": true
+    }
+  },
+  "raise": {
+    "completed": true,
+    "positionId": "4",
+    "poolAfter": {
+      "priceMicroPerBtc": "100377571825",
+      "deviationFrom100k": "+37 bps"
+    },
+    "poolIncreaseVsPrepared": "+2547 bps",
+    "buys": [
+      {
+        "i": 1,
+        "usdcMicro": "2761982",
+        "quoteAtoms": "3054",
+        "minOutAtoms": "3038",
+        "step": "0x1e1a581514c172e13e43fbc693bbae677214d146595a0d226603db141569e4c5"
+      }
+    ],
+    "guardAfter": {
+      "price": "100000000000",
+      "timestamp": "1793983199",
+      "fresh": true
+    },
+    "estimate": {
+      "id": "4",
+      "ownerCloseGuardFloorMicro": "239590",
+      "cashoutQuoteMicro": "242270",
+      "debtMicro": "100383",
+      "estimatedPayoutMicro": "141887",
+      "originalEquityMicro": "100000",
+      "estimatedProfitBeforeGasMicro": "41887",
+      "conservativeGasMicroAt25GweiOrLive": "55078",
+      "estimatedProfitAfterGasMicro": "-13191",
+      "engine": "0xac836824231ae77874d0ca293bd749ffe6c0d00f",
+      "note": "ESTIMATE ONLY. No profit exists until ownerClose confirms."
+    },
+    "steps": {
+      "profit20261106.raise.buy1.approve": {
+        "txHash": "0x84970bbedff5c6296efe345add303e9d3b79fcc241a78db50a2d9d76499429c1",
+        "block": "71057710",
+        "gasUsed": "55438",
+        "gasCostWei": "1385950000000000"
+      },
+      "profit20261106.raise.buy1": {
+        "txHash": "0x1e1a581514c172e13e43fbc693bbae677214d146595a0d226603db141569e4c5",
+        "block": "71057720",
+        "gasUsed": "197169",
+        "gasCostWei": "4929225000000000"
+      },
+      "profit20261106.raise.guard": {
+        "txHash": "0x5e0f52b9689dd658c4991fc4534e29c93ec6fb0f1d5403e13bb0b886093d20d8",
+        "block": "71057730",
+        "gasUsed": "33560",
+        "gasCostWei": "839000000000000"
+      }
+    },
+    "operatorGasSpentWei": "12320001500000000"
+  }
+}
