@@ -196,9 +196,10 @@ contract VaultHandler is Test {
         vm.prank(who);
         try vault.burnWorthlessShares(available) {
             _done("burnWorthless", true);
-        } catch {
-            // refused only by the last-share guard while a position is live; that is the intended behaviour
-            _skip();
+        } catch (bytes memory reason) {
+            // the last-share guard while a position is live is the one intended refusal; anything else is a failure
+            if (bytes4(reason) == MarginVault.LastShareGuard.selector) _skip();
+            else _done("burnWorthless", false);
         }
     }
 

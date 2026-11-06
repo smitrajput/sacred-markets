@@ -553,4 +553,29 @@ contract MarginVaultFundingTest is VaultBase {
         vm.expectRevert(abi.encodeWithSelector(MarginVault.PositionExists.selector, 1));
         engine.reserveOpen(1, trader1, 1 * USDC1);
     }
+
+    function test_origination_isBlockedByAnImpairedOrStaleLivePosition_andRecoversAfterRepayment() public {
+        _deposit(alice, 100 * USDC1);
+        _seedTargets();
+        _open(1, trader1, 10 * USDC1);
+
+        engine.setValue(1, 10 * USDC1 - 1); // below remaining principal
+        vm.expectRevert(abi.encodeWithSelector(MarginVault.AccountingNeedsSettlement.selector, 1));
+        engine.reserveOpen(2, trader2, 5 * USDC1);
+
+        engine.setValue(1, 10 * USDC1);
+        engine.setStale(1, true);
+        vm.expectRevert(abi.encodeWithSelector(MarginVault.StalePrice.selector, 1));
+        engine.reserveOpen(2, trader2, 5 * USDC1);
+        engine.repayPrincipal(1, 1 * USDC1); // repayment never reads the price
+        assertEq(vault.outstandingPrincipal(), 9 * USDC1);
+
+        engine.setStale(1, false);
+        engine.setValue(1, 5 * USDC1); // impaired again: 9 remaining against value 5
+        vm.expectRevert(abi.encodeWithSelector(MarginVault.AccountingNeedsSettlement.selector, 1));
+        engine.reserveOpen(2, trader2, 5 * USDC1);
+        engine.repayPrincipal(1, 4 * USDC1); // remaining 5 <= value 5: recovered
+        engine.reserveOpen(2, trader2, 5 * USDC1);
+        assertEq(vault.pendingOpens(), 1);
+    }
 }

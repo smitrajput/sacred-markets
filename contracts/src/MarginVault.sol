@@ -618,6 +618,8 @@ contract MarginVault is IMarginVaultEngine, ReentrancyGuard {
     function _checkOrigination(address account, uint256 principal) internal view {
         if (fundingPaused) revert FundingIsPaused();
         if (queueHead != queueTail) revert WithdrawalQueueNotEmpty();
+        // New exposure may not be opened against unsettled impairment (or a stale view of it) in an existing position.
+        _requireNoImpairment();
         if (_liveIds.length + pendingOpens >= MAX_LIVE_POSITIONS) revert TooManyPositions();
         if (primaryReserve < primaryTarget || tailReserve < tailTarget) {
             revert ReservesUnderfunded(primaryReserve, tailReserve);
