@@ -17,7 +17,8 @@
     "smoke:status": "bun scripts/smoke/run.ts status",
     "smoke:seed": "bun scripts/smoke/run.ts seed",
     "smoke:venue": "bun scripts/smoke/run.ts venue",
-    "smoke:trade": "bun scripts/smoke/run.ts trade"
+    "smoke:trade": "bun scripts/smoke/run.ts trade",
+    "price:push": "bun scripts/push-price.ts"
   },
   "dependencies": {
     "@circle-fin/adapter-viem-v2": "^1.19.2",
