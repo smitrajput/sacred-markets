@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Pinned Uniswap v4 sources for Sacred's fixed-pool spot adapter (chain 5042002). Installed by scripts/install-v4-deps.sh; each fetch is verified against the commit SHA below.",
+  "generatedAt": "2026-11-06",
+  "dependencies": [
+    {
+      "name": "v4-core",
+      "repo": "https://github.com/Uniswap/v4-core",
+      "commit": "59d3ecf53afa9264a16bba0e38f4c5d2231f80bc",
+      "commitDate": "2025-05-13",
+      "note": "Core commit pinned by v4-periphery 3779387 (lib/v4-core). Its PoolManager compiles to the same runtime code as v4.0.0 (e50237c) and as the Arc PoolManager.",
+      "installPath": "lib/v4-core",
+      "keep": [
+        "src/interfaces",
+        "src/libraries",
+        "src/types",
+        "src/PoolManager.sol",
+        "src/ProtocolFees.sol",
+        "src/ERC6909.sol",
+        "src/ERC6909Claims.sol",
+        "src/Extsload.sol",
+        "src/Exttload.sol",
+        "src/NoDelegateCall.sol"
+      ],
+      "license": "BUSL-1.1 (PoolManager, see licenses/); MIT/GPL-2.0-or-later per file SPDX header"
+    },
+    {
+      "name": "v4-periphery",
+      "repo": "https://github.com/Uniswap/v4-periphery",
+      "commit": "3779387e5d296f39df543d23524b050f89a62917",
+      "commitDate": "2025-11-05",
+      "note": "No release tags upstream. Commit 'Add per hop slippage checks (#497)'. Its PositionManager, V4Quoter and StateView reproduce the Arc runtime code.",
+      "installPath": "lib/v4-periphery",
+      "keep": [
+        "src"
+      ],
+      "license": "MIT (LICENSE) / per file SPDX"
+    },
+    {
+      "name": "permit2",
+      "repo": "https://github.com/Uniswap/permit2",
+      "commit": "cc56ad0f3439c502c246fc5cfcc3db92bb8b7219",
+      "commitDate": "2023-09-29",
+      "note": "Submodule pin of v4-periphery 3779387. Interfaces/libraries only are imported.",
+      "installPath": "lib/permit2",
+      "keep": [
+        "src"
+      ],
+      "license": "MIT (LICENSE) / per file SPDX"
+    },
+    {
+      "name": "solmate",
+      "repo": "https://github.com/transmissions11/solmate",
+      "commit": "4b47a19038b798b4a33d9749d25e570443520647",
+      "commitDate": "2023-11-23",
+      "note": "Submodule pin of v4-core 59d3ecf (Owned, ERC6909/ERC721 bases). Tests and mixins omitted.",
+      "installPath": "lib/solmate",
+      "keep": [
+        "src/auth",
+        "src/tokens",
+        "src/utils"
+      ],
+      "license": "AGPL-3.0-only / MIT per file SPDX"
+    }
+  ],
+  "notVendored": [
+    {
+      "name": "openzeppelin-contracts",
+      "commit": "dbb6104ce834628e473d2173bbc9d47f81a9eec3",
+      "reason": "Only needed to compile v4-periphery PositionManager/PositionDescriptor, which Sacred deploys no copy of. Sacred contracts use @openzeppelin/contracts 5.6.1 from package.json."
+    },
+    {
+      "name": "forge-std",
+      "reason": "Existing lib/forge-std 1.16.2 pin is preserved unchanged."
+    }
+  ],
+  "compiler": {
+    "project": "solc 0.8.28, evm cancun (unchanged)",
+    "upstreamBuild": "solc 0.8.26, via_ir, optimizer_runs 44444444 (PositionManager 30000), bytecode_hash none, evm cancun",
+    "caveat": "v4-core PoolManager.sol has an exact 'pragma solidity 0.8.26'. It cannot be imported into a 0.8.28 compilation unit; use interfaces/libraries (pragma ^0.8.x) in contracts, and the live fork or a 0.8.26 profile for tests that need a PoolManager."
+  }
+}

@@ -24,6 +24,7 @@ Use Bun 1.3.14 and Foundry v1.7.1. Clone with `--recurse-submodules`, or initial
 ```sh
 git submodule update --init --recursive
 bun install --frozen-lockfile
+bash scripts/install-v4-deps.sh
 bun run check
 bunx vite build
 forge build --force

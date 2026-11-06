@@ -29,3 +29,11 @@ contracts/broadcast/
 .arc-studio/
 console.jsonl
 .agents/skills/example/
+
+# Pinned v4 source subsets are reconstructed by the installer
+lib/v4-core/
+lib/v4-periphery/
+lib/permit2/
+lib/solmate/
+!contracts/deps/
+!contracts/deps/v4-manifest.json
