@@ -25,6 +25,12 @@ External deadline: November 7, 2026, 9:30 AM IST. Build/demo hard finish: Novemb
 
 The later controlled price-rise rehearsal also completed: a 0.10 contribution opened position 4, a real operator swap moved the test pool upward, and an owner close realized **0.0118450485625 test USDC after all trader gas**. [Receipts and full accounting](docs/checkpoints/04-hosted.md#controlled-price-rise-demo-position-4).
 
+## Verified contract sources
+
+All four deployed Sacred contracts are fully source verified on Arc Testnet Blockscout. Verification matched Solidity 0.8.28, optimizer 200 runs, Cancun EVM and the deployed constructor arguments. [Verification evidence](docs/review/BLOCKSCOUT_VERIFICATION.json).
+
+[DemoPriceGuard](https://explorer.testnet.arc.io/address/0x4d84bf470b6916d97ec719a5398d534c1adb1d57?tab=contract) · [MarginVault](https://explorer.testnet.arc.io/address/0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450?tab=contract) · [TradeEngine](https://explorer.testnet.arc.io/address/0xac836824231ae77874d0ca293bd749ffe6c0d00f?tab=contract) · [V4SpotVenue](https://explorer.testnet.arc.io/address/0x4e733fffbe2acc8b5849fa2cb7c1ac3f4a342519?tab=contract)
+
 ## Uniswap v4 integration
 
 Sacred integrates the existing Uniswap v4 AMM on Arc Testnet (chain 5042002). Its fixed-pool adapter executes real USDC/cirBTC purchases and collateral sales through `PoolManager`; the app uses the v4 Quoter for executable-output checks. The pool has a 0.30% fee, tick spacing 60 and no custom hook. This is an AMM integration under the [Build with Uniswap prize](https://ethglobal.com/events/mumbai/prizes/uniswap-foundation).

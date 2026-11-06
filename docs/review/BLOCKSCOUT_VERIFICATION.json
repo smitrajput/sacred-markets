@@ -1,0 +1,165 @@
+{
+  "checkedAt": "2026-11-06T22:57:56.537442+00:00",
+  "network": "Arc Testnet",
+  "chainId": 5042002,
+  "explorer": "https://explorer.testnet.arc.io",
+  "method": "Blockscout Etherscan-compatible API, solidity-standard-json-input; exact creation-bytecode prefix matched to existing local artifacts; constructor arguments extracted from indexed creation bytecode. No transactions submitted.",
+  "contracts": [
+    {
+      "name": "DemoPriceGuard",
+      "address": "0x4d84bf470b6916d97ec719a5398d534c1adb1d57",
+      "url": "https://explorer.testnet.arc.io/address/0x4d84bf470b6916d97ec719a5398d534c1adb1d57?tab=contract",
+      "compiler": "0.8.28+commit.7893614a",
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "evmVersion": "cancun",
+      "constructorArguments": "000000000000000000000000afc5b06665e9b99669027c18e82014916778734e0000000000000000000000000000000000000000000000000000000000015180",
+      "creationBytecodeMatchesLocalArtifact": true,
+      "standardInputSha256": "93c39901bcd7381a79c296a516d99f29f165b5134c47efa8ba5808c843c2613c",
+      "submission": {
+        "message": "OK",
+        "result": "4d84bf470b6916d97ec719a5398d534c1adb1d576aee5b58",
+        "status": "1"
+      },
+      "verificationResult": {
+        "message": "OK",
+        "result": "Pass - Verified",
+        "status": "1"
+      },
+      "explorerEvidence": {
+        "name": "DemoPriceGuard",
+        "is_verified": true,
+        "is_fully_verified": true,
+        "is_partially_verified": false,
+        "verified_at": "2026-11-06T22:57:34.844886Z",
+        "compiler_version": "v0.8.28+commit.7893614a",
+        "optimization_enabled": true,
+        "optimization_runs": 200,
+        "evm_version": "cancun",
+        "file_path": "contracts/src/DemoPriceGuard.sol",
+        "constructor_args": "0x000000000000000000000000afc5b06665e9b99669027c18e82014916778734e0000000000000000000000000000000000000000000000000000000000015180"
+      },
+      "sourcePublished": true,
+      "additionalSourcesCount": 1
+    },
+    {
+      "name": "MarginVault",
+      "address": "0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450",
+      "url": "https://explorer.testnet.arc.io/address/0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450?tab=contract",
+      "compiler": "0.8.28+commit.7893614a",
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "evmVersion": "cancun",
+      "constructorArguments": "0000000000000000000000003600000000000000000000000000000000000000000000000000000000000000afc5b06665e9b99669027c18e82014916778734e000000000000000000000000afc5b06665e9b99669027c18e82014916778734e000000000000000000000000afc5b06665e9b99669027c18e82014916778734e00000000000000000000000000000000000000000000000000000000000f424000000000000000000000000000000000000000000000000000000000000186a0",
+      "creationBytecodeMatchesLocalArtifact": true,
+      "standardInputSha256": "5db7bdfa1254fb5f8acd23734abbd4640a82387bbfef2ed1ea6d6677fc71587a",
+      "submission": {
+        "message": "OK",
+        "result": "f3fbda5c4354c9c3d384cfeed90aacdde28c64506aee5b5a",
+        "status": "1"
+      },
+      "verificationResult": {
+        "message": "OK",
+        "result": "Pass - Verified",
+        "status": "1"
+      },
+      "explorerEvidence": {
+        "name": "MarginVault",
+        "is_verified": true,
+        "is_fully_verified": true,
+        "is_partially_verified": false,
+        "verified_at": "2026-11-06T22:57:40.795330Z",
+        "compiler_version": "v0.8.28+commit.7893614a",
+        "optimization_enabled": true,
+        "optimization_runs": 200,
+        "evm_version": "cancun",
+        "file_path": "contracts/src/MarginVault.sol",
+        "constructor_args": "0x0000000000000000000000003600000000000000000000000000000000000000000000000000000000000000afc5b06665e9b99669027c18e82014916778734e000000000000000000000000afc5b06665e9b99669027c18e82014916778734e000000000000000000000000afc5b06665e9b99669027c18e82014916778734e00000000000000000000000000000000000000000000000000000000000f424000000000000000000000000000000000000000000000000000000000000186a0"
+      },
+      "sourcePublished": true,
+      "additionalSourcesCount": 12
+    },
+    {
+      "name": "TradeEngine",
+      "address": "0xac836824231ae77874d0ca293bd749ffe6c0d00f",
+      "url": "https://explorer.testnet.arc.io/address/0xac836824231ae77874d0ca293bd749ffe6c0d00f?tab=contract",
+      "compiler": "0.8.28+commit.7893614a",
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "evmVersion": "cancun",
+      "constructorArguments": "000000000000000000000000f3fbda5c4354c9c3d384cfeed90aacdde28c64500000000000000000000000004e733fffbe2acc8b5849fa2cb7c1ac3f4a3425190000000000000000000000004d84bf470b6916d97ec719a5398d534c1adb1d57000000000000000000000000000000000000000000000000000000000000012c0000000000000000000000000000000000000000000000000000000000002710",
+      "creationBytecodeMatchesLocalArtifact": true,
+      "standardInputSha256": "e031fbe0a8930f513a912e5d0d4ffcc216e62f5a8c9040274e4bf88360d52372",
+      "submission": {
+        "message": "OK",
+        "result": "ac836824231ae77874d0ca293bd749ffe6c0d00f6aee5b5b",
+        "status": "1"
+      },
+      "verificationResult": {
+        "message": "OK",
+        "result": "Pass - Verified",
+        "status": "1"
+      },
+      "explorerEvidence": {
+        "name": "TradeEngine",
+        "is_verified": true,
+        "is_fully_verified": true,
+        "is_partially_verified": false,
+        "verified_at": "2026-11-06T22:57:48.039218Z",
+        "compiler_version": "v0.8.28+commit.7893614a",
+        "optimization_enabled": true,
+        "optimization_runs": 200,
+        "evm_version": "cancun",
+        "file_path": "contracts/src/TradeEngine.sol",
+        "constructor_args": "0x000000000000000000000000f3fbda5c4354c9c3d384cfeed90aacdde28c64500000000000000000000000004e733fffbe2acc8b5849fa2cb7c1ac3f4a3425190000000000000000000000004d84bf470b6916d97ec719a5398d534c1adb1d57000000000000000000000000000000000000000000000000000000000000012c0000000000000000000000000000000000000000000000000000000000002710"
+      },
+      "sourcePublished": true,
+      "additionalSourcesCount": 16
+    },
+    {
+      "name": "V4SpotVenue",
+      "address": "0x4e733fffbe2acc8b5849fa2cb7c1ac3f4a342519",
+      "url": "https://explorer.testnet.arc.io/address/0x4e733fffbe2acc8b5849fa2cb7c1ac3f4a342519?tab=contract",
+      "compiler": "0.8.28+commit.7893614a",
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "evmVersion": "cancun",
+      "constructorArguments": "0000000000000000000000008366a39cc670b4001a1121b8f6a443a643e409510000000000000000000000003600000000000000000000000000000000000000000000000000000000000000f0c4a4ce82a5746abaad9425360ab04fbba432bf0000000000000000000000000000000000000000000000000000000000000bb8000000000000000000000000000000000000000000000000000000000000003c000000000000000000000000afc5b06665e9b99669027c18e82014916778734e",
+      "creationBytecodeMatchesLocalArtifact": true,
+      "standardInputSha256": "c512c713088529cc4697963c6f7ee85931c89f4d8fd67530f38c9576301faf38",
+      "submission": {
+        "message": "OK",
+        "result": "4e733fffbe2acc8b5849fa2cb7c1ac3f4a3425196aee5b5e",
+        "status": "1"
+      },
+      "verificationResult": {
+        "message": "OK",
+        "result": "Pass - Verified",
+        "status": "1"
+      },
+      "explorerEvidence": {
+        "name": "V4SpotVenue",
+        "is_verified": true,
+        "is_fully_verified": true,
+        "is_partially_verified": false,
+        "verified_at": "2026-11-06T22:57:45.286581Z",
+        "compiler_version": "v0.8.28+commit.7893614a",
+        "optimization_enabled": true,
+        "optimization_runs": 200,
+        "evm_version": "cancun",
+        "file_path": "contracts/src/V4SpotVenue.sol",
+        "constructor_args": "0x0000000000000000000000008366a39cc670b4001a1121b8f6a443a643e409510000000000000000000000003600000000000000000000000000000000000000000000000000000000000000f0c4a4ce82a5746abaad9425360ab04fbba432bf0000000000000000000000000000000000000000000000000000000000000bb8000000000000000000000000000000000000000000000000000000000000003c000000000000000000000000afc5b06665e9b99669027c18e82014916778734e"
+      },
+      "sourcePublished": true,
+      "additionalSourcesCount": 29
+    }
+  ]
+}

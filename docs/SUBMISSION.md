@@ -49,6 +49,12 @@ The Uniswap entry is **Build with Uniswap**, through the v4 AMM integration. Sac
 | Presentation | Six-slide Sacred deck prepared in Spaces; export/share from the deck UI and add the judge-accessible link. |
 | Screenshots | [Earn](screenshots/hosted-earn-desktop.jpg), [Trade](screenshots/hosted-trade-desktop.jpg), [mobile Trade](screenshots/hosted-trade-mobile.jpg), [Activity](screenshots/hosted-activity-desktop.jpg). These are public-read captures, not wallet-signing proof. |
 
+## Verified contract sources
+
+All four deployed Sacred contracts are fully source verified on Arc Testnet Blockscout. Verification matched Solidity 0.8.28, optimizer 200 runs, Cancun EVM and the deployed constructor arguments. [Verification evidence](review/BLOCKSCOUT_VERIFICATION.json).
+
+[DemoPriceGuard](https://explorer.testnet.arc.io/address/0x4d84bf470b6916d97ec719a5398d534c1adb1d57?tab=contract) · [MarginVault](https://explorer.testnet.arc.io/address/0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450?tab=contract) · [TradeEngine](https://explorer.testnet.arc.io/address/0xac836824231ae77874d0ca293bd749ffe6c0d00f?tab=contract) · [V4SpotVenue](https://explorer.testnet.arc.io/address/0x4e733fffbe2acc8b5849fa2cb7c1ac3f4a342519?tab=contract)
+
 ## Limitations to state
 
 - This is a testnet prototype with test assets. No audit, production-readiness or Shariah-certification claim.
