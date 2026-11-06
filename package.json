@@ -18,7 +18,15 @@
     "smoke:seed": "bun scripts/smoke/run.ts seed",
     "smoke:venue": "bun scripts/smoke/run.ts venue",
     "smoke:trade": "bun scripts/smoke/run.ts trade",
-    "price:push": "bun scripts/push-price.ts"
+    "price:push": "bun scripts/push-price.ts",
+    "core:preflight": "bun scripts/core/run.ts preflight",
+    "core:status": "bun scripts/core/run.ts status",
+    "core:deploy": "bun scripts/core/run.ts deploy",
+    "core:flow1": "bun scripts/core/run.ts flow1",
+    "core:prep2": "bun scripts/core/run.ts prep2",
+    "core:flow2": "bun scripts/core/run.ts flow2",
+    "core:fifo": "bun scripts/core/run.ts fifo",
+    "core:release": "bun scripts/core/run.ts release"
   },
   "dependencies": {
     "@circle-fin/adapter-viem-v2": "^1.19.2",
