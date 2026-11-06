@@ -61,7 +61,7 @@ Browser handoff correction: paste the self-contained checkpoint messages without
 
 App ID: `37c6c8dc-b313-49c9-9cbb-fe5f61673ab3`. CLI continuation thread: `868bf545-07ba-4ecd-a97c-b45762be5d3c`. Code branch: `codex/arc-mvp`.
 
-The user can report just “00b done” and any exact blocker. Codex pulls the files and verifies the result; long chat transcripts are unnecessary. Ask Studio for a final response of at most 100 words: checkpoint, changed paths, actual checks, blockers.
+Codex now sends the checkpoints directly through the CLI, reads compact results, pulls actual files, verifies and commits each completed behavior. No user relay is needed. User input is reserved for unresolved access/funding or consequential product decisions. Ask Studio for a final response of at most 150 words: checkpoint, changed paths, actual checks, blockers.
 
 After the first pull, `.arc-studio/` is confirmed as local sync metadata and ignored. Exported caches, console logs and the unused example skill are excluded. `forge-std` is a pinned submodule matching all 68 files of Studio's export. Subsequent pulls must not replace its `.git` metadata. Studio deletions require explicit local reconciliation; the 00a deleted starter tools were archived outside the repository.
 

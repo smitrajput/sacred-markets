@@ -11,7 +11,7 @@ Arc Testnet MVP: one cirBTC sale-financing market with Earn, Trade and Activity.
 - [Review decisions and verification](docs/review/REVIEW_DECISIONS.md)
 - [AI contributions](AI_WORKLOG.md) and [skill sources](docs/SKILLS.md)
 
-Deadline: November 7, 2026, 9:30 AM IST. Target submission: 7:30 AM IST.
+External deadline: November 7, 2026, 9:30 AM IST. Build/demo hard finish: November 6, 10:30 PM IST; submission package ready by 10:00 PM.
 
 ## Prior work
 

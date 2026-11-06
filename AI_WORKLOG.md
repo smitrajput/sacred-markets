@@ -65,3 +65,7 @@ Studio app: [Sacred](https://studio.arc.io/app/37c6c8dc-b313-49c9-9cbb-fe5f61673
 | d378f7b | feat(scaffold): display live network and token status | 293 |
 
 The 2,305-line generated Bun lockfile is kept in the dependency-only commit. Every remaining implementation/import commit is below 1,000 changed lines; the two Sacred-specific commits are 140 and 293 lines. Starter modules are labelled as imported Studio tooling, not newly designed protocol features.
+
+## Automated execution and same-day finish — November 6
+
+The user authorized Codex to prompt Studio directly for all remaining checkpoints and escalate blockers, and moved the hard finish to November 6 at 22:30 IST. Codex revised delivery gates and prompt timing without changing protocol economics. The first automated v4 dependency/interface checkpoint is running in the existing Studio app. Optional bridging is off the critical path.
