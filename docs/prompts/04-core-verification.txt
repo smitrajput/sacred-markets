@@ -1,0 +1,7 @@
+Work in this same Sacred Arc Studio app. Read attached spec.md v0.3; it is the contract for this task. Generate/test/deploy through Studio using its supported tools. Touch only this checkpoint's implementation/config/test paths; plans/review docs are maintained locally.
+
+CURRENT CHECKPOINT: 04a. Implement only this checkpoint, then stop. When I say “Continue <checkpoint>”, implement only that named checkpoint from the list below. Preserve all working behavior outside scope.
+
+04a — Freeze feature scope and verify spec §7 through the public seams: vault, engine, v4 adapter, API and browser wallet flow. Rehearse two-wallet funding, actual purchase/sale/pledge, late NAV deposit, principal-first repayment/77:23/release,155% partial sale, queue fill/claim and real event receipts. Check zeroNAV/dust and bad callback/unit/oracle failure tests. Maturity uses time-warp tests, not a hidden changed14day term. Reproduce any failure, fix only that behavior, and rerun the relevant check. Save commands/results, real deployment evidence and a reproducible demo runbook. Stop once core acceptance is green; optional bridge remains disabled until verified.
+
+At completion report changed files, test commands and observed outputs, remaining failures, and any real deployed addresses/transaction hashes. A missing check is not a pass. Stop for local download/review before the next checkpoint.

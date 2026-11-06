@@ -1,0 +1,11 @@
+Work in this same Sacred Arc Studio app. Read attached spec.md v0.3; it is the contract for this task. Generate/test/deploy through Studio using its supported tools. Touch only this checkpoint's implementation/config/test paths; plans/review docs are maintained locally.
+
+CURRENT CHECKPOINT: 03a. Implement only this checkpoint, then stop. When I say “Continue <checkpoint>”, implement only that named checkpoint from the list below. Preserve all working behavior outside scope.
+
+03a — Implement api/ read endpoints: health/config/vault/positions/activity. Financial state comes from chain at a reported block; integer strings. Logs are bounded/paginated with deploymentBlock and in-memory overlap/dedupe. No auth/database/indexer. Use the hosting choice proven in00c.
+03b — Add one gas-funded keeper to the same Node service (or external operator process for Netlify fallback). Mutex async loop10–15s, one tx pending, simulate, dynamic fees≥20gwei, await receipt, reconcile nonce on restart/timeout. No treasury or pricing privileges. Expose liveness/error state; manual processing is a wallet contract call.
+03c — Build Earn: wallet connection/switch-chain/approval/deposit, accepted mandate and NAV terms, shares/value/reserves, request/queue/claim. Display actual demo parameters and each blocked action's reason. No marketing redesign.
+03d — Build Trade: actual v4 quote, E/C/P/M/D, maturity, coverage/price timestamp/expiry, open/repay/release/close. One action-specific pending state, receipt-confirmed success, clear revert/retry path and explorer link. Bigint/string amounts with6/8/18 decimals; prevent duplicate submissions.
+03e — Build Activity from real events and finish deploy/reconciliation. Preserve Sacred's established visual identity. Use an operational interface with clear numeric hierarchy, accessible focus/contrast, responsive widths and one primary next action. Test actual rendered desktop/mobile app, API failure, wallet rejection, expired price and pending receipt. Cite actual screenshots/checks; TSX source alone is not verification.
+
+At completion report changed files, test commands and observed outputs, remaining failures, and any real deployed addresses/transaction hashes. A missing check is not a pass. Stop for local download/review before the next checkpoint.

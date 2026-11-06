@@ -1,0 +1,7 @@
+Work in this same Sacred Arc Studio app. Read attached spec.md v0.3; it is the contract for this task. Generate/test/deploy through Studio using its supported tools. Touch only this checkpoint's implementation/config/test paths; plans/review docs are maintained locally.
+
+CURRENT CHECKPOINT: 05a. Implement only this checkpoint, then stop. When I say “Continue <checkpoint>”, implement only that named checkpoint from the list below. Preserve all working behavior outside scope.
+
+05a — Only run after core04a passed and before 01:30 AM IST cutoff. Implement released cirBTC bridging via actual Bridge Kit + supported viem adapter; pin tested versions. ArcTestnet domain26→EthereumSepolia domain0; official token ID and destination token are spec §6. Flow: full repayment receipt → asset release → fresh quote/approval/source tx → attestation → destination mint/receipt. Persist resumable source hash; retries never burn twice. Use whole-token decimal strings and show fees/finality/chain state. A bridge failure leaves repaid assets under user control. Enable only after a real successful rehearsal with source+destination receipts and destination balance delta. Stop after 60minutes if unsuccessful and leave feature disabled.
+
+At completion report changed files, test commands and observed outputs, remaining failures, and any real deployed addresses/transaction hashes. A missing check is not a pass. Stop for local download/review before the next checkpoint.

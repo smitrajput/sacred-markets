@@ -1,0 +1,7 @@
+Work in this same Sacred Arc Studio app. Read attached spec.md v0.3; it is the contract for this task. Generate/test/deploy through Studio using its supported tools. Touch only this checkpoint's implementation/config/test paths; plans/review docs are maintained locally.
+
+CURRENT CHECKPOINT: 06a. Implement only this checkpoint, then stop. When I say “Continue <checkpoint>”, implement only that named checkpoint from the list below. Preserve all working behavior outside scope.
+
+06a — Generate accurate integration/deployment docs from verified files and receipts: README setup/runbook/prior-work disclosure, docs/ARCHITECTURE.md with diagram, manifest, test report, FEEDBACK.md with actual experience, demo steps and live links. Preserve locally owned PLANS.md/AI_WORKLOG.md/review documents; return proposed updates for local merge. Document actual v4 integration files/lines, upstream versions/licenses and admin-price fixture plus refresh responsibility. Confirm Studio share URL and live app/API. Prepare ≤4-minute video outline without speed-up, project description and screenshots. Use product/function language. Final deadlineNov 7 09:30 AM IST, target submission  07:30 AM; do not claim tests, transfers, publication or form submission that did not happen.
+
+At completion report changed files, test commands and observed outputs, remaining failures, and any real deployed addresses/transaction hashes. A missing check is not a pass. Stop for local download/review before the next checkpoint.
