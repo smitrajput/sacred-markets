@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 570" role="img" aria-labelledby="trade-t trade-d" font-family="system-ui, Helvetica, Arial, sans-serif">
+<title id="trade-t">Trade open to repayment, seven steps</title>
+<desc id="trade-d">Step 1 opens gross C of 0.20 USDC. Step 2 funds all of C from LP idle cash. Step 3, the engine buys BTC through V4SpotVenue. Step 4 records acquisition, the disclosed resale and the BTC pledge. Step 5 collects the trader's 0.10 USDC. Step 6 repays principal then markup. Step 7 returns all remaining pledged BTC to the trader on full repayment. Any failure in steps 2 to 5 undoes everything atomically.</desc>
+<defs><marker id="ah3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1b1915"/></marker></defs>
+<rect x="16" y="12" width="308" height="44" rx="3" fill="#fdfbf6" stroke="#1b1915" stroke-width="1.5"/>
+<text x="30" y="40" font-size="14" font-weight="700" fill="#1b1915">1 · Open: gross C = 0.20 USDC</text>
+<line x1="170" y1="56" x2="170" y2="78" stroke="#1b1915" stroke-width="2" marker-end="url(#ah3)"/>
+<rect x="16" y="78" width="308" height="44" rx="3" fill="#fdfbf6" stroke="#1b1915" stroke-width="1.5"/>
+<text x="30" y="106" font-size="14" font-weight="700" fill="#1b1915">2 · Vault funds all C from LP idle</text>
+<line x1="170" y1="122" x2="170" y2="144" stroke="#1b1915" stroke-width="2" marker-end="url(#ah3)"/>
+<rect x="16" y="144" width="308" height="44" rx="3" fill="#fdfbf6" stroke="#1b1915" stroke-width="1.5"/>
+<text x="30" y="172" font-size="14" font-weight="700" fill="#1b1915">3 · Engine buys BTC via V4SpotVenue</text>
+<line x1="170" y1="188" x2="170" y2="210" stroke="#1b1915" stroke-width="2" marker-end="url(#ah3)"/>
+<rect x="16" y="210" width="308" height="44" rx="3" fill="#fdfbf6" stroke="#1b1915" stroke-width="1.5"/>
+<text x="30" y="238" font-size="14" font-weight="700" fill="#1b1915">4 · Acquisition → sale → pledge</text>
+<line x1="170" y1="254" x2="170" y2="276" stroke="#1b1915" stroke-width="2" marker-end="url(#ah3)"/>
+<rect x="16" y="276" width="308" height="44" rx="3" fill="#fdfbf6" stroke="#1b1915" stroke-width="1.5"/>
+<text x="30" y="304" font-size="14" font-weight="700" fill="#1b1915">5 · Trader's E 0.10 collected</text>
+<line x1="170" y1="320" x2="170" y2="342" stroke="#1b1915" stroke-width="2" marker-end="url(#ah3)"/>
+<rect x="16" y="342" width="308" height="44" rx="3" fill="#fdfbf6" stroke="#1b1915" stroke-width="1.5"/>
+<text x="30" y="370" font-size="14" font-weight="700" fill="#1b1915">6 · Repay: principal, then markup M</text>
+<line x1="170" y1="386" x2="170" y2="408" stroke="#1b1915" stroke-width="2" marker-end="url(#ah3)"/>
+<rect x="16" y="408" width="308" height="44" rx="3" fill="#fdfbf6" stroke="#1b1915" stroke-width="1.5"/>
+<text x="30" y="436" font-size="14" font-weight="700" fill="#1b1915">7 · Full repay: release remaining BTC</text>
+<rect x="16" y="478" width="308" height="76" rx="3" fill="none" stroke="#b5321f" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="30" y="502" font-size="14" font-weight="700" fill="#b5321f">Atomic failure</text>
+<text x="30" y="526" font-size="14" fill="#4b473f">Any failure in steps 2 to 5 undoes everything.</text>
+</svg>

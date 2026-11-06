@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sacred / Inside the MVP</title>
+<style>
+:root{--paper:#f4f0e7;--panel:#fdfbf6;--ink:#1b1915;--sec:#4b473f;--muted:#78736a;--hair:#dcd5c4;--accent:#b5321f;--green:#1f6a3a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:16px;line-height:1.6}
+main{max-width:1120px;margin:0 auto;padding:24px 18px 64px}
+h1,h2,h3{font-family:Georgia,"Times New Roman",serif;font-weight:400;color:var(--ink);line-height:1.2}
+h1{font-size:2.2rem;margin:.1em 0 .3em}
+h2{font-size:1.5rem;margin:2.2em 0 .6em;padding-top:16px;border-top:1px solid var(--hair)}
+h3{font-size:1.15rem;margin:1.3em 0 .35em}
+.kicker{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0}
+.lede{font-size:1.08rem;color:var(--sec);max-width:70ch}
+.status{display:inline-block;border:1px solid var(--accent);color:var(--accent);border-radius:3px;padding:4px 10px;font-size:.95rem}
+.label{display:inline-block;border:1px solid var(--green);color:var(--green);border-radius:3px;padding:2px 8px;font-size:.85rem;margin:0 0 8px}
+.toc ol{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr;gap:4px 24px;font-size:.98rem}
+@media (min-width:640px){.toc ol{grid-template-columns:1fr 1fr}}
+.toc h2{border:0;padding:0}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.facts{display:grid;grid-template-columns:1fr;border-top:1px solid var(--ink);margin:14px 0;font-variant-numeric:tabular-nums}
+@media (min-width:640px){.facts{grid-template-columns:1fr 1fr;column-gap:24px}}
+.facts div{padding:7px 0;border-bottom:1px solid var(--hair)}
+.facts dt{font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.facts dd{margin:0;font-size:.94rem}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;font-size:.85em;overflow-wrap:anywhere}
+table{width:100%;border-collapse:collapse;font-size:.95rem;font-variant-numeric:tabular-nums;margin:12px 0}
+th,td{text-align:left;vertical-align:top;padding:8px 6px;border-bottom:1px solid var(--hair)}
+th{font-weight:600;color:var(--sec)}
+figure{margin:18px 0}
+figure svg{display:block;width:100%;max-width:520px;height:auto;margin:0 auto;background:var(--panel);border:1px solid var(--hair);border-radius:3px}
+figcaption{font-size:.92rem;color:var(--sec);margin-top:6px}
+ol.steps{padding-left:1.5em;margin:.4em 0}
+ol.steps li{margin:.45em 0}
+.cols{display:grid;grid-template-columns:1fr;gap:14px}
+@media (min-width:860px){.cols{grid-template-columns:repeat(3,1fr)}}
+.col{background:var(--panel);border:1px solid var(--hair);border-radius:3px;padding:12px 14px}
+.col h3{margin-top:0}
+.col ul{padding-left:1.2em;margin:.3em 0;font-size:.95rem}
+details{border-top:1px solid var(--hair);padding:8px 0;margin:8px 0}
+summary{cursor:pointer;font-family:Georgia,"Times New Roman",serif;font-size:1.05rem}
+.panel{background:var(--panel);border:1px solid var(--hair);border-radius:3px;padding:12px 14px;margin:12px 0}
+.qa p{margin:.25em 0}
+.qa .why{color:var(--sec)}
+button{font:inherit;background:var(--ink);color:var(--panel);border:0;border-radius:3px;padding:9px 16px;cursor:pointer}
+@media print{
+  body{background:#fff;color:#000;font-size:11pt}
+  main{max-width:none;padding:0}
+  .noprint{display:none!important}
+  a{color:#000;text-decoration:none}
+  details,details>*{display:block!important}
+  details::details-content{content-visibility:visible}
+  h2,h3{break-after:avoid}
+  figure,table,.col,.panel{break-inside:avoid}
+  figure svg{background:#fff}
+}
+</style>
+</head>
+<body>
+<main>
+
+<header>
+<p class="kicker">Sacred · MVP technical master document</p>
+<h1>Sacred / Inside the MVP</h1>
+<p class="lede">One market, one chain, real USDC settlement. This document sets out the approved design, the verified evidence, and what remains open, so each technical decision can be explained.</p>
+<p><span class="status">Implementation in progress; final code reconciliation pending.</span></p>
+<p class="kicker">Verified state: 6 Nov 2026, approximately 17:55 IST</p>
+<p class="noprint"><button type="button" onclick="window.print()">Print / Save PDF</button></p>
+<p class="noprint">Reusable diagrams: <a href="diagrams/architecture.svg" download>Architecture</a> · <a href="diagrams/money-flow.svg" download>Money Flow</a> · <a href="diagrams/loss-waterfall.svg" download>Loss Waterfall</a> · <a href="diagrams/trade-flow.svg" download>Trade Flow</a> · <a href="diagrams/keeper-flow.svg" download>Keeper Flow</a></p>
+</header>
+
+<nav class="toc" aria-label="Contents">
+<h2>Contents</h2>
+<ol>
+<li><a href="#explain">Explain it in 90 seconds</a></li>
+<li><a href="#evidence">Verified live evidence</a></li>
+<li><a href="#architecture">Architecture</a></li>
+<li><a href="#money">Money buckets</a></li>
+<li><a href="#losses">Principal-loss waterfall</a></li>
+<li><a href="#trade">Trade open to repayment</a></li>
+<li><a href="#journeys">Participant journeys</a></li>
+<li><a href="#keeper">Coverage keeper</a></li>
+<li><a href="#scope">Guarantees, operators, testnet limits</a></li>
+<li><a href="#questions">Technical questions</a></li>
+<li><a href="#rationale">Design rationale</a></li>
+<li><a href="#implementation">Frontend, API and operations</a></li>
+<li><a href="#sources">Sources and disclosures</a></li>
+</ol>
+</nav>
+
+<section id="explain">
+<h2>Explain it in 90 seconds</h2>
+<p>Sacred is a testnet MVP on Arc Testnet (chain 5042002) with one market, cirBTC, settled in real USDC through a fixed Uniswap v4 pool with fee 3000, tick spacing 60 and no hooks. Liquidity providers deposit USDC into a vault and receive non-transferable shares priced at NAV.</p>
+<p>A trader puts up 0.10 USDC and is financed 0.10 USDC for a 2x fixed trade. The vault first funds the full 0.20 USDC from LP idle cash. The engine buys the BTC through a narrow adapter, records acquisition, disclosed resale and pledge, and only then collects the trader's 0.10 USDC. The financing carries a fixed 10% annualized markup over 14 days, split 77% to LPs and 23% to the manager, of collected markup.</p>
+<p>If coverage falls to 160% or below, a gas-only keeper can trigger a partial sale. It cannot choose the size or oversell. Withdrawals run first in, first out. By design, the rules for shares, NAV, the markup formula, repayment order and the return of all remaining pledged BTC on full repayment are onchain. The daily price fixture, the separate keeper process and the thin pool are operator or testnet matters. The system is not audited and not production-ready.</p>
+</section>
+
+<section id="evidence">
+<h2>Verified live evidence</h2>
+<dl class="facts">
+<div><dt>Chain</dt><dd>Arc Testnet, 5042002</dd></div>
+<div><dt>V4SpotVenue (smoke only)</dt><dd class="mono">0x1eaE39A746C49708696FBA57CE4a1948eA4337E4, bound to dedicated trader</dd></div>
+<div><dt>PoolManager code</dt><dd>Matches pinned v4 runtime on chain 5042002</dd></div>
+<div><dt>Receipts</dt><dd>12 successful receipts verified; both swaps reconciled to calldata, events and native balances</dd></div>
+<div><dt>Adapter checks</dt><dd>70 passed (68 earlier, 2 new)</dd></div>
+<div><dt>Seed position</dt><dd>NFT 21533; full range ±887220; L 316227</dd></div>
+<div><dt>Seed funding</dt><dd>9.999976 USDC + 0.0001 cirBTC</dd></div>
+<div><dt>Round trip</dt><dd>Buy 0.20 USDC for 195 BTC atoms; sell for 0.197898 USDC; cost 0.002102, gas extra</dd></div>
+<div><dt>API health</dt><dd>8 cases tested locally, with live RPC reads locally</dd></div>
+<div><dt>Hosting</dt><dd>Vercel configured; deployment pending</dd></div>
+<div><dt>Not deployed</dt><dd>Sacred vault and engine (MarginVault, TradeEngine)</dd></div>
+</dl>
+<p>Uniswap's public table labels these addresses as Arc mainnet. This document makes no claim of official testnet listing. Sources: <a href="https://github.com/smitrajput/sacred-markets/blob/main/deployments/arc-testnet.json">deployments/arc-testnet.json</a>, <a href="https://github.com/smitrajput/sacred-markets/tree/main/scripts/smoke">scripts/smoke/</a>.</p>
+</section>
+
+<section id="architecture">
+<h2>Architecture</h2>
+<p>MarginVault records LP shares, NAV and cash buckets. TradeEngine sizes and executes trades and coverage actions. V4SpotVenue is the adapter that routes purchases and sales into the existing Uniswap v4 pool with fixed permissions (<a href="https://github.com/smitrajput/sacred-markets/blob/main/contracts/src/V4SpotVenue.sol">contracts/src/V4SpotVenue.sol</a>). DemoPriceGuard supplies the reference used for collateral valuation. It is an admin-controlled testnet fixture, not a production oracle.</p>
+<figure>
+<svg viewBox="0 0 340 650" role="img" aria-labelledby="arch-t arch-d" font-family="system-ui, Helvetica, Arial, sans-serif">
+<title id="arch-t">Browser, read API and signed transactions</title>
+<desc id="arch-d">The frontend loads in the browser. Its read API fetches public chain state. The user's wallet sends signed transactions directly to Arc RPC. A separate keeper also submits eligible transactions. Onchain, MarginVault holds USDC and TradeEngine holds pledged cirBTC. The engine uses DemoPriceGuard for valuation and V4SpotVenue for swaps with Uniswap v4.</desc>
+<defs><marker id="ah1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4b473f"/></marker><marker id="ar1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b5321f"/></marker></defs>
+<rect x="16" y="14" width="308" height="62" rx="3" fill="#fdfbf6" stroke="#1b1915"/>
+<text x="170" y="39" font-size="16" font-weight="700" text-anchor="middle">Browser · Earn / Trade / Activity</text>
+<text x="170" y="61" font-size="14" fill="#4b473f" text-anchor="middle">React frontend served by Vercel</text>
+<path d="M90,76 V116" stroke="#4b473f" stroke-dasharray="4 4" marker-end="url(#ah1)"/>
+<path d="M250,76 V116" stroke="#b5321f" marker-end="url(#ar1)"/>
+<rect x="16" y="118" width="148" height="65" rx="3" fill="#fdfbf6" stroke="#4b473f"/>
+<text x="90" y="143" font-size="15" font-weight="700" text-anchor="middle">Read-only API</text>
+<text x="90" y="167" font-size="13" fill="#4b473f" text-anchor="middle">No signing keys</text>
+<rect x="176" y="118" width="148" height="65" rx="3" fill="#fdfbf6" stroke="#b5321f"/>
+<text x="250" y="143" font-size="15" font-weight="700" text-anchor="middle">User wallet</text>
+<text x="250" y="167" font-size="13" fill="#4b473f" text-anchor="middle">Approve and sign</text>
+<path d="M90,183 V246" stroke="#4b473f" stroke-dasharray="4 4" marker-start="url(#ah1)" marker-end="url(#ah1)"/>
+<text x="28" y="217" font-size="12" fill="#4b473f">Read state</text>
+<path d="M250,183 V246" stroke="#b5321f" stroke-width="2" marker-end="url(#ar1)"/>
+<text x="177" y="217" font-size="12" fill="#b5321f">Signed transaction</text>
+<rect x="16" y="248" width="308" height="40" rx="3" fill="#f4f0e7" stroke="#1b1915"/>
+<text x="170" y="274" font-size="15" font-weight="700" text-anchor="middle">Arc RPC → chain 5042002</text>
+<path d="M170,288 V320" stroke="#b5321f" marker-end="url(#ar1)"/>
+<rect x="16" y="322" width="308" height="120" rx="3" fill="#fdfbf6" stroke="#1b1915"/>
+<text x="30" y="348" font-size="16" font-weight="700">Sacred contracts</text>
+<text x="30" y="374" font-size="14">MarginVault holds USDC cash buckets</text>
+<text x="30" y="398" font-size="14">TradeEngine holds the cirBTC pledge</text>
+<text x="30" y="422" font-size="13" fill="#4b473f">DemoPriceGuard → reference valuation</text>
+<path d="M170,442 V478" stroke="#1b1915" marker-end="url(#ah1)"/>
+<rect x="16" y="480" width="308" height="64" rx="3" fill="#fdfbf6" stroke="#1b1915"/>
+<text x="170" y="506" font-size="15" font-weight="700" text-anchor="middle">V4SpotVenue → Uniswap PoolManager</text>
+<text x="170" y="530" font-size="13" fill="#4b473f" text-anchor="middle">USDC / cirBTC · fee 3000 · spacing 60</text>
+<rect x="16" y="570" width="308" height="62" rx="3" fill="#f4f0e7" stroke="#4b473f" stroke-dasharray="4 4"/>
+<text x="170" y="595" font-size="15" font-weight="700" text-anchor="middle">Separate keeper process</text>
+<text x="170" y="619" font-size="13" fill="#4b473f" text-anchor="middle">Own gas wallet → Arc RPC → eligible action</text>
+</svg>
+<figcaption>Figure 1. Dashed paths read data; red paths carry user-signed transactions. The read API cannot move funds. The vault, engine and price fixture are pending deployment.</figcaption>
+</figure>
+<p>Balances, debt and transaction receipts come from Arc. The API formats public reads; the browser wallet sends signed transactions directly to the chain. If the API is unavailable, it cannot seize or change onchain positions.</p>
+</section>
+
+<section id="money">
+<h2>Money buckets</h2>
+<p>NAV is LP idle cash plus outstanding principal. Reserves, reserved claims, manager cash and uncollected markup sit in separate buckets, so ordinary deposits and withdrawals use LP assets, not segregated funds. Reserves become LP cash only when explicitly applied to a realized principal loss (<a href="https://github.com/smitrajput/sacred-markets/blob/main/contracts/src/MarginVault.sol">contracts/src/MarginVault.sol</a>, current work item). Donations mint no shares and do not inflate NAV.</p>
+<figure>
+<svg viewBox="0 0 340 640" role="img" aria-labelledby="money-t money-d" font-family="system-ui, Helvetica, Arial, sans-serif">
+<title id="money-t">Money bucket flow from LP deposit to repayment</title>
+<desc id="money-d">An LP deposit moves into LP idle cash, which funds the gross purchase. On open, idle falls by P and principal receivable rises by P. On repayment, principal returns to LP idle, then markup splits 77 percent to LPs and 23 percent to the manager, then owner surplus goes to the trader. Reserves, claims, manager cash and uncollected markup are excluded from NAV.</desc>
+<defs><marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1b1915"/></marker></defs>
+<rect x="16" y="12" width="308" height="48" rx="3" fill="#fdfbf6" stroke="#1b1915" stroke-width="1.5"/>
+<text x="30" y="42" font-size="16" font-weight="700" fill="#1b1915">LP deposit (USDC)</text>
+<line x1="170" y1="60" x2="170" y2="82" stroke="#1b1915" stroke-width="2" marker-end="url(#ah2)"/>
+<rect x="16" y="82" width="308" height="60" rx="3" fill="#fdfbf6" stroke="#1b1915" stroke-width="1.5"/>
+<text x="30" y="106" font-size="16" font-weight="700" fill="#1b1915">LP idle cash · in NAV</text>
+<text x="30" y="130" font-size="14" fill="#4b473f">Funds all gross C = 0.20 USDC at open</text>
+<line x1="170" y1="142" x2="170" y2="164" stroke="#1b1915" stroke-width="2" marker-end="url(#ah2)"/>
+<rect x="16" y="164" width="308" height="60" rx="3" fill="#fdfbf6" stroke="#1b1915" stroke-width="1.5"/>
+<text x="30" y="188" font-size="16" font-weight="700" fill="#1b1915">Principal receivable · in NAV</text>
+<text x="30" y="212" font-size="14" fill="#4b473f">Idle falls by P; receivable rises by P</text>
+<line x1="170" y1="224" x2="170" y2="246" stroke="#1b1915" stroke-width="2" marker-end="url(#ah2)"/>
+<rect x="16" y="246" width="308" height="60" rx="3" fill="#fdfbf6" stroke="#1b1915" stroke-width="1.5"/>
+<text x="30" y="270" font-size="16" font-weight="700" fill="#1b1915">Repayment, from any payer</text>
+<text x="30" y="294" font-size="14" fill="#4b473f">Applied: principal, markup, surplus</text>
+<line x1="170" y1="306" x2="170" y2="328" stroke="#1b1915" stroke-width="2" marker-end="url(#ah2)"/>
+<rect x="16" y="328" width="308" height="40" rx="3" fill="#fdfbf6" stroke="#1b1915" stroke-width="1.5"/>
+<text x="30" y="353" font-size="14" fill="#1b1915">1 · Principal back to LP idle</text>
+<line x1="170" y1="368" x2="170" y2="390" stroke="#1b1915" stroke-width="2" marker-end="url(#ah2)"/>
+<rect x="16" y="390" width="308" height="40" rx="3" fill="#fdfbf6" stroke="#1b1915" stroke-width="1.5"/>
+<text x="30" y="415" font-size="14" fill="#1b1915">2 · Markup: 77% LP, 23% manager</text>
+<line x1="170" y1="430" x2="170" y2="452" stroke="#1b1915" stroke-width="2" marker-end="url(#ah2)"/>
+<rect x="16" y="452" width="308" height="40" rx="3" fill="#fdfbf6" stroke="#1b1915" stroke-width="1.5"/>
+<text x="30" y="477" font-size="14" fill="#1b1915">3 · Owner surplus to trader</text>
+<rect x="16" y="516" width="308" height="108" rx="3" fill="none" stroke="#78736a" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="30" y="542" font-size="16" font-weight="700" fill="#4b473f">Excluded from NAV</text>
+<text x="30" y="566" font-size="14" fill="#4b473f">Reserves (primary 0.004, tail 0.006)</text>
+<text x="30" y="588" font-size="14" fill="#4b473f">Reserved claims, manager cash,</text>
+<text x="30" y="610" font-size="14" fill="#4b473f">uncollected markup</text>
+</svg>
+<figcaption>Figure 2. Money bucket flow. Only LP idle cash and principal receivable count toward NAV.</figcaption>
+</figure>
+<table>
+<thead><tr><th>Bucket</th><th>In NAV</th><th>Role</th></tr></thead>
+<tbody>
+<tr><td>LP idle cash</td><td>Yes</td><td>Funds opens; restored on repayment</td></tr>
+<tr><td>Outstanding principal</td><td>Yes</td><td>Receivable from open trades</td></tr>
+<tr><td>Primary reserve, 0.004 USDC</td><td>No</td><td>First draw for gross principal shortfall</td></tr>
+<tr><td>Tail reserve, 0.006 USDC</td><td>No</td><td>Second draw, after primary</td></tr>
+<tr><td>Reserved claims</td><td>No</td><td>Cash held for filled withdrawals</td></tr>
+<tr><td>Manager cash, uncollected markup</td><td>No</td><td>Collected manager share; unpaid fixed sale markup</td></tr>
+</tbody>
+</table>
+</section>
+
+<section id="losses">
+<h2>Who absorbs a final loss?</h2>
+<p>A coverage sale first pays down principal. On final closure, any principal still unpaid is the <strong>gross principal loss</strong>. The vault covers it in this order; only the uncovered remainder reduces LP NAV.</p>
+<figure>
+<svg viewBox="0 0 340 380" role="img" aria-labelledby="loss-t loss-d" font-family="system-ui, Helvetica, Arial, sans-serif">
+<title id="loss-t">Principal-loss waterfall</title>
+<desc id="loss-d">After final collateral sale, draw primary reserve, tail reserve, optional pilot backstop, then charge uncovered loss to LP NAV. Reserve coverage transfers value internally into LP idle cash. It is not paid to the trader or keeper.</desc>
+<defs><marker id="ah5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b5321f"/></marker></defs>
+<text x="170" y="30" font-size="16" font-weight="700" text-anchor="middle">Unpaid principal after final sale</text>
+<path d="M170,42 V62" stroke="#b5321f" marker-end="url(#ah5)"/>
+<rect x="30" y="64" width="280" height="48" rx="3" fill="#fdfbf6" stroke="#1b1915"/>
+<text x="170" y="94" font-size="16" text-anchor="middle">1 · Primary reserve</text>
+<path d="M170,112 V140" stroke="#b5321f" marker-end="url(#ah5)"/>
+<rect x="30" y="142" width="280" height="48" rx="3" fill="#fdfbf6" stroke="#1b1915"/>
+<text x="170" y="172" font-size="16" text-anchor="middle">2 · Tail reserve</text>
+<path d="M170,190 V218" stroke="#b5321f" marker-end="url(#ah5)"/>
+<rect x="30" y="220" width="280" height="48" rx="3" fill="#fdfbf6" stroke="#1b1915"/>
+<text x="170" y="250" font-size="16" text-anchor="middle">3 · Optional pilot backstop</text>
+<path d="M170,268 V296" stroke="#b5321f" marker-end="url(#ah5)"/>
+<rect x="30" y="298" width="280" height="54" rx="3" fill="#fdfbf6" stroke="#b5321f"/>
+<text x="170" y="321" font-size="16" text-anchor="middle">4 · Remaining loss reduces LP NAV</text>
+<text x="170" y="342" font-size="12" fill="#4b473f" text-anchor="middle">No additional claim against the trader</text>
+</svg>
+<figcaption>Figure 3. Covered loss becomes LP cash; reserves are never paid to the trader or keeper. Unpaid markup is written off separately.</figcaption>
+</figure>
+<p><strong>Replenishment:</strong> the manager’s 23% of collected markup restores primary to 0.4% of the financing ceiling, then tail to 0.6%. Only the remainder becomes locked manager cash. New financing waits if either reserve is below its target.</p>
+</section>
+
+<section id="trade">
+<h2>Trade open to repayment</h2>
+<p>A 2x fixed trade has equity E = 0.10 USDC, gross purchase C = 0.20 USDC and financed principal P = 0.10 USDC. Opening requires gross cash of at least 2P, net idle cash of at least 5% of NAV, principal plus commitments of at most 95% of NAV, an empty withdrawal queue, and the ceiling of 1 and per-account cap of 0.10 respected.</p>
+<p>The markup is 10% annualized over 14 days, fixed at open: M = floor(P × 1000 × 1209600 ÷ (10000 × 31536000)). At P = 100000 atoms (0.10 USDC), M = 383 and debt = 100383 atoms. Collected in full, the markup splits LP 294 and manager 89 micro-USDC.</p>
+<figure>
+<svg viewBox="0 0 340 570" role="img" aria-labelledby="trade-t trade-d" font-family="system-ui, Helvetica, Arial, sans-serif">
+<title id="trade-t">Trade open to repayment, seven steps</title>
+<desc id="trade-d">Step 1 opens gross C of 0.20 USDC. Step 2 funds all of C from LP idle cash. Step 3, the engine buys BTC through V4SpotVenue. Step 4 records acquisition, the disclosed resale and the BTC pledge. Step 5 collects the trader's 0.10 USDC. Step 6 repays principal then markup. Step 7 returns all remaining pledged BTC to the trader on full repayment. Any failure in steps 2 to 5 undoes everything atomically.</desc>
+<defs><marker id="ah3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1b1915"/></marker></defs>
+<rect x="16" y="12" width="308" height="44" rx="3" fill="#fdfbf6" stroke="#1b1915" stroke-width="1.5"/>
+<text x="30" y="40" font-size="14" font-weight="700" fill="#1b1915">1 · Open: gross C = 0.20 USDC</text>
+<line x1="170" y1="56" x2="170" y2="78" stroke="#1b1915" stroke-width="2" marker-end="url(#ah3)"/>
+<rect x="16" y="78" width="308" height="44" rx="3" fill="#fdfbf6" stroke="#1b1915" stroke-width="1.5"/>
+<text x="30" y="106" font-size="14" font-weight="700" fill="#1b1915">2 · Vault funds all C from LP idle</text>
+<line x1="170" y1="122" x2="170" y2="144" stroke="#1b1915" stroke-width="2" marker-end="url(#ah3)"/>
+<rect x="16" y="144" width="308" height="44" rx="3" fill="#fdfbf6" stroke="#1b1915" stroke-width="1.5"/>
+<text x="30" y="172" font-size="14" font-weight="700" fill="#1b1915">3 · Engine buys BTC via V4SpotVenue</text>
+<line x1="170" y1="188" x2="170" y2="210" stroke="#1b1915" stroke-width="2" marker-end="url(#ah3)"/>
+<rect x="16" y="210" width="308" height="44" rx="3" fill="#fdfbf6" stroke="#1b1915" stroke-width="1.5"/>
+<text x="30" y="238" font-size="14" font-weight="700" fill="#1b1915">4 · Acquisition → sale → pledge</text>
+<line x1="170" y1="254" x2="170" y2="276" stroke="#1b1915" stroke-width="2" marker-end="url(#ah3)"/>
+<rect x="16" y="276" width="308" height="44" rx="3" fill="#fdfbf6" stroke="#1b1915" stroke-width="1.5"/>
+<text x="30" y="304" font-size="14" font-weight="700" fill="#1b1915">5 · Trader's E 0.10 collected</text>
+<line x1="170" y1="320" x2="170" y2="342" stroke="#1b1915" stroke-width="2" marker-end="url(#ah3)"/>
+<rect x="16" y="342" width="308" height="44" rx="3" fill="#fdfbf6" stroke="#1b1915" stroke-width="1.5"/>
+<text x="30" y="370" font-size="14" font-weight="700" fill="#1b1915">6 · Repay: principal, then markup M</text>
+<line x1="170" y1="386" x2="170" y2="408" stroke="#1b1915" stroke-width="2" marker-end="url(#ah3)"/>
+<rect x="16" y="408" width="308" height="44" rx="3" fill="#fdfbf6" stroke="#1b1915" stroke-width="1.5"/>
+<text x="30" y="436" font-size="14" font-weight="700" fill="#1b1915">7 · Full repay: release remaining BTC</text>
+<rect x="16" y="478" width="308" height="76" rx="3" fill="none" stroke="#b5321f" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="30" y="502" font-size="14" font-weight="700" fill="#b5321f">Atomic failure</text>
+<text x="30" y="526" font-size="14" fill="#4b473f">Any failure in steps 2 to 5 undoes everything.</text>
+</svg>
+<figcaption>Figure 4. Open to repayment. Partial repayment keeps the pledge; full repayment returns all remaining pledged BTC to the original trader.</figcaption>
+</figure>
+<p>Before any deposit or withdrawal reserves cash, a fresh impairment gate runs. If conservative net collateral is below remaining principal, the losing position settles first. A stale feed blocks new cash reservations, but reserved claims and full repayment or release stay available. Early repayment earns no rebate. A position with zero principal and markup above zero stays live.</p>
+<details>
+<summary>Worked balance example (educational, not a live claim)</summary>
+<p>A 1 USDC LP deposit with 0.01 USDC of treasury reserves. After open: idle 0.90, outstanding P 0.10, NAV 1, reserves 0.01. On full repayment of 100383 atoms, LP idle and NAV reach 1.000294 and the manager's locked cash is 0.000089 if targets are full. Any BTC upside belongs to the borrower, not the protocol. Essential expenses are 0 and there are no company distributions.</p>
+<p>Policy-scale illustration (distinct from the micro demo): P 500, proceeds 480, gross loss 20. Reserves 4 + 6 and a separate optional backstop of 5 leave an LP loss of 5. The gross loss of 20 is still emitted, and the unpaid markup is written off.</p>
+</details>
+</section>
+
+<section id="journeys">
+<h2>Participant journeys</h2>
+<h3>Stablecoin depositor (LP)</h3>
+<ol class="steps">
+<li>Connect the wallet and switch to Arc Testnet (5042002).</li>
+<li>Approve the exact USDC amount (6 decimals).</li>
+<li>Deposit. The vault mints non-transferable shares at floor(amount × supply ÷ pre-deposit NAV). Initial minting is 1:1 in micro-USDC only when the vault is empty.</li>
+<li>Collected LP markup raises NAV and the value per share. It is not a fixed depositor APY. New deposits and financing wait while withdrawal requests are unfilled.</li>
+<li>Request withdrawal. Shares lock into one global FIFO queue: 64 active requests maximum, up to 16 oldest processed per pass, partial head first.</li>
+<li>Queued shares remain exposed to gains and losses until filled. On fill, shares burn and cash is reserved. The later claim pulls this fixed payout without debiting NAV again.</li>
+</ol>
+<p class="panel"><strong>Who earns future markup?</strong> Uncollected markup is excluded from NAV. Whoever holds shares when markup is collected receives its NAV benefit, including recent depositors. Shares already redeemed have no claim on later collections. This keeps accounting simple but does not track earnings by deposit vintage.</p>
+<h3>Leverage trader</h3>
+<ol class="steps">
+<li>Connect the wallet, switch network, and approve the exact E = 0.10 USDC.</li>
+<li>Open the 2x fixed trade: gross C = 0.20 USDC, financed P = 0.10 USDC. All gates must pass.</li>
+<li>The vault funds all of C from LP idle; the engine buys BTC through V4SpotVenue.</li>
+<li>Acquisition, the disclosed resale and the BTC pledge are recorded in that order. The trader's E is collected only now. Any failure undoes everything.</li>
+<li>Monitor coverage V/D. The trigger is 160% or below; partial restoration targets 190% or above.</li>
+<li>Repay principal and markup. Partial repayment keeps the pledge. Full repayment returns all remaining pledged BTC to the original trader, whoever pays and even with a stale feed.</li>
+</ol>
+<h3>Liquidation (coverage) keeper</h3>
+<ol class="steps">
+<li>Poll sequentially every 10 to 15 seconds.</li>
+<li>Read BTC atoms, the reference price and remaining debt D = P + M.</li>
+<li>Compute V = floor(BTC atoms × priceMicroUSDC ÷ 1e8).</li>
+<li>Check eligibility: coverage at or below 160%, maturity reached (after 14 days), or a pending queue action.</li>
+<li>Simulate the single candidate action. If simulation fails, send nothing.</li>
+<li>Send one transaction with maxFee at least 20 gwei and above the live base fee. Wait for the receipt, refresh state, and repeat on the next poll. A manual wallet button is the permissionless fallback.</li>
+</ol>
+</section>
+
+<section id="keeper">
+<h2>Coverage keeper</h2>
+<p>The keeper is a gas-only external operator. It has no oracle, treasury or guardian power, and the engine chooses the sale size, so it cannot oversell. Nothing automatic is promised: each action needs a caller.</p>
+<figure>
+<svg viewBox="0 0 340 630" role="img" aria-labelledby="keeper-t keeper-d" font-family="system-ui, Helvetica, Arial, sans-serif">
+<title id="keeper-t">Coverage keeper flow</title>
+<desc id="keeper-d">The keeper polls every 10 to 15 seconds, reads BTC atoms, price and debt, and computes V. It checks whether coverage is at or below 160 percent, maturity is reached, or a queue action is pending. If not, it loops back to reading state. If yes, it simulates one action, sends one transaction, waits for the receipt, refreshes state, and returns to polling.</desc>
+<defs><marker id="ah4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1b1915"/></marker></defs>
+<rect x="16" y="12" width="308" height="40" rx="3" fill="#fdfbf6" stroke="#1b1915" stroke-width="1.5"/>
+<text x="170" y="37" font-size="14" font-weight="700" fill="#1b1915" text-anchor="middle">Poll every 10 to 15 seconds</text>
+<line x1="170" y1="52" x2="170" y2="72" stroke="#1b1915" stroke-width="2" marker-end="url(#ah4)"/>
+<rect x="16" y="72" width="308" height="40" rx="3" fill="#fdfbf6" stroke="#1b1915" stroke-width="1.5"/>
+<text x="170" y="97" font-size="14" fill="#1b1915" text-anchor="middle">Read BTC atoms, price, D = P + M</text>
+<line x1="170" y1="112" x2="170" y2="132" stroke="#1b1915" stroke-width="2" marker-end="url(#ah4)"/>
+<rect x="16" y="132" width="308" height="40" rx="3" fill="#fdfbf6" stroke="#1b1915" stroke-width="1.5"/>
+<text x="170" y="157" font-size="14" fill="#1b1915" text-anchor="middle">Compute V = floor(atoms × price ÷ 1e8)</text>
+<line x1="170" y1="172" x2="170" y2="190" stroke="#1b1915" stroke-width="2" marker-end="url(#ah4)"/>
+<polygon points="170,191 300,236 170,281 40,236" fill="#fdfbf6" stroke="#1b1915" stroke-width="1.5"/>
+<text x="170" y="232" font-size="14" fill="#1b1915" text-anchor="middle">V/D ≤ 160%, maturity,</text>
+<text x="170" y="254" font-size="14" fill="#1b1915" text-anchor="middle">or queue action?</text>
+<path d="M300,236 H328 V92 H324" fill="none" stroke="#1b1915" stroke-width="2" marker-end="url(#ah4)"/>
+<text x="306" y="228" font-size="13" fill="#4b473f">No</text>
+<line x1="170" y1="281" x2="170" y2="328" stroke="#1b1915" stroke-width="2" marker-end="url(#ah4)"/>
+<text x="178" y="308" font-size="13" fill="#4b473f">Yes</text>
+<rect x="16" y="330" width="308" height="40" rx="3" fill="#fdfbf6" stroke="#1b1915" stroke-width="1.5"/>
+<text x="170" y="355" font-size="14" fill="#1b1915" text-anchor="middle">Simulate the single candidate action</text>
+<line x1="170" y1="370" x2="170" y2="390" stroke="#1b1915" stroke-width="2" marker-end="url(#ah4)"/>
+<rect x="16" y="392" width="308" height="40" rx="3" fill="#fdfbf6" stroke="#1b1915" stroke-width="1.5"/>
+<text x="170" y="417" font-size="14" fill="#1b1915" text-anchor="middle">Send one transaction (maxFee ≥ 20 gwei)</text>
+<line x1="170" y1="432" x2="170" y2="452" stroke="#1b1915" stroke-width="2" marker-end="url(#ah4)"/>
+<rect x="16" y="454" width="308" height="40" rx="3" fill="#fdfbf6" stroke="#1b1915" stroke-width="1.5"/>
+<text x="170" y="479" font-size="14" fill="#1b1915" text-anchor="middle">Wait for receipt</text>
+<line x1="170" y1="494" x2="170" y2="514" stroke="#1b1915" stroke-width="2" marker-end="url(#ah4)"/>
+<rect x="16" y="516" width="308" height="40" rx="3" fill="#fdfbf6" stroke="#1b1915" stroke-width="1.5"/>
+<text x="170" y="541" font-size="14" fill="#1b1915" text-anchor="middle">Refresh authoritative state</text>
+<line x1="170" y1="556" x2="170" y2="576" stroke="#1b1915" stroke-width="2" marker-end="url(#ah4)"/>
+<rect x="16" y="578" width="308" height="40" rx="3" fill="#fdfbf6" stroke="#1b1915" stroke-width="1.5"/>
+<text x="170" y="603" font-size="14" fill="#1b1915" text-anchor="middle">Return to next poll</text>
+</svg>
+<figcaption>Figure 5. Coverage keeper flow. "No" returns to reading state; "Yes" performs one simulated, sent and confirmed action.</figcaption>
+</figure>
+<details>
+<summary>Partial-sale formula and worked illustration</summary>
+<p>Target sale amount g to restore coverage to R = 1.9 with friction f = 0.03: g = (R × D − V) ÷ (R × (1 − f) − 1), with the input rounded up. The engine requires post-sale coverage. If remaining principal P would be dust below 0.01 USDC, it runs a full close.</p>
+<p>Illustration, not executed live yet: 195 BTC atoms at an 80k USDC reference give V = 0.156 USDC. With P = 0.10 USDC and M = 0.000383 USDC, coverage is 155.40%. Selling 52 atoms at a minimum of 0.040352 USDC leaves 143 atoms, V = 0.1144 USDC, debt 0.060031 USDC, and coverage 190.56%.</p>
+</details>
+</section>
+
+<section id="scope">
+<h2>Guarantees, operators and testnet limits</h2>
+<p>The three columns are kept separate so no operator duty or testnet shortcut is read as an onchain guarantee.</p>
+<div class="cols">
+<div class="col">
+<h3>Onchain guarantees (designed; enforced once deployed)</h3>
+<ul>
+<li>Shares are non-transferable. NAV = LP idle + outstanding principal.</li>
+<li>Donations mint no shares and do not raise NAV.</li>
+<li>Markup fixed at open; no late fees, rollover or trader profit share.</li>
+<li>Collected markup split 77% LP, 23% manager, with cumulative floor rounding.</li>
+<li>Repayment order: principal, markup, owner surplus.</li>
+<li>Full repayment returns all remaining pledged BTC to the original trader.</li>
+<li>Swap minimums derive from the reference with a 300 bps friction allowance; integer rounding is explicit. The configuration cap is 460 bps.</li>
+<li>Guardian can pause new deposits and origination only. No upgrades, no arbitrary rescue.</li>
+</ul>
+</div>
+<div class="col">
+<h3>Operator responsibilities</h3>
+<ul>
+<li>Refresh the DemoPriceGuard fixture at least daily and before each rehearsal.</li>
+<li>For a price-drop demo, move the real pool first, then update the fixture explicitly.</li>
+<li>Run the keeper as a separate process with its own gas wallet; keep its keys in ignored secret files inside the Studio sandbox, never in the frontend or read API.</li>
+<li>Keep deployer, trader and keeper test wallets on testnet only.</li>
+<li>Show the keeper as unavailable unless a real heartbeat exists.</li>
+<li>Do not loosen safety limits to capture video.</li>
+</ul>
+</div>
+<div class="col">
+<h3>Testnet simplifications</h3>
+<ul>
+<li>Arc Testnet only; one cirBTC market.</li>
+<li>The fixture is admin-controlled. Pool spot is for execution diagnostics, not collateral pricing.</li>
+<li>The pool is thin; quote checks are required, and the fixture may need refreshing between demos.</li>
+<li>Maturity is tested with time warp.</li>
+<li>Seed liquidity is small: 9.999976 USDC plus 0.0001 cirBTC.</li>
+<li>Not audited; not production-ready.</li>
+</ul>
+</div>
+</div>
+</section>
+
+<section id="questions">
+<h2>Technical questions</h2>
+<div class="qa">
+<h3>1. Where does settlement run, and what is deployed?</h3>
+<p><strong>Answer.</strong> Settlement runs on Arc Testnet (5042002). Only the Sacred smoke adapter is deployed; the vault, engine and reference fixture are pending.</p>
+<p class="why"><strong>Rationale.</strong> We verified the deployed v4 code on the selected chain and executed real swaps before building financing around it.</p>
+
+<h3>2. Why one asset and one chain?</h3>
+<p><strong>Answer.</strong> One cirBTC market on Arc Testnet avoids integration risk. Bridging is off the critical path and not implemented.</p>
+<p class="why"><strong>Rationale.</strong> Scope stays within what can be verified. There is no cross-chain work, ENS, governance token or production oracle.</p>
+
+<h3>3. Why does the vault fund the full 0.20 USDC before buying BTC?</h3>
+<p><strong>Answer.</strong> The engine buys BTC, records acquisition, executes the disclosed resale and holds the BTC pledge. The trader's 0.10 USDC is collected only after acquisition, and any failure undoes everything atomically.</p>
+<p class="why"><strong>Rationale.</strong> This preserves the sale-based financing design and keeps the purchase in one atomic sequence.</p>
+
+<h3>4. How is LP NAV defined, and can tokens sent to the vault inflate it?</h3>
+<p><strong>Answer.</strong> NAV = LP idle cash + outstanding principal. Reserves, claims, manager cash and uncollected markup are excluded. Donations mint no shares and do not raise NAV.</p>
+<p class="why"><strong>Rationale.</strong> Separate buckets prevent routine use of reserves as LP liquidity; the settlement waterfall explicitly applies reserves to principal losses.</p>
+
+<h3>5. What happens when the price feed is stale or a position is underwater?</h3>
+<p><strong>Answer.</strong> A fresh impairment gate runs before any cash reservation. If conservative net collateral is below remaining principal, the losing position settles first. A stale feed blocks new cash reservations, while reserved claims and full repayment or release stay available.</p>
+<p class="why"><strong>Rationale.</strong> DemoPriceGuard is a testnet fixture, not a production oracle, and pool spot only diagnoses execution.</p>
+
+<h3>6. Who decides when and how much a keeper can sell?</h3>
+<p><strong>Answer.</strong> Anyone, including the gas-only keeper, can trigger an eligible coverage or maturity action. The contract checks eligibility and computes the sale quantity; the caller cannot select a larger sale. The keeper has no oracle, treasury or guardian power. Manual wallet execution is the fallback.</p>
+<p class="why"><strong>Rationale.</strong> The design avoids claiming a continuous guarantee that the hosting model cannot provide.</p>
+
+<h3>7. Why a fixed 10% annualized markup, and who receives it?</h3>
+<p><strong>Answer.</strong> 10% annualized over 14 days, fixed at open, with no growing balance, late fees, rollover or trader profit share; early rebate is 0. At P = 100000 atoms, M = 383 and debt = 100383. Collected markup splits 77% LP and 23% manager.</p>
+<p class="why"><strong>Rationale.</strong> The trader gets a predictable cost, and LPs get a clear split of collected markup only.</p>
+
+<h3>8. Why doesn't the keeper run on Vercel?</h3>
+<p><strong>Answer.</strong> The Vercel read API is serverless and does not run a persistent keeper. The keeper runs as a separate operator process, and the UI shows it unavailable unless a real heartbeat exists.</p>
+<p class="why"><strong>Rationale.</strong> This avoids an illusory continuous keeper and keeps signing keys out of the hosted app.</p>
+</div>
+</section>
+
+<section id="rationale">
+<h2>Design rationale</h2>
+<ul>
+<li>One asset and one chain avoid integration risk.</li>
+<li>A real v4 adapter uses an existing protocol with fixed permissions.</li>
+<li>The gross purchase order preserves the sale-based financing design.</li>
+<li>A fixed markup gives predictable cost.</li>
+<li>Cash bucket separation keeps ordinary LP liquidity distinct from reserves and unpaid markup.</li>
+<li>FIFO gives liquidity priority.</li>
+<li>Bounded scans suit a 32-position pilot.</li>
+<li>An independent fixture is an honest testnet compromise, not production-ready.</li>
+<li>A serverless read API is a simple host and avoids an illusory continuous keeper.</li>
+<li>A non-upgradeable, limited surface.</li>
+<li>Bridge and complex oracles are deferred.</li>
+</ul>
+</section>
+
+<section id="implementation">
+<h2>Frontend, API and operations</h2>
+<p class="label">Approved design · implementation in progress</p>
+<p>This section describes the approved build; evidence above records what is complete. The vault funding and lifecycle corrections and FIFO passed 76 independent tests. Studio is now completing the reserve waterfall and markup accounting (01c). Pending modules are not labeled done.</p>
+<h3>Frontend</h3>
+<p>React 18, Vite, TypeScript, wagmi and viem, within the existing Sacred brand. Tabs are Earn, Trade and Activity, with an Arc Testnet badge. Each action follows: connect, switch, exact approval, action, confirmed receipt, authoritative refresh. Amounts use bigint or decimal strings: USDC at 6 decimals (shown to 6 places for small debt and split), BTC at 8, and native USDC at 18 with the same balance.</p>
+<h3>Read API</h3>
+<p>Node/TS with viem, read-only. Endpoints: health, config, vault, positions and activity, using bounded log pages from the deploy block with caching. No database, no private keys, no signing endpoint. API health was tested locally in 8 cases. Vercel hosting for the frontend and API is configured through Studio; deployment is pending (<a href="https://github.com/smitrajput/sacred-markets/blob/main/server/handlers/health.ts">server/handlers/health.ts</a>).</p>
+<h3>Repository and operations</h3>
+<p>The repository is public, with small commits on main. The Studio origin is tracked through the share project and its history. A separate operator process runs with the gas-wallet key held in an ignored secret file inside Studio. Vercel receives no signing key. The user's browser wallet signs the user's own actions. Dedicated deployer, trader and keeper test wallets are used only on testnet, never mainnet.</p>
+</section>
+
+<section id="sources">
+<h2>Sources and disclosures</h2>
+<ul>
+<li>Docs: <a href="https://sacred.markets/docs">sacred.markets/docs</a></li>
+<li>Repository: <a href="https://github.com/smitrajput/sacred-markets">github.com/smitrajput/sacred-markets</a></li>
+<li>Studio: <a href="https://studio.arc.io/app/37c6c8dc-b313-49c9-9cbb-fe5f61673ab3">Arc Studio app 37c6c8dc</a></li>
+<li>Repository paths: <a href="https://github.com/smitrajput/sacred-markets/blob/main/contracts/src/V4SpotVenue.sol">contracts/src/V4SpotVenue.sol</a>; <a href="https://github.com/smitrajput/sacred-markets/blob/main/contracts/src/MarginVault.sol">contracts/src/MarginVault.sol</a> (current work); <a href="https://github.com/smitrajput/sacred-markets/blob/main/server/handlers/health.ts">server/handlers/health.ts</a>; <a href="https://github.com/smitrajput/sacred-markets/tree/main/scripts/smoke">scripts/smoke/</a>; <a href="https://github.com/smitrajput/sacred-markets/blob/main/deployments/arc-testnet.json">deployments/arc-testnet.json</a></li>
+</ul>
+<div class="panel">
+<p><strong>Disclosures.</strong> The structure is a proposed design under review. It has not been certified as Shariah compliant. It is not production-ready and has not been audited. This document contains no private keys and no personal information. Only testnet tokens and addresses are referenced.</p>
+</div>
+</section>
+
+</main>
+</body>
+</html>

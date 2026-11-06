@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 380" role="img" aria-labelledby="loss-t loss-d" font-family="system-ui, Helvetica, Arial, sans-serif">
+<title id="loss-t">Principal-loss waterfall</title>
+<desc id="loss-d">After final collateral sale, draw primary reserve, tail reserve, optional pilot backstop, then charge uncovered loss to LP NAV. Reserve coverage transfers value internally into LP idle cash. It is not paid to the trader or keeper.</desc>
+<defs><marker id="ah5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b5321f"/></marker></defs>
+<text x="170" y="30" font-size="16" font-weight="700" text-anchor="middle">Unpaid principal after final sale</text>
+<path d="M170,42 V62" stroke="#b5321f" marker-end="url(#ah5)"/>
+<rect x="30" y="64" width="280" height="48" rx="3" fill="#fdfbf6" stroke="#1b1915"/>
+<text x="170" y="94" font-size="16" text-anchor="middle">1 · Primary reserve</text>
+<path d="M170,112 V140" stroke="#b5321f" marker-end="url(#ah5)"/>
+<rect x="30" y="142" width="280" height="48" rx="3" fill="#fdfbf6" stroke="#1b1915"/>
+<text x="170" y="172" font-size="16" text-anchor="middle">2 · Tail reserve</text>
+<path d="M170,190 V218" stroke="#b5321f" marker-end="url(#ah5)"/>
+<rect x="30" y="220" width="280" height="48" rx="3" fill="#fdfbf6" stroke="#1b1915"/>
+<text x="170" y="250" font-size="16" text-anchor="middle">3 · Optional pilot backstop</text>
+<path d="M170,268 V296" stroke="#b5321f" marker-end="url(#ah5)"/>
+<rect x="30" y="298" width="280" height="54" rx="3" fill="#fdfbf6" stroke="#b5321f"/>
+<text x="170" y="321" font-size="16" text-anchor="middle">4 · Remaining loss reduces LP NAV</text>
+<text x="170" y="342" font-size="12" fill="#4b473f" text-anchor="middle">No additional claim against the trader</text>
+</svg>
