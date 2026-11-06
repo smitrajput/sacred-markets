@@ -217,6 +217,78 @@
       "gasUsed": "139661",
       "effectiveGasPriceWei": "25000000000",
       "gasCostWei": "3491525000000000"
+    },
+    "f1.approve": {
+      "label": "trader approve engine 100000 (exact)",
+      "role": "trader",
+      "signer": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+      "chainId": 5042002,
+      "nonce": 4,
+      "to": "0x3600000000000000000000000000000000000000",
+      "calldataHash": "0xd1d19071654af63c09d60b7364200dc164ab83fe9de2eb7bd5cf540320a70dfe",
+      "gas": "67489",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "4929025000",
+      "txHash": "0xd3ec3d603d0497961351837fc18d92b9efb67456405a4d9dc3bda4ef38a470fb",
+      "phase": "confirmed",
+      "blockNumber": "71033745",
+      "gasUsed": "55438",
+      "effectiveGasPriceWei": "24929025000",
+      "gasCostWei": "1382015287950000"
+    },
+    "f1.open": {
+      "label": "engine.open(E=100000)",
+      "role": "trader",
+      "signer": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+      "chainId": 5042002,
+      "nonce": 5,
+      "to": "0xac836824231ae77874d0ca293bd749ffe6c0d00f",
+      "calldataHash": "0x385889ff2399997a7b1593d28d012ecdd8e511ab396a748f33ed53ec89a0dd33",
+      "gas": "1131963",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "5000000000",
+      "txHash": "0xeebbcf401e8d46112e9062962cd3a4d2a1f2793b756da94ecaa36a5610326e79",
+      "phase": "confirmed",
+      "blockNumber": "71033753",
+      "gasUsed": "784206",
+      "effectiveGasPriceWei": "25000000000",
+      "gasCostWei": "19605150000000000"
+    },
+    "f1.approveRepay": {
+      "label": "trader approve engine 100383 (exact)",
+      "role": "trader",
+      "signer": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+      "chainId": 5042002,
+      "nonce": 6,
+      "to": "0x3600000000000000000000000000000000000000",
+      "calldataHash": "0x21a1e9e08fdb6a5724b6a3e711ad3858f83ffb9a97975a1d728617882fbb1b8d",
+      "gas": "67489",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "5000000000",
+      "txHash": "0xd62a1ad6318b1ee027bd152b5df2ef28668aeecefb1c3869d6e4b72ea4d7312d",
+      "phase": "confirmed",
+      "blockNumber": "71033768",
+      "gasUsed": "55438",
+      "effectiveGasPriceWei": "25000000000",
+      "gasCostWei": "1385950000000000"
+    },
+    "f1.repay": {
+      "label": "engine.repayAndRelease(id, 100383)",
+      "role": "trader",
+      "signer": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+      "chainId": 5042002,
+      "nonce": 7,
+      "to": "0xac836824231ae77874d0ca293bd749ffe6c0d00f",
+      "calldataHash": "0xc5185c1527dcd32d88a86e9a449015cfa58957bf97b327a83a69fe2262c20eae",
+      "gas": "485212",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "5000000000",
+      "txHash": "0x853aff671d5661b68e902fc506ecec71ad45d039cf915d06e5ef040e005c14c5",
+      "phase": "confirmed",
+      "blockNumber": "71033777",
+      "gasUsed": "320960",
+      "effectiveGasPriceWei": "25000000000",
+      "gasCostWei": "8024000000000000"
     }
   },
   "records": {
@@ -338,6 +410,316 @@
         "venue": "https://explorer.testnet.arc.io/address/0x4e733fffbe2acc8b5849fa2cb7c1ac3f4a342519",
         "engine": "https://explorer.testnet.arc.io/address/0xac836824231ae77874d0ca293bd749ffe6c0d00f"
       }
+    },
+    "param.f1.open": {
+      "quote": "195",
+      "deadline": "1793971576",
+      "coverageBpsAtQuote": "19425"
+    },
+    "f1.before": {
+      "deployer": {
+        "block": "71033738",
+        "nativeWei": "8713818931370500000",
+        "usdc": "8713818",
+        "cirBtc": "0"
+      },
+      "trader": {
+        "block": "71033738",
+        "nativeWei": "19987340982417600000",
+        "usdc": "19987340",
+        "cirBtc": "10000"
+      },
+      "keeper": {
+        "block": "71033738",
+        "nativeWei": "20000000000000000000",
+        "usdc": "20000000",
+        "cirBtc": "0"
+      },
+      "engine": {
+        "block": "71033738",
+        "nativeWei": "0",
+        "usdc": "0",
+        "cirBtc": "0"
+      },
+      "vault": {
+        "block": "71033738",
+        "nativeWei": "1010000000000000000",
+        "usdc": "1010000",
+        "cirBtc": "0"
+      },
+      "venue": {
+        "block": "71033738",
+        "nativeWei": "0",
+        "usdc": "0",
+        "cirBtc": "0"
+      },
+      "smokeVenue": {
+        "block": "71033738",
+        "nativeWei": "0",
+        "usdc": "0",
+        "cirBtc": "0"
+      },
+      "vaultState": {
+        "depositorIdleCash": "1000000",
+        "outstandingPrincipal": "0",
+        "commitments": "0",
+        "pendingGrossCash": "0",
+        "nav": "1000000",
+        "totalShares": "1000000",
+        "managerCash": "0",
+        "primaryReserve": "4000",
+        "tailReserve": "6000",
+        "pilotBackstop": "0",
+        "claimableWithdrawals": "0",
+        "primaryTarget": "4000",
+        "tailTarget": "6000",
+        "queueHead": "0",
+        "queueTail": "0",
+        "livePositions": "0",
+        "pendingOpens": "0",
+        "activeRequests": "0",
+        "financingCeiling": "1000000",
+        "perAccountCap": "100000",
+        "fundingPaused": false,
+        "engine": "0xac836824231ae77874D0Ca293BD749ffE6c0d00f"
+      }
+    },
+    "f1.opened": {
+      "id": "1",
+      "txHash": "0xeebbcf401e8d46112e9062962cd3a4d2a1f2793b756da94ecaa36a5610326e79",
+      "block": "71033753",
+      "events": [
+        {
+          "name": "AssetAcquired",
+          "logIndex": 36,
+          "args": {
+            "id": "1",
+            "trader": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+            "cost": "200000",
+            "atoms": "195",
+            "referencePrice": "100000000000"
+          }
+        },
+        {
+          "name": "DisclosedSaleAgreed",
+          "logIndex": 37,
+          "args": {
+            "id": "1",
+            "trader": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+            "equity": "100000",
+            "principal": "100000",
+            "markup": "383",
+            "atoms": "195",
+            "termsHash": "0xb3dc89d6be33479580f5bc183906c6d7d1b67559167252edd086af824733e8b7"
+          }
+        },
+        {
+          "name": "Pledged",
+          "logIndex": 38,
+          "args": {
+            "id": "1",
+            "trader": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+            "atoms": "195",
+            "termsHash": "0xb3dc89d6be33479580f5bc183906c6d7d1b67559167252edd086af824733e8b7"
+          }
+        },
+        {
+          "name": "Opened",
+          "logIndex": 45,
+          "args": {
+            "id": "1",
+            "trader": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+            "maturesAt": "1795180284"
+          }
+        }
+      ],
+      "position": {
+        "trader": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+        "status": 1,
+        "openedAt": "1793970684",
+        "maturesAt": "1795180284",
+        "grossCost": "200000",
+        "principal0": "100000",
+        "principal": "100000",
+        "markup0": "383",
+        "markup": "383",
+        "collateral": "195",
+        "collected": "0",
+        "lpAllocation": "0",
+        "termsHash": "0xb3dc89d6be33479580f5bc183906c6d7d1b67559167252edd086af824733e8b7"
+      },
+      "after": {
+        "deployer": {
+          "block": "71033753",
+          "nativeWei": "8713818931370500000",
+          "usdc": "8713818",
+          "cirBtc": "0"
+        },
+        "trader": {
+          "block": "71033753",
+          "nativeWei": "19866353817129650000",
+          "usdc": "19866353",
+          "cirBtc": "10000"
+        },
+        "keeper": {
+          "block": "71033753",
+          "nativeWei": "20000000000000000000",
+          "usdc": "20000000",
+          "cirBtc": "0"
+        },
+        "engine": {
+          "block": "71033753",
+          "nativeWei": "0",
+          "usdc": "0",
+          "cirBtc": "195"
+        },
+        "vault": {
+          "block": "71033753",
+          "nativeWei": "910000000000000000",
+          "usdc": "910000",
+          "cirBtc": "0"
+        },
+        "venue": {
+          "block": "71033753",
+          "nativeWei": "0",
+          "usdc": "0",
+          "cirBtc": "0"
+        },
+        "smokeVenue": {
+          "block": "71033753",
+          "nativeWei": "0",
+          "usdc": "0",
+          "cirBtc": "0"
+        },
+        "vaultState": {
+          "depositorIdleCash": "900000",
+          "outstandingPrincipal": "100000",
+          "commitments": "0",
+          "pendingGrossCash": "0",
+          "nav": "1000000",
+          "totalShares": "1000000",
+          "managerCash": "0",
+          "primaryReserve": "4000",
+          "tailReserve": "6000",
+          "pilotBackstop": "0",
+          "claimableWithdrawals": "0",
+          "primaryTarget": "4000",
+          "tailTarget": "6000",
+          "queueHead": "0",
+          "queueTail": "0",
+          "livePositions": "1",
+          "pendingOpens": "0",
+          "activeRequests": "0",
+          "financingCeiling": "1000000",
+          "perAccountCap": "100000",
+          "fundingPaused": false,
+          "engine": "0xac836824231ae77874D0Ca293BD749ffE6c0d00f"
+        }
+      },
+      "gasCostWei": "19605150000000000"
+    },
+    "f1.released": {
+      "txHash": "0x853aff671d5661b68e902fc506ecec71ad45d039cf915d06e5ef040e005c14c5",
+      "block": "71033777",
+      "events": [
+        {
+          "name": "Repaid",
+          "logIndex": 22,
+          "args": {
+            "id": "1",
+            "payer": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+            "principalPaid": "100000",
+            "markupPaid": "383"
+          }
+        },
+        {
+          "name": "Released",
+          "logIndex": 25,
+          "args": {
+            "id": "1",
+            "trader": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+            "atomsReturned": "195"
+          }
+        }
+      ],
+      "after": {
+        "deployer": {
+          "block": "71033777",
+          "nativeWei": "8713818931370500000",
+          "usdc": "8713818",
+          "cirBtc": "0"
+        },
+        "trader": {
+          "block": "71033777",
+          "nativeWei": "19756560867129650000",
+          "usdc": "19756560",
+          "cirBtc": "10195"
+        },
+        "keeper": {
+          "block": "71033777",
+          "nativeWei": "20000000000000000000",
+          "usdc": "20000000",
+          "cirBtc": "0"
+        },
+        "engine": {
+          "block": "71033777",
+          "nativeWei": "0",
+          "usdc": "0",
+          "cirBtc": "0"
+        },
+        "vault": {
+          "block": "71033777",
+          "nativeWei": "1010383000000000000",
+          "usdc": "1010383",
+          "cirBtc": "0"
+        },
+        "venue": {
+          "block": "71033777",
+          "nativeWei": "0",
+          "usdc": "0",
+          "cirBtc": "0"
+        },
+        "smokeVenue": {
+          "block": "71033777",
+          "nativeWei": "0",
+          "usdc": "0",
+          "cirBtc": "0"
+        },
+        "vaultState": {
+          "depositorIdleCash": "1000294",
+          "outstandingPrincipal": "0",
+          "commitments": "0",
+          "pendingGrossCash": "0",
+          "nav": "1000294",
+          "totalShares": "1000000",
+          "managerCash": "89",
+          "primaryReserve": "4000",
+          "tailReserve": "6000",
+          "pilotBackstop": "0",
+          "claimableWithdrawals": "0",
+          "primaryTarget": "4000",
+          "tailTarget": "6000",
+          "queueHead": "0",
+          "queueTail": "0",
+          "livePositions": "0",
+          "pendingOpens": "0",
+          "activeRequests": "0",
+          "financingCeiling": "1000000",
+          "perAccountCap": "100000",
+          "fundingPaused": false,
+          "engine": "0xac836824231ae77874D0Ca293BD749ffE6c0d00f"
+        }
+      },
+      "checks": {
+        "lpIdleIncrease": true,
+        "managerCash89": true,
+        "outstandingZero": true,
+        "liveZero": true,
+        "btcReturnedToTrader": true,
+        "engineBtcZero": true,
+        "engineUsdcZero": true
+      },
+      "gasCostWei": "8024000000000000"
     }
   }
 }
