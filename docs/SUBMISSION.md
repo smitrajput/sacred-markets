@@ -36,6 +36,7 @@ The Uniswap entry is **Build with Uniswap**, through the v4 AMM integration. Sac
 
 | Field | Link or state |
 | --- | --- |
+| Branded app entry | https://sacred.markets/app (redirects to the hosted MVP) |
 | Public app and read API | https://sacred-arc-mvp.vercel.app |
 | Repository | https://github.com/smitrajput/sacred-markets |
 | Studio app for submission | https://studio.arc.io/app/37c6c8dc-b313-49c9-9cbb-fe5f61673ab3 |

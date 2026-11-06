@@ -5,6 +5,7 @@ USDC liquidity and fixed-markup cirBTC financing on Arc Testnet.
 
 Arc Testnet MVP: one cirBTC sale-financing market with Earn, Trade and Activity. The vault, financing engine, operator price fixture and fixed-pool Uniswap v4 adapter are deployed. The frontend and read API are public at **[sacred-arc-mvp.vercel.app](https://sacred-arc-mvp.vercel.app)**. The founder completed the real MetaMask rehearsal with separate depositor and trader accounts: deposit, open, repay and release BTC, request withdrawal, keeper processing and claim. All nine receipts and the resulting accounting were independently verified. An earlier live keeper coverage sale is also verified.
 
+- [Launch app through sacred.markets](https://sacred.markets/app): the landing page forwards to the same hosted MVP.
 - [Arc Studio implementation provenance and source hashes](docs/BUILD_PROVENANCE.md): historical 81-file wallet checkpoint plus the [current 23-path UI/brand comparison](docs/review/STUDIO_UI_SOURCE_MATCH.json), including verified font hashes.
 - [Hosted deployment checks](docs/checkpoints/04-hosted.md) and [frontend/API review](docs/review/UI_API_REVIEW.md)
 - [Architecture](docs/ARCHITECTURE.md) and [demo runbook](docs/DEMO.md)
