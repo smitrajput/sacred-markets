@@ -1,0 +1,52 @@
+{
+  "checkedAt": "2026-11-06T15:03:11.029Z",
+  "chainId": 5042002,
+  "owner": "0x5B935E09b4749efbE9AA9855ac049d7cacE32659",
+  "vault": "0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450",
+  "sourceCommit": "d71ddbd",
+  "approval": {
+    "hash": "0x12eab7381ba3ed5397c90bd5a808440080054402b7a414408d8806910afc1c0d",
+    "block": "71046467",
+    "nonce": 0,
+    "status": "success",
+    "call": {
+      "functionName": "approve",
+      "args": [
+        "0xf3fbDa5C4354c9c3D384CfeED90aACdDe28C6450",
+        "100000"
+      ]
+    },
+    "gasCostWei": "1108760000000000"
+  },
+  "deposit": {
+    "hash": "0xee5a1b2847299604da329322f857ed90fd3fe3d87822438a61c0edeac2b22baf",
+    "block": "71046501",
+    "nonce": 1,
+    "status": "success",
+    "call": {
+      "functionName": "deposit",
+      "args": [
+        "100000",
+        "99470",
+        "0x97250e4278d3490a68e4426ce66f91f87fe348b95483150482e7f71736298d2a"
+      ]
+    },
+    "event": {
+      "account": "0x5B935E09b4749efbE9AA9855ac049d7cacE32659",
+      "amount": "100000",
+      "shares": "99970",
+      "navBefore": "900265"
+    },
+    "gasCostWei": "2532600000000000"
+  },
+  "scope": "Actual user-signed hosted-browser approval and deposit; independently checked on chain. No transaction sent by this verifier.",
+  "accounting": {
+    "sharesBefore": "900000",
+    "expectedMintedShares": "99970",
+    "navAfter": "1000265",
+    "totalSharesAfter": "999970",
+    "ownerSharesAfter": "99970",
+    "observedBlock": "71046601",
+    "checks": "floor(amount * totalSharesBefore / navBefore) matches minted shares; NAV increased by exactly the deposited amount."
+  }
+}

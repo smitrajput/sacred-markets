@@ -1,0 +1,52 @@
+{
+  "checkedAt": "2026-11-06T14:58:04.411708+00:00",
+  "baseUrl": "https://sacred-arc-mvp.vercel.app",
+  "sourceCommit": "d71ddbd",
+  "deploymentId": "dpl_3tCzpRKHCFNvRCEr8QekURFG9DKe",
+  "pageStatus": 200,
+  "asset": "/assets/index-Bd9LzlWz.js",
+  "assetStatus": 200,
+  "bundleSha256": "b3d204886e5c9c63d92288922e42578680d3f9898f3f1e37d4bcfceb039ba92f",
+  "matchesLocalBuiltBundle": true,
+  "newWalletPreparationPresent": true,
+  "oldMisleadingMessageAbsent": true,
+  "healthStatus": 200,
+  "health": {
+    "status": "ok",
+    "service": "sacred-api",
+    "time": "2026-11-06T14:58:04.273Z",
+    "mode": "read-only",
+    "signing": "none",
+    "chain": {
+      "name": "Arc Testnet",
+      "chainId": 5042002,
+      "rpc": {
+        "status": "reachable",
+        "chainId": 5042002,
+        "chainIdMatches": true,
+        "latestBlock": 71046219,
+        "latencyMs": 343
+      }
+    },
+    "contracts": {
+      "source": "deployments/arc-testnet.json",
+      "statuses": {
+        "usdcEarn": "deployed",
+        "cirBtcSpotFinancing": "deployed",
+        "demoPriceGuard": "deployed",
+        "productionVenue": "deployed"
+      }
+    },
+    "scheduler": {
+      "status": "unavailable",
+      "kind": "external",
+      "detail": "The keeper is a separately run operator process, not part of this serverless deployment. Nothing is scheduled here; wallet actions remain permissionless."
+    },
+    "deployment": {
+      "host": "vercel",
+      "environment": "production",
+      "region": "iad1",
+      "commit": "d71ddbd"
+    }
+  }
+}

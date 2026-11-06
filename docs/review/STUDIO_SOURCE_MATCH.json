@@ -1,9 +1,9 @@
 {
-  "checkedCommit": "1737996cee952e9cc653e08c93814a79c51f8c19",
+  "checkedCommit": "d71ddbd7b33217e737f428761a82465439f1f1a7",
   "studioAppId": "37c6c8dc-b313-49c9-9cbb-fe5f61673ab3",
   "studioThreadId": "868bf545-07ba-4ecd-a97c-b45762be5d3c",
-  "checkedAt": "2026-11-06T14:30:23.450760+00:00",
-  "scope": "Fresh scoped Arc Studio CLI download; source files only, excludes secrets. Local-owned documentation and hosting exclusions are outside this comparison.",
+  "checkedAt": "2026-11-06T14:57:35.483901+00:00",
+  "scope": "Fresh scoped Arc Studio CLI download after wallet preparation fix; source files only, excludes secrets. Local-owned documentation and hosting exclusions are outside this comparison.",
   "files": [
     {
       "path": "api/activity.ts",
@@ -338,8 +338,8 @@
     {
       "path": "src/hooks/useAction.ts",
       "match": "exact",
-      "studioSha256": "ddeecb2216464e3d0a43a3eff053d1d94bfe3f47f6905897784df93cf4e26f44",
-      "localSha256": "ddeecb2216464e3d0a43a3eff053d1d94bfe3f47f6905897784df93cf4e26f44"
+      "studioSha256": "90b644c42df3f476987f4093decb601c30245a9f51b4bf755c072f6db8912f4c",
+      "localSha256": "90b644c42df3f476987f4093decb601c30245a9f51b4bf755c072f6db8912f4c"
     },
     {
       "path": "src/hooks/useWallet.ts",
@@ -422,8 +422,26 @@
     {
       "path": "src/lib/txRunner.ts",
       "match": "exact",
-      "studioSha256": "47fb7d865b71139938ef5bb3387fd6773ab69552c3fdeac653604884cc609aa3",
-      "localSha256": "47fb7d865b71139938ef5bb3387fd6773ab69552c3fdeac653604884cc609aa3"
+      "studioSha256": "4232ab61e3496bf6ac0effb2c242c55890d9cbe567d125a8fe1a3631b04f9b95",
+      "localSha256": "4232ab61e3496bf6ac0effb2c242c55890d9cbe567d125a8fe1a3631b04f9b95"
+    },
+    {
+      "path": "src/lib/wallet.test.ts",
+      "match": "exact",
+      "studioSha256": "f5c99dc08ee8332cd91636b1ebe939fc3c6fd600c82c5c38e4e800bfc122b72b",
+      "localSha256": "f5c99dc08ee8332cd91636b1ebe939fc3c6fd600c82c5c38e4e800bfc122b72b"
+    },
+    {
+      "path": "src/lib/wallet.ts",
+      "match": "exact",
+      "studioSha256": "6f91ef0d691fad07c429fe6cef23ae0bf594e6166b543f3be1c7683161ec4d30",
+      "localSha256": "6f91ef0d691fad07c429fe6cef23ae0bf594e6166b543f3be1c7683161ec4d30"
+    },
+    {
+      "path": "src/lib/walletTestKit.ts",
+      "match": "exact",
+      "studioSha256": "c3d1d649945003f406d14382d2bcff1ca6f4d18562c89b76ccbb6878e92ac75d",
+      "localSha256": "c3d1d649945003f406d14382d2bcff1ca6f4d18562c89b76ccbb6878e92ac75d"
     },
     {
       "path": "src/main.tsx",
