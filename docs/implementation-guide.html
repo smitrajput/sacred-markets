@@ -68,7 +68,7 @@ button{font:inherit;background:var(--ink);color:var(--panel);border:0;border-rad
 <h1>Sacred / Inside the MVP</h1>
 <p class="lede">One market, one chain, real USDC settlement. This document sets out the approved design, the verified evidence, and what remains open, so each technical decision can be explained.</p>
 <p><span class="status">Implementation in progress; final code reconciliation pending.</span></p>
-<p class="kicker">Verified state: 6 Nov 2026, approximately 17:55 IST</p>
+<p class="kicker">Verified state: 6 Nov 2026, approximately 18:15 IST</p>
 <p class="noprint"><button type="button" onclick="window.print()">Print / Save PDF</button></p>
 <p class="noprint">Reusable diagrams: <a href="diagrams/architecture.svg" download>Architecture</a> · <a href="diagrams/money-flow.svg" download>Money Flow</a> · <a href="diagrams/loss-waterfall.svg" download>Loss Waterfall</a> · <a href="diagrams/trade-flow.svg" download>Trade Flow</a> · <a href="diagrams/keeper-flow.svg" download>Keeper Flow</a></p>
 </header>
@@ -107,6 +107,7 @@ button{font:inherit;background:var(--ink);color:var(--panel);border:0;border-rad
 <div><dt>PoolManager code</dt><dd>Matches pinned v4 runtime on chain 5042002</dd></div>
 <div><dt>Receipts</dt><dd>12 successful receipts verified; both swaps reconciled to calldata, events and native balances</dd></div>
 <div><dt>Adapter checks</dt><dd>70 passed (68 earlier, 2 new)</dd></div>
+<div><dt>Vault checks</dt><dd>98 passed independently, including reserve waterfalls and handler invariants</dd></div>
 <div><dt>Seed position</dt><dd>NFT 21533; full range ±887220; L 316227</dd></div>
 <div><dt>Seed funding</dt><dd>9.999976 USDC + 0.0001 cirBTC</dd></div>
 <div><dt>Round trip</dt><dd>Buy 0.20 USDC for 195 BTC atoms; sell for 0.197898 USDC; cost 0.002102, gas extra</dd></div>
@@ -163,7 +164,7 @@ button{font:inherit;background:var(--ink);color:var(--panel);border:0;border-rad
 
 <section id="money">
 <h2>Money buckets</h2>
-<p>NAV is LP idle cash plus outstanding principal. Reserves, reserved claims, manager cash and uncollected markup sit in separate buckets, so ordinary deposits and withdrawals use LP assets, not segregated funds. Reserves become LP cash only when explicitly applied to a realized principal loss (<a href="https://github.com/smitrajput/sacred-markets/blob/main/contracts/src/MarginVault.sol">contracts/src/MarginVault.sol</a>, current work item). Donations mint no shares and do not inflate NAV.</p>
+<p>NAV is LP idle cash plus outstanding principal. Reserves, reserved claims, manager cash and uncollected markup sit in separate buckets, so ordinary deposits and withdrawals use LP assets, not segregated funds. Reserves become LP cash only when explicitly applied to a realized principal loss (<a href="https://github.com/smitrajput/sacred-markets/blob/main/contracts/src/MarginVault.sol">contracts/src/MarginVault.sol</a>, verified locally). Donations mint no shares and do not inflate NAV.</p>
 <figure>
 <svg viewBox="0 0 340 640" role="img" aria-labelledby="money-t money-d" font-family="system-ui, Helvetica, Arial, sans-serif">
 <title id="money-t">Money bucket flow from LP deposit to repayment</title>
@@ -463,7 +464,7 @@ button{font:inherit;background:var(--ink);color:var(--panel);border:0;border-rad
 <section id="implementation">
 <h2>Frontend, API and operations</h2>
 <p class="label">Approved design · implementation in progress</p>
-<p>This section describes the approved build; evidence above records what is complete. The vault funding and lifecycle corrections and FIFO passed 76 independent tests. Studio is now completing the reserve waterfall and markup accounting (01c). Pending modules are not labeled done.</p>
+<p>This section describes the approved build; evidence above records what is complete. The vault, FIFO, collected-markup allocation and reserve waterfall passed 98 independent tests. A focused review identified two small hardening follow-ups before deployment. Studio is now building the financing engine.</p>
 <h3>Frontend</h3>
 <p>React 18, Vite, TypeScript, wagmi and viem, within the existing Sacred brand. Tabs are Earn, Trade and Activity, with an Arc Testnet badge. Each action follows: connect, switch, exact approval, action, confirmed receipt, authoritative refresh. Amounts use bigint or decimal strings: USDC at 6 decimals (shown to 6 places for small debt and split), BTC at 8, and native USDC at 18 with the same balance.</p>
 <h3>Read API</h3>
@@ -478,7 +479,7 @@ button{font:inherit;background:var(--ink);color:var(--panel);border:0;border-rad
 <li>Docs: <a href="https://sacred.markets/docs">sacred.markets/docs</a></li>
 <li>Repository: <a href="https://github.com/smitrajput/sacred-markets">github.com/smitrajput/sacred-markets</a></li>
 <li>Studio: <a href="https://studio.arc.io/app/37c6c8dc-b313-49c9-9cbb-fe5f61673ab3">Arc Studio app 37c6c8dc</a></li>
-<li>Repository paths: <a href="https://github.com/smitrajput/sacred-markets/blob/main/contracts/src/V4SpotVenue.sol">contracts/src/V4SpotVenue.sol</a>; <a href="https://github.com/smitrajput/sacred-markets/blob/main/contracts/src/MarginVault.sol">contracts/src/MarginVault.sol</a> (current work); <a href="https://github.com/smitrajput/sacred-markets/blob/main/server/handlers/health.ts">server/handlers/health.ts</a>; <a href="https://github.com/smitrajput/sacred-markets/tree/main/scripts/smoke">scripts/smoke/</a>; <a href="https://github.com/smitrajput/sacred-markets/blob/main/deployments/arc-testnet.json">deployments/arc-testnet.json</a></li>
+<li>Repository paths: <a href="https://github.com/smitrajput/sacred-markets/blob/main/contracts/src/V4SpotVenue.sol">contracts/src/V4SpotVenue.sol</a>; <a href="https://github.com/smitrajput/sacred-markets/blob/main/contracts/src/MarginVault.sol">contracts/src/MarginVault.sol</a> (verified locally); <a href="https://github.com/smitrajput/sacred-markets/blob/main/server/handlers/health.ts">server/handlers/health.ts</a>; <a href="https://github.com/smitrajput/sacred-markets/tree/main/scripts/smoke">scripts/smoke/</a>; <a href="https://github.com/smitrajput/sacred-markets/blob/main/deployments/arc-testnet.json">deployments/arc-testnet.json</a></li>
 </ul>
 <div class="panel">
 <p><strong>Disclosures.</strong> The structure is a proposed design under review. It has not been certified as Shariah compliant. It is not production-ready and has not been audited. This document contains no private keys and no personal information. Only testnet tokens and addresses are referenced.</p>
