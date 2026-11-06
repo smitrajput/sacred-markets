@@ -1,0 +1,296 @@
+{
+  "checkedAt": "2026-11-06T14:14:28Z",
+  "baseUrl": "http://127.0.0.1:5174",
+  "results": [
+    {
+      "path": "/api/health",
+      "method": "GET",
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "seconds": 0.158,
+      "body": {
+        "status": "ok",
+        "service": "sacred-api",
+        "time": "2026-11-06T14:14:22.868Z",
+        "mode": "read-only",
+        "signing": "none",
+        "chain": {
+          "name": "Arc Testnet",
+          "chainId": 5042002,
+          "rpc": {
+            "status": "reachable",
+            "chainId": 5042002,
+            "chainIdMatches": true,
+            "latestBlock": 71041187,
+            "latencyMs": 151
+          }
+        },
+        "contracts": {
+          "source": "deployments/arc-testnet.json",
+          "statuses": {
+            "usdcEarn": "deployed",
+            "cirBtcSpotFinancing": "deployed",
+            "demoPriceGuard": "deployed",
+            "productionVenue": "deployed"
+          }
+        },
+        "scheduler": {
+          "status": "unavailable",
+          "kind": "external",
+          "detail": "The keeper is a separately run operator process, not part of this serverless deployment. Nothing is scheduled here; wallet actions remain permissionless."
+        },
+        "deployment": {
+          "host": "local",
+          "environment": "development",
+          "region": null,
+          "commit": null
+        }
+      }
+    },
+    {
+      "path": "/api/config",
+      "method": "GET",
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "seconds": 0.485,
+      "body": {
+        "chainId": 5042002,
+        "observedBlock": "71041187",
+        "observedAt": "1793974462",
+        "manifestPolicyHash": "0xb3dc89d6be33479580f5bc183906c6d7d1b67559167252edd086af824733e8b7",
+        "network": {
+          "name": "Arc Testnet",
+          "explorer": "https://explorer.testnet.arc.io",
+          "nativeGasDecimals": 18,
+          "usdcDecimals": 6,
+          "btcDecimals": 8
+        },
+        "contracts": {
+          "vault": "0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450",
+          "engine": "0xac836824231ae77874d0ca293bd749ffe6c0d00f",
+          "guard": "0x4d84bf470b6916d97ec719a5398d534c1adb1d57",
+          "venue": "0x4e733fffbe2acc8b5849fa2cb7c1ac3f4a342519",
+          "usdc": "0x3600000000000000000000000000000000000000",
+          "cirBtc": "0xf0C4a4CE82A5746AbAAd9425360Ab04fbBA432BF"
+        },
+        "deployBlock": "71033361",
+        "deployments": {
+          "vault": {
+            "address": "0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450",
+            "deployTxHash": "0xdb8b3c987ac926e5c076930822bf9a63eea261c4d6f971716377ad59ee7072a1",
+            "deployBlock": 71033370,
+            "codeHash": "0x5e50630020121c4787eb861ad7775ccafcf8ffda329e36bbdbb012c70eae4629"
+          },
+          "engine": {
+            "address": "0xac836824231ae77874d0ca293bd749ffe6c0d00f",
+            "deployTxHash": "0x04dc6505179eac18e73f5e2a0f07b957e8fbf0edb4fc1b6ea4aab89c53e23b71",
+            "deployBlock": 71033391,
+            "codeHash": "0xfe0ba291ca7629d97c59d822b0a9c3ad8a1bd07ac8e3f57fa8d48d2c9e6eff3a"
+          },
+          "guard": {
+            "address": "0x4d84bf470b6916d97ec719a5398d534c1adb1d57",
+            "deployTxHash": "0xab0bba55f9e9d30dc48879249e13195f4cc017ba28fb895a63dd4c283b576d13",
+            "deployBlock": 71033361,
+            "codeHash": "0x9b8f9f58bf7dadcbba931cecdfbf8a491ece64d43fae25780f62857f9b5b403c"
+          },
+          "venue": {
+            "address": "0x4e733fffbe2acc8b5849fa2cb7c1ac3f4a342519",
+            "deployTxHash": "0x19147c9050966415be5ad7e6762bc5d9090bc654fc9a91e5aea16831179ab1bd",
+            "deployBlock": 71033381,
+            "codeHash": "0xeaca07679f2d89ce91b9e3f2bd77fded217a37c620a391153d41e78ddb8db7ed"
+          }
+        },
+        "uniswap": {
+          "quoter": "0x8Dc178eFB8111BB0973Dd9d722ebeFF267c98F94",
+          "stateView": "0xF3334192D15450CdD385c8B70e03f9A6bD9E673b",
+          "poolManager": "0x8366a39CC670B4001A1121B8F6A443A643e40951",
+          "poolId": "0xf4e18ec272549ab0140d43d33a7ba93768ecaec4dee4a7fb4f2c9af00950cde4",
+          "fee": 3000,
+          "tickSpacing": 60
+        },
+        "policy": {
+          "termSeconds": 1209600,
+          "annualMarkupBps": 1000,
+          "lpMarkupBps": 7700,
+          "triggerBps": 16000,
+          "restoreBps": 19000,
+          "initialCoverageBps": 19000,
+          "frictionBps": 300,
+          "dustAtoms": "10000",
+          "earlyRebateBps": 0
+        },
+        "termsHashMatchesChain": true,
+        "gasReserveAtoms": "100000",
+        "keeper": {
+          "status": "external_unverified",
+          "detail": "No heartbeat is published. Manual wallet actions work without any keeper."
+        },
+        "oracle": {
+          "kind": "testnet operator fixture",
+          "note": "Users cannot update it. Opens and sales fail closed when stale."
+        }
+      }
+    },
+    {
+      "path": "/api/vault?owner=0x5B935E09b4749efbE9AA9855ac049d7cacE32659",
+      "method": "GET",
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "seconds": 0.636,
+      "body": {
+        "chainId": 5042002,
+        "observedBlock": "71041188",
+        "observedAt": "1793974462",
+        "manifestPolicyHash": "0xb3dc89d6be33479580f5bc183906c6d7d1b67559167252edd086af824733e8b7",
+        "vault": {
+          "depositorIdleCash": "840877",
+          "outstandingPrincipal": "59388",
+          "commitments": "0",
+          "pendingGrossCash": "0",
+          "nav": "900265",
+          "totalShares": "900000",
+          "managerCash": "89",
+          "primaryReserve": "4000",
+          "tailReserve": "6000",
+          "pilotBackstop": "0",
+          "claimableWithdrawals": "0",
+          "primaryTarget": "4000",
+          "tailTarget": "6000",
+          "queueHead": "1",
+          "queueTail": "1",
+          "livePositions": "1",
+          "pendingOpens": "0",
+          "activeRequests": "0",
+          "financingCeiling": "1000000",
+          "perAccountCap": "100000",
+          "fundingPaused": false,
+          "engine": "0xac836824231ae77874D0Ca293BD749ffE6c0d00f"
+        },
+        "mandateHash": "0x97250e4278d3490a68e4426ce66f91f87fe348b95483150482e7f71736298d2a",
+        "financingHeadroom": "420438",
+        "fullyBacked": true,
+        "navPerShareE6": "1000294",
+        "queue": [],
+        "account": {
+          "owner": "0x5B935E09b4749efbE9AA9855ac049d7cacE32659",
+          "shares": "0",
+          "lockedShares": "0",
+          "claimable": "0"
+        },
+        "oracle": {
+          "priceMicroUsdcPerBtc": "80000000000",
+          "observedAt": "1793970799",
+          "fresh": true,
+          "maxAgeSeconds": "86400",
+          "expiresAt": "1794057199"
+        },
+        "livePositions": 1,
+        "blockers": {
+          "deposit": [],
+          "financing": []
+        }
+      }
+    },
+    {
+      "path": "/api/positions",
+      "method": "GET",
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "seconds": 0.804,
+      "body": {
+        "chainId": 5042002,
+        "observedBlock": "71041190",
+        "observedAt": "1793974463",
+        "manifestPolicyHash": "0xb3dc89d6be33479580f5bc183906c6d7d1b67559167252edd086af824733e8b7",
+        "owner": null,
+        "positions": [
+          {
+            "id": "2",
+            "trader": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+            "status": 1,
+            "openedAt": "1793970729",
+            "maturesAt": "1795180329",
+            "principal0": "100000",
+            "principal": "59388",
+            "markup0": "383",
+            "markup": "383",
+            "debt": "59771",
+            "collateral": "143",
+            "collected": "0",
+            "lpAllocation": "0",
+            "termsHash": "0xb3dc89d6be33479580f5bc183906c6d7d1b67559167252edd086af824733e8b7",
+            "netCollateralValue": "110968",
+            "priceFresh": true,
+            "coverageBps": "19139",
+            "rebalance": {
+              "eligible": false,
+              "partial": false,
+              "sellAtoms": "0",
+              "minUsdc": "0"
+            },
+            "matured": false,
+            "impaired": false
+          }
+        ],
+        "activeTotal": 1,
+        "oracle": {
+          "priceMicroUsdcPerBtc": "80000000000",
+          "observedAt": "1793970799",
+          "fresh": true,
+          "maxAgeSeconds": "86400",
+          "expiresAt": "1794057199"
+        }
+      }
+    },
+    {
+      "path": "/api/activity",
+      "method": "GET",
+      "status": 503,
+      "contentType": "application/json; charset=utf-8",
+      "seconds": 2.188,
+      "body": {
+        "error": {
+          "code": "chain_read_failed",
+          "message": "The chain could not be read right now.",
+          "hint": "Retry in a few seconds. (Request exceeds defined limit.\n\nURL: <url>\nRequest body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":[\"0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450\",\"0xac8368242)"
+        }
+      }
+    },
+    {
+      "path": "/api/positions?owner=bad",
+      "method": "GET",
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "seconds": 0.002,
+      "body": {
+        "error": {
+          "code": "invalid_owner",
+          "message": "owner is not a valid address",
+          "hint": "Use a 0x-prefixed 20-byte address."
+        }
+      }
+    },
+    {
+      "path": "/api/activity?cursor=bad",
+      "method": "GET",
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "seconds": 0.326,
+      "body": {
+        "error": {
+          "code": "invalid_cursor",
+          "message": "cursor is not a valid continuation",
+          "hint": "Use the nextCursor value returned by this endpoint, unchanged."
+        }
+      }
+    },
+    {
+      "path": "/api/vault",
+      "method": "HEAD",
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "seconds": 1.203,
+      "body": null
+    }
+  ]
+}
