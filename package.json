@@ -13,7 +13,11 @@
     "check": "bash scripts/check.sh",
     "contracts:build": "forge build",
     "contracts:test": "forge test",
-    "contracts:test:arc-fork": "bash scripts/test-arc-fork.sh"
+    "contracts:test:arc-fork": "bash scripts/test-arc-fork.sh",
+    "smoke:status": "bun scripts/smoke/run.ts status",
+    "smoke:seed": "bun scripts/smoke/run.ts seed",
+    "smoke:venue": "bun scripts/smoke/run.ts venue",
+    "smoke:trade": "bun scripts/smoke/run.ts trade"
   },
   "dependencies": {
     "@circle-fin/adapter-viem-v2": "^1.19.2",
