@@ -26,7 +26,11 @@
     "core:prep2": "bun scripts/core/run.ts prep2",
     "core:flow2": "bun scripts/core/run.ts flow2",
     "core:fifo": "bun scripts/core/run.ts fifo",
-    "core:release": "bun scripts/core/run.ts release"
+    "core:release": "bun scripts/core/run.ts release",
+    "test:journal": "bun test scripts/core",
+    "keeper": "bun scripts/keeper.ts",
+    "keeper:dry": "bun scripts/keeper.ts --dry-run --once",
+    "test:app": "bun test server src/lib scripts/core"
   },
   "dependencies": {
     "@circle-fin/adapter-viem-v2": "^1.19.2",
