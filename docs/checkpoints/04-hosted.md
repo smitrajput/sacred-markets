@@ -1,6 +1,6 @@
 # Checkpoint 04: public frontend and read API
 
-Public app: **https://sacred-arc-mvp.vercel.app**. Current source checkpoint: `d71ddbd`. Current deployment: `dpl_3tCzpRKHCFNvRCEr8QekURFG9DKe`, Vercel project `sacred-arc-mvp` in `smit-rajputs-projects`. Codex deployed the downloaded Studio application through the authenticated Vercel CLI; contract generation/deployment remained in Studio. This host deployment created no contracts or chain transactions.
+Public app: **https://sacred-arc-mvp.vercel.app**. Application source checkpoint: `d71ddbd`. Current deployment: `dpl_9ZgeMmhE29SETZqMMqUgpm9c9aZD`, built from documentation checkpoint `7170898`, Vercel project `sacred-arc-mvp` in `smit-rajputs-projects`. Codex deployed the downloaded Studio application through the authenticated Vercel CLI; contract generation/deployment remained in Studio. The final guide redeploy leaves the application bundle byte-identical to the wallet-verified build. These host deployments created no contracts or chain transactions. [Guide and bundle verification](../review/GUIDE_HOSTED_VERIFICATION.json).
 
 ## Verified
 

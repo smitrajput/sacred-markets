@@ -1,0 +1,55 @@
+{
+  "checkedAt": "2026-11-06T15:43:44.527858+00:00",
+  "publicUrl": "https://sacred-arc-mvp.vercel.app",
+  "deploymentSourceCommit": "7170898",
+  "applicationSourceCheckpoint": "d71ddbd",
+  "guide": {
+    "status": 200,
+    "sha256": "fff8b2432f0fd3311db943103f9ca1d4ce6493b769aa7ce5fb53ec473b5ccc17",
+    "matchesReviewedLocalGuide": true
+  },
+  "applicationBundle": {
+    "path": "/assets/index-Bd9LzlWz.js",
+    "sha256": "b3d204886e5c9c63d92288922e42578680d3f9898f3f1e37d4bcfceb039ba92f",
+    "unchangedFromWalletVerifiedBuild": true
+  },
+  "health": {
+    "status": "ok",
+    "service": "sacred-api",
+    "time": "2026-11-06T15:43:44.413Z",
+    "mode": "read-only",
+    "signing": "none",
+    "chain": {
+      "name": "Arc Testnet",
+      "chainId": 5042002,
+      "rpc": {
+        "status": "reachable",
+        "chainId": 5042002,
+        "chainIdMatches": true,
+        "latestBlock": 71051580,
+        "latencyMs": 394
+      }
+    },
+    "contracts": {
+      "source": "deployments/arc-testnet.json",
+      "statuses": {
+        "usdcEarn": "deployed",
+        "cirBtcSpotFinancing": "deployed",
+        "demoPriceGuard": "deployed",
+        "productionVenue": "deployed"
+      }
+    },
+    "scheduler": {
+      "status": "unavailable",
+      "kind": "external",
+      "detail": "The keeper is a separately run operator process, not part of this serverless deployment. Nothing is scheduled here; wallet actions remain permissionless."
+    },
+    "deployment": {
+      "host": "vercel",
+      "environment": "production",
+      "region": "iad1",
+      "commit": "7170898"
+    }
+  },
+  "scope": "Documentation-only redeploy: hosted guide equals reviewed repository bytes, application bundle unchanged, live read-only health returned 200. No transaction sent."
+}

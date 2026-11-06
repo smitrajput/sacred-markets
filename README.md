@@ -9,6 +9,7 @@ Arc Testnet MVP: one cirBTC sale-financing market with Earn, Trade and Activity.
 - [Hosted deployment checks](docs/checkpoints/04-hosted.md) and [frontend/API review](docs/review/UI_API_REVIEW.md)
 - [Architecture](docs/ARCHITECTURE.md) and [demo runbook](docs/DEMO.md)
 - [Browser lifecycle evidence](docs/checkpoints/04-hosted.md#browser-wallet-rehearsal-complete)
+- [Submission draft and remaining founder actions](docs/SUBMISSION.md)
 
 - [Visual implementation guide and reusable diagrams](docs/MASTER_GUIDE.md)
 - [Deployed contracts and live transaction walkthrough](docs/checkpoints/02-live.md)
