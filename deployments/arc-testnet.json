@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "project": "Sacred",
+  "network": {
+    "name": "Arc Testnet",
+    "chainId": 5042002,
+    "rpcUrl": "https://rpc.testnet.arc.io",
+    "explorerUrl": "https://explorer.testnet.arc.io",
+    "nativeGas": {
+      "symbol": "USDC",
+      "decimals": 18,
+      "note": "Native gas is the same USDC balance as the ERC20 view, not additional funds. Use ERC20 units (6 decimals) for all protocol accounting."
+    }
+  },
+  "externalContracts": {
+    "usdc": {
+      "status": "verified",
+      "address": "0x3600000000000000000000000000000000000000",
+      "standard": "ERC20",
+      "symbol": "USDC",
+      "name": "USDC",
+      "decimals": 6,
+      "verification": {
+        "method": "eth_chainId, eth_getCode, symbol(), name(), decimals() via read-only calls",
+        "checkedAt": "2026-11-06T10:29:26Z",
+        "blockNumber": 71014626,
+        "codeSizeBytes": 1798,
+        "codeHash": "0xc9987bd3af6b26a030951faa7eacc017b68343aeedf3ce5fe68f821c4b93939d"
+      }
+    },
+    "cirBTC": {
+      "status": "verified",
+      "address": "0xf0C4a4CE82A5746AbAAd9425360Ab04fbBA432BF",
+      "standard": "ERC20",
+      "symbol": "cirBTC",
+      "name": "Circle Wrapped Bitcoin",
+      "decimals": 8,
+      "verification": {
+        "method": "eth_chainId, eth_getCode, symbol(), name(), decimals() via read-only calls",
+        "checkedAt": "2026-11-06T10:29:26Z",
+        "blockNumber": 71014626,
+        "codeSizeBytes": 1496,
+        "codeHash": "0x0833ebf26b18ab2caebefb078a62c34ba84c7e89e72a73986dbce75e8b08ad87"
+      }
+    }
+  },
+  "sacredContracts": {
+    "usdcEarn": {
+      "status": "undeployed",
+      "description": "USDC Earn (provisional name)",
+      "address": null,
+      "deployTxHash": null,
+      "deployBlock": null
+    },
+    "cirBtcSpotFinancing": {
+      "status": "undeployed",
+      "description": "cirBTC spot financing (provisional name)",
+      "address": null,
+      "deployTxHash": null,
+      "deployBlock": null
+    }
+  },
+  "roles": {
+    "admin": null,
+    "pauser": null,
+    "treasury": null
+  }
+}
