@@ -16,7 +16,7 @@ Sacred is deployed on Arc Testnet with Earn, Trade, Activity, a read-only API an
 
 For contract evidence, read `docs/review/CORE_LIVE_VERIFICATION.md`. For browser behavior, read `docs/review/UI_API_REVIEW.md` and `docs/review/BROWSER_WALLET_REVIEW.md`. Tests, builds and startup commands are listed in `package.json`.
 
-For the final demo, read `docs/DEMO.md`. Judge access to Studio and the actual video remain separate delivery gates: source hashes and a public Vercel app do not establish judge access to the Studio conversation. Keep `AI_WORKLOG.md` and checkpoint documents factual about the actor, source, checks and limitations.
+For the final demo, read `docs/DEMO.md`. The founder chose the existing Studio app URL plus the public Vercel URL, supported by Studio history, code and runtime traces in the demo. Do not keep organizer confirmation as a blocker or ask for it again without new evidence. Judge access remains unverified; this decision does not establish public conversation access. The actual video and presentation sharing remain delivery gates. Keep `AI_WORKLOG.md` and checkpoint documents factual about the actor, source, checks and limitations.
 
 ## Share links
 

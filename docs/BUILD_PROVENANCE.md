@@ -7,15 +7,17 @@ Sacred's MVP application, contracts and operator scripts were generated in **one
 - [Continued Studio conversation](https://studio.arc.io/app/37c6c8dc-b313-49c9-9cbb-fe5f61673ab3?thread=868bf545-07ba-4ecd-a97c-b45762be5d3c): `868bf545-07ba-4ecd-a97c-b45762be5d3c`
 - Source: [smitrajput/sacred-markets](https://github.com/smitrajput/sacred-markets)
 - Current implementation checkpoint: [`d71ddbd`](https://github.com/smitrajput/sacred-markets/commit/d71ddbd)
-- **Judge-accessible Share link: pending signed-out verification.** The workspace URL above requires login; it is not yet sufficient evidence of public judge access.
+- Public app: [Sacred MVP](https://sacred-arc-mvp.vercel.app/)
+- **Chosen submission approach:** include the Studio app URL above and the public Vercel URL, and show the Studio build conversation, code, preview and runtime traces in the demo. The founder selected this route on November 6 because the Arc team was unavailable. Organizer confirmation is not a blocker.
+- **Access observation:** the Studio workspace requires login when opened signed out. Judge access has not been independently verified; neither URL is represented as proof of public access to the build conversation.
 
 ## Organizer requirement
 
-The [official Arc prize page for ETHGlobal Mumbai](https://ethglobal.com/events/mumbai/prizes/arc), checked November 6, requires a shareable Studio project URL judges can open and Studio shown in the demo. Source hashes and a Vercel URL support the evidence but do not replace that requirement. Share currently prompts the founder to deploy to Vercel; the correct project-sharing route remains an open delivery item.
+The [official Arc prize page for ETHGlobal Mumbai](https://ethglobal.com/events/mumbai/prizes/arc), checked November 6, requires a shareable Studio project URL judges can open and Studio shown in the demo. Source hashes and a Vercel URL support the evidence but do not replace that requirement. Share currently prompts the founder to deploy to Vercel. The founder has chosen to submit the two existing URLs and demonstrate Studio directly; this is a submission decision, not a claim of organizer confirmation or verified judge permissions.
 
 ## Verification route for judges
 
-1. Open the verified Share link once recorded above. Inspect the app's build conversation/code if that sharing mode exposes them. If sharing only exposes the running app, the founder should show the signed-in Studio workspace live or in the demo video as well.
+1. Open the Studio app URL and public Vercel app linked above. The demo shows the signed-in Studio workspace, its build conversation and current code. Runtime traces demonstrate preview activity; they are supplementary to the build history and source comparison, not proof of authorship by themselves.
 2. Inspect the chronological [AI work log](../AI_WORKLOG.md), [milestone prompts](prompts/) and [Studio/local workflow](STUDIO_GIT_WORKFLOW.md). The build did not switch to a second app.
 3. Compare the downloaded implementation with [source hashes](review/STUDIO_SOURCE_MATCH.json). A fresh scoped download compared 81 files at the recorded commit, including contract sources, application/API code, scripts, configuration and deployment manifest. 79 match the Studio bytes exactly. `src/main.tsx` and `tailwind.config.js` differ only in trailing whitespace; there are no implementation differences within the checked scope. Local-owned documentation and hosting exclusions are outside this comparison.
 4. Inspect [sanitized CLI checkpoint results](review/STUDIO_CHECKPOINT_03_RESULTS.json). These preserve app/thread/trace identifiers and the reported checks, without raw event logs, preview credentials or environment values. Trace IDs are provenance references, not independently verifiable signatures; access to Studio and the code comparison are the stronger checks.

@@ -44,7 +44,7 @@ bun run dev
 
 The development server prints its local URL. `verify:onchain` makes read-only Arc Testnet calls. The adapter suite includes real Arc native-USDC fork execution through `bash scripts/test-arc-fork.sh`. On macOS the pinned Arc binary also needs `libusb` (`brew install libusb`).
 
-[Arc Studio workspace](https://studio.arc.io/app/37c6c8dc-b313-49c9-9cbb-fe5f61673ab3) · [00a verification](docs/review/CHECKPOINT_00A.md). Judge-accessible sharing will be verified before submission.
+[Arc Studio workspace](https://studio.arc.io/app/37c6c8dc-b313-49c9-9cbb-fe5f61673ab3) · [00a verification](docs/review/CHECKPOINT_00A.md). Submission uses this Studio app URL plus the public Vercel URL; the demo will show the Studio build conversation, code and runtime traces. Judge access has not been independently verified.
 
 ## Read API and hosting
 

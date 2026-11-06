@@ -131,3 +131,7 @@ The user explicitly authorized a bounded keeper episode: at most 60 sequential c
 ## Final guide and submission preparation — November 6, 21:14 IST
 
 Codex reconciled the guide, project memory and demo script with the deployed application and completed browser receipts. The public guide was redeployed from documentation checkpoint 7170898; its bytes match the reviewed copy and the application bundle remains byte-identical to the wallet-verified build. All 81 previously compared implementation files are unchanged. Codex prepared a six-slide editable presentation in Spaces and the [submission draft](docs/SUBMISSION.md), with recording and Studio judge access left explicitly open. At the user's request, the separate local progress page was updated from four to seven verified milestones and fresh account-usage snapshots; it now displays independent timestamps and flags readings older than fifteen minutes. No implementation code or contract behavior changed.
+
+## Founder submission-route decision — November 6
+
+With the Arc team unavailable, the founder chose to submit the existing Studio app URL and public Vercel URL and show Studio history, current code and runtime traces in the demo. Codex recorded this as the selected submission approach and removed organizer confirmation as a blocker. Judge access remains unverified; no organizer approval or public conversation access is claimed. The founder also declined the optional DeltaV update; nothing was posted.

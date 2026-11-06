@@ -1,6 +1,6 @@
 # Sacred submission package
 
-Prepared November 6, 2026. The application and browser rehearsal are complete. The final video URL, presentation sharing/export and judge access to the Studio workspace still need confirmation before submission.
+Prepared November 6, 2026. The application and browser rehearsal are complete. The founder selected the existing Studio app URL and public Vercel URL, supported by Studio history/code/runtime traces in the demo. Organizer confirmation is no longer a blocker. The final video URL and presentation sharing/export remain.
 
 ## Project title and short description
 
@@ -34,8 +34,9 @@ Actual integrations are Arc Testnet, USDC for settlement and native gas, cirBTC 
 | --- | --- |
 | Public app and read API | https://sacred-arc-mvp.vercel.app |
 | Repository | https://github.com/smitrajput/sacred-markets |
-| Studio continuation | https://studio.arc.io/app/37c6c8dc-b313-49c9-9cbb-fe5f61673ab3?thread=868bf545-07ba-4ecd-a97c-b45762be5d3c |
-| Studio judge access | Unverified. Signed-out workspace redirects to login; Share currently offers hosting. Ask Arc organizers which project URL/access route they accept. |
+| Studio app for submission | https://studio.arc.io/app/37c6c8dc-b313-49c9-9cbb-fe5f61673ab3 |
+| Studio continuation for the demo | https://studio.arc.io/app/37c6c8dc-b313-49c9-9cbb-fe5f61673ab3?thread=868bf545-07ba-4ecd-a97c-b45762be5d3c |
+| Studio access note | Judge access is unverified; signed-out workspace redirects to login. Founder chose both existing URLs plus a direct Studio demonstration. Organizer confirmation is not a blocker. |
 | Source and authorship proof | [BUILD_PROVENANCE.md](BUILD_PROVENANCE.md) |
 | Architecture | [Architecture](ARCHITECTURE.md), [reusable SVG](diagrams/architecture.svg) |
 | Visual technical guide | https://sacred-arc-mvp.vercel.app/guide.html |
@@ -54,7 +55,7 @@ Actual integrations are Arc Testnet, USDC for settlement and native gas, cirBTC 
 
 ## Final founder actions
 
-1. Confirm the accepted Studio sharing/access route with Arc and record the answer.
+1. Include both the Studio app URL and public Vercel URL in the submission. Show the Studio build conversation, current code and runtime traces in the video; do not describe judge permissions as verified.
 2. Record the three-minute walkthrough, including the signed-in Studio workspace and the actual completed receipts; upload and test the link signed out.
 3. Export/share the prepared presentation and add its accessible link.
 4. Confirm the selected bounty/track, prior-work disclosure and final submission form fields; submit before November 7, 09:30 IST.
