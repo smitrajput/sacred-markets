@@ -64,16 +64,8 @@ export class Stop extends Error {
   }
 }
 
-export function loadCore(): CoreState {
-  if (!existsSync(STATE_PATH)) return { schemaVersion: 1, chainId: CHAIN_ID, steps: {}, records: {} }
-  return JSON.parse(readFileSync(STATE_PATH, 'utf8')) as CoreState
-}
-
-export function saveCore(s: CoreState): void {
-  const tmp = STATE_PATH + '.tmp'
-  writeFileSync(tmp, JSON.stringify(s, null, 2) + '\n')
-  renameSync(tmp, STATE_PATH)
-}
+export const loadCore = (): CoreState => fileStore(STATE_PATH).load()
+export const saveCore = (s: CoreState): void => fileStore(STATE_PATH).save(s)
 
 export function setCoreRecord(key: string, value: unknown): void {
   const s = loadCore()
@@ -100,20 +92,80 @@ export interface Plan {
   valueSpendWei?: bigint
 }
 
-async function waitForHead(pc: PublicClient, block: bigint): Promise<void> {
-  for (let i = 0; i < 60; i++) {
-    if ((await pc.getBlockNumber()) >= block) return
-    await new Promise((r) => setTimeout(r, 1000))
+/** Everything runTx touches, injectable so the recovery rules can be tested with mocks (no live failure injection). */
+export interface Store {
+  load(): CoreState
+  save(s: CoreState): void
+}
+export interface ChainLike {
+  assertChain(): Promise<void>
+  getReceipt(hash: Hex): Promise<Pick<TransactionReceipt, 'status' | 'blockNumber' | 'gasUsed' | 'effectiveGasPrice' | 'contractAddress'> | undefined>
+  waitReceipt(hash: Hex): Promise<Pick<TransactionReceipt, 'status' | 'blockNumber' | 'gasUsed' | 'effectiveGasPrice' | 'contractAddress'>>
+  nonce(address: Address, tag: 'latest' | 'pending'): Promise<number>
+  call(args: { account: Address; to?: Address; data: Hex }): Promise<void>
+  estimateGas(args: { account: Address; to?: Address; data: Hex }): Promise<bigint>
+  fees(): Promise<{ maxFeePerGas: bigint; maxPriorityFeePerGas: bigint }>
+  balance(address: Address): Promise<bigint>
+  send(serialized: Hex): Promise<Hex | undefined>
+  readReached(block: bigint): Promise<void>
+}
+export interface SignerLike {
+  address: Address
+  signTransaction(tx: Record<string, unknown>): Promise<Hex>
+}
+export interface RunDeps {
+  store: Store
+  chain: ChainLike
+  signer(role: Role): SignerLike
+}
+
+export const fileStore = (path: string): Store => ({
+  load() {
+    if (!existsSync(path)) return { schemaVersion: 1, chainId: CHAIN_ID, steps: {}, records: {} }
+    return JSON.parse(readFileSync(path, 'utf8')) as CoreState
+  },
+  save(s) {
+    const tmp = path + '.tmp'
+    writeFileSync(tmp, JSON.stringify(s, null, 2) + '\n')
+    renameSync(tmp, path)
+  },
+})
+
+export function liveChain(): ChainLike {
+  const cc = chainClient()
+  return {
+    assertChain: () => assertArcChain(cc),
+    getReceipt: (hash) => cc.getTransactionReceipt({ hash }).catch(() => undefined),
+    waitReceipt: (hash) => cc.waitForTransactionReceipt({ hash, timeout: 150_000 }),
+    nonce: (address, tag) => cc.getTransactionCount({ address, blockTag: tag }),
+    call: async (a) => {
+      await cc.call(a)
+    },
+    estimateGas: (a) => cc.estimateGas(a),
+    fees: () => feeParams(cc),
+    balance: (address) => cc.getBalance({ address }),
+    send: (serializedTransaction) => cc.sendRawTransaction({ serializedTransaction }).catch(() => undefined),
+    readReached: async (block) => {
+      const reader = publicClient()
+      for (let i = 0; i < 60; i++) {
+        if ((await reader.getBlockNumber()) >= block) return
+        await new Promise((r) => setTimeout(r, 1000))
+      }
+    },
   }
 }
 
-async function finalize(cc: PublicClient, step: string): Promise<CoreStep> {
-  const state = loadCore()
+const liveDeps = (): RunDeps => ({ store: fileStore(STATE_PATH), chain: liveChain(), signer: (role) => loadAccount(role) as unknown as SignerLike })
+
+const sameAddr = (a?: string, b?: string) => (a ?? '').toLowerCase() === (b ?? '').toLowerCase()
+
+async function finalizeStep(d: RunDeps, step: string): Promise<CoreStep> {
+  const state = d.store.load()
   const rec = state.steps[step]
   if (!rec) throw new Stop('journal lost ' + step)
-  let receipt: TransactionReceipt
+  let receipt
   try {
-    receipt = await cc.waitForTransactionReceipt({ hash: rec.txHash, timeout: 150_000 })
+    receipt = await d.chain.waitReceipt(rec.txHash)
   } catch {
     throw new Stop(`no receipt for ${step} (${rec.txHash}) within the timeout; re-run to resume, do not resend by hand`)
   }
@@ -123,25 +175,15 @@ async function finalize(cc: PublicClient, step: string): Promise<CoreStep> {
   rec.gasCostWei = (receipt.gasUsed * receipt.effectiveGasPrice).toString()
   if (receipt.contractAddress) rec.contractAddress = receipt.contractAddress
   rec.phase = receipt.status === 'success' ? 'confirmed' : 'reverted'
-  saveCore(state)
+  d.store.save(state)
   if (receipt.status !== 'success') throw new Stop(`${step} reverted on chain (${rec.txHash})`)
-  await waitForHead(publicClient(), receipt.blockNumber) // the read node must have reached the receipt block
+  await d.chain.readReached(receipt.blockNumber)
   return rec
 }
 
-/** Re-reads the receipt of a step recorded as confirmed: recorded success is never trusted on its own. */
-async function verifyConfirmed(cc: PublicClient, step: string, rec: CoreStep): Promise<CoreStep> {
-  const receipt = await cc.getTransactionReceipt({ hash: rec.txHash }).catch(() => undefined)
-  if (!receipt || receipt.status !== 'success' || receipt.blockNumber.toString() !== rec.blockNumber) {
-    throw new Stop(`journal says ${step} is confirmed but the chain disagrees (${rec.txHash})`)
-  }
-  return rec
-}
-
-async function buildSigned(plan: Plan, nonce: number, rec: Pick<CoreStep, 'gas' | 'maxFeePerGas' | 'maxPriorityFeePerGas'>) {
-  const account = loadAccount(plan.role)
-  if (!account.signTransaction) throw new Stop('account cannot sign locally')
-  const serialized = await account.signTransaction({
+async function signPlan(d: RunDeps, plan: Plan, nonce: number, rec: Pick<CoreStep, 'gas' | 'maxFeePerGas' | 'maxPriorityFeePerGas'>) {
+  const signer = d.signer(plan.role)
+  const serialized = await signer.signTransaction({
     type: 'eip1559',
     chainId: CHAIN_ID,
     nonce,
@@ -152,81 +194,94 @@ async function buildSigned(plan: Plan, nonce: number, rec: Pick<CoreStep, 'gas' 
     maxFeePerGas: BigInt(rec.maxFeePerGas),
     maxPriorityFeePerGas: BigInt(rec.maxPriorityFeePerGas),
   })
-  return { account, serialized, hash: keccak256(serialized) }
+  return { signer, serialized, hash: keccak256(serialized) }
 }
 
-export async function runTx(plan: Plan): Promise<CoreStep> {
-  const cc = chainClient()
-  await assertArcChain(cc)
-  const state = loadCore()
-  const known = state.steps[plan.step]
+export function makeRunner(d: RunDeps) {
+  return async function run(plan: Plan): Promise<CoreStep> {
+    await d.chain.assertChain()
+    const state = d.store.load()
+    const known = state.steps[plan.step]
 
-  if (known) {
-    if (known.chainId !== CHAIN_ID) throw new Stop('journal chain mismatch for ' + plan.step)
-    if (known.calldataHash !== keccak256(plan.data) || known.role !== plan.role) {
-      throw new Stop(`step ${plan.step} exists in the journal with different calldata or signer; refusing to continue`)
+    if (known) {
+      // A resumed step must be the SAME transaction: chain, role, destination, calldata and the actual loaded signer.
+      const signer = d.signer(plan.role)
+      if (
+        known.chainId !== CHAIN_ID ||
+        known.role !== plan.role ||
+        known.calldataHash !== keccak256(plan.data) ||
+        !sameAddr(known.to, plan.to) ||
+        !sameAddr(known.signer, signer.address)
+      ) {
+        throw new Stop(`step ${plan.step} exists in the journal with a different destination, calldata or signer; refusing to continue`)
+      }
+      if (known.phase === 'confirmed') {
+        const receipt = await d.chain.getReceipt(known.txHash)
+        if (!receipt || receipt.status !== 'success' || receipt.blockNumber.toString() !== known.blockNumber) {
+          throw new Stop(`journal says ${plan.step} is confirmed but the chain disagrees (${known.txHash})`)
+        }
+        return known
+      }
+      if (known.phase === 'reverted') throw new Stop(`step ${plan.step} previously reverted (${known.txHash})`)
+      if (await d.chain.getReceipt(known.txHash)) return finalizeStep(d, plan.step)
+      const latest = await d.chain.nonce(known.signer, 'latest')
+      const pending = await d.chain.nonce(known.signer, 'pending')
+      if (latest > known.nonce) {
+        throw new Stop(`nonce ${known.nonce} was consumed on chain by a transaction other than ${known.txHash}; ambiguous, not resending`)
+      }
+      if (pending > latest) return finalizeStep(d, plan.step) // the node holds it pending: wait, never resend
+      if (latest !== known.nonce || pending !== known.nonce) {
+        throw new Stop(`nonce state (latest ${latest}, pending ${pending}) does not match the saved nonce ${known.nonce}; not resending`)
+      }
+      // The chain never saw it. Retransmit ONLY the identical bytes (same nonce, fees, calldata; deterministic signature).
+      const again = await signPlan(d, plan, known.nonce, known)
+      if (again.hash !== known.txHash) throw new Stop(`cannot rebuild the identical transaction for ${plan.step}; not resending`)
+      await d.chain.send(again.serialized)
+      known.phase = 'broadcast'
+      d.store.save(state)
+      return finalizeStep(d, plan.step)
     }
-    if (known.phase === 'confirmed') return verifyConfirmed(cc, plan.step, known)
-    if (known.phase === 'reverted') throw new Stop(`step ${plan.step} previously reverted (${known.txHash})`)
-    // signed or broadcast but not confirmed: look for the receipt first
-    const receipt = await cc.getTransactionReceipt({ hash: known.txHash }).catch(() => undefined)
-    if (receipt) return finalize(cc, plan.step)
-    const latest = await cc.getTransactionCount({ address: known.signer, blockTag: 'latest' })
-    const pending = await cc.getTransactionCount({ address: known.signer, blockTag: 'pending' })
-    if (latest > known.nonce) {
-      throw new Stop(`nonce ${known.nonce} was consumed on chain by a transaction other than ${known.txHash}; ambiguous, not resending`)
+
+    // ---- new step. One transaction at a time: nothing else may be unconfirmed.
+    const open = Object.entries(state.steps).find(([, s]) => s.phase === 'signed' || s.phase === 'broadcast')
+    if (open) throw new Stop(`step ${open[0]} is not confirmed yet; resolve it first`)
+    const signer = d.signer(plan.role)
+    const latest = await d.chain.nonce(signer.address, 'latest')
+    const pending = await d.chain.nonce(signer.address, 'pending')
+    if (pending !== latest) throw new Stop(`${signer.address} has a pending transaction (latest ${latest}, pending ${pending})`)
+
+    await d.chain.call({ account: signer.address, to: plan.to, data: plan.data }) // a revert aborts before any signature
+    const gas = ((await d.chain.estimateGas({ account: signer.address, to: plan.to, data: plan.data })) * 12n) / 10n
+    const fees = await d.chain.fees()
+    if (fees.maxFeePerGas < 20n * GWEI) throw new Stop('maxFeePerGas below the 20 gwei floor')
+    const bal = await d.chain.balance(signer.address)
+    const need = gas * fees.maxFeePerGas + (plan.valueSpendWei ?? 0n) + RESERVE_WEI
+    if (bal < need) throw new Stop(`budget: ${plan.role} balance ${bal} < required ${need} (includes the 2 USDC gas reserve)`)
+
+    const rec: CoreStep = {
+      label: plan.label,
+      role: plan.role,
+      signer: signer.address,
+      chainId: CHAIN_ID,
+      nonce: latest,
+      to: plan.to,
+      calldataHash: keccak256(plan.data),
+      gas: gas.toString(),
+      maxFeePerGas: fees.maxFeePerGas.toString(),
+      maxPriorityFeePerGas: fees.maxPriorityFeePerGas.toString(),
+      txHash: '0x',
+      phase: 'signed',
     }
-    if (pending > latest) {
-      // the node reports a pending transaction at this nonce: wait for it, do not resend
-      return finalize(cc, plan.step)
-    }
-    // nonce unchanged, nothing pending: the chain never saw it. Resend only the byte-identical transaction.
-    const again = await buildSigned(plan, known.nonce, known)
-    if (again.hash !== known.txHash) throw new Stop(`cannot rebuild the identical transaction for ${plan.step}; not resending`)
-    await cc.sendRawTransaction({ serializedTransaction: again.serialized })
-    known.phase = 'broadcast'
-    saveCore(state)
-    return finalize(cc, plan.step)
+    const signed = await signPlan(d, plan, latest, rec)
+    rec.txHash = signed.hash
+    state.steps[plan.step] = rec
+    d.store.save(state) // intent + hash are on disk BEFORE the broadcast
+    const sent = await d.chain.send(signed.serialized)
+    if (sent !== undefined && sent !== signed.hash) throw new Stop('node returned a different hash than the signed transaction')
+    rec.phase = 'broadcast'
+    d.store.save(state)
+    return finalizeStep(d, plan.step)
   }
-
-  // ---- new step. One transaction at a time: nothing else may be unconfirmed.
-  const open = Object.entries(state.steps).find(([, s]) => s.phase === 'signed' || s.phase === 'broadcast')
-  if (open) throw new Stop(`step ${open[0]} is not confirmed yet; resolve it first`)
-  const account = loadAccount(plan.role)
-  const latest = await cc.getTransactionCount({ address: account.address, blockTag: 'latest' })
-  const pending = await cc.getTransactionCount({ address: account.address, blockTag: 'pending' })
-  if (pending !== latest) throw new Stop(`${account.address} has a pending transaction (latest ${latest}, pending ${pending})`)
-
-  await cc.call({ account: account.address, to: plan.to, data: plan.data }) // a revert aborts before any signature
-  const estimate = await cc.estimateGas({ account: account.address, to: plan.to, data: plan.data })
-  const gas = (estimate * 12n) / 10n
-  const fees = await feeParams(cc)
-  if (fees.maxFeePerGas < 20n * GWEI) throw new Stop('maxFeePerGas below the 20 gwei floor')
-  const bal = await cc.getBalance({ address: account.address })
-  const need = gas * fees.maxFeePerGas + (plan.valueSpendWei ?? 0n) + RESERVE_WEI
-  if (bal < need) throw new Stop(`budget: ${plan.role} balance ${bal} < required ${need} (includes the 2 USDC gas reserve)`)
-
-  const rec: CoreStep = {
-    label: plan.label,
-    role: plan.role,
-    signer: account.address,
-    chainId: CHAIN_ID,
-    nonce: latest,
-    to: plan.to,
-    calldataHash: keccak256(plan.data),
-    gas: gas.toString(),
-    maxFeePerGas: fees.maxFeePerGas.toString(),
-    maxPriorityFeePerGas: fees.maxPriorityFeePerGas.toString(),
-    txHash: '0x',
-    phase: 'signed',
-  }
-  const signed = await buildSigned(plan, latest, rec)
-  rec.txHash = signed.hash
-  state.steps[plan.step] = rec
-  saveCore(state) // intent + hash are on disk BEFORE the broadcast
-  const sent = await cc.sendRawTransaction({ serializedTransaction: signed.serialized }).catch(() => undefined)
-  if (sent !== undefined && sent !== signed.hash) throw new Stop('node returned a different hash than the signed transaction')
-  rec.phase = 'broadcast'
-  saveCore(state)
-  return finalize(cc, plan.step)
 }
+
+export const runTx = (plan: Plan): Promise<CoreStep> => makeRunner(liveDeps())(plan)
