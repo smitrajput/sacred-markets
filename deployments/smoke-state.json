@@ -1,0 +1,233 @@
+{
+  "schemaVersion": 1,
+  "chainId": 5042002,
+  "steps": {
+    "seed.approve.usdc.permit2": {
+      "label": "deployer approves Permit2 for exactly 10000000 usdc atoms",
+      "txHash": "0x157ce0d20e57591373627949c6430702d7928f5c40f8abb29d7fa235f24709b7",
+      "status": "success",
+      "blockNumber": "71025359",
+      "gasUsed": "55378",
+      "effectiveGasPriceWei": "25000000000",
+      "gasCostWei": "1384450000000000"
+    },
+    "seed.approve.usdc.positionManager": {
+      "label": "deployer lets PositionManager pull exactly 10000000 usdc atoms through Permit2",
+      "txHash": "0x183b6dfe8fd744fc40b3fad76358af80b8c5fe364423adc07bb5d354a23b6392",
+      "status": "success",
+      "blockNumber": "71025363",
+      "gasUsed": "47362",
+      "effectiveGasPriceWei": "25000000000",
+      "gasCostWei": "1184050000000000"
+    },
+    "seed.approve.cirBtc.permit2": {
+      "label": "deployer approves Permit2 for exactly 10000 cirBtc atoms",
+      "txHash": "0x88c8c04732148f4c4e661e494497b7d338c23ad5586924fb22bbb3dbe9188b2c",
+      "status": "success",
+      "blockNumber": "71025374",
+      "gasUsed": "55463",
+      "effectiveGasPriceWei": "25000000000",
+      "gasCostWei": "1386575000000000"
+    },
+    "seed.approve.cirBtc.positionManager": {
+      "label": "deployer lets PositionManager pull exactly 10000 cirBtc atoms through Permit2",
+      "txHash": "0x0d57df27cc046f10b15bb66a39b9775cec7e336535b086e01120ca6176493832",
+      "status": "success",
+      "blockNumber": "71025379",
+      "gasUsed": "47578",
+      "effectiveGasPriceWei": "25000000000",
+      "gasCostWei": "1189450000000000"
+    },
+    "pool.initialize": {
+      "label": "PositionManager.initializePool at the 100,000 USDC per cirBTC fixture",
+      "txHash": "0x2ff48c1584ef2c6ba20b98cd9ae28d6af80985f41bdb6646dd795a736d2f8773",
+      "status": "success",
+      "blockNumber": "71025382",
+      "gasUsed": "56266",
+      "effectiveGasPriceWei": "25000000000",
+      "gasCostWei": "1406650000000000"
+    },
+    "seed.mint": {
+      "label": "PositionManager.modifyLiquidities MINT_POSITION + SETTLE_PAIR (full range)",
+      "txHash": "0xb28fb9412913d4d9fdc26bbd8f3f710baad01a97e14ee20ee25660faf4e4b497",
+      "status": "success",
+      "blockNumber": "71025386",
+      "gasUsed": "420200",
+      "effectiveGasPriceWei": "25000000000",
+      "gasCostWei": "10505000000000000"
+    },
+    "venue.deploy": {
+      "label": "deploy SMOKE-ONLY V4SpotVenue (deployer = binder)",
+      "txHash": "0x8faecb724a50a74708ee46910a9fed96c72b5f520c7fc010e455acfdd281a503",
+      "status": "success",
+      "blockNumber": "71025406",
+      "gasUsed": "1621189",
+      "effectiveGasPriceWei": "25000000000",
+      "gasCostWei": "40529725000000000",
+      "contractAddress": "0x1eae39a746c49708696fba57ce4a1948ea4337e4"
+    },
+    "venue.bindEngine": {
+      "label": "bind SMOKE venue engine to the trader wallet (one shot)",
+      "txHash": "0xf00127c8798bdde002c8720e87cc07974158e74dac12aad9717dd7846ff1cfbe",
+      "status": "success",
+      "blockNumber": "71025411",
+      "gasUsed": "45531",
+      "effectiveGasPriceWei": "25000000000",
+      "gasCostWei": "1138275000000000"
+    },
+    "trade.approve.buy": {
+      "label": "trader approves the smoke venue for exactly 200000 USDC atoms",
+      "txHash": "0xb8e209542507715e0d10bfcbcf1dcec2b31bb805fbe3b45833e0fb9a95cbf9b4",
+      "status": "success",
+      "blockNumber": "71025436",
+      "gasUsed": "55438",
+      "effectiveGasPriceWei": "20250000000",
+      "gasCostWei": "1122619500000000"
+    },
+    "trade.buy": {
+      "label": "smoke venue buyCirBtc exact input 200000",
+      "txHash": "0x289c319043fa4a7dc274b0e847f5ed78d21a642114c9ff5672116fac57d301d8",
+      "status": "success",
+      "blockNumber": "71025440",
+      "gasUsed": "192834",
+      "effectiveGasPriceWei": "20250000000",
+      "gasCostWei": "3904888500000000"
+    },
+    "trade.approve.sell": {
+      "label": "trader approves the smoke venue for exactly 195 cirBTC atoms",
+      "txHash": "0xe4538e64fd12ae1b18886cf94812653a4115969dabdcb54b9fb116644b5baf2f",
+      "status": "success",
+      "blockNumber": "71025506",
+      "gasUsed": "55511",
+      "effectiveGasPriceWei": "21729600000",
+      "gasCostWei": "1206231825600000"
+    },
+    "trade.sell": {
+      "label": "smoke venue sellCirBtc exact input 195",
+      "txHash": "0x6e4b39f8e75bc52540494fe83715112cf1c3adf5a91e124c22859bd81eef30f2",
+      "status": "success",
+      "blockNumber": "71025510",
+      "gasUsed": "198958",
+      "effectiveGasPriceWei": "21729600000",
+      "gasCostWei": "4323277756800000"
+    }
+  },
+  "records": {
+    "position": {
+      "tokenId": "21533",
+      "liquidity": "316227",
+      "tickLower": -887220,
+      "tickUpper": 887220,
+      "deposited0Atoms": "9999976",
+      "deposited1Atoms": "10000",
+      "mintTx": "0xb28fb9412913d4d9fdc26bbd8f3f710baad01a97e14ee20ee25660faf4e4b497",
+      "owner": "0xafC5b06665e9b99669027C18E82014916778734E"
+    },
+    "seed.balances": {
+      "beforeDeployer": {
+        "nativeWei": "20000000000000000000",
+        "usdcAtoms": "20000000",
+        "cirBtcAtoms": "10000"
+      },
+      "afterDeployer": {
+        "nativeWei": "9982967825000000000",
+        "usdcAtoms": "9982967",
+        "cirBtcAtoms": "0"
+      }
+    },
+    "venue": {
+      "address": "0x1eae39a746c49708696fba57ce4a1948ea4337e4",
+      "smokeOnly": true,
+      "engine": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+      "poolManager": "0x8366a39CC670B4001A1121B8F6A443A643e40951",
+      "fee": 3000,
+      "tickSpacing": 60,
+      "binder": "0xafC5b06665e9b99669027C18E82014916778734E"
+    },
+    "trade.before": {
+      "trader": {
+        "nativeWei": "20000000000000000000",
+        "usdcAtoms": "20000000",
+        "cirBtcAtoms": "10000"
+      },
+      "venue": {
+        "nativeWei": "0",
+        "usdcAtoms": "0",
+        "cirBtcAtoms": "0"
+      },
+      "poolManager": {
+        "nativeWei": "4380166949768270124913",
+        "usdcAtoms": "4380166949",
+        "cirBtcAtoms": "19012"
+      }
+    },
+    "trade.buy.plan": {
+      "quoteOut": "195",
+      "fixtureOut": "200",
+      "floor": "194",
+      "minOut": "195",
+      "note": "Recorded after the first run printed these values; minOut verified from the sent transaction calldata. The first run failed only in its post-trade balance read (lagging RPC), after the swap succeeded."
+    },
+    "trade.buy": {
+      "quoteOut": "195",
+      "fixtureOut": "200",
+      "floor": "194",
+      "minOut": "195",
+      "actualOut": "195",
+      "swappedEventOut": "195",
+      "txHash": "0x289c319043fa4a7dc274b0e847f5ed78d21a642114c9ff5672116fac57d301d8"
+    },
+    "trade.sell.plan": {
+      "quoteOut": "197898",
+      "fixtureOut": "195000",
+      "floor": "189150",
+      "minOut": "197898"
+    },
+    "trade.sell": {
+      "quoteOut": "197898",
+      "fixtureOut": "195000",
+      "floor": "189150",
+      "minOut": "197898",
+      "actualOut": "197898",
+      "swappedEventOut": "197898",
+      "txHash": "0x6e4b39f8e75bc52540494fe83715112cf1c3adf5a91e124c22859bd81eef30f2"
+    },
+    "trade.complete": {
+      "buy": {
+        "quoteOut": "195",
+        "fixtureOut": "200",
+        "floor": "194",
+        "minOut": "195",
+        "actualOut": "195",
+        "swappedEventOut": "195",
+        "txHash": "0x289c319043fa4a7dc274b0e847f5ed78d21a642114c9ff5672116fac57d301d8"
+      },
+      "sell": {
+        "quoteOut": "197898",
+        "fixtureOut": "195000",
+        "floor": "189150",
+        "minOut": "197898",
+        "actualOut": "197898",
+        "swappedEventOut": "197898",
+        "txHash": "0x6e4b39f8e75bc52540494fe83715112cf1c3adf5a91e124c22859bd81eef30f2"
+      },
+      "traderAfter": {
+        "nativeWei": "19987340982417600000",
+        "usdcAtoms": "19987340",
+        "cirBtcAtoms": "10000"
+      },
+      "venueAfter": {
+        "nativeWei": "0",
+        "usdcAtoms": "0",
+        "cirBtcAtoms": "0"
+      },
+      "roundTripUsdcNetAtoms": "-2102",
+      "tradeGasWei": "10557017582400000",
+      "nativeDeltaWei": "-12659017582400000",
+      "expectedNativeDeltaWei": "-12659017582400000",
+      "nativeAccountingExact": true,
+      "traderCirBtcUnchanged": true,
+      "venueHoldsNothing": true
+    }
+  }
+}

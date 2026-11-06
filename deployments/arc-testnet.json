@@ -64,5 +64,47 @@
     "admin": null,
     "pauser": null,
     "treasury": null
+  },
+  "uniswapV4": {
+    "note": "Existing v4 deployment on chain 5042002, not deployed by Sacred. Runtime identity checked against pinned sources in docs/checkpoints/00b-deps.md. Uniswap lists these addresses under Arc mainnet (5042).",
+    "poolManager": "0x8366a39CC670B4001A1121B8F6A443A643e40951",
+    "positionManager": "0x6049c9a0e26405C0985f9E3685C87d0aE917f82B",
+    "quoter": "0x8Dc178eFB8111BB0973Dd9d722ebeFF267c98F94",
+    "stateView": "0xF3334192D15450CdD385c8B70e03f9A6bD9E673b",
+    "permit2": "0x000000000022D473030F116dDEE9F6B43aC78BA3",
+    "pool": {
+      "poolId": "0xf4e18ec272549ab0140d43d33a7ba93768ecaec4dee4a7fb4f2c9af00950cde4",
+      "currency0": "0x3600000000000000000000000000000000000000",
+      "currency1": "0xf0C4a4CE82A5746AbAAd9425360Ab04fbBA432BF",
+      "fee": 3000,
+      "tickSpacing": 60,
+      "hooks": "0x0000000000000000000000000000000000000000",
+      "initializeTx": "0x2ff48c1584ef2c6ba20b98cd9ae28d6af80985f41bdb6646dd795a736d2f8773",
+      "fixture": "100000 USDC per cirBTC (atoms 1e11 : 1e8)"
+    },
+    "fullRangePosition": {
+      "tokenId": "21533",
+      "liquidity": "316227",
+      "tickLower": -887220,
+      "tickUpper": 887220,
+      "deposited0Atoms": "9999976",
+      "deposited1Atoms": "10000",
+      "mintTx": "0xb28fb9412913d4d9fdc26bbd8f3f710baad01a97e14ee20ee25660faf4e4b497",
+      "owner": "0xafC5b06665e9b99669027C18E82014916778734E"
+    }
+  },
+  "smoke": {
+    "note": "Smoke-only venue bound to the trader wallet. The production venue will be bound to the real engine later. Sacred vault and engine are still undeployed.",
+    "venue": {
+      "address": "0x1eaE39A746C49708696FBA57CE4a1948eA4337E4",
+      "deployTx": "0x8faecb724a50a74708ee46910a9fed96c72b5f520c7fc010e455acfdd281a503",
+      "bindEngineTx": "0xf00127c8798bdde002c8720e87cc07974158e74dac12aad9717dd7846ff1cfbe"
+    },
+    "trades": {
+      "approveBuyTx": "0xb8e209542507715e0d10bfcbcf1dcec2b31bb805fbe3b45833e0fb9a95cbf9b4",
+      "buyTx": "0x289c319043fa4a7dc274b0e847f5ed78d21a642114c9ff5672116fac57d301d8",
+      "approveSellTx": "0xe4538e64fd12ae1b18886cf94812653a4115969dabdcb54b9fb116644b5baf2f",
+      "sellTx": "0x6e4b39f8e75bc52540494fe83715112cf1c3adf5a91e124c22859bd81eef30f2"
+    }
   }
 }
