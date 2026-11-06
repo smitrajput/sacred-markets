@@ -1,0 +1,81 @@
+{
+  "checkedAt": "2026-11-06T16:54:08.051968+00:00",
+  "url": "https://sacred-arc-mvp.vercel.app",
+  "deploymentId": "dpl_B11eJWVGAZHj1zbT2HajdGtKRTbu",
+  "deploymentUrl": "https://sacred-arc-qyzm4q4hv-smit-rajputs-projects.vercel.app",
+  "deployedCommit": "c2c73bd",
+  "appImplementationCommit": "9bf75bd",
+  "checks": [
+    {
+      "path": "/",
+      "status": 200,
+      "bytes": 803,
+      "sha256": "e92c133eceb14b73a71f2966283dcf7e0fb37bb5464319fd6816898974ba66b6"
+    },
+    {
+      "path": "/guide.html",
+      "status": 200,
+      "bytes": 52541,
+      "sha256": "d94d346e94ad7f3b8e94f7dfca9207572d18234d09ef9b020166f205f8a12d47",
+      "matchesFinalGuide": true
+    },
+    {
+      "path": "/assets/index-CXJHlURS.js",
+      "status": 200,
+      "bytes": 1460884,
+      "sha256": "97164d6ddc954cdce093452d744a8fc4a8ab64562238564f95b70e095dee6edf",
+      "unchangedReviewedAppBundle": true
+    },
+    {
+      "path": "/assets/index-Dy_jI75u.css",
+      "status": 200,
+      "bytes": 15661,
+      "sha256": "ad8cdf51846a73c220b9e5630b41eec75e9ef757cd9582b61bcd73eb9c680edb",
+      "unchangedReviewedAppBundle": true
+    },
+    {
+      "path": "/api/health",
+      "status": 200,
+      "bytes": 961,
+      "sha256": "aa5aa7a7d1c172522633d7a0b27eb7cd73319e7381255b3009344acaaf2d25e5",
+      "health": {
+        "status": "ok",
+        "service": "sacred-api",
+        "time": "2026-11-06T16:54:07.917Z",
+        "mode": "read-only",
+        "signing": "none",
+        "chain": {
+          "name": "Arc Testnet",
+          "chainId": 5042002,
+          "rpc": {
+            "status": "reachable",
+            "chainId": 5042002,
+            "chainIdMatches": true,
+            "latestBlock": 71059391,
+            "latencyMs": 442
+          }
+        },
+        "contracts": {
+          "source": "deployments/arc-testnet.json",
+          "statuses": {
+            "usdcEarn": "deployed",
+            "cirBtcSpotFinancing": "deployed",
+            "demoPriceGuard": "deployed",
+            "productionVenue": "deployed"
+          }
+        },
+        "scheduler": {
+          "status": "unavailable",
+          "kind": "external",
+          "detail": "The keeper is a separately run operator process, not part of this serverless deployment. Nothing is scheduled here; wallet actions remain permissionless."
+        },
+        "deployment": {
+          "host": "vercel",
+          "environment": "production",
+          "region": "iad1",
+          "commit": "c2c73bd"
+        }
+      }
+    }
+  ]
+}
