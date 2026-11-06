@@ -2,9 +2,9 @@ Build Sacred: a testnet cirBTC spot-financing app with Earn, Trade and Activity.
 
 CHECKPOINT 00c. Implement only a minimal real GET /health API and hosting configuration. Do not build the financial UI or pretend contracts exist yet.
 
-Frontend on Netlify. Preferred API plus later keeper: one Node TypeScript process in a Hugging Face Docker Space, binding0.0.0.0:7860. Verify current account entitlement and whether the hardware sleeps before promising continuous scheduling. No paid resource purchase without the user's authorization.
+The user has connected Vercel in this Studio app and explicitly selected it. Use Vercel for the Vite frontend and Node TypeScript API functions. Implement real GET /api/health (plus /health rewrite if useful), deployment config and shared server handler structure so later financial reads reuse the same API code. Verify the existing Vercel integration and deploy through Studio. No additional hosting provider or paid resource is needed.
 
-If HF access is unavailable, host the same read handlers as Netlify Functions. The keeper then runs as an external operator process for rehearsal, with a permissionless wallet-action fallback in the app. Do not introduce another provider.
+Vercel request handlers are not a continuous keeper process. The later keeper is a separately run operator process for rehearsal, with permissionless wallet-action fallback in the app. Report scheduler status honestly as external/unavailable when not running. Keep endpoints read-only; do not expose a signing API.
 
 Keep credentials in host secret stores. Report a real accessible health URL and its response, or the exact missing account step. A static frontend response is not a backend deployment.
 

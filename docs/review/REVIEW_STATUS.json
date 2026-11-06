@@ -1,8 +1,8 @@
 {
   "status": "IMPLEMENTING",
   "spec_version": "0.3-reviewed",
-  "current_spec_sha256": "816a1fdc96b078d591eafc9cd1fbe5a7f3688bde8bf0b0a5efeec942b79fb2a3",
-  "approved_spec_sha256": "816a1fdc96b078d591eafc9cd1fbe5a7f3688bde8bf0b0a5efeec942b79fb2a3",
+  "current_spec_sha256": "2574c33718b37eb9bd6b68280d9a2816c41ef92a722af5200106363a1e3a085e",
+  "approved_spec_sha256": "2574c33718b37eb9bd6b68280d9a2816c41ef92a722af5200106363a1e3a085e",
   "claude_fable_review_received": true,
   "review_dispositions_complete": true,
   "implementation_started": true,
@@ -18,5 +18,7 @@
   "prior_economics_review_spec_sha256": "d1aa5f145a020462e7127c150bcf38ffa2e277d28ed71ad9cf9d06fcf9ea5889",
   "hard_finish_ist": "2026-11-06T22:30:00+05:30",
   "execution_mode": "codex-orchestrated-studio-cli",
-  "schedule_revision": "User requested same-day finish; schedule only, economics unchanged"
+  "schedule_revision": "User requested same-day finish; schedule only, economics unchanged",
+  "hosting": "Vercel frontend and read API; external keeper",
+  "hosting_revision": "User connected Vercel; economics unchanged"
 }

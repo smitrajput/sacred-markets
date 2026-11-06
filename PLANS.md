@@ -20,3 +20,5 @@ Status: **IMPLEMENTING — 00a scaffold verified; 00b dependencies verified; ada
 Existing Sacred website/design/code predate this implementation. Preserve prior-work disclosure and real chronology. For each checkpoint record actor, decisions, actual tests, SHA and Studio trace in AI_WORKLOG.md. Plan files explain the process; they do not estimate a human/AI authorship percentage.
 
 Execution: Studio CLI is the primary path; browser prompts remain a fallback. No manual copy/paste relay is required. Keep callbacks, accounting, real swaps and receipt checks intact when cutting optional scope.
+
+Hosting: Vercel frontend plus read API functions, as connected by the user. Keeper runs separately for rehearsal and has a manual onchain fallback. The user authorized dedicated testnet-only signing wallets within stated faucet-asset limits; no existing wallet secrets or mainnet funds.
