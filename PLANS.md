@@ -1,0 +1,20 @@
+# Sacred implementation plan
+
+Status: **READY_FOR_IMPLEMENTATION — Fable review incorporated in v0.3; next 00a preflight.** No application build has started in this workflow. Deadline **November 7,2026,9:30 AM IST**, target submission 7:30 AM.
+
+- [Specification](docs/spec.md)
+- [Prompt instructions](docs/README.md)
+- [Studio/local Git workflow](docs/STUDIO_GIT_WORKFLOW.md) and [commit plan](docs/COMMIT_PLAN.md)
+- [Review dispositions](docs/review/REVIEW_DECISIONS.md), [math checks](docs/review/SPEC_VERIFICATION.md), [status/hash](docs/review/REVIEW_STATUS.json)
+- [Skills](docs/SKILLS.md), [organiser guidance](docs/ORGANISER_GUIDANCE.md), [AI work log](AI_WORKLOG.md)
+
+## Decisions and sequence
+
+1. User direction: current Sacred economics, small end-to-end demo, Fable review before implementation and clear sequential commits.
+2. Codex specification and Fable review: complete. Codex incorporated justified findings, corrected review arithmetic and preserved the separate protection waterfall.
+3. Scope: one cirBTC market, existing v4 pool infrastructure, Earn/Trade/Activity, NAV deposits, continuous FIFO, separate admin demo-price fixture, real read API, gas-funded keeper plus manual path. Optional bridge follows a passing core.
+4. Implementation lives in `smitrajput/sacred-markets`, local sibling checkout `sacred-markets`. Studio generates one checkpoint; Codex pulls, checks, commits and pushes before the next checkpoint.
+5. First preflight proves affordable pool/position sizing, token funding, actual v4 execution and hosting access. Freeze actual amounts/roles in the deployment manifest.
+6. Finish contracts by 21:00, app/rehearsal 00:30, freeze 02:00, video 04:00 and submit 07:30. Drop optional bridge first if gates slip.
+
+Existing Sacred website/design/code predate this implementation. Preserve prior-work disclosure and real chronology. For each checkpoint record actor, decisions, actual tests, SHA and Studio trace in AI_WORKLOG.md. Plan files explain the process; they do not estimate a human/AI authorship percentage.

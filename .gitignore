@@ -13,3 +13,14 @@ states/
 # Optional
 .env
 .env.local
+
+# Local secrets and tool output
+.env*
+!.env.example
+node_modules/
+dist/
+coverage/
+.DS_Store
+contracts/out/
+contracts/cache/
+contracts/broadcast/
