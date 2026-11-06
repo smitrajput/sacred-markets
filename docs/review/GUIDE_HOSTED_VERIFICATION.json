@@ -1,11 +1,12 @@
 {
-  "checkedAt": "2026-11-06T15:43:44.527858+00:00",
+  "checkedAt": "2026-11-06T15:58:35.041776+00:00",
   "publicUrl": "https://sacred-arc-mvp.vercel.app",
-  "deploymentSourceCommit": "7170898",
+  "deploymentSourceCommit": "84dabce",
+  "deploymentId": "dpl_GycgKGob9QB3PtdAZEMfWc6LeGkz",
   "applicationSourceCheckpoint": "d71ddbd",
   "guide": {
     "status": 200,
-    "sha256": "fff8b2432f0fd3311db943103f9ca1d4ce6493b769aa7ce5fb53ec473b5ccc17",
+    "sha256": "9bdbf3a8fb51b515a1288f42adb3c6a5dc2bcd74f72cfd412b38b772e975c9d0",
     "matchesReviewedLocalGuide": true
   },
   "applicationBundle": {
@@ -16,7 +17,7 @@
   "health": {
     "status": "ok",
     "service": "sacred-api",
-    "time": "2026-11-06T15:43:44.413Z",
+    "time": "2026-11-06T15:58:34.927Z",
     "mode": "read-only",
     "signing": "none",
     "chain": {
@@ -26,8 +27,8 @@
         "status": "reachable",
         "chainId": 5042002,
         "chainIdMatches": true,
-        "latestBlock": 71051580,
-        "latencyMs": 394
+        "latestBlock": 71053331,
+        "latencyMs": 388
       }
     },
     "contracts": {
@@ -48,8 +49,8 @@
       "host": "vercel",
       "environment": "production",
       "region": "iad1",
-      "commit": "7170898"
+      "commit": "84dabce"
     }
   },
-  "scope": "Documentation-only redeploy: hosted guide equals reviewed repository bytes, application bundle unchanged, live read-only health returned 200. No transaction sent."
+  "scope": "Documentation-only redeploy recording the founder-selected submission route; guide equals reviewed repository bytes, application bundle unchanged and public health returns 200. No transactions sent."
 }
