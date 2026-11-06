@@ -40,3 +40,14 @@ lib/solmate/
 
 # Pinned local Arc-aware test tools
 .tools/
+
+# Hosting and generated runtime state
+.vercel/
+.circle/
+recovery_file*
+*.pem
+/out/
+/cache/
+/broadcast/
+traces.jsonl
+*.log

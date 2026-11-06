@@ -1,0 +1,9 @@
+.tools
+.env
+.env.*
+contracts/out
+contracts/cache
+lib
+docs
+traces.jsonl
+console.jsonl
