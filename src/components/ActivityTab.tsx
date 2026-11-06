@@ -36,64 +36,76 @@ export function ActivityTab() {
 
   const list = [...rows.values()].sort((a, b) => (BigInt(b.blockNumber) === BigInt(a.blockNumber) ? b.logIndex - a.logIndex : BigInt(b.blockNumber) > BigInt(a.blockNumber) ? 1 : -1))
   return (
-    <div className="grid gap-4 lg:grid-cols-[2fr_1fr]">
-      <Panel title="On-chain activity" aside={first.data ? <span className="text-xs text-muted num">block {first.data.observedBlock}</span> : null}>
-        {first.isLoading ? <Notice>Reading recent events from the chain…</Notice> : null}
-        {first.error ? <Notice tone="error">{first.error instanceof Error ? first.error.message : 'Activity is unavailable.'} Retrying automatically.</Notice> : null}
-        {first.data && list.length === 0 ? <Notice>No Sacred events in the scanned range yet. Older history can be loaded below.</Notice> : null}
-        <ol className="divide-y divide-hairline">
-          {list.map((e) => {
-            const d = describeEvent(e)
-            return (
-              <li key={e.key} className="py-3">
-                <p className="text-sm text-ink">{d.title}</p>
-                <p className="text-sm text-secondary">{d.detail}</p>
-                <p className="text-xs text-muted num">
-                  {formatTime(BigInt(e.timestamp))} · block {e.blockNumber} ·{' '}
-                  <a className="underline" href={explorerTx(e.txHash)} target="_blank" rel="noopener noreferrer">
-                    {shortHash(e.txHash)}
-                  </a>{' '}
-                  · {e.contract}
-                </p>
-              </li>
+    <div className="grid gap-8 lg:grid-cols-12 lg:gap-10">
+      <div className="lg:col-span-8 min-w-0">
+        <Panel title="On-chain activity" aside={first.data ? <span className="font-mono">block {first.data.observedBlock}</span> : null}>
+          {first.isLoading ? <Notice>Reading recent events from the chain…</Notice> : null}
+          {first.error ? <Notice tone="error">{first.error instanceof Error ? first.error.message : 'Activity is unavailable.'} Retrying automatically.</Notice> : null}
+          {first.data && list.length === 0 ? <Notice>No Sacred events in the scanned range yet. Older history can be loaded below.</Notice> : null}
+          <ol className="divide-y divide-rule border-y border-rule">
+            {list.map((e) => {
+              const d = describeEvent(e)
+              return (
+                <li key={e.key} className="py-4 grid gap-1 sm:grid-cols-[9.5rem_1fr] sm:gap-x-6">
+                  <p className="text-sm text-secondary num">{formatTime(BigInt(e.timestamp))}</p>
+                  <div className="min-w-0">
+                    <p className="text-base font-bold text-ink break-words">{d.title}</p>
+                    <p className="text-sm text-secondary break-words">{d.detail}</p>
+                    <p className="text-xs text-secondary num mt-1 break-all">
+                      block {e.blockNumber} ·{' '}
+                      <a className="font-mono underline" href={explorerTx(e.txHash)} target="_blank" rel="noopener noreferrer">
+                        {shortHash(e.txHash)}
+                      </a>{' '}
+                      · {e.contract}
+                    </p>
+                  </div>
+                </li>
+              )
+            })}
+          </ol>
+          {loadErr ? (
+            <div className="mt-5">
+              <Notice tone="error">{loadErr}</Notice>
+            </div>
+          ) : null}
+          {first.data ? (
+            next ? (
+              <button type="button" onClick={() => void loadOlder()} disabled={loading} className="mt-5 h-11 px-5 border border-ink rounded text-sm font-bold hover:bg-raised transition-colors w-full sm:w-auto disabled:bg-raised disabled:text-secondary disabled:border-rule disabled:cursor-not-allowed">
+                {loading ? 'Loading…' : 'Load older activity'}
+              </button>
+            ) : (
+              <p className="text-sm text-secondary mt-5">Reached the deployment block. Nothing older exists.</p>
             )
-          })}
-        </ol>
-        {loadErr ? <Notice tone="error">{loadErr}</Notice> : null}
-        {first.data ? (
-          next ? (
-            <button type="button" onClick={() => void loadOlder()} disabled={loading} className="mt-3 border border-ink rounded px-3 py-1.5 text-sm hover:bg-raised disabled:opacity-50">
-              {loading ? 'Loading…' : 'Load older activity'}
-            </button>
-          ) : (
-            <p className="text-xs text-muted mt-3">Reached the deployment block. Nothing older exists.</p>
-          )
-        ) : null}
-        {first.data?.truncated ? <p className="text-xs text-muted mt-2">This page was capped; newer events are listed first.</p> : null}
-      </Panel>
-      <div className="space-y-4">
-        <Panel title="Verified contracts">
+          ) : null}
+          {first.data?.truncated ? <p className="text-sm text-secondary mt-3">This page was capped; newer events are listed first.</p> : null}
+        </Panel>
+      </div>
+      <div className="lg:col-span-4 min-w-0">
+        <Panel title="Verified contracts" variant="plain">
           {cfg.data ? (
-            <ul className="text-sm space-y-1">
+            <ul className="space-y-4">
               {Object.entries(cfg.data.deployments).map(([name, d]) => (
-                <li key={name}>
-                  {name}:{' '}
-                  <a className="underline num" href={explorerAddr(d.address)} target="_blank" rel="noopener noreferrer">
+                <li key={name} className="min-w-0">
+                  <p className="text-sm font-bold">{name}</p>
+                  <a className="font-mono text-sm break-all" href={explorerAddr(d.address)} target="_blank" rel="noopener noreferrer">
                     {shortAddr(d.address)}
-                  </a>{' '}
-                  <span className="text-xs text-muted">block {d.deployBlock}</span>
+                  </a>
+                  <p className="text-xs text-secondary">block {d.deployBlock}</p>
                 </li>
               ))}
-              <li className="text-xs text-muted pt-1">{cfg.data.termsHashMatchesChain ? 'Manifest terms hash matches the engine on chain.' : 'Warning: manifest terms hash differs from the chain.'}</li>
+              <li>
+                {cfg.data.termsHashMatchesChain ? <p className="text-sm text-ink">Manifest terms hash matches the engine on chain.</p> : <Notice tone="error">Warning: manifest terms hash differs from the chain.</Notice>}
+              </li>
             </ul>
           ) : cfg.error ? (
             <Notice tone="error">Config unavailable.</Notice>
           ) : (
             <Notice>Loading…</Notice>
           )}
-        </Panel>
-        <Panel title="Keeper">
-          <p className="text-sm text-secondary">Keeper scheduling is external and unverified: no heartbeat is published, so this app cannot say whether a keeper is running. Every action above works from your own wallet without it.</p>
+          <section className="border-t border-rule mt-6 pt-5">
+            <h3 className="text-lg">Keeper</h3>
+            <p className="text-sm text-secondary mt-2">Keeper scheduling is external and unverified: no heartbeat is published, so this app cannot say whether a keeper is running. Every action above works from your own wallet without it.</p>
+          </section>
         </Panel>
       </div>
     </div>
