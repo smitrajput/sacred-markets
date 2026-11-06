@@ -1,6 +1,6 @@
 # Sacred implementation plan
 
-Status: **READY_FOR_IMPLEMENTATION — Fable review incorporated in v0.3; next 00a preflight.** No application build has started in this workflow. Deadline **November 7,2026,9:30 AM IST**, target submission 7:30 AM.
+Status: **IMPLEMENTING — 00a scaffold verified; next 00b v4 preflight.** Arc Studio generated the scaffold; no Sacred financial contracts or deployments yet. Deadline **November 7,2026,9:30 AM IST**, target submission 7:30 AM.
 
 - [Specification](docs/spec.md)
 - [Prompt instructions](docs/README.md)
