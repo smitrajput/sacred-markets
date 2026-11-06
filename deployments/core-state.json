@@ -289,6 +289,186 @@
       "gasUsed": "320960",
       "effectiveGasPriceWei": "25000000000",
       "gasCostWei": "8024000000000000"
+    },
+    "prep2.approve": {
+      "label": "trader approve smoke venue 195 cirBTC atoms (exact)",
+      "role": "trader",
+      "signer": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+      "chainId": 5042002,
+      "nonce": 8,
+      "to": "0xf0C4a4CE82A5746AbAAd9425360Ab04fbBA432BF",
+      "calldataHash": "0x7cbc72e783a867d5055d9bc2b7373af32351e62a3f67636acf860a2066635514",
+      "gas": "67576",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "5000000000",
+      "txHash": "0x8667abdb2440c4e5290b01a72f45d2e2d7a9a9f7f2d194e1c997fb23d07e3790",
+      "phase": "confirmed",
+      "blockNumber": "71033802",
+      "gasUsed": "55511",
+      "effectiveGasPriceWei": "25000000000",
+      "gasCostWei": "1387775000000000"
+    },
+    "prep2.sell": {
+      "label": "smoke venue: sell released BTC back to the pool",
+      "role": "trader",
+      "signer": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+      "chainId": 5042002,
+      "nonce": 9,
+      "to": "0x1eaE39A746C49708696FBA57CE4a1948eA4337E4",
+      "calldataHash": "0xb7f4430baab84905ba067211bad767b851083543c723d7bc87d322e6b0e499dd",
+      "gas": "281239",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "5000000000",
+      "txHash": "0xf67142726f91e13750e3bbc07eb948d4e50df21ccfa7f49a726c682c9cad7b06",
+      "phase": "confirmed",
+      "blockNumber": "71033811",
+      "gasUsed": "185300",
+      "effectiveGasPriceWei": "25000000000",
+      "gasCostWei": "4632500000000000"
+    },
+    "f2.approve": {
+      "label": "trader approve engine 100000 (exact)",
+      "role": "trader",
+      "signer": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+      "chainId": 5042002,
+      "nonce": 10,
+      "to": "0x3600000000000000000000000000000000000000",
+      "calldataHash": "0xd1d19071654af63c09d60b7364200dc164ab83fe9de2eb7bd5cf540320a70dfe",
+      "gas": "67489",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "5000000000",
+      "txHash": "0x6d0a89c92dde48129fdcde75b5e2f664a79b03db52e94f09cc34edea5ee196aa",
+      "phase": "confirmed",
+      "blockNumber": "71033833",
+      "gasUsed": "55438",
+      "effectiveGasPriceWei": "25000000000",
+      "gasCostWei": "1385950000000000"
+    },
+    "f2.open": {
+      "label": "engine.open(E=100000)",
+      "role": "trader",
+      "signer": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+      "chainId": 5042002,
+      "nonce": 11,
+      "to": "0xac836824231ae77874d0ca293bd749ffe6c0d00f",
+      "calldataHash": "0x3668d5a57d3ea06b4b3227961d65e33b3b9a8f2bf2d1189cd33c1a2be4ab2b13",
+      "gas": "1112226",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "5000000000",
+      "txHash": "0x46bb917630154d3a20facd0034692e17b62e6f69caec85f16d156ce40187bd29",
+      "phase": "confirmed",
+      "blockNumber": "71033842",
+      "gasUsed": "767999",
+      "effectiveGasPriceWei": "25000000000",
+      "gasCostWei": "19199975000000000"
+    },
+    "f2.moveApprove": {
+      "label": "trader approve smoke venue 1161 cirBTC atoms (exact)",
+      "role": "trader",
+      "signer": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+      "chainId": 5042002,
+      "nonce": 12,
+      "to": "0xf0C4a4CE82A5746AbAAd9425360Ab04fbBA432BF",
+      "calldataHash": "0xf2206172fd5fe4cd36d528655a1c834ccdae9aee16ad1b6701536a67caaa8eb9",
+      "gas": "67591",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "5000000000",
+      "txHash": "0x0f5d53edc2305b6a0b751d1e7d88ac761ecfb22d22edbbe1bc9ed959221f62c5",
+      "phase": "confirmed",
+      "blockNumber": "71033856",
+      "gasUsed": "55523",
+      "effectiveGasPriceWei": "25000000000",
+      "gasCostWei": "1388075000000000"
+    },
+    "f2.moveSell": {
+      "label": "smoke venue: sell trader reserve to move the pool",
+      "role": "trader",
+      "signer": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+      "chainId": 5042002,
+      "nonce": 13,
+      "to": "0x1eaE39A746C49708696FBA57CE4a1948eA4337E4",
+      "calldataHash": "0x338a6e1f6fc9bb00fe9acf78bd5eb56f91b9580834c438c36b9a78dc45a24d47",
+      "gas": "281138",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "5000000000",
+      "txHash": "0xf833247cb8dea4decf90c0cb272d824c35f317c10a7afcc7b484395a4b4ef627",
+      "phase": "confirmed",
+      "blockNumber": "71033865",
+      "gasUsed": "185233",
+      "effectiveGasPriceWei": "25000000000",
+      "gasCostWei": "4630825000000000"
+    },
+    "f2.move2Approve": {
+      "label": "trader approve smoke venue 223 cirBTC atoms (exact)",
+      "role": "trader",
+      "signer": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+      "chainId": 5042002,
+      "nonce": 14,
+      "to": "0xf0C4a4CE82A5746AbAAd9425360Ab04fbBA432BF",
+      "calldataHash": "0x3e978a8344c04576643e0cecbdaf40b8a68193ea4b335da24c943e854e72cd98",
+      "gas": "67576",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "0",
+      "txHash": "0x22c303b1938675e6bd03fb5b568870d0e780588a6e69283526425be31d764e09",
+      "phase": "confirmed",
+      "blockNumber": "71033970",
+      "gasUsed": "55511",
+      "effectiveGasPriceWei": "20000000000",
+      "gasCostWei": "1110220000000000"
+    },
+    "f2.move2Sell": {
+      "label": "smoke venue: sell trader reserve to move the pool",
+      "role": "trader",
+      "signer": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+      "chainId": 5042002,
+      "nonce": 15,
+      "to": "0x1eaE39A746C49708696FBA57CE4a1948eA4337E4",
+      "calldataHash": "0xb60f818538c38fb0bbd2a3b996878d777314ab5735a5ef710b9745b03d2926bf",
+      "gas": "281008",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "1",
+      "txHash": "0x9c36b76c9d50e005eeee53768b3f7b9e930a9e2172372ccf6d438ec643896cdc",
+      "phase": "confirmed",
+      "blockNumber": "71033979",
+      "gasUsed": "185147",
+      "effectiveGasPriceWei": "20000000001",
+      "gasCostWei": "3702940000185147"
+    },
+    "f2.oracle": {
+      "label": "DemoPriceGuard.update(80000 USDC per BTC)",
+      "role": "deployer",
+      "signer": "0xafC5b06665e9b99669027C18E82014916778734E",
+      "chainId": 5042002,
+      "nonce": 20,
+      "to": "0x4d84bf470b6916d97ec719a5398d534c1adb1d57",
+      "calldataHash": "0x37fb8bf0ccf1881a6af5ffa23303977bfa44c7020a23016903aa1bf3d3245a19",
+      "gas": "40700",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "0",
+      "txHash": "0xe295caf072acf1201ee6666d403338b6f9a2cf63300cacaddec22d0fbd1a7461",
+      "phase": "confirmed",
+      "blockNumber": "71033988",
+      "gasUsed": "33560",
+      "effectiveGasPriceWei": "20000000000",
+      "gasCostWei": "671200000000000"
+    },
+    "f2.rebalance": {
+      "label": "engine.rebalance(id) by the keeper",
+      "role": "keeper",
+      "signer": "0x60579fc93E6B7f2377dd952e1FD4c58C2e3Ca373",
+      "chainId": 5042002,
+      "nonce": 0,
+      "to": "0xac836824231ae77874d0ca293bd749ffe6c0d00f",
+      "calldataHash": "0xe598d9fd0b3f46fc59bb732202f47928d28e4dceae413312738eab258c2575aa",
+      "gas": "466410",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "0",
+      "txHash": "0xc7afcee5e170601d01468b8acef07f62439b49404a31dbe553b770dd4a783f78",
+      "phase": "confirmed",
+      "blockNumber": "71033997",
+      "gasUsed": "308455",
+      "effectiveGasPriceWei": "20000000000",
+      "gasCostWei": "6169100000000000"
     }
   },
   "records": {
@@ -720,6 +900,414 @@
         "engineUsdcZero": true
       },
       "gasCostWei": "8024000000000000"
+    },
+    "param.prep2.sell": {
+      "quote": "197955",
+      "minOut": "197955",
+      "floor": "189150",
+      "deadline": "1793971607"
+    },
+    "prep2.done": {
+      "txHash": "0xf67142726f91e13750e3bbc07eb948d4e50df21ccfa7f49a726c682c9cad7b06",
+      "block": "71033811",
+      "atoms": "195",
+      "quote": "197955",
+      "poolAfter": {
+        "sqrtPriceX96": "2504676578412272946392510804",
+        "tick": -69087,
+        "liquidity": "316227",
+        "priceMicroPerBtc": "100058930884"
+      }
+    },
+    "param.f2.open": {
+      "quote": "195",
+      "deadline": "1793971622",
+      "coverageBpsAtQuote": "19425"
+    },
+    "f2.before": {
+      "deployer": {
+        "block": "71033828",
+        "nativeWei": "8713818931370500000",
+        "usdc": "8713818",
+        "cirBtc": "0"
+      },
+      "trader": {
+        "block": "71033828",
+        "nativeWei": "19948495592129650000",
+        "usdc": "19948495",
+        "cirBtc": "10000"
+      },
+      "keeper": {
+        "block": "71033828",
+        "nativeWei": "20000000000000000000",
+        "usdc": "20000000",
+        "cirBtc": "0"
+      },
+      "engine": {
+        "block": "71033828",
+        "nativeWei": "0",
+        "usdc": "0",
+        "cirBtc": "0"
+      },
+      "vault": {
+        "block": "71033828",
+        "nativeWei": "1010383000000000000",
+        "usdc": "1010383",
+        "cirBtc": "0"
+      },
+      "venue": {
+        "block": "71033828",
+        "nativeWei": "0",
+        "usdc": "0",
+        "cirBtc": "0"
+      },
+      "smokeVenue": {
+        "block": "71033828",
+        "nativeWei": "0",
+        "usdc": "0",
+        "cirBtc": "0"
+      },
+      "vaultState": {
+        "depositorIdleCash": "1000294",
+        "outstandingPrincipal": "0",
+        "commitments": "0",
+        "pendingGrossCash": "0",
+        "nav": "1000294",
+        "totalShares": "1000000",
+        "managerCash": "89",
+        "primaryReserve": "4000",
+        "tailReserve": "6000",
+        "pilotBackstop": "0",
+        "claimableWithdrawals": "0",
+        "primaryTarget": "4000",
+        "tailTarget": "6000",
+        "queueHead": "0",
+        "queueTail": "0",
+        "livePositions": "0",
+        "pendingOpens": "0",
+        "activeRequests": "0",
+        "financingCeiling": "1000000",
+        "perAccountCap": "100000",
+        "fundingPaused": false,
+        "engine": "0xac836824231ae77874D0Ca293BD749ffE6c0d00f"
+      }
+    },
+    "f2.opened": {
+      "id": "2",
+      "txHash": "0x46bb917630154d3a20facd0034692e17b62e6f69caec85f16d156ce40187bd29",
+      "block": "71033842",
+      "events": [
+        {
+          "name": "AssetAcquired",
+          "logIndex": 21,
+          "args": {
+            "id": "2",
+            "trader": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+            "cost": "200000",
+            "atoms": "195",
+            "referencePrice": "100000000000"
+          }
+        },
+        {
+          "name": "DisclosedSaleAgreed",
+          "logIndex": 22,
+          "args": {
+            "id": "2",
+            "trader": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+            "equity": "100000",
+            "principal": "100000",
+            "markup": "383",
+            "atoms": "195",
+            "termsHash": "0xb3dc89d6be33479580f5bc183906c6d7d1b67559167252edd086af824733e8b7"
+          }
+        },
+        {
+          "name": "Pledged",
+          "logIndex": 23,
+          "args": {
+            "id": "2",
+            "trader": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+            "atoms": "195",
+            "termsHash": "0xb3dc89d6be33479580f5bc183906c6d7d1b67559167252edd086af824733e8b7"
+          }
+        },
+        {
+          "name": "Opened",
+          "logIndex": 30,
+          "args": {
+            "id": "2",
+            "trader": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+            "maturesAt": "1795180329"
+          }
+        }
+      ],
+      "position": {
+        "trader": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+        "status": 1,
+        "openedAt": "1793970729",
+        "maturesAt": "1795180329",
+        "grossCost": "200000",
+        "principal0": "100000",
+        "principal": "100000",
+        "markup0": "383",
+        "markup": "383",
+        "collateral": "195",
+        "collected": "0",
+        "lpAllocation": "0",
+        "termsHash": "0xb3dc89d6be33479580f5bc183906c6d7d1b67559167252edd086af824733e8b7"
+      },
+      "after": {
+        "deployer": {
+          "block": "71033842",
+          "nativeWei": "8713818931370500000",
+          "usdc": "8713818",
+          "cirBtc": "0"
+        },
+        "trader": {
+          "block": "71033842",
+          "nativeWei": "19827909667129650000",
+          "usdc": "19827909",
+          "cirBtc": "10000"
+        },
+        "keeper": {
+          "block": "71033842",
+          "nativeWei": "20000000000000000000",
+          "usdc": "20000000",
+          "cirBtc": "0"
+        },
+        "engine": {
+          "block": "71033842",
+          "nativeWei": "0",
+          "usdc": "0",
+          "cirBtc": "195"
+        },
+        "vault": {
+          "block": "71033842",
+          "nativeWei": "910383000000000000",
+          "usdc": "910383",
+          "cirBtc": "0"
+        },
+        "venue": {
+          "block": "71033842",
+          "nativeWei": "0",
+          "usdc": "0",
+          "cirBtc": "0"
+        },
+        "smokeVenue": {
+          "block": "71033842",
+          "nativeWei": "0",
+          "usdc": "0",
+          "cirBtc": "0"
+        },
+        "vaultState": {
+          "depositorIdleCash": "900294",
+          "outstandingPrincipal": "100000",
+          "commitments": "0",
+          "pendingGrossCash": "0",
+          "nav": "1000294",
+          "totalShares": "1000000",
+          "managerCash": "89",
+          "primaryReserve": "4000",
+          "tailReserve": "6000",
+          "pilotBackstop": "0",
+          "claimableWithdrawals": "0",
+          "primaryTarget": "4000",
+          "tailTarget": "6000",
+          "queueHead": "0",
+          "queueTail": "0",
+          "livePositions": "1",
+          "pendingOpens": "0",
+          "activeRequests": "0",
+          "financingCeiling": "1000000",
+          "perAccountCap": "100000",
+          "fundingPaused": false,
+          "engine": "0xac836824231ae77874D0Ca293BD749ffE6c0d00f"
+        }
+      },
+      "gasCostWei": "19199975000000000"
+    },
+    "param.f2.move": {
+      "atoms": "1161",
+      "quote": "1077148",
+      "floor": "900936",
+      "deadline": "1793971635"
+    },
+    "f2.moved": {
+      "txHash": "0xf833247cb8dea4decf90c0cb272d824c35f317c10a7afcc7b484395a4b4ef627",
+      "pool": {
+        "sqrtPriceX96": "2745600908215028043474290207",
+        "tick": -67250,
+        "liquidity": "316227",
+        "priceMicroPerBtc": "83269191484"
+      },
+      "deviationFrom80kBps": "408"
+    },
+    "f2.move.landed": {
+      "txHash": "0xf833247cb8dea4decf90c0cb272d824c35f317c10a7afcc7b484395a4b4ef627",
+      "pool": {
+        "sqrtPriceX96": "2745600908215028043474290207",
+        "tick": -67250,
+        "liquidity": "316227",
+        "priceMicroPerBtc": "83269191484"
+      },
+      "deviationFrom80kBps": "408"
+    },
+    "param.f2.move2": {
+      "atoms": "223",
+      "quote": "181187",
+      "floor": "173048",
+      "deadline": "1793971692"
+    },
+    "f2.move2.landed": {
+      "txHash": "0x9c36b76c9d50e005eeee53768b3f7b9e930a9e2172372ccf6d438ec643896cdc",
+      "pool": {
+        "sqrtPriceX96": "2801221244486651538450262394",
+        "tick": -66849,
+        "liquidity": "316227",
+        "priceMicroPerBtc": "79995276658"
+      },
+      "deviationFrom80kBps": "0"
+    },
+    "param.f2.observedAt": "1793970799",
+    "param.f2.rebalance": {
+      "minUsdc": "40352",
+      "deadline": "1793971707"
+    },
+    "f2.rebalanced": {
+      "id": "2",
+      "plan": {
+        "eligible": true,
+        "isPartial": true,
+        "value": "156000",
+        "debt": "100383",
+        "gross": "41196",
+        "sellAtoms": "52",
+        "minUsdc": "40352"
+      },
+      "txHash": "0xc7afcee5e170601d01468b8acef07f62439b49404a31dbe553b770dd4a783f78",
+      "block": "71033997",
+      "events": [
+        {
+          "name": "Repaid",
+          "logIndex": 23,
+          "args": {
+            "id": "2",
+            "payer": "0xac836824231ae77874D0Ca293BD749ffE6c0d00f",
+            "principalPaid": "40612",
+            "markupPaid": "0"
+          }
+        },
+        {
+          "name": "Rebalanced",
+          "logIndex": 24,
+          "args": {
+            "id": "2",
+            "atomsSold": "52",
+            "proceeds": "40612",
+            "principalAfter": "59388",
+            "markupAfter": "383",
+            "collateralAfter": "143",
+            "dustFallback": "false",
+            "toleranceUsed": "false"
+          }
+        }
+      ],
+      "positionAfter": {
+        "trader": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+        "status": 1,
+        "openedAt": "1793970729",
+        "maturesAt": "1795180329",
+        "grossCost": "200000",
+        "principal0": "100000",
+        "principal": "59388",
+        "markup0": "383",
+        "markup": "383",
+        "collateral": "143",
+        "collected": "0",
+        "lpAllocation": "0",
+        "termsHash": "0xb3dc89d6be33479580f5bc183906c6d7d1b67559167252edd086af824733e8b7"
+      },
+      "coverageBpsAfter": "19139",
+      "coverageBpsBefore": "15540",
+      "coverageBpsAtOpen": "19425",
+      "checks": {
+        "quantityIsEnginePlan": true,
+        "proceedsMeetFloor": true,
+        "principalAtLeastDust": true,
+        "coverageAtLeast190Strict": true,
+        "toleranceUsed": "false",
+        "stillActive": true,
+        "vaultOutstandingMatches": true
+      },
+      "after": {
+        "deployer": {
+          "block": "71033997",
+          "nativeWei": "8713147731370500000",
+          "usdc": "8713147",
+          "cirBtc": "0"
+        },
+        "trader": {
+          "block": "71033997",
+          "nativeWei": "21075412607129464853",
+          "usdc": "21075412",
+          "cirBtc": "8616"
+        },
+        "keeper": {
+          "block": "71033997",
+          "nativeWei": "19993830900000000000",
+          "usdc": "19993830",
+          "cirBtc": "0"
+        },
+        "engine": {
+          "block": "71033997",
+          "nativeWei": "0",
+          "usdc": "0",
+          "cirBtc": "143"
+        },
+        "vault": {
+          "block": "71033997",
+          "nativeWei": "950995000000000000",
+          "usdc": "950995",
+          "cirBtc": "0"
+        },
+        "venue": {
+          "block": "71033997",
+          "nativeWei": "0",
+          "usdc": "0",
+          "cirBtc": "0"
+        },
+        "smokeVenue": {
+          "block": "71033997",
+          "nativeWei": "0",
+          "usdc": "0",
+          "cirBtc": "0"
+        },
+        "vaultState": {
+          "depositorIdleCash": "940906",
+          "outstandingPrincipal": "59388",
+          "commitments": "0",
+          "pendingGrossCash": "0",
+          "nav": "1000294",
+          "totalShares": "1000000",
+          "managerCash": "89",
+          "primaryReserve": "4000",
+          "tailReserve": "6000",
+          "pilotBackstop": "0",
+          "claimableWithdrawals": "0",
+          "primaryTarget": "4000",
+          "tailTarget": "6000",
+          "queueHead": "0",
+          "queueTail": "0",
+          "livePositions": "1",
+          "pendingOpens": "0",
+          "activeRequests": "0",
+          "financingCeiling": "1000000",
+          "perAccountCap": "100000",
+          "fundingPaused": false,
+          "engine": "0xac836824231ae77874D0Ca293BD749ffE6c0d00f"
+        }
+      },
+      "gasCostWei": "6169100000000000"
     }
   }
 }
