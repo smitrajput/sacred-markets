@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 640" role="img" aria-labelledby="money-t money-d" font-family="system-ui, Helvetica, Arial, sans-serif">
+<title id="money-t">Money bucket flow from LP deposit to repayment</title>
+<desc id="money-d">An LP deposit moves into LP idle cash, which funds the gross purchase. On open, idle falls by P and principal receivable rises by P. On repayment, principal returns to LP idle, then markup splits 77 percent to LPs and 23 percent to the manager, then owner surplus goes to the trader. Reserves, claims, manager cash and uncollected markup are excluded from NAV.</desc>
+<defs><marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1b1915"/></marker></defs>
+<rect x="16" y="12" width="308" height="48" rx="3" fill="#fdfbf6" stroke="#1b1915" stroke-width="1.5"/>
+<text x="30" y="42" font-size="16" font-weight="700" fill="#1b1915">LP deposit (USDC)</text>
+<line x1="170" y1="60" x2="170" y2="82" stroke="#1b1915" stroke-width="2" marker-end="url(#ah2)"/>
+<rect x="16" y="82" width="308" height="60" rx="3" fill="#fdfbf6" stroke="#1b1915" stroke-width="1.5"/>
+<text x="30" y="106" font-size="16" font-weight="700" fill="#1b1915">LP idle cash · in NAV</text>
+<text x="30" y="130" font-size="14" fill="#4b473f">Funds all gross C = 0.20 USDC at open</text>
+<line x1="170" y1="142" x2="170" y2="164" stroke="#1b1915" stroke-width="2" marker-end="url(#ah2)"/>
+<rect x="16" y="164" width="308" height="60" rx="3" fill="#fdfbf6" stroke="#1b1915" stroke-width="1.5"/>
+<text x="30" y="188" font-size="16" font-weight="700" fill="#1b1915">Principal receivable · in NAV</text>
+<text x="30" y="212" font-size="14" fill="#4b473f">Idle falls by P; receivable rises by P</text>
+<line x1="170" y1="224" x2="170" y2="246" stroke="#1b1915" stroke-width="2" marker-end="url(#ah2)"/>
+<rect x="16" y="246" width="308" height="60" rx="3" fill="#fdfbf6" stroke="#1b1915" stroke-width="1.5"/>
+<text x="30" y="270" font-size="16" font-weight="700" fill="#1b1915">Repayment, from any payer</text>
+<text x="30" y="294" font-size="14" fill="#4b473f">Applied: principal, markup, surplus</text>
+<line x1="170" y1="306" x2="170" y2="328" stroke="#1b1915" stroke-width="2" marker-end="url(#ah2)"/>
+<rect x="16" y="328" width="308" height="40" rx="3" fill="#fdfbf6" stroke="#1b1915" stroke-width="1.5"/>
+<text x="30" y="353" font-size="14" fill="#1b1915">1 · Principal back to LP idle</text>
+<line x1="170" y1="368" x2="170" y2="390" stroke="#1b1915" stroke-width="2" marker-end="url(#ah2)"/>
+<rect x="16" y="390" width="308" height="40" rx="3" fill="#fdfbf6" stroke="#1b1915" stroke-width="1.5"/>
+<text x="30" y="415" font-size="14" fill="#1b1915">2 · Markup: 77% LP, 23% manager</text>
+<line x1="170" y1="430" x2="170" y2="452" stroke="#1b1915" stroke-width="2" marker-end="url(#ah2)"/>
+<rect x="16" y="452" width="308" height="40" rx="3" fill="#fdfbf6" stroke="#1b1915" stroke-width="1.5"/>
+<text x="30" y="477" font-size="14" fill="#1b1915">3 · Owner surplus to trader</text>
+<rect x="16" y="516" width="308" height="108" rx="3" fill="none" stroke="#78736a" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="30" y="542" font-size="16" font-weight="700" fill="#4b473f">Excluded from NAV</text>
+<text x="30" y="566" font-size="14" fill="#4b473f">Reserves (primary 0.004, tail 0.006)</text>
+<text x="30" y="588" font-size="14" fill="#4b473f">Reserved claims, manager cash,</text>
+<text x="30" y="610" font-size="14" fill="#4b473f">uncollected markup</text>
+</svg>

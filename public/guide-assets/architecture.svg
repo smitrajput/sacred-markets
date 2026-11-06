@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 650" role="img" aria-labelledby="arch-t arch-d" font-family="system-ui, Helvetica, Arial, sans-serif">
+<title id="arch-t">Browser, read API and signed transactions</title>
+<desc id="arch-d">The frontend loads in the browser. Its read API fetches public chain state. The user's wallet sends signed transactions directly to Arc RPC. A separate keeper also submits eligible transactions. Onchain, MarginVault holds USDC and TradeEngine holds pledged cirBTC. The engine uses DemoPriceGuard for valuation and V4SpotVenue for swaps with Uniswap v4.</desc>
+<defs><marker id="ah1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4b473f"/></marker><marker id="ar1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b5321f"/></marker></defs>
+<rect x="16" y="14" width="308" height="62" rx="3" fill="#fdfbf6" stroke="#1b1915"/>
+<text x="170" y="39" font-size="16" font-weight="700" text-anchor="middle">Browser · Earn / Trade / Activity</text>
+<text x="170" y="61" font-size="14" fill="#4b473f" text-anchor="middle">React frontend served by Vercel</text>
+<path d="M90,76 V116" stroke="#4b473f" stroke-dasharray="4 4" marker-end="url(#ah1)"/>
+<path d="M250,76 V116" stroke="#b5321f" marker-end="url(#ar1)"/>
+<rect x="16" y="118" width="148" height="65" rx="3" fill="#fdfbf6" stroke="#4b473f"/>
+<text x="90" y="143" font-size="15" font-weight="700" text-anchor="middle">Read-only API</text>
+<text x="90" y="167" font-size="13" fill="#4b473f" text-anchor="middle">No signing keys</text>
+<rect x="176" y="118" width="148" height="65" rx="3" fill="#fdfbf6" stroke="#b5321f"/>
+<text x="250" y="143" font-size="15" font-weight="700" text-anchor="middle">User wallet</text>
+<text x="250" y="167" font-size="13" fill="#4b473f" text-anchor="middle">Approve and sign</text>
+<path d="M90,183 V246" stroke="#4b473f" stroke-dasharray="4 4" marker-start="url(#ah1)" marker-end="url(#ah1)"/>
+<text x="28" y="217" font-size="12" fill="#4b473f">Read state</text>
+<path d="M250,183 V246" stroke="#b5321f" stroke-width="2" marker-end="url(#ar1)"/>
+<text x="177" y="217" font-size="12" fill="#b5321f">Signed transaction</text>
+<rect x="16" y="248" width="308" height="40" rx="3" fill="#f4f0e7" stroke="#1b1915"/>
+<text x="170" y="274" font-size="15" font-weight="700" text-anchor="middle">Arc RPC → chain 5042002</text>
+<path d="M170,288 V320" stroke="#b5321f" marker-end="url(#ar1)"/>
+<rect x="16" y="322" width="308" height="120" rx="3" fill="#fdfbf6" stroke="#1b1915"/>
+<text x="30" y="348" font-size="16" font-weight="700">Sacred contracts</text>
+<text x="30" y="374" font-size="14">MarginVault holds USDC cash buckets</text>
+<text x="30" y="398" font-size="14">TradeEngine holds the cirBTC pledge</text>
+<text x="30" y="422" font-size="13" fill="#4b473f">DemoPriceGuard → reference valuation</text>
+<path d="M170,442 V478" stroke="#1b1915" marker-end="url(#ah1)"/>
+<rect x="16" y="480" width="308" height="64" rx="3" fill="#fdfbf6" stroke="#1b1915"/>
+<text x="170" y="506" font-size="15" font-weight="700" text-anchor="middle">V4SpotVenue → Uniswap PoolManager</text>
+<text x="170" y="530" font-size="13" fill="#4b473f" text-anchor="middle">USDC / cirBTC · fee 3000 · spacing 60</text>
+<rect x="16" y="570" width="308" height="62" rx="3" fill="#f4f0e7" stroke="#4b473f" stroke-dasharray="4 4"/>
+<text x="170" y="595" font-size="15" font-weight="700" text-anchor="middle">Separate keeper process</text>
+<text x="170" y="619" font-size="13" fill="#4b473f" text-anchor="middle">Own gas wallet → Arc RPC → eligible action</text>
+</svg>
