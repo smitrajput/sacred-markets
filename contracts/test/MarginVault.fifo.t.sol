@@ -78,11 +78,13 @@ contract MarginVaultFifoTest is VaultBase {
 
     function test_payout_usesPreFillNav_afterMarkup() public {
         _deposit(alice, 100 * USDC1);
-        engine.creditLpMarkup(5 * USDC1); // NAV 105, shares 100
+        _seedTargets();
+        _open(1, trader1, 10 * USDC1);
+        engine.recordCollectedMarkup(1, 10 * USDC1); // LP share 7.7: NAV 107.7, shares 100
         _request(alice, 20 * USDC1);
         _process(1);
-        assertEq(vault.claimable(alice), 21_000_000); // 20 * 105 / 100
-        assertEq(vault.nav(), 84_000_000);
+        assertEq(vault.claimable(alice), 21_540_000); // 20 * 107.7 / 100
+        assertEq(vault.nav(), 86_160_000);
         assertEq(vault.totalShares(), 80_000_000);
     }
 

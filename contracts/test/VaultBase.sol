@@ -72,4 +72,14 @@ abstract contract VaultBase is Test {
     function _open(uint256 id, address account, uint256 principal) internal {
         engine.openFull(id, account, principal);
     }
+
+    /// @dev Uses the full 1 USDC of protection seeded by `_seedTargets()` (0.4 primary + 0.6 tail) by opening and
+    /// completely losing a 1 USDC position, so later final losses are uncovered. The position is finalized; net idle
+    /// cash is unchanged because the covered principal returns to idle. Needs 2 USDC of free idle cash and an unused id.
+    function _drainReserves(uint256 id) internal {
+        engine.openFull(id, makeAddr("reserveDrain"), 1 * USDC1);
+        engine.finalLoss(id, 0);
+        engine.finalizePosition(id);
+        assertEq(vault.primaryReserve() + vault.tailReserve(), 0, "reserves drained");
+    }
 }

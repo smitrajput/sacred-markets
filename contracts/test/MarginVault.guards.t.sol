@@ -27,7 +27,8 @@ contract MarginVaultGuardsTest is VaultBase {
         _deposit(alice, 10 * USDC1);
         _seedTargets();
         _open(1, trader1, 5 * USDC1);
-        engine.writeOffPrincipal(1, 5 * USDC1);
+        _drainReserves(9001); // protection is spent first, so the next loss lands on LPs in full
+        engine.settleFinalLoss(1);
         assertEq(vault.nav(), 5_000_000);
         assertEq(vault.totalShares(), 10_000_000);
     }
@@ -55,12 +56,14 @@ contract MarginVaultGuardsTest is VaultBase {
         _deposit(alice, 10 * USDC1);
         _deposit(bob, 10 * USDC1);
         _seedTargets();
-        engine.openFull(1, trader1, 10 * USDC1); // idle 10, outstanding 10
+        engine.openFull(1, trader1, 5 * USDC1);
+        engine.openFull(2, trader2, 5 * USDC1); // idle 10, outstanding 10
+        _drainReserves(9001);
         _request(alice, 10 * USDC1);
         assertEq(_process(1), 1); // alice takes all the idle cash
-        engine.writeOffPrincipal(1, 5 * USDC1); // outstanding 5 remains; NAV 5e6 over bob's 10e6 shares
+        engine.settleFinalLoss(1); // 5 lost with no protection left; outstanding 5 remains
         assertEq(vault.depositorIdleCash(), 0);
-        assertEq(vault.nav(), 5_000_000);
+        assertEq(vault.nav(), 5_000_000); // NAV 5e6 over bob's 10e6 shares
 
         _request(bob, 1); // worth floor(1 * 5e6 / 10e6) = 0
         vm.expectEmit(true, true, false, true, address(vault));
@@ -77,9 +80,11 @@ contract MarginVaultGuardsTest is VaultBase {
         _open(1, trader1, 2_500_000);
         _open(2, trader2, 1_250_000);
         _open(3, carol, 1_250_000);
-        engine.writeOffPrincipal(1, 2_500_000);
-        engine.writeOffPrincipal(2, 1_250_000);
-        engine.writeOffPrincipal(3, 1_250_000); // 5e6 lost: NAV 5e6 = idle 5e6 over 10e6 shares
+        _drainReserves(9001);
+        engine.settleFinalLoss(1);
+        engine.settleFinalLoss(2);
+        engine.settleFinalLoss(3); // 5e6 lost, nothing covered: NAV 5e6 = idle 5e6 over 10e6 shares
+        _seedTargets(); // the treasury restores protection so financing can resume
         assertEq(vault.nav(), 5_000_000);
         assertEq(vault.depositorIdleCash(), 5_000_000);
         // Lend again so idle is 1.25e6: positions of 2.5e6 and 1.25e6 (each needs 2P of idle).
@@ -121,29 +126,35 @@ contract MarginVaultGuardsTest is VaultBase {
     }
 
     function test_waiting_whenIdleBuysLessThanOneShare_returnsWithoutMutation() public {
-        // NAV is twice the share count, so one atom of idle cash is worth less than one whole share.
+        // NAV exceeds the share count, so a single atom of idle cash is worth less than one whole share.
         _deposit(alice, 10 * USDC1);
         _deposit(bob, 10 * USDC1);
         _seedTargets();
-        engine.creditLpMarkup(20 * USDC1); // NAV 40, shares 20
-        _open(1, trader1, 10 * USDC1);
-        _open(2, trader2, 10 * USDC1);
-        _open(3, carol, 10 * USDC1);
-        assertEq(vault.depositorIdleCash(), 10_000_000);
+        engine.openFull(1, trader1, 10 * USDC1);
+        engine.recordCollectedMarkup(1, 26 * USDC1); // LP share 20.02 exactly: NAV 40.02, shares 20
+        engine.openFull(2, trader2, 10 * USDC1);
+        engine.openFull(3, carol, 10 * USDC1);
+        assertEq(vault.depositorIdleCash(), 10_020_000);
+        assertEq(vault.nav(), 40_020_000);
+
         _request(alice, 10 * USDC1);
-        assertEq(_process(1), 0); // burn min(10, floor(10*20/40)) = 5 shares, payout 10
-        assertEq(vault.depositorIdleCash(), 0);
-        assertEq(vault.totalShares(), 15_000_000);
-        engine.repayPrincipal(1, 1); // one atom of idle cash arrives
+        assertEq(_process(1), 0);
+        // burn = min(10e6, floor(10_020_000 * 20e6 / 40_020_000)) = 5_007_496; payout = floor(5_007_496 * 2.001) = 10_019_999
+        assertEq(vault.claimable(alice), 10_019_999);
+        assertEq(vault.totalShares(), 14_992_504);
+        assertEq(vault.depositorIdleCash(), 1); // one atom is left
+        assertEq(vault.nav(), 30_000_001);
 
         uint256 supply = vault.totalShares();
         (, uint256 left) = vault.withdrawalRequests(0);
-        assertEq(_process(16), 0); // floor(1 * 15e6 / 30_000_001) = 0 shares: wait, do not destroy anything
+        assertEq(_process(16), 0); // floor(1 * 14_992_504 / 30_000_001) = 0 shares: wait, do not destroy anything
         assertEq(vault.totalShares(), supply);
         (, uint256 left2) = vault.withdrawalRequests(0);
         assertEq(left2, left);
+        assertEq(vault.lockedShares(alice), left);
         assertEq(vault.depositorIdleCash(), 1);
-        assertEq(vault.claimable(alice), 10_000_000);
+        assertEq(vault.claimable(alice), 10_019_999);
+        assertEq(vault.queueHead(), 0);
     }
 
     function test_rounding_favoursTheVault_andIsNotDust() public {
@@ -161,9 +172,10 @@ contract MarginVaultGuardsTest is VaultBase {
         _deposit(alice, 10 * USDC1);
         _seedTargets();
         _open(1, trader1, 5 * USDC1);
+        _drainReserves(9001);
         _request(alice, 10 * USDC1);
         _process(1); // pays 5 of idle; 5e6 shares stay queued
-        engine.writeOffPrincipal(1, 5 * USDC1); // NAV 0, position live at zero principal
+        engine.settleFinalLoss(1); // NAV 0, position live at zero principal
         assertEq(vault.nav(), 0);
         assertEq(vault.totalShares(), 5_000_000);
 
@@ -191,6 +203,7 @@ contract MarginVaultGuardsTest is VaultBase {
         _deposit(bob, 10 * USDC1);
         _seedTargets();
         engine.openFull(1, trader1, 10 * USDC1); // idle 10, outstanding 10
+        _drainReserves(9001);
         _request(alice, 10 * USDC1);
         assertEq(_process(1), 1); // alice is paid the idle 10; bob keeps 10 shares behind the lent 10
 
@@ -198,7 +211,7 @@ contract MarginVaultGuardsTest is VaultBase {
         vm.expectRevert(abi.encodeWithSelector(MarginVault.NavNotZero.selector, 10_000_000));
         vault.burnWorthlessShares(1); // NAV is positive: shares are not worthless
 
-        engine.writeOffPrincipal(1, 10 * USDC1); // NAV 0, position live at zero principal
+        engine.settleFinalLoss(1); // NAV 0, position live at zero principal
         vm.prank(carol);
         vm.expectRevert(abi.encodeWithSelector(MarginVault.InsufficientShares.selector, 0, 1));
         vault.burnWorthlessShares(1); // not a holder
@@ -222,9 +235,10 @@ contract MarginVaultGuardsTest is VaultBase {
         _deposit(alice, 10 * USDC1);
         _seedTargets();
         _open(1, trader1, 5 * USDC1);
+        _drainReserves(9001);
         _request(alice, 10 * USDC1);
         _process(1);
-        engine.writeOffPrincipal(1, 5 * USDC1); // NAV 0; 5e6 shares are locked in the queue
+        engine.settleFinalLoss(1); // NAV 0; 5e6 shares are locked in the queue
         vm.prank(alice);
         vm.expectRevert(abi.encodeWithSelector(MarginVault.InsufficientShares.selector, 0, 1));
         vault.burnWorthlessShares(1);
@@ -250,7 +264,7 @@ contract MarginVaultGuardsTest is VaultBase {
         assertEq(_process(1), 0); // still nothing more can burn
         assertEq(vault.totalShares(), 1);
 
-        engine.creditLpMarkup(77_000); // the engine collects markup and the LP share arrives
+        engine.recordCollectedMarkup(1, 100_000); // collected markup: LP share 77_000, manager 23_000
         assertEq(vault.nav(), 77_001);
         engine.finalizePosition(1); // debt settled, position closed
         assertEq(_process(1), 1);
@@ -261,7 +275,7 @@ contract MarginVaultGuardsTest is VaultBase {
         assertEq(vault.claim(), 10_077_000);
         assertEq(usdc.balanceOf(alice), 10_077_000);
         assertEq(vault.claimableWithdrawals(), 0);
-        assertEq(usdc.balanceOf(address(vault)), 1_000_000); // only the protection reserves remain
+        assertEq(usdc.balanceOf(address(vault)), 1_023_000); // protection reserves plus the manager's locked cash
     }
 
     function test_lastShare_withNoLivePosition_theFinalShareRedeemsNormally() public {

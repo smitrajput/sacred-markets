@@ -30,63 +30,62 @@ contract MarginVaultDepositTest is VaultBase {
         assertEq(vault.nav(), 50_000_000);
     }
 
-    function test_deposit_afterLpMarkup_pricesAtPreDepositNav() public {
+    function test_deposit_afterCollectedMarkup_pricesAtPreDepositNav() public {
         _deposit(alice, 100 * USDC1);
-        engine.creditLpMarkup(5 * USDC1); // NAV 105, shares 100
-        assertEq(vault.nav(), 105_000_000);
-        // 21 USDC at 105/100 per share -> exactly 20 shares
-        assertEq(_deposit(bob, 21 * USDC1), 20_000_000);
+        _seedTargets();
+        _open(1, trader1, 10 * USDC1);
+        engine.recordCollectedMarkup(1, 10 * USDC1); // 77% = 7.7 to LPs, 2.3 to the manager (reserves are full)
+        assertEq(vault.nav(), 107_700_000);
+        assertEq(vault.managerCash(), 2_300_000);
+        // 21.54 USDC at 107.7 / 100 per share -> exactly 20 shares
+        assertEq(_deposit(bob, 21_540_000), 20_000_000);
         assertEq(vault.totalShares(), 120_000_000);
-        assertEq(vault.nav(), 126_000_000);
+        assertEq(vault.nav(), 129_240_000);
     }
 
     function test_deposit_afterPrincipalLoss_buysMoreSharesPerUsdc() public {
         _deposit(alice, 100 * USDC1);
         _seedTargets();
         _open(1, trader1, 10 * USDC1);
-        engine.writeOffPrincipal(1, 10 * USDC1); // uncovered loss of the whole position (still live at P=0)
-        assertEq(vault.nav(), 90_000_000);
-        assertEq(vault.liveCount(), 1);
-        // 9 USDC at 90/100 per share -> exactly 10 shares
-        assertEq(_deposit(bob, 9 * USDC1), 10_000_000);
+        engine.finalLoss(1, 0); // the whole 10 is lost; protection covers 1, LPs lose 9
+        assertEq(vault.nav(), 91_000_000);
+        assertEq(vault.liveCount(), 1); // still live at P = 0 until finalized
+        // 9.1 USDC at 91 / 100 per share -> exactly 10 shares
+        assertEq(_deposit(bob, 9_100_000), 10_000_000);
     }
 
     function test_deposit_roundsSharesDown_andHonoursMinShares() public {
-        _deposit(alice, 3); // 3 atoms -> 3 shares
-        engine.creditLpMarkup(1); // NAV 4
+        _deposit(alice, 100 * USDC1);
+        _seedTargets();
+        _open(1, trader1, 10 * USDC1);
+        engine.recordCollectedMarkup(1, 3); // LP gets floor(3 * 0.77) = 2 atoms: NAV 100_000_002
+        assertEq(vault.nav(), 100_000_002);
         usdc.mint(bob, 5);
         vm.startPrank(bob);
         usdc.approve(address(vault), 5);
         bytes32 m = vault.MANDATE_HASH();
-        // floor(5 * 3 / 4) = 3, not 3.75 and not 4
-        vm.expectRevert(abi.encodeWithSelector(MarginVault.SlippageExceeded.selector, 3, 4));
-        vault.deposit(5, 4, m);
-        assertEq(vault.deposit(5, 3, m), 3);
+        // floor(5 * 100e6 / 100_000_002) = 4 (4.9999999), not 5
+        vm.expectRevert(abi.encodeWithSelector(MarginVault.SlippageExceeded.selector, 4, 5));
+        vault.deposit(5, 5, m);
+        assertEq(vault.deposit(5, 4, m), 4);
         vm.stopPrank();
     }
 
     function test_deposit_revertsWhenSharesWouldRoundToZero() public {
-        _deposit(alice, 1); // 1 atom, 1 share
-        engine.creditLpMarkup(1_000_000_000); // NAV 1_000_000_001
-        usdc.mint(bob, 100_000_000);
+        _deposit(alice, 100 * USDC1);
+        _seedTargets();
+        _open(1, trader1, 10 * USDC1);
+        engine.recordCollectedMarkup(1, 1_000 * USDC1); // LP share 770 USDC: NAV 870, shares 100
+        assertEq(vault.nav(), 870_000_000);
+        uint256 cash = usdc.balanceOf(address(vault));
+        usdc.mint(bob, 1);
         vm.startPrank(bob);
-        usdc.approve(address(vault), type(uint256).max);
+        usdc.approve(address(vault), 1);
         bytes32 m = vault.MANDATE_HASH();
         vm.expectRevert(MarginVault.ZeroShares.selector);
-        vault.deposit(100_000_000, 0, m); // floor(1e8 * 1 / 1_000_000_001) = 0
+        vault.deposit(1, 0, m); // floor(1 * 100e6 / 870e6) = 0
         vm.stopPrank();
-        assertEq(usdc.balanceOf(address(vault)), 1_000_000_001); // nothing taken
-    }
-
-    function test_initialFunding_rejectsPreexistingRecordedAssets() public {
-        engine.creditLpMarkup(5 * USDC1); // recorded LP cash with zero supply
-        usdc.mint(alice, 10 * USDC1);
-        vm.startPrank(alice);
-        usdc.approve(address(vault), type(uint256).max);
-        bytes32 m = vault.MANDATE_HASH();
-        vm.expectRevert(MarginVault.InvalidInitialState.selector);
-        vault.deposit(10 * USDC1, 0, m);
-        vm.stopPrank();
+        assertEq(usdc.balanceOf(address(vault)), cash); // nothing taken
     }
 
     // ---------------------------------------------------------------- validation
@@ -279,16 +278,15 @@ contract MarginVaultDepositTest is VaultBase {
         (bool ok,) = _bobTriesDeposit(1);
         assertFalse(ok);
 
-        engine.repayPrincipal(2, 5 * USDC1);
-        engine.writeOffPrincipal(2, 5 * USDC1); // loss recorded, principal now zero
+        engine.finalLoss(2, 5 * USDC1); // 5 returned, the other 5 lost: protection covers 1, LPs lose 4
         engine.finalizePosition(2);
-        assertEq(vault.nav(), 95_000_000);
+        assertEq(vault.nav(), 96_000_000);
         assertEq(vault.liveCount(), 1);
-        // 9.5 USDC at 95/100 per share -> exactly 10 shares
-        usdc.mint(bob, 9_500_000);
+        // 9.6 USDC at 96 / 100 per share -> exactly 10 shares
+        usdc.mint(bob, 9_600_000);
         vm.startPrank(bob);
-        usdc.approve(address(vault), 9_500_000);
-        assertEq(vault.deposit(9_500_000, 0, vault.MANDATE_HASH()), 10_000_000);
+        usdc.approve(address(vault), 9_600_000);
+        assertEq(vault.deposit(9_600_000, 0, vault.MANDATE_HASH()), 10_000_000);
         vm.stopPrank();
     }
 
@@ -307,5 +305,39 @@ contract MarginVaultDepositTest is VaultBase {
     function _args(bytes memory ret) internal pure returns (bytes memory out) {
         out = new bytes(ret.length - 4);
         for (uint256 i; i < out.length; i++) out[i] = ret[i + 4];
+    }
+
+    // ---------------------------------------------------------------- stale price on a principal-zero position
+
+    function test_gate_scansPrincipalZeroPositionsToo_whileRepaymentFinalizationMarkupAndClaimsStayIndependent() public {
+        _twoLivePositions();
+        engine.repayPrincipal(1, 10 * USDC1); // position 1: P = 0, markup may still be owed, still live
+        assertEq(vault.liveCount(), 2);
+        // A reserved withdrawal exists before the price goes stale.
+        vm.prank(alice);
+        vault.requestWithdraw(5 * USDC1);
+        engine.setValue(2, 10 * USDC1); // position 2 healthy
+        vault.processWithdrawals(1);
+        uint256 reserved = vault.claimable(alice);
+        assertEq(reserved, 5_000_000);
+
+        engine.setStale(1, true); // only the P = 0 position goes stale
+        (bool ok, bytes memory ret) = _bobTriesDeposit(1 * USDC1);
+        assertFalse(ok);
+        assertEq(bytes4(ret), MarginVault.StalePrice.selector);
+        assertEq(abi.decode(_args(ret), (uint256)), 1);
+
+        vm.prank(alice);
+        vault.requestWithdraw(1 * USDC1);
+        vm.expectRevert(abi.encodeWithSelector(MarginVault.StalePrice.selector, 1));
+        vault.processWithdrawals(1); // no new cash is reserved on a stale scan
+
+        // Everything that must not depend on the oracle still works.
+        engine.repayPrincipal(2, 4 * USDC1);
+        engine.recordCollectedMarkup(1, 1 * USDC1); // collected markup on the stale P = 0 position
+        vm.prank(alice);
+        assertEq(vault.claim(), reserved); // already-reserved cash
+        engine.finalizePosition(1);
+        assertEq(vault.liveCount(), 1);
     }
 }

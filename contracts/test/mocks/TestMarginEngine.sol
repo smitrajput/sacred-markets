@@ -105,13 +105,24 @@ contract TestMarginEngine is IMarginEngineView {
         vault.repayPrincipal(id, amount);
     }
 
-    function creditLpMarkup(uint256 amount) external {
-        usdc.mint(address(this), amount);
-        vault.creditLpMarkup(amount);
+    /// @dev The trader pays a markup instalment; the engine hands exactly that payment to the vault.
+    function recordCollectedMarkup(uint256 id, uint256 payment) external {
+        usdc.mint(address(this), payment);
+        vault.recordCollectedMarkup(id, payment);
     }
 
-    function writeOffPrincipal(uint256 id, uint256 amount) external {
-        vault.writeOffPrincipal(id, amount);
+    function settleFinalLoss(uint256 id) external {
+        vault.settleFinalLoss(id);
+    }
+
+    /// @dev Liquidation outcome: the engine returns the sale proceeds as principal, then the vault books what is left
+    /// as a final loss. With no shortfall left, only the repayment happens.
+    function finalLoss(uint256 id, uint256 proceeds) external {
+        if (proceeds > 0) {
+            usdc.mint(address(this), proceeds);
+            vault.repayPrincipal(id, proceeds);
+        }
+        vault.settleFinalLoss(id);
     }
 
     function finalizePosition(uint256 id) external {

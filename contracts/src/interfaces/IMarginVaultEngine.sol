@@ -4,9 +4,9 @@ pragma solidity ^0.8.28;
 /// @title IMarginVaultEngine
 /// @notice The small surface the margin engine uses on MarginVault. Every function is callable only by the one bound
 ///         engine. USDC flows are pull-based: the engine approves the vault, and the vault measures what it receives.
-/// @dev Origination, principal return, finalization and the two NAV primitives (`creditLpMarkup`,
-///      `writeOffPrincipal`). Checkpoint 01c puts the 77/23 markup split and the loss waterfall in front of those two
-///      primitives; their signatures here are what the vault records after that routing.
+/// @dev The complete engine accounting API: origination, principal return, collected markup, final loss and
+///      finalization. There are no raw NAV or reserve primitives; the 77/23 split and the loss waterfall run inside
+///      the vault, so a faulty engine cannot misallocate them.
 interface IMarginVaultEngine {
     /// @notice Reserve a financing commitment and send `2 * principal` of gross purchase cash to the engine, funded
     ///         entirely from existing recorded depositor idle cash. Trader equity is NOT received here.
@@ -29,12 +29,17 @@ interface IMarginVaultEngine {
     ///         owed. Allowed while funding is paused. Never subject to a price check.
     function repayPrincipal(uint256 id, uint256 amount) external;
 
-    /// @notice LP share of collected markup, already split by the engine. Raises NAV for all current shares.
-    function creditLpMarkup(uint256 amount) external;
+    /// @notice A markup payment actually collected from the trader. The vault pulls exactly `payment` USDC, splits it
+    ///         77/23 cumulatively per position (LP share raises NAV; the manager part refills primary to 0.4% of the
+    ///         ceiling, then tail to 0.6%, then is locked as manager cash). Allowed while paused or stale; the position
+    ///         must be live (principal may already be zero).
+    function recordCollectedMarkup(uint256 id, uint256 payment) external;
 
-    /// @notice Principal lost after protection buckets were exhausted. Lowers NAV. No cash moves. The position stays
-    ///         live at zero principal until finalized.
-    function writeOffPrincipal(uint256 id, uint256 amount) external;
+    /// @notice Final loss of the position's whole remaining principal, after the engine has returned any proceeds with
+    ///         `repayPrincipal`. Draws primary, then tail, then the pilot backstop, then LP NAV. Covered principal
+    ///         moves from reserve cash into depositor idle cash; uncovered principal only lowers outstanding
+    ///         principal. Remaining principal becomes zero and the position stays live until `finalizePosition`.
+    function settleFinalLoss(uint256 id) external;
 
     /// @notice Final closure, only with recorded principal of zero: the engine calls it after the full debt is paid or
     ///         unpaid markup is written off. Removes the position from the bounded live set exactly once.

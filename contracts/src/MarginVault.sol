@@ -12,7 +12,8 @@ import {IMarginVaultEngine, IMarginEngineView} from "./interfaces/IMarginVaultEn
 /// @notice USDC vault with internal, non-transferable shares priced against recorded NAV, plus the funding and cap
 ///         accounting for fixed 2x margin financing. 01a: deposits, share/NAV math, origination limits, protection
 ///         seeding, pause and the engine accounting surface. 01b: one global FIFO withdrawal queue, permissionless
-///         processing, pull claims, worthless-share burns and the last-share guard. Loss/markup routing is 01c.
+///         processing, pull claims, worthless-share burns and the last-share guard. 01c: collected-markup accounting
+///         (77/23, manager part replenishes protection) and the final-loss waterfall.
 /// @dev NAV = depositorIdleCash + outstandingPrincipal. It is built only from recorded buckets, so direct token
 ///      donations never change NAV or mint shares. Reserves, claimable cash, manager cash and trader equity are
 ///      separate buckets and are never lendable.
@@ -80,6 +81,7 @@ contract MarginVault is IMarginVaultEngine, ReentrancyGuard {
     uint256 public constant MAX_UTILISATION_BPS = 9500; // principal + commitments <= 95% of NAV
     uint256 public constant PRIMARY_TARGET_BPS = 40; // 0.4% of the immutable financing ceiling
     uint256 public constant TAIL_TARGET_BPS = 60; // 0.6% of the immutable financing ceiling
+    uint256 public constant LP_MARKUP_BPS = 7_700; // LP share of COLLECTED markup; the rest is the manager's
     uint256 private constant BPS = 10_000;
 
     /// @notice Hash every depositor accepts: 2x exposure, 14-day term, 10% annualized markup fixed at open,
@@ -123,6 +125,8 @@ contract MarginVault is IMarginVaultEngine, ReentrancyGuard {
     uint256 public queueTail; // next request id
     uint256 public activeRequests; // unfilled requests, at most MAX_ACTIVE_REQUESTS
     mapping(address => uint256) public claimable; // reserved withdrawal cash per owner
+    mapping(uint256 => uint256) public markupCollected; // cumulative collected markup per position
+    mapping(uint256 => uint256) public lpMarkupAllocated; // cumulative LP share already credited, per position
 
     mapping(uint256 => Position) public positions;
     uint256[] private _liveIds;
@@ -140,8 +144,24 @@ contract MarginVault is IMarginVaultEngine, ReentrancyGuard {
     event OpenConfirmed(uint256 indexed id);
     event OpenCancelled(uint256 indexed id);
     event PrincipalRepaid(uint256 indexed id, uint256 amount, uint256 remaining);
-    event PrincipalWrittenOff(uint256 indexed id, uint256 amount, uint256 remaining);
-    event LpMarkupCredited(uint256 amount);
+    /// @dev Emitted for every collected-markup payment: the LP increment and where the manager part went.
+    event MarkupCollected(
+        uint256 indexed id,
+        uint256 payment,
+        uint256 lpIncrement,
+        uint256 toPrimary,
+        uint256 toTail,
+        uint256 toManagerCash
+    );
+    /// @dev Emitted for every final loss, even when protection covers all of it (uncoveredLpLoss is then zero).
+    event FinalLossSettled(
+        uint256 indexed id,
+        uint256 grossLoss,
+        uint256 fromPrimary,
+        uint256 fromTail,
+        uint256 fromBackstop,
+        uint256 uncoveredLpLoss
+    );
     event PositionFinalized(uint256 indexed id);
     event WithdrawalFilled(uint256 indexed requestId, address indexed owner, uint256 sharesBurned, uint256 payout);
     event WithdrawalDustWrittenOff(uint256 indexed requestId, address indexed owner, uint256 sharesBurned);
@@ -186,6 +206,7 @@ contract MarginVault is IMarginVaultEngine, ReentrancyGuard {
     error TooManyRequests();
     error NavNotZero(uint256 nav);
     error LastShareGuard();
+    error NoShortfall(uint256 id);
     error AmountExceedsRemaining(uint256 id, uint256 amount, uint256 remaining);
 
     modifier onlyEngine() {
@@ -267,7 +288,7 @@ contract MarginVault is IMarginVaultEngine, ReentrancyGuard {
             shares = amount; // 1:1 in micro-USDC units
         } else {
             if (navBefore == 0) revert ZeroNav(); // no recapitalization into zero NAV with shares outstanding
-            shares = (amount * totalShares) / navBefore;
+            shares = Math.mulDiv(amount, totalShares, navBefore);
         }
         if (shares == 0) revert ZeroShares();
         if (shares < minShares) revert SlippageExceeded(shares, minShares);
@@ -431,20 +452,51 @@ contract MarginVault is IMarginVaultEngine, ReentrancyGuard {
     }
 
     /// @inheritdoc IMarginVaultEngine
-    function creditLpMarkup(uint256 amount) external onlyEngine nonReentrant {
-        if (amount == 0) revert ZeroAmount();
-        _pull(msg.sender, amount);
-        depositorIdleCash += amount;
-        emit LpMarkupCredited(amount);
+    function recordCollectedMarkup(uint256 id, uint256 payment) external onlyEngine nonReentrant {
+        _livePosition(id); // the position must be live; its principal may already be zero
+        if (payment == 0) revert ZeroAmount();
+
+        // 77/23 applies to COLLECTED markup only, cumulatively per position, so rounding never drifts across payments.
+        uint256 cumulative = markupCollected[id] + payment;
+        uint256 lpTotal = Math.mulDiv(cumulative, LP_MARKUP_BPS, BPS);
+        uint256 lpIncrement = lpTotal - lpMarkupAllocated[id];
+        uint256 managerPart = payment - lpIncrement;
+        markupCollected[id] = cumulative;
+        lpMarkupAllocated[id] = lpTotal;
+        depositorIdleCash += lpIncrement; // raises NAV for every current share
+
+        // Manager part: refill primary to its target, then tail to its target, then lock the excess as manager cash.
+        uint256 toPrimary = _min(managerPart, primaryTarget > primaryReserve ? primaryTarget - primaryReserve : 0);
+        primaryReserve += toPrimary;
+        managerPart -= toPrimary;
+        uint256 toTail = _min(managerPart, tailTarget > tailReserve ? tailTarget - tailReserve : 0);
+        tailReserve += toTail;
+        managerPart -= toTail;
+        managerCash += managerPart; // locked: nothing in this vault can pay it out in the pilot
+
+        _pull(msg.sender, payment); // exactly the allocated LP plus manager amounts must arrive
+        emit MarkupCollected(id, payment, lpIncrement, toPrimary, toTail, managerPart);
     }
 
     /// @inheritdoc IMarginVaultEngine
-    function writeOffPrincipal(uint256 id, uint256 amount) external onlyEngine nonReentrant {
+    function settleFinalLoss(uint256 id) external onlyEngine nonReentrant {
         Position storage p = _livePosition(id);
-        if (amount == 0) revert ZeroAmount();
-        if (amount > p.remaining) revert AmountExceedsRemaining(id, amount, p.remaining);
-        _reduce(p, amount);
-        emit PrincipalWrittenOff(id, amount, p.remaining);
+        uint256 gross = p.remaining;
+        if (gross == 0) revert NoShortfall(id);
+
+        // primary, then tail, then the optional pilot backstop, then LP NAV. Manager cash is never touched.
+        uint256 fromPrimary = _min(gross, primaryReserve);
+        uint256 fromTail = _min(gross - fromPrimary, tailReserve);
+        uint256 fromBackstop = _min(gross - fromPrimary - fromTail, pilotBackstop);
+        uint256 covered = fromPrimary + fromTail + fromBackstop;
+        uint256 uncovered = gross - covered;
+
+        primaryReserve -= fromPrimary;
+        tailReserve -= fromTail;
+        pilotBackstop -= fromBackstop;
+        depositorIdleCash += covered; // covered principal moves from reserve cash into depositor idle cash
+        _reduce(p, gross); // outstanding falls by the whole loss; uncovered principal credits nothing
+        emit FinalLossSettled(id, gross, fromPrimary, fromTail, fromBackstop, uncovered);
     }
 
     // ================================================================ views
@@ -592,11 +644,10 @@ contract MarginVault is IMarginVaultEngine, ReentrancyGuard {
         IMarginEngineView e = IMarginEngineView(engine);
         for (uint256 i; i < n; i++) {
             uint256 id = _liveIds[i];
-            uint256 remaining = positions[id].remaining;
-            if (remaining == 0) continue; // nothing at risk: only markup can still be owed
+            // Every live position is scanned, including principal zero with markup still owed.
             (uint256 value, bool fresh) = e.positionValue(id);
             if (!fresh) revert StalePrice(id);
-            if (value < remaining) revert AccountingNeedsSettlement(id);
+            if (value < positions[id].remaining) revert AccountingNeedsSettlement(id);
         }
     }
 

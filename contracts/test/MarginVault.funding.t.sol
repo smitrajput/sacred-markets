@@ -57,9 +57,9 @@ contract MarginVaultFundingTest is VaultBase {
             vm.expectRevert(MarginVault.NotEngine.selector);
             vault.repayPrincipal(1, 1);
             vm.expectRevert(MarginVault.NotEngine.selector);
-            vault.creditLpMarkup(1);
+            vault.recordCollectedMarkup(1, 1);
             vm.expectRevert(MarginVault.NotEngine.selector);
-            vault.writeOffPrincipal(1, 1);
+            vault.settleFinalLoss(1);
             vm.expectRevert(MarginVault.NotEngine.selector);
             vault.finalizePosition(1);
             vm.stopPrank();
@@ -476,20 +476,18 @@ contract MarginVaultFundingTest is VaultBase {
         engine.repayPrincipal(2, 1);
     }
 
-    function test_writeOff_lowersNavWithoutMovingCash_andLeavesThePositionLiveAtZero() public {
+    function test_finalLoss_movesNoCashIn_andLeavesThePositionLiveAtZero() public {
         _fundedVault();
         _open(1, trader1, 10 * USDC1);
         uint256 cash = usdc.balanceOf(address(vault));
-        engine.writeOffPrincipal(1, 3 * USDC1);
-        assertEq(usdc.balanceOf(address(vault)), cash);
-        assertEq(vault.nav(), 97_000_000);
-        assertEq(vault.outstandingPrincipal(), 7_000_000);
-        assertEq(vault.accountExposure(trader1), 7_000_000);
-        vm.expectRevert(abi.encodeWithSelector(MarginVault.AmountExceedsRemaining.selector, 1, 7_000_001, 7_000_000));
-        engine.writeOffPrincipal(1, 7 * USDC1 + 1);
-        engine.writeOffPrincipal(1, 7 * USDC1);
+        engine.settleFinalLoss(1); // protection (1 USDC) covers a tenth; LPs lose 9
+        assertEq(usdc.balanceOf(address(vault)), cash, "a loss moves no cash");
+        assertEq(vault.nav(), 91_000_000);
+        assertEq(vault.outstandingPrincipal(), 0);
+        assertEq(vault.accountExposure(trader1), 0);
         assertEq(vault.liveCount(), 1);
-        assertEq(vault.nav(), 90_000_000);
+        vm.expectRevert(abi.encodeWithSelector(MarginVault.NoShortfall.selector, 1));
+        engine.settleFinalLoss(1);
         assertTrue(vault.isFullyBacked());
     }
 
@@ -522,7 +520,7 @@ contract MarginVaultFundingTest is VaultBase {
         engine.repayPrincipal(1, 1);
 
         // The swapped-in entry must now finalize correctly too.
-        engine.writeOffPrincipal(3, 5 * USDC1);
+        engine.settleFinalLoss(3);
         engine.finalizePosition(3);
         assertEq(vault.liveCount(), 1);
         assertEq(vault.liveIdAt(0), 2);
