@@ -46,3 +46,7 @@ Sacred: USDC Earn and cirBTC spot financing on Arc Testnet. Checkpoint 00a (scaf
 bun install
 bun run dev
 ```
+
+## Checkpoint 00b-deps
+
+Pinned Uniswap v4 sources live in `lib/` (manifest: `contracts/deps/v4-manifest.json`, installer: `scripts/install-v4-deps.sh`). Evidence: `docs/checkpoints/00b-deps.md`. Fork interface test: `contracts/test/V4Interface.t.sol`. No Sacred contracts are deployed yet.
