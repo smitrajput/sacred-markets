@@ -37,3 +37,6 @@ lib/permit2/
 lib/solmate/
 !contracts/deps/
 !contracts/deps/v4-manifest.json
+
+# Pinned local Arc-aware test tools
+.tools/

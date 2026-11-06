@@ -20,6 +20,12 @@ auto_detect_solc = false
 evm_version = "cancun"
 optimizer = true
 optimizer_runs = 200
+# Fork tests that move real Arc USDC need Circle's Arc-aware Foundry (scripts/test-arc-fork.sh); standard forge skips them.
+no_match_path = "test/fork/**"
 
 [rpc_endpoints]
 arc_testnet = "https://rpc.testnet.arc.io"
+
+# Used only by scripts/test-arc-fork.sh with arc-foundry `--network arc`: includes test/fork.
+[profile.arcfork]
+no_match_path = "test/__none__/**"

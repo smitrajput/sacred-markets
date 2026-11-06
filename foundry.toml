@@ -10,6 +10,8 @@ auto_detect_solc = false
 evm_version = "cancun"
 optimizer = true
 optimizer_runs = 200
+# Fork tests that move real Arc USDC need Circle's Arc-aware Foundry (scripts/test-arc-fork.sh); standard forge skips them.
+no_match_path = "contracts/test/fork/**"
 
 [rpc_endpoints]
 ethereum = "https://ethereum-rpc.publicnode.com"
@@ -20,3 +22,7 @@ arbitrum = "https://arbitrum-one-rpc.publicnode.com"
 polygon = "https://polygon-bor-rpc.publicnode.com"
 optimism = "https://optimism-rpc.publicnode.com"
 arc_testnet = "https://rpc.testnet.arc.io"
+
+# Used only by scripts/test-arc-fork.sh with arc-foundry `--network arc`: includes contracts/test/fork.
+[profile.arcfork]
+no_match_path = "contracts/test/__none__/**"

@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit",
     "check": "bash scripts/check.sh",
     "contracts:build": "forge build",
-    "contracts:test": "forge test"
+    "contracts:test": "forge test",
+    "contracts:test:arc-fork": "bash scripts/test-arc-fork.sh"
   },
   "dependencies": {
     "@circle-fin/adapter-viem-v2": "^1.19.2",
