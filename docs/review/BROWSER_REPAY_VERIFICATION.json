@@ -1,0 +1,79 @@
+{
+  "checkedAt": "2026-11-06T15:19:08.517Z",
+  "chainId": 5042002,
+  "trader": "0xAA46220DfD751f915d9c802412eDaBC0aB69dEcC",
+  "engine": "0xac836824231ae77874d0ca293bd749ffe6c0d00f",
+  "id": "3",
+  "sourceCommit": "d71ddbd",
+  "approval": {
+    "hash": "0x5e3db337dc486027e9d99f7cba9dff8e8dc759ce640a72c6e3ef95fc0f5c7a8d",
+    "block": "71048534",
+    "nonce": 2,
+    "status": "success",
+    "call": {
+      "functionName": "approve",
+      "args": [
+        "0xac836824231ae77874D0Ca293BD749ffE6c0d00f",
+        "100383"
+      ]
+    }
+  },
+  "action": {
+    "hash": "0x8e76a287a16c5ebe6d719298d0c4391f0035889037052f2e2999fb290d4bf12c",
+    "block": "71048551",
+    "nonce": 3,
+    "status": "success",
+    "call": {
+      "functionName": "repayAndRelease",
+      "args": [
+        "3",
+        "100383"
+      ]
+    },
+    "events": [
+      {
+        "name": "Repaid",
+        "logIndex": 16,
+        "args": {
+          "id": "3",
+          "payer": "0xAA46220DfD751f915d9c802412eDaBC0aB69dEcC",
+          "principalPaid": "100000",
+          "markupPaid": "383"
+        }
+      },
+      {
+        "name": "Released",
+        "logIndex": 19,
+        "args": {
+          "id": "3",
+          "trader": "0xAA46220DfD751f915d9c802412eDaBC0aB69dEcC",
+          "atomsReturned": "246"
+        }
+      }
+    ]
+  },
+  "positionAtReceipt": {
+    "trader": "0xAA46220DfD751f915d9c802412eDaBC0aB69dEcC",
+    "status": 2,
+    "openedAt": "1793978145",
+    "maturesAt": "1795187745",
+    "grossCost": "200000",
+    "principal0": "100000",
+    "principal": "0",
+    "markup0": "383",
+    "markup": "0",
+    "collateral": "0",
+    "collected": "383",
+    "lpAllocation": "294",
+    "termsHash": "0xb3dc89d6be33479580f5bc183906c6d7d1b67559167252edd086af824733e8b7"
+  },
+  "checks": {
+    "principalPaid": "100000",
+    "markupPaid": "383",
+    "remainingDebt": "0",
+    "releasedAtoms": "246",
+    "traderBtcAtoms": "246",
+    "positionClosed": true
+  },
+  "scope": "Actual user-signed browser trade; raw receipts, calldata, event order and block-pinned state checked independently. Verifier sends no transactions."
+}

@@ -1,0 +1,162 @@
+{
+  "checkedAt": "2026-11-06T15:25:26.870Z",
+  "chainId": 5042002,
+  "owner": "0x5B935E09b4749efbE9AA9855ac049d7cacE32659",
+  "vault": "0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450",
+  "sourceCommit": "d71ddbd",
+  "transactions": [
+    {
+      "hash": "0xfa78120f24459fda306bfda954ce14f032cac2ce890754a815434d1216960815",
+      "block": "71048953",
+      "from": "0x5b935e09b4749efbe9aa9855ac049d7cace32659",
+      "nonce": 2,
+      "status": "success",
+      "call": {
+        "functionName": "requestWithdraw",
+        "args": [
+          "99970"
+        ]
+      },
+      "event": {
+        "name": "WithdrawalRequested",
+        "args": {
+          "requestId": "1",
+          "owner": "0x5B935E09b4749efbE9AA9855ac049d7cacE32659",
+          "shares": "99970"
+        }
+      },
+      "state": {
+        "depositorIdleCash": "941171",
+        "outstandingPrincipal": "59388",
+        "commitments": "0",
+        "pendingGrossCash": "0",
+        "nav": "1000559",
+        "totalShares": "999970",
+        "managerCash": "178",
+        "primaryReserve": "4000",
+        "tailReserve": "6000",
+        "pilotBackstop": "0",
+        "claimableWithdrawals": "0",
+        "primaryTarget": "4000",
+        "tailTarget": "6000",
+        "queueHead": "1",
+        "queueTail": "2",
+        "livePositions": "1",
+        "pendingOpens": "0",
+        "activeRequests": "1",
+        "financingCeiling": "1000000",
+        "perAccountCap": "100000",
+        "fundingPaused": false,
+        "engine": "0xac836824231ae77874D0Ca293BD749ffE6c0d00f"
+      },
+      "gasCostWei": "2448880000000000"
+    },
+    {
+      "hash": "0xcb4125096e937bad51fe05641370f2a5dc5c3c09e32fc4f979a18461034e3855",
+      "block": "71048956",
+      "from": "0x60579fc93e6b7f2377dd952e1fd4c58c2e3ca373",
+      "nonce": 2,
+      "status": "success",
+      "call": {
+        "functionName": "processWithdrawals",
+        "args": [
+          "16"
+        ]
+      },
+      "event": {
+        "name": "WithdrawalFilled",
+        "args": {
+          "requestId": "1",
+          "owner": "0x5B935E09b4749efbE9AA9855ac049d7cacE32659",
+          "sharesBurned": "99970",
+          "payout": "100028"
+        }
+      },
+      "state": {
+        "depositorIdleCash": "841143",
+        "outstandingPrincipal": "59388",
+        "commitments": "0",
+        "pendingGrossCash": "0",
+        "nav": "900531",
+        "totalShares": "900000",
+        "managerCash": "178",
+        "primaryReserve": "4000",
+        "tailReserve": "6000",
+        "pilotBackstop": "0",
+        "claimableWithdrawals": "100028",
+        "primaryTarget": "4000",
+        "tailTarget": "6000",
+        "queueHead": "2",
+        "queueTail": "2",
+        "livePositions": "1",
+        "pendingOpens": "0",
+        "activeRequests": "0",
+        "financingCeiling": "1000000",
+        "perAccountCap": "100000",
+        "fundingPaused": false,
+        "engine": "0xac836824231ae77874D0Ca293BD749ffE6c0d00f"
+      },
+      "gasCostWei": "2489560000000000"
+    },
+    {
+      "hash": "0x72683156f818699601f9d43bf96118ebe38cc34018e120a2153dc9dcf04835c4",
+      "block": "71049141",
+      "from": "0x5b935e09b4749efbe9aa9855ac049d7cace32659",
+      "nonce": 3,
+      "status": "success",
+      "call": {
+        "functionName": "claim"
+      },
+      "event": {
+        "name": "Claimed",
+        "args": {
+          "owner": "0x5B935E09b4749efbE9AA9855ac049d7cacE32659",
+          "amount": "100028"
+        }
+      },
+      "state": {
+        "depositorIdleCash": "841143",
+        "outstandingPrincipal": "59388",
+        "commitments": "0",
+        "pendingGrossCash": "0",
+        "nav": "900531",
+        "totalShares": "900000",
+        "managerCash": "178",
+        "primaryReserve": "4000",
+        "tailReserve": "6000",
+        "pilotBackstop": "0",
+        "claimableWithdrawals": "0",
+        "primaryTarget": "4000",
+        "tailTarget": "6000",
+        "queueHead": "2",
+        "queueTail": "2",
+        "livePositions": "1",
+        "pendingOpens": "0",
+        "activeRequests": "0",
+        "financingCeiling": "1000000",
+        "perAccountCap": "100000",
+        "fundingPaused": false,
+        "engine": "0xac836824231ae77874D0Ca293BD749ffE6c0d00f"
+      },
+      "gasCostWei": "1073320000000000"
+    }
+  ],
+  "checks": {
+    "requestId": "1",
+    "burnedShares": "99970",
+    "payout": "100028",
+    "processedByKeeper": true,
+    "processor": "0x60579fc93e6b7f2377dd952e1fd4c58c2e3ca373",
+    "navBeforeFill": "1000559",
+    "navAfterFill": "900531",
+    "navBeforeClaim": "900531",
+    "navAfterClaim": "900531",
+    "navDebitedExactlyOnce": true,
+    "claimTransferMatched": true,
+    "ownerSharesAfter": "0",
+    "ownerLockedAfter": "0",
+    "ownerClaimableAfter": "0",
+    "queueEmpty": true
+  },
+  "scope": "Actual user-signed browser withdrawal and claim. Independently checked raw receipts, calldata, FIFO fill sender, transfer and block-pinned accounting. No transactions sent by this verifier."
+}

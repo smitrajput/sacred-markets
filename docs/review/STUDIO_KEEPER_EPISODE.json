@@ -1,0 +1,9 @@
+{
+  "status": "completed",
+  "appId": "37c6c8dc-b313-49c9-9cbb-fe5f61673ab3",
+  "threadId": "868bf545-07ba-4ecd-a97c-b45762be5d3c",
+  "traceId": "01a1b176-f78b-7618-999f-b706c7cd14c4",
+  "finalText": "The episode finished on its own and the keeper filled the depositor's withdrawal. Read-only check at 2026-11-06T15:25:43Z; I started and sent nothing and edited nothing.\n\n**Process**\n- Wrapper PID 22887 is no longer running.\n- It began at 15:08:26Z and logged \"episode finished 60/60\" at 15:21:38Z.\n- All 60 ticks exited 0, with no `STOP`, budget or ambiguity message in the log.\n- Of the 60 ticks, 59 found nothing eligible. Tick 59 sent one transaction.\n\n**Submitted transaction (one)**\n- Hash `0xcb4125096e937bad51fe05641370f2a5dc5c3c09e32fc4f979a18461034e3855`, block 71048956, 2026-11-06T15:21:30Z.\n- Purpose: `processWithdrawals(16)`.\n- Receipt: success, from the keeper `0x60579fc9\u2026a373`, gas used 124,478.\n\n**Journal (`deployments/keeper-state.json`)**\n- One confirmed step, `keeper.0.process.1`, signer nonce 2, sequence counter 1.\n- Gas spent 0.00248956 USDC against the 0.5 USDC budget.\n\n**Depositor `0x5B935E09\u20262659`**\n1. 15:00:30Z: deposit of 100,000 atoms for 99,970 shares (`0xee5a1b28\u20262baf`).\n2. 15:21:29Z: withdrawal requested for 99,970 shares (`0xfa78120f\u20260815`).\n3. 15:21:30Z: filled by the keeper's transaction above, burning 99,970 shares for a 100,028-atom payout. The event shows request 1.\n4. 15:23:04Z: the depositor's own claim of 100,028 atoms (`0x72683156\u202635c4`).\n\nThe user's report matches the chain.",
+  "filesChanged": [],
+  "scope": "Read-only final Studio status for the authorized 60-check keeper episode. Withdrawal transaction and NAV accounting independently verified in BROWSER_WITHDRAWAL_VERIFICATION.json. No restart or new transaction authorized by this status check."
+}

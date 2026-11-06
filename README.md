@@ -3,11 +3,12 @@ USDC liquidity and fixed-markup cirBTC financing on Arc Testnet.
 
 ## Current build
 
-Arc Testnet MVP: one cirBTC sale-financing market with Earn, Trade and Activity. The vault, financing engine, operator price fixture and fixed-pool Uniswap v4 adapter are deployed. The frontend and read API are public at **[sacred-arc-mvp.vercel.app](https://sacred-arc-mvp.vercel.app)**. Live contract opening, repayment, BTC release, a keeper coverage sale and FIFO withdrawal claim are independently verified; the separate browser-wallet rehearsal remains pending.
+Arc Testnet MVP: one cirBTC sale-financing market with Earn, Trade and Activity. The vault, financing engine, operator price fixture and fixed-pool Uniswap v4 adapter are deployed. The frontend and read API are public at **[sacred-arc-mvp.vercel.app](https://sacred-arc-mvp.vercel.app)**. The founder completed the real MetaMask rehearsal with separate depositor and trader accounts: deposit, open, repay and release BTC, request withdrawal, keeper processing and claim. All nine receipts and the resulting accounting were independently verified. An earlier live keeper coverage sale is also verified.
 
 - [Arc Studio implementation provenance and source hashes](docs/BUILD_PROVENANCE.md): fresh comparison of 81 source/configuration files, 79 byte-identical and two with trailing-whitespace differences only.
 - [Hosted deployment checks](docs/checkpoints/04-hosted.md) and [frontend/API review](docs/review/UI_API_REVIEW.md)
 - [Architecture](docs/ARCHITECTURE.md) and [demo runbook](docs/DEMO.md)
+- [Browser lifecycle evidence](docs/checkpoints/04-hosted.md#browser-wallet-rehearsal-complete)
 
 - [Visual implementation guide and reusable diagrams](docs/MASTER_GUIDE.md)
 - [Deployed contracts and live transaction walkthrough](docs/checkpoints/02-live.md)

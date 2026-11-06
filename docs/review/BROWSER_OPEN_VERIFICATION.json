@@ -1,0 +1,105 @@
+{
+  "checkedAt": "2026-11-06T15:16:37.900Z",
+  "chainId": 5042002,
+  "trader": "0xAA46220DfD751f915d9c802412eDaBC0aB69dEcC",
+  "engine": "0xac836824231ae77874d0ca293bd749ffe6c0d00f",
+  "id": "3",
+  "sourceCommit": "d71ddbd",
+  "approval": {
+    "hash": "0xd535717d49077c3d6fce667a5a33103875553072aa552a5a1c7466d3739ace26",
+    "block": "71048256",
+    "nonce": 0,
+    "status": "success",
+    "call": {
+      "functionName": "approve",
+      "args": [
+        "0xac836824231ae77874D0Ca293BD749ffE6c0d00f",
+        "100000"
+      ]
+    }
+  },
+  "action": {
+    "hash": "0xa311d6e40c00a24e4d83434fa91733899b3f5235f46c7decaf38b34044400a20",
+    "block": "71048277",
+    "nonce": 1,
+    "status": "success",
+    "call": {
+      "functionName": "open",
+      "args": [
+        "100000",
+        "246",
+        "1793978715",
+        "0xb3dc89d6be33479580f5bc183906c6d7d1b67559167252edd086af824733e8b7"
+      ]
+    },
+    "events": [
+      {
+        "name": "AssetAcquired",
+        "logIndex": 31,
+        "args": {
+          "id": "3",
+          "trader": "0xAA46220DfD751f915d9c802412eDaBC0aB69dEcC",
+          "cost": "200000",
+          "atoms": "246",
+          "referencePrice": "80000000000"
+        }
+      },
+      {
+        "name": "DisclosedSaleAgreed",
+        "logIndex": 32,
+        "args": {
+          "id": "3",
+          "trader": "0xAA46220DfD751f915d9c802412eDaBC0aB69dEcC",
+          "equity": "100000",
+          "principal": "100000",
+          "markup": "383",
+          "atoms": "246",
+          "termsHash": "0xb3dc89d6be33479580f5bc183906c6d7d1b67559167252edd086af824733e8b7"
+        }
+      },
+      {
+        "name": "Pledged",
+        "logIndex": 33,
+        "args": {
+          "id": "3",
+          "trader": "0xAA46220DfD751f915d9c802412eDaBC0aB69dEcC",
+          "atoms": "246",
+          "termsHash": "0xb3dc89d6be33479580f5bc183906c6d7d1b67559167252edd086af824733e8b7"
+        }
+      },
+      {
+        "name": "Opened",
+        "logIndex": 40,
+        "args": {
+          "id": "3",
+          "trader": "0xAA46220DfD751f915d9c802412eDaBC0aB69dEcC",
+          "maturesAt": "1795187745"
+        }
+      }
+    ]
+  },
+  "positionAtReceipt": {
+    "trader": "0xAA46220DfD751f915d9c802412eDaBC0aB69dEcC",
+    "status": 1,
+    "openedAt": "1793978145",
+    "maturesAt": "1795187745",
+    "grossCost": "200000",
+    "principal0": "100000",
+    "principal": "100000",
+    "markup0": "383",
+    "markup": "383",
+    "collateral": "246",
+    "collected": "0",
+    "lpAllocation": "0",
+    "termsHash": "0xb3dc89d6be33479580f5bc183906c6d7d1b67559167252edd086af824733e8b7"
+  },
+  "checks": {
+    "eventOrder": "AssetAcquired < DisclosedSaleAgreed < Pledged",
+    "principal": "100000",
+    "markup": "383",
+    "debt": "100383",
+    "collateral": "246",
+    "termSeconds": "1209600"
+  },
+  "scope": "Actual user-signed browser trade; raw receipts, calldata, event order and block-pinned state checked independently. Verifier sends no transactions."
+}

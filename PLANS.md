@@ -1,6 +1,6 @@
 # Sacred implementation plan
 
-Status: **REHEARSAL — core, frontend and read API deployed; browser-wallet rehearsal, judge access to Studio and final recording remain.** Arc Studio generated the contracts, frontend, read API and operator scripts. Independent checks cover 138 vault/engine tests, two Arc-fork cases, four deployed runtimes, 29 core receipts and the 59-case app suite across focused runs. The public app and all read endpoints return successful responses. External deadline **November 7, 2026, 9:30 AM IST**. Hard finish **November 6, 10:30 PM IST**.
+Status: **PACKAGING — core, frontend and read API deployed; complete browser lifecycle verified with separate depositor/trader wallets. Judge access to Studio and final recording remain.** Arc Studio generated the contracts, frontend, read API and operator scripts. Independent checks cover 138 vault/engine tests, two Arc-fork cases, four deployed runtimes, 29 core receipts, nine additional browser/keeper receipts and the 59-case app suite across focused runs. The public app and all read endpoints return successful responses. External deadline **November 7, 2026, 9:30 AM IST**. Hard finish **November 6, 10:30 PM IST**.
 
 - [Specification](docs/spec.md)
 - [Prompt instructions](docs/README.md)
