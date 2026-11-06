@@ -1,35 +1,22 @@
-# Sacred
+# Sacred MVP project memory
 
-> Built with Arc Studio - money-powered apps in minutes
+Sacred is deployed on Arc Testnet with Earn, Trade, Activity, a read-only API and four contracts. The founder completed the browser lifecycle with separate depositor and trader wallets. Current implementation checkpoint: d71ddbd. Read `README.md` for public links, `docs/checkpoints/04-hosted.md` for the nine browser/keeper receipts and `docs/BUILD_PROVENANCE.md` for Studio/source evidence.
 
-This is the **project memory** - what Arc Studio remembers about building this app. It helps future agents (or humans) understand and extend the project.
+## Working rules
 
----
+- Implementation is authored through the same Arc Studio app. Codex directs scoped prompts, pulls, reviews, tests, documents and records small sequential commits on main. Before implementation, read `docs/STUDIO_GIT_WORKFLOW.md` and the relevant checkpoint in `docs/checkpoints/`.
+- Preserve existing protocol economics and the distinction between prior Sacred design and this new MVP. Read `docs/spec.md` before changing financial behavior; deployment policy and actual addresses are authoritative in `deployments/arc-testnet.json`.
+- After a fix, run the focused checks that exercise the failure plus required lint/typecheck/build checks. Repeat contract money flows only when a change or new unresolved concern requires it.
+- User browser actions are signed by the user. Studio operator keys stay in ignored sandbox environment files; the Vercel host has no signing key. Read `docs/ARCHITECTURE.md` before changing custody, roles or operational assumptions.
+- The authorized 60-check keeper episode completed and stopped. It is not continuous hosting or permission for another episode. `processWithdrawals` and eligible settlement calls remain permissionless; the read API reports no verified heartbeat.
+- USDC uses six ERC-20 decimals and eighteen native-gas decimals over the same balance. cirBTC uses eight decimals. Keep protocol calculations in integer units.
+- Keep quote and coverage gates intact. After the verified browser purchase, the thin pool blocked another 0.10 opening below 190% coverage. Use the recorded receipts when demonstrating that completed lifecycle.
 
-## What This App Does
+## Verification and delivery
 
-Sacred: USDC Earn and cirBTC spot financing on Arc Testnet. Checkpoint 00a (scaffold) is done: app shell, `contracts/foundry.toml`, and `deployments/arc-testnet.json`. No application contracts exist yet.
+For contract evidence, read `docs/review/CORE_LIVE_VERIFICATION.md`. For browser behavior, read `docs/review/UI_API_REVIEW.md` and `docs/review/BROWSER_WALLET_REVIEW.md`. Tests, builds and startup commands are listed in `package.json`.
 
-- cirBTC: `0xf0C4a4CE82A5746AbAAd9425360Ab04fbBA432BF` (8 decimals). USDC ERC20: 6 decimals; native gas USDC is 18 decimals and is the same balance, so protocol accounting uses ERC20 units.
-- `deployments/arc-testnet.json` is the source of truth for addresses. Verified external tokens are separate from Sacred contracts (status `undeployed`, address `null`). Roles are unset. Update it only from real deploy results.
-- Contract sources go in `contracts/src`, tests in `contracts/test`. Root `foundry.toml` and `contracts/foundry.toml` share one layout and output dir `contracts/out`.
-- `bun run verify:onchain` rechecks the manifest against the live chain.
-
-## Tech Stack
-
-- Frontend: React 18, Vite, TypeScript, Tailwind CSS
-- Web3: wagmi v2, viem v2, ConnectKit
-- Contracts: Solidity 0.8.28 + Foundry. Sources in `contracts/`, unit tests in `contracts/test/*.t.sol`. Build with `bun run contracts:build` (`forge build`), test with `bun run contracts:test` (`forge test`).
-- Wallet: injected (MetaMask, etc.)
-- Chain: Arc Testnet (Chain ID: 5042002, imported from `viem/chains`)
-- Token: USDC (6 decimals) (Address: 0x3600000000000000000000000000000000000000, Chain: Arc Testnet)
-- Toasts: Sonner
-
-## Key Files
-
-- `src/App.tsx` - Main application logic
-- `src/components/` - UI components
-- `src/config.ts` - wagmi config (chains, connectors, transports)
+For the final demo, read `docs/DEMO.md`. Judge access to Studio and the actual video remain separate delivery gates: source hashes and a public Vercel app do not establish judge access to the Studio conversation. Keep `AI_WORKLOG.md` and checkpoint documents factual about the actor, source, checks and limitations.
 
 ## Share links
 
@@ -39,22 +26,3 @@ Sacred: USDC Earn and cirBTC spot financing on Arc Testnet. Checkpoint 00a (scaf
 - Build every link a user copies or sends with `buildShareLink()` from `src/lib/share.ts`.
 - Keep the `installShareSync()` call in `src/main.tsx` when editing it; it keeps the Studio address bar in step with in-app navigation.
 - Navigate inside the app with relative links.
-
-## To Run
-
-```bash
-bun install
-bun run dev
-```
-
-## Checkpoint 00b-deps
-
-Pinned Uniswap v4 sources live in `lib/` (manifest: `contracts/deps/v4-manifest.json`, installer: `scripts/install-v4-deps.sh`). Evidence: `docs/checkpoints/00b-deps.md`. Fork interface test: `contracts/test/V4Interface.t.sol`. No Sacred contracts are deployed yet.
-
-## Checkpoint 00b-adapter
-
-`contracts/src/V4SpotVenue.sol` implements `ISpotVenue` against the existing v4 PoolManager (fixed USDC/cirBTC 3000/60 pool, one-time engine binding). Tests: `contracts/test/*.t.sol` (unit, mock PoolManager; `forge test`) and `contracts/test/fork/` (pinned Arc fork, real contracts, fork-only balances; run with `bash scripts/test-arc-fork.sh`, which installs Circle's arc-foundry v0.8.0-4 into `.tools/`). Evidence: `docs/checkpoints/00b-adapter.md`. Nothing is deployed.
-
-## Checkpoint 00c
-
-Read-only health API: `GET /api/health` and `/health`, code in `server/` (route table `server/routes.ts`) with the Vercel entry `api/health.ts`; `vercel.json` configures hosting. Demo wallets (testnet-only): public addresses in `deployments/demo-wallets.json`, keys in the ignored `.env` as `SACRED_*_PRIVATE_KEY`. Vercel deploy is initiated from the Studio Integrations menu; no hosted URL recorded yet. Evidence: `docs/checkpoints/00c-hosting.md`.

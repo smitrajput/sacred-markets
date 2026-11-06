@@ -67,8 +67,8 @@ button{font:inherit;background:var(--ink);color:var(--panel);border:0;border-rad
 <p class="kicker">Sacred · MVP technical master document</p>
 <h1>Sacred / Inside the MVP</h1>
 <p class="lede">One market, one chain, real USDC settlement. This document sets out the approved design, the verified evidence, and what remains open, so each technical decision can be explained.</p>
-<p><span class="status">Implementation in progress; final code reconciliation pending.</span></p>
-<p class="kicker">Verified state: 6 Nov 2026, approximately 18:50 IST</p>
+<p><span class="status">Deployed MVP; separate-wallet browser lifecycle verified. Recording and judge access remain open.</span></p>
+<p class="kicker">Verified state: 6 Nov 2026, 20:56 IST · application checkpoint d71ddbd</p>
 <p class="noprint"><button type="button" onclick="window.print()">Print / Save PDF</button></p>
 <p class="noprint">Reusable diagrams: <a href="diagrams/architecture.svg" download>Architecture</a> · <a href="diagrams/money-flow.svg" download>Money Flow</a> · <a href="diagrams/loss-waterfall.svg" download>Loss Waterfall</a> · <a href="diagrams/trade-flow.svg" download>Trade Flow</a> · <a href="diagrams/keeper-flow.svg" download>Keeper Flow</a></p>
 </header>
@@ -94,8 +94,8 @@ button{font:inherit;background:var(--ink);color:var(--panel);border:0;border-rad
 
 <section id="explain">
 <h2>Explain it in 90 seconds</h2>
-<p>Sacred is a testnet MVP on Arc Testnet (chain 5042002) with one market, cirBTC, settled in real USDC through a fixed Uniswap v4 pool with fee 3000, tick spacing 60 and no hooks. Liquidity providers deposit USDC into a vault and receive non-transferable shares priced at NAV.</p>
-<p>A trader puts up 0.10 USDC and is financed 0.10 USDC for a 2x fixed trade. The vault first funds the full 0.20 USDC from LP idle cash. The engine buys the BTC through a narrow adapter, records acquisition, disclosed resale and pledge, and only then collects the trader's 0.10 USDC. The financing carries a fixed 10% annualized markup over 14 days, split 77% to LPs and 23% to the manager, of collected markup.</p>
+<p>Sacred is a testnet MVP on Arc Testnet (chain 5042002) with one market, cirBTC, settled in test USDC through a real Uniswap v4 pool with fee 3000, tick spacing 60 and no hooks. Liquidity providers deposit USDC into a vault and receive non-transferable shares priced at NAV.</p>
+<p>In the verified browser example, a trader put up 0.10 USDC and was financed 0.10 USDC for a 2x fixed trade. The vault first funds the full 0.20 USDC from LP idle cash. The engine buys the BTC through a narrow adapter, records acquisition, disclosed resale and pledge, and only then collects the trader's 0.10 USDC. The financing carries a fixed 10% annualized markup over 14 days, split 77% to LPs and 23% to the manager, of collected markup.</p>
 <p>If coverage falls to 160% or below, a gas-only keeper can trigger a partial sale. It cannot choose the size or oversell. Withdrawals run first in, first out. By design, the rules for shares, NAV, the markup formula, repayment order and the return of all remaining pledged BTC on full repayment are onchain. The daily price fixture, the separate keeper process and the thin pool are operator or testnet matters. The system is not audited and not production-ready.</p>
 </section>
 
@@ -111,8 +111,8 @@ button{font:inherit;background:var(--ink);color:var(--panel);border:0;border-rad
 <div><dt>Seed position</dt><dd>NFT 21533; full range ±887220; L 316227</dd></div>
 <div><dt>Seed funding</dt><dd>9.999976 USDC + 0.0001 cirBTC</dd></div>
 <div><dt>Earlier pool smoke round trip</dt><dd>Buy 0.20 USDC for 195 BTC atoms; sell for 0.197898 USDC; cost 0.002102, gas extra</dd></div>
-<div><dt>API health</dt><dd>8 cases tested locally, with live RPC reads locally</dd></div>
-<div><dt>Hosting</dt><dd>Vercel configured; deployment pending</dd></div>
+<div><dt>Application checks</dt><dd>59 cases covered across focused runs; lint, typecheck and production build passed. Public health, config, vault, positions and activity reads returned HTTP 200.</dd></div>
+<div><dt>Hosting</dt><dd><a href="https://sacred-arc-mvp.vercel.app">Public app and read API</a>; Studio-authored implementation deployed through Codex’s authenticated Vercel CLI. No host signing keys.</dd></div>
 <div><dt>MarginVault</dt><dd><a href="https://explorer.testnet.arc.io/address/0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450" target="_blank" rel="noopener noreferrer">0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450</a> · <a href="https://explorer.testnet.arc.io/tx/0xdb8b3c987ac926e5c076930822bf9a63eea261c4d6f971716377ad59ee7072a1" target="_blank" rel="noopener noreferrer">deployment</a></dd></div>
 <div><dt>TradeEngine</dt><dd><a href="https://explorer.testnet.arc.io/address/0xac836824231ae77874d0ca293bd749ffe6c0d00f" target="_blank" rel="noopener noreferrer">0xac836824231ae77874d0ca293bd749ffe6c0d00f</a> · <a href="https://explorer.testnet.arc.io/tx/0x04dc6505179eac18e73f5e2a0f07b957e8fbf0edb4fc1b6ea4aab89c53e23b71" target="_blank" rel="noopener noreferrer">deployment</a></dd></div>
 <div><dt>DemoPriceGuard</dt><dd><a href="https://explorer.testnet.arc.io/address/0x4d84bf470b6916d97ec719a5398d534c1adb1d57" target="_blank" rel="noopener noreferrer">0x4d84bf470b6916d97ec719a5398d534c1adb1d57</a> · <a href="https://explorer.testnet.arc.io/tx/0xab0bba55f9e9d30dc48879249e13195f4cc017ba28fb895a63dd4c283b576d13" target="_blank" rel="noopener noreferrer">deployment</a></dd></div>
@@ -120,6 +120,10 @@ button{font:inherit;background:var(--ink);color:var(--panel);border:0;border-rad
 <div><dt>Live keeper action</dt><dd><a href="https://explorer.testnet.arc.io/tx/0xc7afcee5e170601d01468b8acef07f62439b49404a31dbe553b770dd4a783f78" target="_blank" rel="noopener noreferrer">Keeper transaction</a>: 52 BTC atoms sold for 0.040612 USDC; remaining debt 0.059771, BTC 143 atoms, coverage 191.39%. No rounding tolerance used.</dd></div>
 <div><dt>Live withdrawal</dt><dd><a href="https://explorer.testnet.arc.io/tx/0x8be5d0517b2ca62e0dc9842ad506533fb3ad67b2c663943f9932750e1f17ed55" target="_blank" rel="noopener noreferrer">Fill</a> burned 100000 shares and reserved 0.100029 USDC. <a href="https://explorer.testnet.arc.io/tx/0xb4b830b521adcdbae48815d193479531aa48a60669d349faf0502b9c72b9b5f3" target="_blank" rel="noopener noreferrer">Claim</a> paid it without debiting NAV again.</dd></div>
 <div><dt>Core verification</dt><dd>55 independent checks passed: four runtime comparisons, wiring and policy getters, all 29 receipts with signer / nonce / calldata checks, repayment, keeper execution and FIFO claim accounting.</dd></div><div><dt>Live financing round trip</dt><dd><a href="https://explorer.testnet.arc.io/tx/0xeebbcf401e8d46112e9062962cd3a4d2a1f2793b756da94ecaa36a5610326e79" target="_blank" rel="noopener noreferrer">Open</a> → <a href="https://explorer.testnet.arc.io/tx/0x853aff671d5661b68e902fc506ecec71ad45d039cf915d06e5ef040e005c14c5" target="_blank" rel="noopener noreferrer">repay and release</a>: P 100000, M 383; LP 294 / manager 89; 195 BTC atoms returned.</dd></div>
+<div><dt>Browser depositor</dt><dd><a href="https://explorer.testnet.arc.io/tx/0xee5a1b2847299604da329322f857ed90fd3fe3d87822438a61c0edeac2b22baf">Deposit</a>: 0.10 test USDC for 0.09997 shares. A separate trader account supplied the financing demand.</dd></div>
+<div><dt>Browser trader</dt><dd>Position 3: <a href="https://explorer.testnet.arc.io/tx/0xa311d6e40c00a24e4d83434fa91733899b3f5235f46c7decaf38b34044400a20">opened</a> with principal 0.10 and markup 0.000383; <a href="https://explorer.testnet.arc.io/tx/0x8e76a287a16c5ebe6d719298d0c4391f0035889037052f2e2999fb290d4bf12c">repaid and released</a> all 246 cirBTC atoms. Acquisition, sale agreement and pledge event order independently checked.</dd></div>
+<div><dt>Browser depositor exit</dt><dd><a href="https://explorer.testnet.arc.io/tx/0xfa78120f24459fda306bfda954ce14f032cac2ce890754a815434d1216960815">Request</a> → <a href="https://explorer.testnet.arc.io/tx/0xcb4125096e937bad51fe05641370f2a5dc5c3c09e32fc4f979a18461034e3855">keeper fill</a> → <a href="https://explorer.testnet.arc.io/tx/0x72683156f818699601f9d43bf96118ebe38cc34018e120a2153dc9dcf04835c4">claim</a>: 0.100028 USDC paid before wallet gas. NAV decreased once, from 1.000559 to 0.900531, when cash was reserved. Claim left NAV unchanged.</dd></div>
+<div><dt>Browser evidence</dt><dd>All nine approval, action and keeper receipts independently verified. <a href="https://github.com/smitrajput/sacred-markets/blob/main/docs/checkpoints/04-hosted.md">Complete receipt record</a>.</dd></div>
 </dl>
 <p>Uniswap's public table labels these addresses as Arc mainnet. This document makes no claim of official testnet listing. Sources: <a href="https://github.com/smitrajput/sacred-markets/blob/main/deployments/arc-testnet.json">deployments/arc-testnet.json</a>, <a href="https://github.com/smitrajput/sacred-markets/tree/main/scripts/smoke">scripts/smoke/</a>.</p>
 </section>
@@ -163,7 +167,7 @@ button{font:inherit;background:var(--ink);color:var(--panel);border:0;border-rad
 <text x="170" y="595" font-size="15" font-weight="700" text-anchor="middle">Separate keeper process</text>
 <text x="170" y="619" font-size="13" fill="#4b473f" text-anchor="middle">Own gas wallet → Arc RPC → eligible action</text>
 </svg>
-<figcaption>Figure 1. Dashed paths read data; red paths carry user-signed transactions. The read API cannot move funds. The four settlement contracts are deployed. The frontend and read API are still being integrated.</figcaption>
+<figcaption>Figure 1. Dashed paths read data; red paths carry user-signed transactions. The read API cannot move funds. All four contracts, the frontend and the read API are deployed. Browser approvals and transactions were signed by the founder.</figcaption>
 </figure>
 <p>Balances, debt and transaction receipts come from Arc. The API formats public reads; the browser wallet sends signed transactions directly to the chain. If the API is unavailable, it cannot seize or change onchain positions.</p>
 </section>
@@ -302,6 +306,7 @@ button{font:inherit;background:var(--ink);color:var(--panel);border:0;border-rad
 <li>Request withdrawal. Shares lock, with no cancellation, into one global FIFO queue: 64 active requests maximum, up to 16 oldest processed per pass, partial head first.</li>
 <li>Queued shares remain exposed to gains and losses until filled. On fill, shares burn and cash is reserved. The later claim pulls this fixed payout without debiting NAV again.</li>
 </ol>
+<p><strong>Why request, process, then claim?</strong> Financing can leave some LP assets unavailable as immediate cash. A request preserves queue priority. Anyone can process eligible requests; the keeper automates that call and pays its gas. Processing checks accounting and available liquidity, burns shares and reserves the payout. Claim transfers only the owner’s reserved cash, even while funding is paused or the price has expired. The user can use Process queue if no keeper is running.</p>
 <p class="panel"><strong>Who earns future markup?</strong> Uncollected markup is excluded from NAV. Whoever holds shares when markup is collected receives its NAV benefit, including recent depositors. Shares already redeemed have no claim on later collections. This keeps accounting simple but does not track earnings by deposit vintage.</p>
 <h3>Leverage trader</h3>
 <ol class="steps">
@@ -469,15 +474,16 @@ button{font:inherit;background:var(--ink);color:var(--panel);border:0;border-rad
 
 <section id="implementation">
 <h2>Frontend, API and operations</h2>
-<p class="label">Approved design · implementation in progress</p>
-<p>This section describes the approved build; evidence above records what is complete. The vault and financing engine passed 138 independent tests. Review fixes cover caller-controlled sale sizing, stale/impaired origination, small-equity rounding and reentrancy. All four contracts are deployed and independently checked. Opening, full repayment, BTC release, a keeper coverage sale, and FIFO request / fill / claim all succeeded live. Frontend integration is the next checkpoint.</p>
+<p class="label">Deployed implementation · verified browser lifecycle</p>
+<p>This section describes the deployed build; the evidence above separates earlier operator tests from the founder’s browser rehearsal. The vault and financing engine passed 138 independent tests. Review fixes cover caller-controlled sale sizing, stale/impaired origination, small-equity rounding and reentrancy. All four contracts are deployed and independently checked. Opening, full repayment, BTC release, a keeper coverage sale, and FIFO request / fill / claim all succeeded live. The founder also completed the full browser flow using separate depositor and trader wallets. The current application checkpoint is d71ddbd; Codex verified the Studio source comparison and served build.</p>
 <h3>Frontend</h3>
 <p>React 18, Vite, TypeScript, wagmi and viem, within the existing Sacred brand. Tabs are Earn, Trade and Activity, with an Arc Testnet badge. Each action follows: connect, switch, exact approval, action, confirmed receipt, authoritative refresh. Amounts use bigint or decimal strings: USDC at 6 decimals (shown to 6 places for small debt and split), BTC at 8, and native USDC at 18 with the same balance.</p>
 <p><strong>Quote boundary:</strong> the actual DEX output must also meet initial 190% coverage. At tiny trade sizes, rounding to whole BTC atoms can make an otherwise acceptable output floor insufficient; the interface must explain the rejection before submission.</p>
+<p>The verified opening had 196.04% coverage. After that purchase, another 0.10 contribution quoted 187.28% and was correctly blocked. Full repayment returned BTC to the trader rather than selling it back into the pool. The same contribution is therefore not guaranteed to remain executable at the next quote.</p>
 <h3>Read API</h3>
-<p>Node/TS with viem, read-only. Endpoints: health, config, vault, positions and activity, using bounded log pages from the deploy block with caching. No database, no private keys, no signing endpoint. API health was tested locally in 8 cases. Vercel hosting for the frontend and API is configured through Studio; deployment is pending (<a href="https://github.com/smitrajput/sacred-markets/blob/main/server/handlers/health.ts">server/handlers/health.ts</a>).</p>
+<p>Node/TS with viem, read-only. Endpoints: health, config, vault, positions and activity, using bounded log pages from the deploy block with caching. No database, no private keys, no signing endpoint. The public endpoints were checked against live Arc state. Vercel hosts the Studio-generated frontend and API; Codex deployed them using the authenticated local Vercel CLI (<a href="https://github.com/smitrajput/sacred-markets/blob/main/server/handlers/health.ts">server/handlers/health.ts</a>).</p>
 <h3>Repository and operations</h3>
-<p>The repository is public, with small commits on main. The Studio origin is tracked through the share project and its history. A separate operator process runs with the gas-wallet key held in an ignored secret file inside Studio. Vercel receives no signing key. The user's browser wallet signs the user's own actions. Dedicated deployer, trader and keeper test wallets are used only on testnet, never mainnet.</p>
+<p>The repository is public, with small commits on main. Studio origin is documented by the same app’s conversation, saved prompts, checkpoint trace references and an 81-file source comparison: 79 exact matches and two trailing-whitespace differences. Judge access to the Studio workspace remains unverified; a hosting Share link alone does not establish conversation access. The authorized keeper episode completed all 60 checks, processed one withdrawal, and stopped. Its gas-wallet key stays in an ignored secret file inside Studio. Vercel receives no signing key. The user's browser wallet signs the user's own actions. Dedicated deployer, trader and keeper test wallets are used only on testnet, never mainnet.</p>
 </section>
 
 <section id="sources">
@@ -486,6 +492,7 @@ button{font:inherit;background:var(--ink);color:var(--panel);border:0;border-rad
 <li>Docs: <a href="https://sacred.markets/docs">sacred.markets/docs</a></li>
 <li>Repository: <a href="https://github.com/smitrajput/sacred-markets">github.com/smitrajput/sacred-markets</a></li>
 <li>Studio: <a href="https://studio.arc.io/app/37c6c8dc-b313-49c9-9cbb-fe5f61673ab3">Arc Studio app 37c6c8dc</a></li>
+<li>Authorship: <a href="https://github.com/smitrajput/sacred-markets/blob/main/docs/BUILD_PROVENANCE.md">Studio source comparison and build history</a>. The prior Sacred design and website predate this MVP; Claude drafted this guide and Codex reconciled it with implementation evidence.</li>
 <li>Repository paths: <a href="https://github.com/smitrajput/sacred-markets/blob/main/contracts/src/V4SpotVenue.sol">contracts/src/V4SpotVenue.sol</a>; <a href="https://github.com/smitrajput/sacred-markets/blob/main/contracts/src/MarginVault.sol">contracts/src/MarginVault.sol</a> (verified locally); <a href="https://github.com/smitrajput/sacred-markets/blob/main/server/handlers/health.ts">server/handlers/health.ts</a>; <a href="https://github.com/smitrajput/sacred-markets/tree/main/scripts/smoke">scripts/smoke/</a>; <a href="https://github.com/smitrajput/sacred-markets/blob/main/deployments/arc-testnet.json">deployments/arc-testnet.json</a></li>
 </ul>
 <div class="panel">
