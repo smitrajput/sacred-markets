@@ -1,0 +1,32 @@
+{
+  "checkedAt": "2026-11-06T22:42:05.795Z",
+  "block": "71100245",
+  "blockTime": "2026-11-06T22:42:02.000Z",
+  "chainId": 5042002,
+  "poolId": "0xf4e18ec272549ab0140d43d33a7ba93768ecaec4dee4a7fb4f2c9af00950cde4",
+  "sqrtPriceX96": "2527306693072888527701592696",
+  "tick": -68907,
+  "activeLiquidity": "884452",
+  "poolSpotUsdcPerCirBtc": 98275.04977659944,
+  "liquidityChangeCount": 2,
+  "ranges": [
+    {
+      "lower": -887220,
+      "upper": 887220,
+      "liquidity": "316227",
+      "usdcPrincipal": 9.91335330059829,
+      "cirBtcPrincipal": 0.00010087355155895113
+    },
+    {
+      "lower": -69060,
+      "upper": -65340,
+      "liquidity": "568225",
+      "usdcPrincipal": 2.909660013491695,
+      "cirBtcPrincipal": 0.000001381288922337781
+    }
+  ],
+  "usdcPrincipal": 12.823013314089986,
+  "cirBtcPrincipal": 0.00010225484048128891,
+  "principalValueAtPoolSpotUsdc": 22.87211285228689,
+  "scope": "Read-only estimate from full pool-specific liquidity-change history and current block-pinned StateView. Principal only; excludes uncollected swap fees. Test assets; not real-dollar TVL. Does not use singleton PoolManager token balances."
+}
