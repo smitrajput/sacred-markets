@@ -7,7 +7,7 @@ const BASE_HEADERS = {
 } as const
 
 export function json(body: unknown, init: { status?: number; headers?: Record<string, string> } = {}): Response {
-  return new Response(JSON.stringify(body, null, 2) + '\n', {
+  return new Response(JSON.stringify(body, (_k: string, v: unknown): unknown => (typeof v === 'bigint' ? v.toString() : v), 2) + '\n', {
     status: init.status ?? 200,
     headers: { ...BASE_HEADERS, ...init.headers },
   })
@@ -24,4 +24,9 @@ export function notFound(): Response {
 /** HEAD gets the GET response without a body. */
 export function withoutBody(response: Response): Response {
   return new Response(null, { status: response.status, headers: response.headers })
+}
+
+/** Actionable error body: a stable code, a human message and a hint on what to do next. */
+export function apiError(status: number, code: string, message: string, hint: string): Response {
+  return json({ error: { code, message, hint } }, { status, headers: status === 503 ? { 'retry-after': '5' } : {} })
 }

@@ -1,4 +1,5 @@
 import { healthHandler } from './handlers/health.js'
+import { activityHandler, configHandler, positionsHandler, vaultHandler } from './handlers/chainApi.js'
 import { methodNotAllowed, notFound, withoutBody } from './http.js'
 
 type Handler = (request: Request) => Promise<Response> | Response
@@ -10,6 +11,10 @@ type Handler = (request: Request) => Promise<Response> | Response
 export const routes: Readonly<Record<string, Handler>> = {
   '/api/health': (request) => healthHandler(request),
   '/health': (request) => healthHandler(request),
+  '/api/config': (request) => configHandler(request),
+  '/api/vault': (request) => vaultHandler(request),
+  '/api/positions': (request) => positionsHandler(request),
+  '/api/activity': (request) => activityHandler(request),
 }
 
 export const ALLOWED_METHODS = ['GET', 'HEAD'] as const

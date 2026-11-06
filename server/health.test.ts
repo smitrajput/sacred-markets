@@ -79,7 +79,7 @@ test('response never contains environment secrets', async () => {
 test('contracts and scheduler are reported honestly', async () => {
   const res = await healthHandler(new Request('http://x/health'), { env: baseEnv, fetchImpl: rpcFetch('0x4cef52', '0x1') })
   const body = (await res.json()) as Health
-  assert.deepEqual(body.contracts.statuses, { usdcEarn: 'undeployed', cirBtcSpotFinancing: 'undeployed' })
+  assert.deepEqual(body.contracts.statuses, { usdcEarn: 'deployed', cirBtcSpotFinancing: 'deployed', demoPriceGuard: 'deployed', productionVenue: 'deployed' })
   assert.equal(body.scheduler.status, 'unavailable')
   assert.equal(body.scheduler.kind, 'external')
 })
@@ -98,7 +98,7 @@ test('router: only GET and HEAD are routable; HEAD has no body; unknown paths 40
   }
   assert.equal((await handleRequest(new Request('http://x/api/nope'))).status, 404)
   assert.equal((await handleRequest(new Request('http://x/api/sign'))).status, 404)
-  assert.deepEqual(Object.keys(routes).sort(), ['/api/health', '/health'])
+  assert.deepEqual(Object.keys(routes).sort(), ['/api/activity', '/api/config', '/api/health', '/api/positions', '/api/vault', '/health'])
 })
 
 test('RPC URL resolution order: override, then proxy, then public facts', () => {
