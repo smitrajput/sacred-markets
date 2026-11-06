@@ -26,7 +26,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
 @media (min-width:640px){.facts{grid-template-columns:1fr 1fr;column-gap:24px}}
 .facts div{padding:7px 0;border-bottom:1px solid var(--hair)}
 .facts dt{font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
-.facts dd{margin:0;font-size:.94rem}
+.facts dd{margin:0;font-size:.94rem;overflow-wrap:anywhere}
 .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;font-size:.85em;overflow-wrap:anywhere}
 table{width:100%;border-collapse:collapse;font-size:.95rem;font-variant-numeric:tabular-nums;margin:12px 0}
 th,td{text-align:left;vertical-align:top;padding:8px 6px;border-bottom:1px solid var(--hair)}
@@ -105,12 +105,12 @@ button{font:inherit;background:var(--ink);color:var(--panel);border:0;border-rad
 <div><dt>Chain</dt><dd>Arc Testnet, 5042002</dd></div>
 <div><dt>V4SpotVenue (smoke only)</dt><dd class="mono">0x1eaE39A746C49708696FBA57CE4a1948eA4337E4, bound to dedicated trader</dd></div>
 <div><dt>PoolManager code</dt><dd>Matches pinned v4 runtime on chain 5042002</dd></div>
-<div><dt>Receipts</dt><dd>12 successful receipts verified; both swaps reconciled to calldata, events and native balances</dd></div>
+<div><dt>Earlier pool smoke receipts</dt><dd>12 successful receipts verified; both swaps reconciled to calldata, events and native balances</dd></div>
 <div><dt>Adapter checks</dt><dd>70 passed (68 earlier, 2 new)</dd></div>
 <div><dt>Vault + engine checks</dt><dd>138 passed independently, including the previously failing fuzz seed; 2 Arc-fork integration cases passed</dd></div>
 <div><dt>Seed position</dt><dd>NFT 21533; full range ±887220; L 316227</dd></div>
 <div><dt>Seed funding</dt><dd>9.999976 USDC + 0.0001 cirBTC</dd></div>
-<div><dt>Round trip</dt><dd>Buy 0.20 USDC for 195 BTC atoms; sell for 0.197898 USDC; cost 0.002102, gas extra</dd></div>
+<div><dt>Earlier pool smoke round trip</dt><dd>Buy 0.20 USDC for 195 BTC atoms; sell for 0.197898 USDC; cost 0.002102, gas extra</dd></div>
 <div><dt>API health</dt><dd>8 cases tested locally, with live RPC reads locally</dd></div>
 <div><dt>Hosting</dt><dd>Vercel configured; deployment pending</dd></div>
 <div><dt>MarginVault</dt><dd><a href="https://explorer.testnet.arc.io/address/0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450" target="_blank" rel="noopener noreferrer">0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450</a> · <a href="https://explorer.testnet.arc.io/tx/0xdb8b3c987ac926e5c076930822bf9a63eea261c4d6f971716377ad59ee7072a1" target="_blank" rel="noopener noreferrer">deployment</a></dd></div>

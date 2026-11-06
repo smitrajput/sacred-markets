@@ -1,9 +1,13 @@
-# sacred-markets
-Onchain shariah powered earn, leverage trade and borrow.
+# Sacred
+USDC liquidity and fixed-markup cirBTC financing on Arc Testnet.
 
 ## Current build
 
-Arc Testnet MVP: one cirBTC sale-financing market with Earn, Trade and Activity. The scaffold and fixed-pool Uniswap v4 adapter are implemented and verified. A read-only health API and Vercel configuration are ready; hosted deployment and vault/engine implementation are in progress. Application contracts are not deployed yet.
+Arc Testnet MVP: one cirBTC sale-financing market with Earn, Trade and Activity. The vault, financing engine, operator price fixture and fixed-pool Uniswap v4 adapter are deployed. Live opening, repayment, BTC release, a keeper coverage sale and FIFO withdrawal claim are independently verified. Frontend integration and public Vercel deployment remain in progress.
+
+- [Visual implementation guide and reusable diagrams](docs/MASTER_GUIDE.md)
+- [Deployed contracts and live transaction walkthrough](docs/checkpoints/02-live.md)
+- [Independent live verification](docs/review/CORE_LIVE_VERIFICATION.md): 55 checks and 29 successful core receipts; 138 vault/engine tests and two real Arc-fork cases passed.
 
 - [Plan](PLANS.md) and [specification](docs/spec.md)
 - [Start the Studio checkpoints](docs/README.md)
@@ -15,9 +19,9 @@ External deadline: November 7, 2026, 9:30 AM IST. Build/demo hard finish: Novemb
 
 ## Prior work
 
-The [Sacred website and protocol design](https://sacred.markets/docs) and [prior repository](https://github.com/smitrajput/sacred-protocol) predate this implementation. Planning and review artifacts here are AI-assisted and attributed in AI_WORKLOG.md. New MVP implementation will be generated, tested and deployed through one Arc Studio app, with its URL and transaction evidence added as the work occurs. This repository does not claim the historical design/site as newly written code.
+The [Sacred website and protocol design](https://sacred.markets/docs) and [prior repository](https://github.com/smitrajput/sacred-protocol) predate this implementation. Planning and review artifacts here are AI-assisted and attributed in AI_WORKLOG.md. MVP implementation is generated, tested and deployed through one Arc Studio app, with independent review, local verification and small Git commits. The Studio URL and actual transaction evidence are linked below. This repository does not claim the historical design/site as newly written code.
 
-## Run the scaffold
+## Run locally
 
 Use Bun 1.3.14 and Foundry v1.7.1. Clone with `--recurse-submodules`, or initialize the pinned dependency:
 

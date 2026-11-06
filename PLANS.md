@@ -1,6 +1,6 @@
 # Sacred implementation plan
 
-Status: **IMPLEMENTING — 00a scaffold and 00b adapter verified; hosting/wallet setup in progress.** Arc Studio generated the scaffold; the fixed-pool adapter exists; vault/engine and live deployments remain upcoming. External deadline **November 7, 2026, 9:30 AM IST**. Hard finish **November 6, 10:30 PM IST**.
+Status: **IMPLEMENTING — core deployed and all three participant flows verified live; frontend integration and hosting remain.** Arc Studio generated the core contracts and operator scripts. Independent checks cover 138 vault/engine tests, two Arc-fork cases, four deployed runtimes, 29 core receipts, repayment, keeper execution and FIFO claims. External deadline **November 7, 2026, 9:30 AM IST**. Hard finish **November 6, 10:30 PM IST**.
 
 - [Specification](docs/spec.md)
 - [Prompt instructions](docs/README.md)

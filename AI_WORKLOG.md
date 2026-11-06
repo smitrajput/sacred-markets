@@ -8,8 +8,8 @@ This log distinguishes observed contributions. It was assembled by Codex on Nove
 - **Existing Sacred material:** public design/site and older repository code existed beforehand. Their complete authorship history has not been reconstructed in this log.
 - **Codex:** researched current public protocol and integration documentation; drafted the specification and staged prompts; checked arithmetic examples; incorporated an internal consistency review; prepared plan, commit and Fable-review handoffs. These artifacts are AI-assisted, not presented as solely human-authored.
 - **Claude Fable:** review supplied by the user on November 6,2026; identified integration, sizing, hosting, queue and Git issues. See review dispositions for accepted changes and corrections.
-- **Arc Studio:** generated checkpoint 00a and its cleanup in the app linked below. No Sacred deployment or transaction has occurred.
-- **Verification so far:** specification arithmetic, prompt checks and 00a scaffold validation. Financial contract and end-to-end tests remain upcoming.
+- **Arc Studio:** generated the scaffold, adapter, vault, price fixture, financing engine, tests and operator scripts; deployed and rehearsed the core through the same app. Frontend integration remains in progress.
+- **Verification so far:** specification arithmetic; 70 adapter checks; 138 vault/engine tests; two real Arc-fork engine cases; 12 earlier pool-smoke receipts; all 29 core receipts and live repayment, keeper and FIFO accounting. Browser end-to-end verification remains upcoming.
 
 ## Update format
 
@@ -101,3 +101,11 @@ The user-requested master guide was drafted with Claude Haiku5.5, corrected by C
 ## Checkpoint02 engine — November6
 
 Studio generated the price fixture, fixed-policy financing engine, operator refresh script and focused tests. Codex independently reproduced a keeper-sizing defect: caller minimum output could force a full sale in place of a partial one. Studio corrected it and added a mode/quantity invariance regression. Codex’s independent fuzz run then exposed a small-equity rounding boundary that the first passing seed missed; Studio corrected the test-domain assumptions, preserved the initial-coverage guard and added explicit boundary/reentrancy cases. The final independent run passed all138 vault/engine tests using the original failing seed. Two actual Arc-fork integration cases and TypeScript typecheck also passed. Slither0.11.6 findings were reviewed and dispositioned; Claude Opus5.5 provided a bounded additional review. See [engine review](docs/review/ENGINE_REVIEW.md) and [static analysis](docs/review/STATIC_ANALYSIS.md). No production safety claim is made.
+
+## Checkpoint 02 live — November 6, approximately 18:50 IST
+
+Studio deployed the four core contracts, seeded protection and initial LP cash, and ran purchase → full repayment → BTC release, a separate keeper partial sale, and FIFO request → fill → claim. Codex independently matched deployed runtimes to local reviewed output, checked wiring / policy getters, and verified all 29 receipts against signer, nonce and calldata. The 55 read-only checks also verify repayment allocation, post-sale coverage of 191.39%, and claim payout net of gas without a second NAV debit. TypeScript passed locally after the pull. Source and journey evidence were committed separately: 224dd9d, 4b3f805, 9d373a7, 73d8158, 876b6db, fea6d30 and 363cbcb. No commit was backdated.
+
+The visual guide now links deployed contracts and live participant journeys. Claude Haiku5.5 drafted it; Codex corrected and reconciled it against code and independent chain reads. Frontend / API descriptions remain labelled as pending implementation.
+
+Checkpoint03 began in the same Studio app, exporting the actual ABIs and testing public RPC log bounds, then stopped at the per-user daily allowance. No claim is made that the unfinished frontend is functional. Recovery work will continue in the same app after the allowance is restored.
