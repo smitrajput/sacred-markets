@@ -23,6 +23,8 @@ Arc Testnet MVP: one cirBTC sale-financing market with Earn, Trade and Activity.
 
 External deadline: November 7, 2026, 9:30 AM IST. Build/demo hard finish: November 6, 10:30 PM IST; submission package ready by 10:00 PM.
 
+The later controlled price-rise rehearsal also completed: a 0.10 contribution opened position 4, a real operator swap moved the test pool upward, and an owner close realized **0.0118450485625 test USDC after all trader gas**. [Receipts and full accounting](docs/checkpoints/04-hosted.md#controlled-price-rise-demo-position-4).
+
 ## Uniswap v4 integration
 
 Sacred integrates the existing Uniswap v4 AMM on Arc Testnet (chain 5042002). Its fixed-pool adapter executes real USDC/cirBTC purchases and collateral sales through `PoolManager`; the app uses the v4 Quoter for executable-output checks. The pool has a 0.30% fee, tick spacing 60 and no custom hook. This is an AMM integration under the [Build with Uniswap prize](https://ethglobal.com/events/mumbai/prizes/uniswap-foundation).

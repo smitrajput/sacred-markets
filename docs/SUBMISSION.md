@@ -16,6 +16,8 @@ Depositors receive non-transferable shares at NAV and participate in collected m
 
 The public MVP includes Earn, Trade and Activity, a read-only API, four deployed contracts and a separate gas-funded keeper. The founder completed a real MetaMask rehearsal using separate depositor and trader accounts: 0.10 test-USDC deposit, a 0.10 trader contribution, repayment of 0.100383 debt, release of 246 cirBTC atoms, and a 0.100028-USDC withdrawal claim. All nine approval/action/keeper receipts were independently verified. The claim payout is before wallet gas, not a net-profit claim.
 
+A second browser scenario demonstrated a realized trading exit: 0.10 test USDC financed a 0.20 purchase of 247 cirBTC sats. After a disclosed operator-controlled testnet pool rise of 25.47%, the trader sold the pledge through v4, repaid 0.100383 debt and received 0.141887. The net wallet gain was 0.0118450485625 after all approval/open/close gas. Operator market-moving costs are separate. [Verified owner close](https://explorer.testnet.arc.io/tx/0xe2f98645857130e922c46f053ea1444b5704e8a8dc6fc66bc5bdd40b79bd9ad0).
+
 ## How it was built
 
 Arc Studio authored and tested the contracts, frontend, read API and operator scripts in one persistent app. Codex directed scoped checkpoints through the Studio CLI, reviewed downloaded files, independently tested critical behavior and verified public chain receipts. Codex also maintained small sequential Git commits and deployed the Studio-generated frontend/API through the authenticated Vercel CLI. Claude assisted bounded reviews, the explanatory guide and the final brand design direction; Studio implemented the UI changes. The prior Sacred design, brand and website predate this MVP and are disclosed in the repository.
@@ -51,7 +53,7 @@ The Uniswap entry is **Build with Uniswap**, through the v4 AMM integration. Sac
 
 - This is a testnet prototype with test assets. No audit, production-readiness or Shariah-certification claim.
 - The price is an operator-controlled fixture. Its expiry is visible in the application. Repayment and already-reserved claims remain available after expiry.
-- The pool is thin. After the successful browser purchase, another 0.10 opening quoted below 190% coverage and was correctly blocked. The demo uses the completed receipts rather than implying every later quote is executable.
+- The pool is thin and quotes can fail the 190% coverage gate. The later profit demo deliberately moved the actual testnet pool using a separate operator wallet. It demonstrates execution and accounting, not organic demand or expected returns.
 - The authorized keeper completed 60 checks, submitted one FIFO transaction and stopped. There is no continuous hosting or verified heartbeat; manual permissionless controls remain.
 - Fourteen-day maturity was tested using local time warp; no claim that the live position aged fourteen days during the hackathon.
 

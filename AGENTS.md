@@ -1,6 +1,6 @@
 # Sacred MVP project memory
 
-Sacred is deployed on Arc Testnet with Earn, Trade, Activity, a read-only API and four contracts. The founder completed the browser lifecycle with separate depositor and trader wallets. Current implementation checkpoint: d71ddbd. Read `README.md` for public links, `docs/checkpoints/04-hosted.md` for the nine browser/keeper receipts and `docs/BUILD_PROVENANCE.md` for Studio/source evidence.
+Sacred is deployed on Arc Testnet with Earn, Trade, Activity, a read-only API and four contracts. The founder completed the browser lifecycle with separate depositor and trader wallets. Current app implementation checkpoint: 9bf75bd (Opus-directed brand refinement); wallet behavior was previously verified at d71ddbd. Read `README.md` for public links, `docs/checkpoints/04-hosted.md` for the nine browser/keeper receipts and `docs/BUILD_PROVENANCE.md` for Studio/source evidence.
 
 ## Working rules
 
@@ -10,7 +10,7 @@ Sacred is deployed on Arc Testnet with Earn, Trade, Activity, a read-only API an
 - User browser actions are signed by the user. Studio operator keys stay in ignored sandbox environment files; the Vercel host has no signing key. Read `docs/ARCHITECTURE.md` before changing custody, roles or operational assumptions.
 - The authorized 60-check keeper episode completed and stopped. It is not continuous hosting or permission for another episode. `processWithdrawals` and eligible settlement calls remain permissionless; the read API reports no verified heartbeat.
 - USDC uses six ERC-20 decimals and eighteen native-gas decimals over the same balance. cirBTC uses eight decimals. Keep protocol calculations in integer units.
-- Keep quote and coverage gates intact. After the verified browser purchase, the thin pool blocked another 0.10 opening below 190% coverage. Use the recorded receipts when demonstrating that completed lifecycle.
+- Keep quote and coverage gates intact. The later controlled price-rise demo opened and owner-closed position 4, realizing 0.0118450485625 test USDC after all trader gas. Its operator restored the real pool near 80k, bought toward 100k and then updated the separate fixture. That bounded episode is complete; do not replay its preparation or price move. Read docs/review/PROFIT_CLOSE_VERIFICATION.json and the hosted checkpoint. Use completed receipts for the recording; all new browser transactions require the user to sign.
 
 ## Verification and delivery
 

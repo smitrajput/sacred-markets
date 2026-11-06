@@ -28,7 +28,8 @@
     "Independent read-only Arc fork at71055163 passed full prepare/open/market-buy/fixture-update/owner-close sequence",
     "Local TypeScript check passed",
     "Five focused arithmetic checks passed",
-    "Prepare, opening and raise public receipts independently decoded and checked"
+    "Prepare, opening and raise public receipts independently decoded and checked",
+    "Owner-close receipt and complete trader gas/native-balance reconciliation passed"
   ],
-  "scope": "Bounded demo operator only. Browser opening/closing signed by founder; no redeployment or keeper restart. Realized profit remains unverified until owner-close receipt."
+  "scope": "Bounded Studio demo operator. Founder signed browser opening and closing; no redeployment or keeper restart. Realized profit independently verified in PROFIT_CLOSE_VERIFICATION.json."
 }

@@ -40,3 +40,24 @@ Prior script-driven live contract receipts remain separate evidence in [checkpoi
 The user authorized at most 60 checks with 12-second gaps and a 0.5 test-USDC journal gas budget. The Studio wrapper ran from 15:08:26Z to 15:21:38Z on November 6, completed all 60 checks successfully and exited. Tick 59 submitted the single withdrawal-processing transaction above, spending 0.00248956 test USDC in gas. The final read-only Studio check confirmed that the wrapper no longer ran; no restart was performed. [Sanitized status](../review/STUDIO_KEEPER_EPISODE.json).
 
 The keeper is an external process and has no published heartbeat. It is not scheduled on Vercel, and this completed episode is not continuous hosting. The app's manual permissionless controls remain available. The founder selected the existing Studio app URL plus the public Vercel URL, with Studio history/code/traces shown in the demo. Judge access remains unverified, and organizer confirmation is not a delivery blocker. The recorded demonstration remains pending; see [provenance](../BUILD_PROVENANCE.md) and [demo runbook](../DEMO.md).
+
+## Controlled price-rise demo: position 4
+
+Completed November 6 at 22:17 IST, with the same deployed contracts. The founder signed the browser approval, opening and owner close. The dedicated Studio operator restored the existing pool around 80,000 and then bought cirBTC to simulate demand; this was controlled testnet activity, not organic market performance. The actual pool moved from 79,997.772747 to 100,377.571825 USDC/cirBTC (+25.47%). The independent operator fixture moved from 80,000 to 100,000 only after the real swap.
+
+| Item | Amount (USDC unless stated) |
+| --- | ---: |
+| Trader contribution | 0.100000 |
+| cirBTC purchased and pledged | 247 cirBTC sats |
+| Fixed debt | 0.100383 |
+| Sale proceeds | 0.242270 |
+| Payout after debt | 0.141887 |
+| Trading profit before gas | 0.041887 |
+| Approval + opening + closing gas | 0.0300419514375 |
+| Net trader wallet gain | **0.0118450485625** |
+
+The native-USDC balance reconciles exactly from 19.7763515 to 19.7881965485625. Position 4 has no debt or collateral left. The prior 246 cirBTC sats in the trader's wallet remain unchanged. LP NAV received 0.000294 and manager cash 0.000089 from the fixed markup.
+
+[Opening](https://explorer.testnet.arc.io/tx/0x75b67561be287fad78b9af2baec55df4a5ebeb0ac30f307eb850d3fedd99c750) · [operator market buy](https://explorer.testnet.arc.io/tx/0x1e1a581514c172e13e43fbc693bbae677214d146595a0d226603db141569e4c5) · [owner close](https://explorer.testnet.arc.io/tx/0xe2f98645857130e922c46f053ea1444b5704e8a8dc6fc66bc5bdd40b79bd9ad0). Independent evidence: [prepare](../review/PROFIT_PREPARE_VERIFICATION.json), [open](../review/PROFIT_OPEN_VERIFICATION.json), [raise](../review/PROFIT_RAISE_VERIFICATION.json), [close and complete gas accounting](../review/PROFIT_CLOSE_VERIFICATION.json).
+
+Operator costs are separate from trader P&L: one 547-sat restore sale, one 2.761982-USDC market buy, and 0.0123200015 USDC of operator gas across five transactions. The operator stayed below its 1,000-sat restore, 4-USDC buy and 0.2-USDC gas limits. No contracts were redeployed and no keeper was restarted. [Studio script comparison](../review/PROFIT_DEMO_SOURCE_MATCH.json).
