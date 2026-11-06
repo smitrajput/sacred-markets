@@ -1,0 +1,164 @@
+{
+  "checkedAt": "2026-11-06T16:40:43.838201+00:00",
+  "studioAppId": "37c6c8dc-b313-49c9-9cbb-fe5f61673ab3",
+  "studioThreadId": "868bf545-07ba-4ecd-a97c-b45762be5d3c",
+  "studioTraces": [
+    "01a1b1a9-3400-73dd-aaea-5bc62dd6101b",
+    "01a1b1b1-56eb-7348-97e3-6ec341069218",
+    "01a1b1b6-af84-73da-8a74-88adbd28d2f0",
+    "01a1b1b9-7e61-745c-8e16-9a2e58aea066"
+  ],
+  "scope": "23 app/configuration and existing brand asset paths. Text/SVG/license files compared with fresh scoped Studio downloads;8 binary fonts verified against Studio-reported SHA256 and exact original brand assets because CLI pull UTF8-corrupts binary output. src/main.tsx has one trailing blank line normalized locally. Excludes local-owned docs, operator scripts and secrets.",
+  "designModel": "claude-opus-5-5",
+  "exactFiles": 22,
+  "files": [
+    {
+      "path": "index.html",
+      "match": "exact",
+      "studioSha256": "73b8df9d63dff1fcc937ce6fafe08de90c3e145589cbd83db5c3f6373dc5a992",
+      "localSha256": "73b8df9d63dff1fcc937ce6fafe08de90c3e145589cbd83db5c3f6373dc5a992"
+    },
+    {
+      "path": "tailwind.config.js",
+      "match": "exact",
+      "studioSha256": "7d212ed52af0cef7a11623d2f2044096d0837fb8123888e0b6b7d985f383b788",
+      "localSha256": "7d212ed52af0cef7a11623d2f2044096d0837fb8123888e0b6b7d985f383b788"
+    },
+    {
+      "path": "src/index.css",
+      "match": "exact",
+      "studioSha256": "d0ff025845e3bf2435f2771246cba1c413ce1d8ccdb10d9469ab7868346ba627",
+      "localSha256": "d0ff025845e3bf2435f2771246cba1c413ce1d8ccdb10d9469ab7868346ba627"
+    },
+    {
+      "path": "src/App.tsx",
+      "match": "exact",
+      "studioSha256": "a2ab8cc8dfe79787f83a8c2d42103d8d58d0bc6bc97535dc4c525bcbe51fb34f",
+      "localSha256": "a2ab8cc8dfe79787f83a8c2d42103d8d58d0bc6bc97535dc4c525bcbe51fb34f"
+    },
+    {
+      "path": "src/components/Header.tsx",
+      "match": "exact",
+      "studioSha256": "a838c45b2925c54a7f537121c1c6602dc7b66835735bb7e3db4f27f74207141f",
+      "localSha256": "a838c45b2925c54a7f537121c1c6602dc7b66835735bb7e3db4f27f74207141f"
+    },
+    {
+      "path": "src/components/ui.tsx",
+      "match": "exact",
+      "studioSha256": "2324837df94206f468a8b59271aceb1e0bdddec7bca0da43a6f92be07c3b5876",
+      "localSha256": "2324837df94206f468a8b59271aceb1e0bdddec7bca0da43a6f92be07c3b5876"
+    },
+    {
+      "path": "src/components/EarnTab.tsx",
+      "match": "exact",
+      "studioSha256": "a55f5205bf9568d5684817029d06ffb19ecc566cf63c5456252c74134a7fa94a",
+      "localSha256": "a55f5205bf9568d5684817029d06ffb19ecc566cf63c5456252c74134a7fa94a"
+    },
+    {
+      "path": "src/components/TradeTab.tsx",
+      "match": "exact",
+      "studioSha256": "12bc162ccb3fab873f332ab140989b65ee40525d684283f04b14eaace93b8355",
+      "localSha256": "12bc162ccb3fab873f332ab140989b65ee40525d684283f04b14eaace93b8355"
+    },
+    {
+      "path": "src/components/ActivityTab.tsx",
+      "match": "exact",
+      "studioSha256": "e5b5306e9be86db37901c08275ea491a364c77817d316cfb387ed47e31c58276",
+      "localSha256": "e5b5306e9be86db37901c08275ea491a364c77817d316cfb387ed47e31c58276"
+    },
+    {
+      "path": "public/brand/sacred-wordmark-ink.svg",
+      "match": "exact",
+      "studioSha256": "b52d6537f09c2ee2a36ee2f89e7adbf40b2ece307a6a6dcaf32d9603c477ff81",
+      "localSha256": "b52d6537f09c2ee2a36ee2f89e7adbf40b2ece307a6a6dcaf32d9603c477ff81"
+    },
+    {
+      "path": "public/brand/sacred-horizontal-ink.svg",
+      "match": "exact",
+      "studioSha256": "1b635c5961dc25b24edea5de198170777a78cb1e7756b0dcb76fecb813828c3d",
+      "localSha256": "1b635c5961dc25b24edea5de198170777a78cb1e7756b0dcb76fecb813828c3d"
+    },
+    {
+      "path": "public/brand/sacred-horizontal-primary.svg",
+      "match": "exact",
+      "studioSha256": "4f0266612b7d30bb7474652870174131cead329251776767989c098baf1178de",
+      "localSha256": "4f0266612b7d30bb7474652870174131cead329251776767989c098baf1178de"
+    },
+    {
+      "path": "public/brand/sacred-wordmark-primary.svg",
+      "match": "exact",
+      "studioSha256": "b52d6537f09c2ee2a36ee2f89e7adbf40b2ece307a6a6dcaf32d9603c477ff81",
+      "localSha256": "b52d6537f09c2ee2a36ee2f89e7adbf40b2ece307a6a6dcaf32d9603c477ff81"
+    },
+    {
+      "path": "public/fonts/LibertinusSans-Bold.ttf",
+      "match": "remote-sha256-exact",
+      "studioSha256": "92e1e56b0d949241c400e3bca9a772a5318d3b49de7c5f7ccff0413d1a4cc339",
+      "localSha256": "92e1e56b0d949241c400e3bca9a772a5318d3b49de7c5f7ccff0413d1a4cc339",
+      "verification": "Studio sha256sum and Python hash output compared with original brand asset; binary-safe local restoration after CLI pull UTF-8 corruption."
+    },
+    {
+      "path": "public/fonts/LibertinusSans-Italic.ttf",
+      "match": "remote-sha256-exact",
+      "studioSha256": "44527ec77f40df4a9f5b306ca4db46d973ddf90929e7e875f8dde0084754ef38",
+      "localSha256": "44527ec77f40df4a9f5b306ca4db46d973ddf90929e7e875f8dde0084754ef38",
+      "verification": "Studio sha256sum and Python hash output compared with original brand asset; binary-safe local restoration after CLI pull UTF-8 corruption."
+    },
+    {
+      "path": "public/fonts/LibertinusSans-Regular.ttf",
+      "match": "remote-sha256-exact",
+      "studioSha256": "2d261d21add710a08b2ffbd89072d7fd2f29a19582e872da4b8f8f6d622cd78b",
+      "localSha256": "2d261d21add710a08b2ffbd89072d7fd2f29a19582e872da4b8f8f6d622cd78b",
+      "verification": "Studio sha256sum and Python hash output compared with original brand asset; binary-safe local restoration after CLI pull UTF-8 corruption."
+    },
+    {
+      "path": "public/fonts/OFL.txt",
+      "match": "exact",
+      "studioSha256": "543bbe3d066d7ee6b062b6911220355c72720dc16003e5086885d6f543a6f376",
+      "localSha256": "543bbe3d066d7ee6b062b6911220355c72720dc16003e5086885d6f543a6f376"
+    },
+    {
+      "path": "public/fonts/LibertinusSerif-Regular.ttf",
+      "match": "remote-sha256-exact",
+      "studioSha256": "81ea17858245163742c9f5ddf19e9c54667ee5e026708556fb1bf5dce7f92fae",
+      "localSha256": "81ea17858245163742c9f5ddf19e9c54667ee5e026708556fb1bf5dce7f92fae",
+      "verification": "Studio sha256sum and Python hash output compared with original brand asset; binary-safe local restoration after CLI pull UTF-8 corruption."
+    },
+    {
+      "path": "public/fonts/LibertinusMono-Regular.ttf",
+      "match": "remote-sha256-exact",
+      "studioSha256": "98e3326985108f7d427d1f447d4fa00c93f6787bc53b5c15150c115c5b9d9b9a",
+      "localSha256": "98e3326985108f7d427d1f447d4fa00c93f6787bc53b5c15150c115c5b9d9b9a",
+      "verification": "Studio sha256sum and Python hash output compared with original brand asset; binary-safe local restoration after CLI pull UTF-8 corruption."
+    },
+    {
+      "path": "public/fonts/LibertinusSerif-Italic.ttf",
+      "match": "remote-sha256-exact",
+      "studioSha256": "c8d62202ff921968c491bbbd05f9794213e98e1317c8cbf5edc1d8043f4a21d6",
+      "localSha256": "c8d62202ff921968c491bbbd05f9794213e98e1317c8cbf5edc1d8043f4a21d6",
+      "verification": "Studio sha256sum and Python hash output compared with original brand asset; binary-safe local restoration after CLI pull UTF-8 corruption."
+    },
+    {
+      "path": "public/fonts/LibertinusSerif-SemiBold.ttf",
+      "match": "remote-sha256-exact",
+      "studioSha256": "1f6d00f88c709b0babeaaf78fdc4da6c8d5ddb619d7799c5f6a1d7ae05576966",
+      "localSha256": "1f6d00f88c709b0babeaaf78fdc4da6c8d5ddb619d7799c5f6a1d7ae05576966",
+      "verification": "Studio sha256sum and Python hash output compared with original brand asset; binary-safe local restoration after CLI pull UTF-8 corruption."
+    },
+    {
+      "path": "public/fonts/LibertinusSerif-Bold.ttf",
+      "match": "remote-sha256-exact",
+      "studioSha256": "dc5c00822f0d248256dbbe9fea8e68153e90c0dd7f95c906ed667b2ce053b415",
+      "localSha256": "dc5c00822f0d248256dbbe9fea8e68153e90c0dd7f95c906ed667b2ce053b415",
+      "verification": "Studio sha256sum and Python hash output compared with original brand asset; binary-safe local restoration after CLI pull UTF-8 corruption."
+    },
+    {
+      "path": "src/main.tsx",
+      "match": "trailing-whitespace-only",
+      "studioSha256": "f5168e6785a7abee475ec6873c972769e1f96e53b3062aaeb2a530818ce8590d",
+      "localSha256": "57cf1f395baa5a1538c519f88b8a16ee3e0f4b76273a83edd65571fadb221ec3"
+    }
+  ],
+  "trailingWhitespaceOnlyFiles": 1,
+  "checkedCommit": "9bf75bda845b13fee5be07c9d7e2c8f8a79685d5"
+}

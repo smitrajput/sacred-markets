@@ -1,0 +1,66 @@
+[
+  {
+    "file": "LibertinusSans-Bold.ttf",
+    "bytes": 489576,
+    "sfntVersion": "0x10000",
+    "tables": 16,
+    "errors": [],
+    "sha256": "92e1e56b0d949241c400e3bca9a772a5318d3b49de7c5f7ccff0413d1a4cc339"
+  },
+  {
+    "file": "LibertinusSans-Italic.ttf",
+    "bytes": 631960,
+    "sfntVersion": "0x10000",
+    "tables": 16,
+    "errors": [],
+    "sha256": "44527ec77f40df4a9f5b306ca4db46d973ddf90929e7e875f8dde0084754ef38"
+  },
+  {
+    "file": "LibertinusSans-Regular.ttf",
+    "bytes": 460756,
+    "sfntVersion": "0x10000",
+    "tables": 16,
+    "errors": [],
+    "sha256": "2d261d21add710a08b2ffbd89072d7fd2f29a19582e872da4b8f8f6d622cd78b"
+  },
+  {
+    "file": "LibertinusSerif-Regular.ttf",
+    "bytes": 603444,
+    "sfntVersion": "0x10000",
+    "tables": 16,
+    "errors": [],
+    "sha256": "81ea17858245163742c9f5ddf19e9c54667ee5e026708556fb1bf5dce7f92fae"
+  },
+  {
+    "file": "LibertinusMono-Regular.ttf",
+    "bytes": 153480,
+    "sfntVersion": "0x10000",
+    "tables": 17,
+    "errors": [],
+    "sha256": "98e3326985108f7d427d1f447d4fa00c93f6787bc53b5c15150c115c5b9d9b9a"
+  },
+  {
+    "file": "LibertinusSerif-Italic.ttf",
+    "bytes": 605956,
+    "sfntVersion": "0x10000",
+    "tables": 16,
+    "errors": [],
+    "sha256": "c8d62202ff921968c491bbbd05f9794213e98e1317c8cbf5edc1d8043f4a21d6"
+  },
+  {
+    "file": "LibertinusSerif-SemiBold.ttf",
+    "bytes": 497840,
+    "sfntVersion": "0x10000",
+    "tables": 16,
+    "errors": [],
+    "sha256": "1f6d00f88c709b0babeaaf78fdc4da6c8d5ddb619d7799c5f6a1d7ae05576966"
+  },
+  {
+    "file": "LibertinusSerif-Bold.ttf",
+    "bytes": 510796,
+    "sfntVersion": "0x10000",
+    "tables": 16,
+    "errors": [],
+    "sha256": "dc5c00822f0d248256dbbe9fea8e68153e90c0dd7f95c906ed667b2ce053b415"
+  }
+]

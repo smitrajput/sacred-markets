@@ -1,0 +1,31 @@
+{
+  "checkedAt": "2026-11-06T16:31:08.500Z",
+  "baseline": "d71ddbd",
+  "checks": [
+    {
+      "file": "src/components/EarnTab.tsx",
+      "expressionsBefore": 19,
+      "expressionsAfter": 19,
+      "unchanged": true,
+      "removed": [],
+      "added": []
+    },
+    {
+      "file": "src/components/TradeTab.tsx",
+      "expressionsBefore": 25,
+      "expressionsAfter": 25,
+      "unchanged": true,
+      "removed": [],
+      "added": []
+    },
+    {
+      "file": "src/components/ActivityTab.tsx",
+      "expressionsBefore": 0,
+      "expressionsAfter": 0,
+      "unchanged": true,
+      "removed": [],
+      "added": []
+    }
+  ],
+  "passed": true
+}

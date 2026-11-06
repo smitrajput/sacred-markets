@@ -6,7 +6,8 @@ Sacred's MVP application, contracts and operator scripts were generated in **one
 - App ID: `37c6c8dc-b313-49c9-9cbb-fe5f61673ab3`
 - [Continued Studio conversation](https://studio.arc.io/app/37c6c8dc-b313-49c9-9cbb-fe5f61673ab3?thread=868bf545-07ba-4ecd-a97c-b45762be5d3c): `868bf545-07ba-4ecd-a97c-b45762be5d3c`
 - Source: [smitrajput/sacred-markets](https://github.com/smitrajput/sacred-markets)
-- Current implementation checkpoint: [`d71ddbd`](https://github.com/smitrajput/sacred-markets/commit/d71ddbd)
+- Wallet-verified behavior checkpoint: [`d71ddbd`](https://github.com/smitrajput/sacred-markets/commit/d71ddbd)
+- Current UI implementation checkpoint: [`9bf75bd`](https://github.com/smitrajput/sacred-markets/commit/9bf75bd), directed by Opus 5.5 and implemented in the same Studio app. [UI review](review/OPUS_UI_REFINEMENT.md), [current source comparison](review/STUDIO_UI_SOURCE_MATCH.json).
 - Public app: [Sacred MVP](https://sacred-arc-mvp.vercel.app/)
 - **Chosen submission approach:** include the Studio app URL above and the public Vercel URL, and show the Studio build conversation, code, preview and runtime traces in the demo. The founder selected this route on November 6 because the Arc team was unavailable. Organizer confirmation is not a blocker.
 - **Access observation:** the Studio workspace requires login when opened signed out. Judge access has not been independently verified; neither URL is represented as proof of public access to the build conversation.
@@ -19,8 +20,9 @@ The [official Arc prize page for ETHGlobal Mumbai](https://ethglobal.com/events/
 
 1. Open the Studio app URL and public Vercel app linked above. The demo shows the signed-in Studio workspace, its build conversation and current code. Runtime traces demonstrate preview activity; they are supplementary to the build history and source comparison, not proof of authorship by themselves.
 2. Inspect the chronological [AI work log](../AI_WORKLOG.md), [milestone prompts](prompts/) and [Studio/local workflow](STUDIO_GIT_WORKFLOW.md). The build did not switch to a second app.
-3. Compare the downloaded implementation with [source hashes](review/STUDIO_SOURCE_MATCH.json). A fresh scoped download compared 81 files at the recorded commit, including contract sources, application/API code, scripts, configuration and deployment manifest. 79 match the Studio bytes exactly. `src/main.tsx` and `tailwind.config.js` differ only in trailing whitespace; there are no implementation differences within the checked scope. Local-owned documentation and hosting exclusions are outside this comparison.
-4. Inspect [sanitized CLI checkpoint results](review/STUDIO_CHECKPOINT_03_RESULTS.json). These preserve app/thread/trace identifiers and the reported checks, without raw event logs, preview credentials or environment values. Trace IDs are provenance references, not independently verifiable signatures; access to Studio and the code comparison are the stronger checks.
+3. For the wallet checkpoint, compare the historical [source hashes](review/STUDIO_SOURCE_MATCH.json). That scoped download compared 81 files at d71ddbd, including contract sources, application/API code, scripts, configuration and deployment manifest. 79 match the Studio bytes exactly. `src/main.tsx` and `tailwind.config.js` differ only in trailing whitespace; there are no implementation differences within the checked scope. Local-owned documentation and hosting exclusions are outside this comparison.
+4. For the current visual refinement, use the [23-path UI/brand comparison](review/STUDIO_UI_SOURCE_MATCH.json): 22 exact content/hash matches and one trailing-blank-line normalization. Eight fonts were checked by their Studio SHA-256 hashes and restored from the exact preexisting brand binaries after CLI download corruption. A scoped 44-expression comparison preserves the wallet-verified action/guard behavior.
+5. Inspect [sanitized CLI checkpoint results](review/STUDIO_CHECKPOINT_03_RESULTS.json). These preserve app/thread/trace identifiers and the reported checks, without raw event logs, preview credentials or environment values. Trace IDs are provenance references, not independently verifiable signatures; access to Studio and the code comparison are the stronger checks.
 5. Follow the actual deployment and transaction evidence in [checkpoint 02](checkpoints/02-live.md), [core verification](review/CORE_LIVE_VERIFICATION.md) and the hosted checkpoint when published. Code generation claims and live-chain evidence are separate claims.
 
 ## Recorded frontend checkpoints
@@ -36,7 +38,7 @@ Prompts: [first review corrections](prompts/03-review-corrections.txt), [follow-
 
 ## Attribution and prior work
 
-The Sacred protocol design, brand and existing website predate this hackathon implementation. They are not presented as new Studio-generated work. The new MVP implementation is Studio-authored. Codex maintained planning/review/submission documents and Git history, normalized one trailing blank line and prepared upload exclusions. Claude assisted earlier bounded reviews and drafted the explanatory guide; it did not implement the application. No authorship percentage is estimated.
+The Sacred protocol design, brand and existing website predate this hackathon implementation. They are not presented as new Studio-generated work. The new MVP implementation is Studio-authored. Codex maintained planning/review/submission documents and Git history, normalized one trailing blank line and prepared upload exclusions. Claude assisted earlier bounded reviews, drafted the explanatory guide and directed the later brand UI refinement. Arc Studio authored the UI implementation; Codex performed verification, formatting normalization and binary-safe restoration of the existing font assets. No authorship percentage is estimated.
 
 Keep the Studio build timeline and source visible in the recorded demo. A badge, a repository timestamp or a successful deployment alone does not prove where the code was authored.
 

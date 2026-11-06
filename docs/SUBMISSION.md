@@ -18,9 +18,9 @@ The public MVP includes Earn, Trade and Activity, a read-only API, four deployed
 
 ## How it was built
 
-Arc Studio authored and tested the contracts, frontend, read API and operator scripts in one persistent app. Codex directed scoped checkpoints through the Studio CLI, reviewed downloaded files, independently tested critical behavior and verified public chain receipts. Codex also maintained small sequential Git commits and deployed the Studio-generated frontend/API through the authenticated Vercel CLI. Claude assisted bounded reviews and the explanatory guide. The prior Sacred design, brand and website predate this MVP and are disclosed in the repository.
+Arc Studio authored and tested the contracts, frontend, read API and operator scripts in one persistent app. Codex directed scoped checkpoints through the Studio CLI, reviewed downloaded files, independently tested critical behavior and verified public chain receipts. Codex also maintained small sequential Git commits and deployed the Studio-generated frontend/API through the authenticated Vercel CLI. Claude assisted bounded reviews, the explanatory guide and the final brand design direction; Studio implemented the UI changes. The prior Sacred design, brand and website predate this MVP and are disclosed in the repository.
 
-A fresh comparison at implementation checkpoint d71ddbd covers 81 source/configuration files: 79 exact byte matches and two differences only in trailing whitespace. The repository includes prompts, sanitized checkpoint references, source hashes, review dispositions and transaction evidence. The video must show the actual Studio conversation and current source.
+The historical wallet checkpoint d71ddbd comparison covers 81 source/configuration files: 79 exact matches and two trailing-whitespace differences. The final UI checkpoint 9bf75bd has a separate [23-path comparison](review/STUDIO_UI_SOURCE_MATCH.json): 22 exact content/hash matches and one trailing-blank-line normalization. Studio font hashes verify the original brand binaries despite a CLI download defect. The repository includes prompts, sanitized checkpoint references, source hashes, review dispositions and transaction evidence. The video must show the actual Studio conversation and current source.
 
 ## Integration and qualification
 
