@@ -46,18 +46,83 @@
   },
   "sacredContracts": {
     "usdcEarn": {
-      "status": "undeployed",
-      "description": "USDC Earn (provisional name)",
-      "address": null,
-      "deployTxHash": null,
-      "deployBlock": null
+      "status": "deployed",
+      "description": "MarginVault (USDC Earn): shares/NAV vault, FIFO withdrawals, protection buckets",
+      "address": "0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450",
+      "deployTxHash": "0xdb8b3c987ac926e5c076930822bf9a63eea261c4d6f971716377ad59ee7072a1",
+      "deployBlock": 71033370,
+      "runtimeBytes": 13678,
+      "codeHash": "0x5e50630020121c4787eb861ad7775ccafcf8ffda329e36bbdbb012c70eae4629",
+      "identity": "deployed runtime equals compiled runtime except immutable slots (checked)",
+      "explorer": "https://explorer.testnet.arc.io/address/0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450",
+      "policy": {
+        "financingCeilingAtoms": "1000000",
+        "perAccountCapAtoms": "100000",
+        "primaryTargetAtoms": "4000",
+        "tailTargetAtoms": "6000",
+        "guardian": "deployer",
+        "treasury": "deployer",
+        "maxLivePositions": 32
+      }
     },
     "cirBtcSpotFinancing": {
-      "status": "undeployed",
-      "description": "cirBTC spot financing (provisional name)",
-      "address": null,
-      "deployTxHash": null,
-      "deployBlock": null
+      "status": "deployed",
+      "description": "TradeEngine (cirBTC spot financing): fixed 2x policy",
+      "address": "0xac836824231ae77874d0ca293bd749ffe6c0d00f",
+      "deployTxHash": "0x04dc6505179eac18e73f5e2a0f07b957e8fbf0edb4fc1b6ea4aab89c53e23b71",
+      "deployBlock": 71033391,
+      "runtimeBytes": 14753,
+      "codeHash": "0xfe0ba291ca7629d97c59d822b0a9c3ad8a1bd07ac8e3f57fa8d48d2c9e6eff3a",
+      "identity": "deployed runtime equals compiled runtime except immutable slots (checked)",
+      "explorer": "https://explorer.testnet.arc.io/address/0xac836824231ae77874d0ca293bd749ffe6c0d00f",
+      "policy": {
+        "termSeconds": 1209600,
+        "annualMarkupBps": 1000,
+        "lpMarkupBps": 7700,
+        "triggerBps": 16000,
+        "restoreBps": 19000,
+        "initialCoverageBps": 19000,
+        "frictionBps": 300,
+        "dustAtoms": "10000",
+        "termsHash": "0xb3dc89d6be33479580f5bc183906c6d7d1b67559167252edd086af824733e8b7",
+        "boundTo": {
+          "vault": "0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450",
+          "venue": "0x4e733fffbe2acc8b5849fa2cb7c1ac3f4a342519",
+          "guard": "0x4d84bf470b6916d97ec719a5398d534c1adb1d57"
+        }
+      }
+    },
+    "demoPriceGuard": {
+      "status": "deployed",
+      "description": "DemoPriceGuard: testnet operator price fixture (not a production oracle)",
+      "address": "0x4d84bf470b6916d97ec719a5398d534c1adb1d57",
+      "deployTxHash": "0xab0bba55f9e9d30dc48879249e13195f4cc017ba28fb895a63dd4c283b576d13",
+      "deployBlock": 71033361,
+      "runtimeBytes": 937,
+      "codeHash": "0x9b8f9f58bf7dadcbba931cecdfbf8a491ece64d43fae25780f62857f9b5b403c",
+      "identity": "deployed runtime equals compiled runtime except immutable slots (checked)",
+      "explorer": "https://explorer.testnet.arc.io/address/0x4d84bf470b6916d97ec719a5398d534c1adb1d57",
+      "policy": {
+        "priceAdmin": "deployer",
+        "maxAgeSeconds": 86400,
+        "note": "operator fixture; price is explicit and never copied from pool spot"
+      }
+    },
+    "productionVenue": {
+      "status": "deployed",
+      "description": "V4SpotVenue (production): fixed USDC/cirBTC 3000/60 pool, bound once to the TradeEngine",
+      "address": "0x4e733fffbe2acc8b5849fa2cb7c1ac3f4a342519",
+      "deployTxHash": "0x19147c9050966415be5ad7e6762bc5d9090bc654fc9a91e5aea16831179ab1bd",
+      "deployBlock": 71033381,
+      "runtimeBytes": 7230,
+      "codeHash": "0xeaca07679f2d89ce91b9e3f2bd77fded217a37c620a391153d41e78ddb8db7ed",
+      "identity": "deployed runtime equals compiled runtime except immutable slots (checked)",
+      "explorer": "https://explorer.testnet.arc.io/address/0x4e733fffbe2acc8b5849fa2cb7c1ac3f4a342519",
+      "policy": {
+        "poolId": "0xf4e18ec272549ab0140d43d33a7ba93768ecaec4dee4a7fb4f2c9af00950cde4",
+        "engine": "0xac836824231ae77874d0ca293bd749ffe6c0d00f",
+        "bindTx": "0xf0969b4820319b869701a6f74edda9402fca6d67d73a4242c4ae75da8c79ae4e"
+      }
     }
   },
   "roles": {
@@ -94,7 +159,7 @@
     }
   },
   "smoke": {
-    "note": "Smoke-only venue bound to the trader wallet. The production venue will be bound to the real engine later. Sacred vault and engine are still undeployed.",
+    "note": "Smoke-only venue bound to the trader wallet (EOA). It is NOT the production venue; it stays separate and is used only to move the pool for rehearsals. The Sacred contracts are deployed: see sacredContracts and deployments/core-state.json.",
     "venue": {
       "address": "0x1eaE39A746C49708696FBA57CE4a1948eA4337E4",
       "deployTx": "0x8faecb724a50a74708ee46910a9fed96c72b5f520c7fc010e455acfdd281a503",
@@ -106,5 +171,11 @@
       "approveSellTx": "0xe4538e64fd12ae1b18886cf94812653a4115969dabdcb54b9fb116644b5baf2f",
       "sellTx": "0x6e4b39f8e75bc52540494fe83715112cf1c3adf5a91e124c22859bd81eef30f2"
     }
+  },
+  "wiring": {
+    "vaultBindEngineTx": "0x1eb45d214e297b7303a87cf4dc5699061ce14c697fbe7ca78e39353a38bc70b6",
+    "venueBindEngineTx": "0xf0969b4820319b869701a6f74edda9402fca6d67d73a4242c4ae75da8c79ae4e",
+    "vaultEngine": "0xac836824231ae77874d0ca293bd749ffe6c0d00f",
+    "venueEngine": "0xac836824231ae77874d0ca293bd749ffe6c0d00f"
   }
 }

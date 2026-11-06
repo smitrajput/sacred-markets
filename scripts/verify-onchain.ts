@@ -30,6 +30,12 @@ for (const [key, t] of Object.entries(manifest.externalContracts)) {
 }
 
 for (const [key, c] of Object.entries(manifest.sacredContracts)) {
-  check(`${key} manifest`, c.status === 'undeployed' && c.address === null, `${c.status}, address ${c.address}`)
+  if (c.status === 'deployed') {
+    const code = await client.getCode({ address: c.address as `0x${string}` })
+    check(`${key} bytecode`, !!code && code !== '0x', `${code ? (code.length - 2) / 2 : 0} bytes at ${c.address}`)
+    if (code) check(`${key} code hash`, keccak256(code) === c.codeHash, keccak256(code))
+  } else {
+    check(`${key} manifest`, c.status === 'undeployed' && c.address === null, `${c.status}, address ${c.address}`)
+  }
 }
 process.exit(failed ? 1 : 0)

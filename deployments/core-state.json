@@ -1,0 +1,343 @@
+{
+  "schemaVersion": 1,
+  "chainId": 5042002,
+  "steps": {
+    "deploy.guard": {
+      "label": "Deploy DemoPriceGuard",
+      "role": "deployer",
+      "signer": "0xafC5b06665e9b99669027C18E82014916778734E",
+      "chainId": 5042002,
+      "nonce": 8,
+      "calldataHash": "0xbd9a793b8ef74999af31ed145942b1ccdab1c1875531627f2dc7f222a5cd034b",
+      "gas": "313944",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "3810750000",
+      "txHash": "0xab0bba55f9e9d30dc48879249e13195f4cc017ba28fb895a63dd4c283b576d13",
+      "phase": "confirmed",
+      "blockNumber": "71033361",
+      "gasUsed": "258402",
+      "effectiveGasPriceWei": "23810750000",
+      "gasCostWei": "6152745421500000",
+      "contractAddress": "0x4d84bf470b6916d97ec719a5398d534c1adb1d57"
+    },
+    "deploy.vault": {
+      "label": "Deploy MarginVault",
+      "role": "deployer",
+      "signer": "0xafC5b06665e9b99669027C18E82014916778734E",
+      "chainId": 5042002,
+      "nonce": 9,
+      "calldataHash": "0x2a6ddd9726737306cc5c3d91f2bcbd0f2539c193c8e97649351b48c37f046d70",
+      "gas": "3677090",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "4518000000",
+      "txHash": "0xdb8b3c987ac926e5c076930822bf9a63eea261c4d6f971716377ad59ee7072a1",
+      "phase": "confirmed",
+      "blockNumber": "71033370",
+      "gasUsed": "3038956",
+      "effectiveGasPriceWei": "24518000000",
+      "gasCostWei": "74509123208000000",
+      "contractAddress": "0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450"
+    },
+    "deploy.venue": {
+      "label": "Deploy V4SpotVenue (production)",
+      "role": "deployer",
+      "signer": "0xafC5b06665e9b99669027C18E82014916778734E",
+      "chainId": 5042002,
+      "nonce": 10,
+      "calldataHash": "0x64e4ed8e76d7f6d94a08d544262b3d0f5834ac271f233d2316f24f7d15f38796",
+      "gas": "1962267",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "5000000000",
+      "txHash": "0x19147c9050966415be5ad7e6762bc5d9090bc654fc9a91e5aea16831179ab1bd",
+      "phase": "confirmed",
+      "blockNumber": "71033381",
+      "gasUsed": "1621189",
+      "effectiveGasPriceWei": "25000000000",
+      "gasCostWei": "40529725000000000",
+      "contractAddress": "0x4e733fffbe2acc8b5849fa2cb7c1ac3f4a342519"
+    },
+    "deploy.engine": {
+      "label": "Deploy TradeEngine",
+      "role": "deployer",
+      "signer": "0xafC5b06665e9b99669027C18E82014916778734E",
+      "chainId": 5042002,
+      "nonce": 11,
+      "calldataHash": "0x225a8751150467f4dd14707c9c15b2dbc634d1be28fa962b57e8e1fddad247f5",
+      "gas": "3963096",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "5000000000",
+      "txHash": "0x04dc6505179eac18e73f5e2a0f07b957e8fbf0edb4fc1b6ea4aab89c53e23b71",
+      "phase": "confirmed",
+      "blockNumber": "71033391",
+      "gasUsed": "3275417",
+      "effectiveGasPriceWei": "25000000000",
+      "gasCostWei": "81885425000000000",
+      "contractAddress": "0xac836824231ae77874d0ca293bd749ffe6c0d00f"
+    },
+    "wire.venue": {
+      "label": "Venue bindEngine(engine)",
+      "role": "deployer",
+      "signer": "0xafC5b06665e9b99669027C18E82014916778734E",
+      "chainId": 5042002,
+      "nonce": 12,
+      "to": "0x4e733fffbe2acc8b5849fa2cb7c1ac3f4a342519",
+      "calldataHash": "0x49893ca842c41fb9c1247cf34833d51cf576d17c87f40a2943a35f034e5a2da4",
+      "gas": "55094",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "5000000000",
+      "txHash": "0xf0969b4820319b869701a6f74edda9402fca6d67d73a4242c4ae75da8c79ae4e",
+      "phase": "confirmed",
+      "blockNumber": "71033401",
+      "gasUsed": "45531",
+      "effectiveGasPriceWei": "25000000000",
+      "gasCostWei": "1138275000000000"
+    },
+    "wire.vault": {
+      "label": "Vault bindEngine(engine)",
+      "role": "deployer",
+      "signer": "0xafC5b06665e9b99669027C18E82014916778734E",
+      "chainId": 5042002,
+      "nonce": 13,
+      "to": "0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450",
+      "calldataHash": "0x49893ca842c41fb9c1247cf34833d51cf576d17c87f40a2943a35f034e5a2da4",
+      "gas": "55045",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "5000000000",
+      "txHash": "0x1eb45d214e297b7303a87cf4dc5699061ce14c697fbe7ca78e39353a38bc70b6",
+      "phase": "confirmed",
+      "blockNumber": "71033410",
+      "gasUsed": "45490",
+      "effectiveGasPriceWei": "25000000000",
+      "gasCostWei": "1137250000000000"
+    },
+    "guard.update": {
+      "label": "DemoPriceGuard.update(100000 USDC per BTC)",
+      "role": "deployer",
+      "signer": "0xafC5b06665e9b99669027C18E82014916778734E",
+      "chainId": 5042002,
+      "nonce": 14,
+      "to": "0x4d84bf470b6916d97ec719a5398d534c1adb1d57",
+      "calldataHash": "0x8ba4d76cd3f4a5e6916c916ef5bc6cb3db67ad25a1f7174b2a43cf35166b6575",
+      "gas": "82334",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "5000000000",
+      "txHash": "0x180695cd20811d74901af0a4588dc8e70d26898ceec96e87fe28006ea610a042",
+      "phase": "confirmed",
+      "blockNumber": "71033496",
+      "gasUsed": "67760",
+      "effectiveGasPriceWei": "25000000000",
+      "gasCostWei": "1694000000000000"
+    },
+    "seed.approve": {
+      "label": "USDC approve(vault, 10000)",
+      "role": "deployer",
+      "signer": "0xafC5b06665e9b99669027C18E82014916778734E",
+      "chainId": 5042002,
+      "nonce": 15,
+      "to": "0x3600000000000000000000000000000000000000",
+      "calldataHash": "0x598baa92de1ac3b3c0e4a9e7d088a6f7b8184443eee7c1be952750b6b559ece6",
+      "gas": "67474",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "5000000000",
+      "txHash": "0x052b2e573404cd5bb7c6eb4ed5174869434ac9494ac3d3662b0249feffe10d6c",
+      "phase": "confirmed",
+      "blockNumber": "71033505",
+      "gasUsed": "55426",
+      "effectiveGasPriceWei": "25000000000",
+      "gasCostWei": "1385650000000000"
+    },
+    "seed.primary": {
+      "label": "seedProtection(Primary, 4000)",
+      "role": "deployer",
+      "signer": "0xafC5b06665e9b99669027C18E82014916778734E",
+      "chainId": 5042002,
+      "nonce": 16,
+      "to": "0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450",
+      "calldataHash": "0x1f00a256bff8cb9a3022a9f7bf024ea88155f7fd0eeea3a23c8ecc93184d63fb",
+      "gas": "109821",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "5000000000",
+      "txHash": "0x93c2fc80a47b7e2c2671a583739be1fa4dcbd0d5e9dcbdd7a3f8e915d936892d",
+      "phase": "confirmed",
+      "blockNumber": "71033514",
+      "gasUsed": "85794",
+      "effectiveGasPriceWei": "25000000000",
+      "gasCostWei": "2144850000000000"
+    },
+    "seed.tail": {
+      "label": "seedProtection(Tail, 6000)",
+      "role": "deployer",
+      "signer": "0xafC5b06665e9b99669027C18E82014916778734E",
+      "chainId": 5042002,
+      "nonce": 17,
+      "to": "0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450",
+      "calldataHash": "0x4ec2fbb555ef6f0c18b85e4325ef5543436322c6256391e66d58d3fdbaad733a",
+      "gas": "109176",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "5000000000",
+      "txHash": "0xc51ef0cb6f9d654203ffd46cdba274881ce88bb08ea7fa35acc9669243625724",
+      "phase": "confirmed",
+      "blockNumber": "71033522",
+      "gasUsed": "81055",
+      "effectiveGasPriceWei": "25000000000",
+      "gasCostWei": "2026375000000000"
+    },
+    "lp.approve": {
+      "label": "USDC approve(vault, 1000000)",
+      "role": "deployer",
+      "signer": "0xafC5b06665e9b99669027C18E82014916778734E",
+      "chainId": 5042002,
+      "nonce": 18,
+      "to": "0x3600000000000000000000000000000000000000",
+      "calldataHash": "0x6f0d7c9f79aea5f8d4552c95818c6ea794f3969ffba535c89171fa32f29db96f",
+      "gas": "67489",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "5000000000",
+      "txHash": "0x31d4be52fa971c051007cca4c302f1f4d7c765986d444d451043047da81e68d3",
+      "phase": "confirmed",
+      "blockNumber": "71033532",
+      "gasUsed": "55438",
+      "effectiveGasPriceWei": "25000000000",
+      "gasCostWei": "1385950000000000"
+    },
+    "lp.deposit": {
+      "label": "Vault deposit 1 USDC",
+      "role": "deployer",
+      "signer": "0xafC5b06665e9b99669027C18E82014916778734E",
+      "chainId": 5042002,
+      "nonce": 19,
+      "to": "0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450",
+      "calldataHash": "0xaf41b9c88daaa89f7c3b414e976a079288273b22dbd2e7599bdbcf695e8c0123",
+      "gas": "180478",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "5000000000",
+      "txHash": "0x7728c79ee18ee27e4c45a5e1df84d1ea45179edd7c781a074b74ae81910878ec",
+      "phase": "confirmed",
+      "blockNumber": "71033541",
+      "gasUsed": "139661",
+      "effectiveGasPriceWei": "25000000000",
+      "gasCostWei": "3491525000000000"
+    }
+  },
+  "records": {
+    "preflight": {
+      "chainId": 5042002,
+      "decimals": {
+        "usdc": 6,
+        "cirBtc": 8
+      },
+      "wallets": {
+        "deployer": {
+          "address": "0xafC5b06665e9b99669027C18E82014916778734E",
+          "nativeWei": "9735947281370500000",
+          "usdcAtoms": "9735947",
+          "cirBtcAtoms": "0"
+        },
+        "trader": {
+          "address": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+          "nativeWei": "19987340982417600000",
+          "usdcAtoms": "19987340",
+          "cirBtcAtoms": "10000"
+        },
+        "keeper": {
+          "address": "0x60579fc93E6B7f2377dd952e1FD4c58C2e3Ca373",
+          "nativeWei": "20000000000000000000",
+          "usdcAtoms": "20000000",
+          "cirBtcAtoms": "0"
+        }
+      },
+      "smokeVenue": {
+        "address": "0x1eaE39A746C49708696FBA57CE4a1948eA4337E4",
+        "engine": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+        "isTraderEoa": true
+      },
+      "pool": {
+        "sqrtPriceX96": "2505038248023231370248274739",
+        "tick": -69085,
+        "liquidity": "316227",
+        "usdcPerBtcMicro": "100030040577",
+        "deviationFromFixtureBps": "3"
+      },
+      "buyQuote200000": "195",
+      "runtimeBytes": {
+        "vault": 13678,
+        "engine": 14753,
+        "guard": 937,
+        "venue": 7230
+      }
+    },
+    "deploy.partial": {
+      "guard": "0x4d84bf470b6916d97ec719a5398d534c1adb1d57",
+      "vault": "0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450",
+      "venue": "0x4e733fffbe2acc8b5849fa2cb7c1ac3f4a342519",
+      "engine": "0xac836824231ae77874d0ca293bd749ffe6c0d00f"
+    },
+    "addresses": {
+      "guard": "0x4d84bf470b6916d97ec719a5398d534c1adb1d57",
+      "vault": "0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450",
+      "venue": "0x4e733fffbe2acc8b5849fa2cb7c1ac3f4a342519",
+      "engine": "0xac836824231ae77874d0ca293bd749ffe6c0d00f"
+    },
+    "identity": {
+      "guard": {
+        "matchesCompiledRuntimeExceptImmutables": true,
+        "runtimeBytes": 937,
+        "codeHash": "0x9b8f9f58bf7dadcbba931cecdfbf8a491ece64d43fae25780f62857f9b5b403c"
+      },
+      "vault": {
+        "matchesCompiledRuntimeExceptImmutables": true,
+        "runtimeBytes": 13678,
+        "codeHash": "0x5e50630020121c4787eb861ad7775ccafcf8ffda329e36bbdbb012c70eae4629"
+      },
+      "venue": {
+        "matchesCompiledRuntimeExceptImmutables": true,
+        "runtimeBytes": 7230,
+        "codeHash": "0xeaca07679f2d89ce91b9e3f2bd77fded217a37c620a391153d41e78ddb8db7ed"
+      },
+      "engine": {
+        "matchesCompiledRuntimeExceptImmutables": true,
+        "runtimeBytes": 14753,
+        "codeHash": "0xfe0ba291ca7629d97c59d822b0a9c3ad8a1bd07ac8e3f57fa8d48d2c9e6eff3a"
+      }
+    },
+    "termsHash": "0xb3dc89d6be33479580f5bc183906c6d7d1b67559167252edd086af824733e8b7",
+    "param.guard.observedAt": "1793970549",
+    "afterDeploy": {
+      "vaultState": {
+        "depositorIdleCash": "1000000",
+        "outstandingPrincipal": "0",
+        "commitments": "0",
+        "pendingGrossCash": "0",
+        "nav": "1000000",
+        "totalShares": "1000000",
+        "managerCash": "0",
+        "primaryReserve": "4000",
+        "tailReserve": "6000",
+        "pilotBackstop": "0",
+        "claimableWithdrawals": "0",
+        "primaryTarget": "4000",
+        "tailTarget": "6000",
+        "queueHead": "0",
+        "queueTail": "0",
+        "livePositions": "0",
+        "pendingOpens": "0",
+        "activeRequests": "0",
+        "financingCeiling": "1000000",
+        "perAccountCap": "100000",
+        "fundingPaused": false,
+        "engine": "0xac836824231ae77874D0Ca293BD749ffE6c0d00f"
+      },
+      "guard": [
+        "100000000000",
+        "1793970549",
+        true
+      ],
+      "links": {
+        "guard": "https://explorer.testnet.arc.io/address/0x4d84bf470b6916d97ec719a5398d534c1adb1d57",
+        "vault": "https://explorer.testnet.arc.io/address/0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450",
+        "venue": "https://explorer.testnet.arc.io/address/0x4e733fffbe2acc8b5849fa2cb7c1ac3f4a342519",
+        "engine": "https://explorer.testnet.arc.io/address/0xac836824231ae77874d0ca293bd749ffe6c0d00f"
+      }
+    }
+  }
+}
