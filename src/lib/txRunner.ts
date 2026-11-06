@@ -58,6 +58,8 @@ export interface WaitResult {
 export interface RunnerDeps {
   chainId(): Promise<number>
   switchChain(id: number): Promise<void>
+  /** Optional: resolve and validate the signing client/account/chain before any allowance read or signature. */
+  prepare?(): Promise<void>
   allowance(a: Approval): Promise<bigint>
   approve(a: Approval): Promise<Hex>
   simulate(call: Call): Promise<unknown>
@@ -151,6 +153,10 @@ export async function runAction(rawDeps: RunnerDeps, plan: ActionPlan, set: (s: 
         return fail(c.kind === 'rejected' ? 'rejected' : 'chain', c.kind === 'rejected' ? 'You declined the network switch. Writes only work on Arc Testnet.' : 'Could not switch to Arc Testnet. Add the network in your wallet and retry.')
       }
       if ((await deps.chainId()) !== ARC_CHAIN_ID) return fail('chain', 'Your wallet is still on another network. Switch to Arc Testnet and retry.')
+    }
+    if (deps.prepare) {
+      set({ phase: 'allowance', message: 'Preparing your wallet…' })
+      await deps.prepare()
     }
     for (const a of plan.approvals) {
       set({ phase: 'allowance', message: 'Checking your current allowance…' })

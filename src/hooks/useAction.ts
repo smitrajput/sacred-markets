@@ -1,11 +1,13 @@
 import { useCallback, useMemo, useRef, useState } from 'react'
-import { erc20Abi, type Hex } from 'viem'
+import type { Address } from 'viem'
 import { arcTestnet } from 'viem/chains'
-import { useAccount, usePublicClient, useSwitchChain, useWalletClient } from 'wagmi'
+import { useAccount, useConfig } from 'wagmi'
+import { getAccount } from 'wagmi/actions'
 
 import { useRefreshAfter } from '@/lib/api'
 import { createIntentStore, type KV } from '@/lib/intent'
-import { idle, recover, retryRefresh, runAction, stateFromIntent, type ActionPlan, type ActionState, type RunnerDeps, type WaitResult } from '@/lib/txRunner'
+import { idle, recover, retryRefresh, runAction, stateFromIntent, type ActionPlan, type ActionState, type RunnerDeps } from '@/lib/txRunner'
+import { makeRunnerDeps } from '@/lib/wallet'
 
 export interface ActionHandle {
   state: ActionState
@@ -27,14 +29,13 @@ let intentStore: ReturnType<typeof createIntentStore> | undefined
 const store = () => (intentStore ??= createIntentStore(sessionKv()))
 
 /**
- * Each caller gets its own state machine (`id` names the button). A second click while an action runs, while its receipt is
- * being refreshed, or while ANY earlier transaction of this wallet is unresolved (also after a tab remount) is ignored.
+ * Each caller gets its own state machine (`id` names the button). The running guard is taken BEFORE anything is awaited, so a
+ * second click cannot start a parallel preparation or signing. The signing client is resolved from the live connection at action
+ * time (see lib/wallet.ts); recovery and refresh never need one.
  */
 export function useAction(id: string): ActionHandle {
+  const config = useConfig()
   const { address } = useAccount()
-  const publicClient = usePublicClient({ chainId: arcTestnet.id })
-  const { data: walletClient } = useWalletClient()
-  const { switchChainAsync } = useSwitchChain()
   const refreshAfter = useRefreshAfter()
   const [state, setState] = useState<ActionState>(idle)
   const running = useRef(false)
@@ -50,66 +51,36 @@ export function useAction(id: string): ActionHandle {
     [state, storedId, storedKind, storedHash, storedBlock, id],
   )
 
-  const makeDeps = useCallback((): RunnerDeps | null => {
-    if (!address || !publicClient || !walletClient) return null
-    const pc = publicClient
-    const wc = walletClient
-    return {
-      chainId: () => wc.getChainId(),
-      switchChain: async (cid) => {
-        await switchChainAsync({ chainId: cid })
-      },
-      allowance: (a) => pc.readContract({ address: a.token, abi: erc20Abi, functionName: 'allowance', args: [address, a.spender] }),
-      approve: (a) => wc.writeContract({ address: a.token, abi: erc20Abi, functionName: 'approve', args: [a.spender, a.amount], account: address, chain: arcTestnet }),
-      simulate: async (c) => (await pc.simulateContract({ account: address, address: c.address, abi: c.abi, functionName: c.functionName, args: c.args })).request,
-      send: (request) => wc.writeContract(request as Parameters<typeof wc.writeContract>[0]),
-      wait: async (hash: Hex): Promise<WaitResult> => {
-        const rep: { kind?: 'repriced' | 'replaced' | 'cancelled'; hash?: Hex } = {}
-        const r = await pc.waitForTransactionReceipt({
-          hash,
-          timeout: 120_000,
-          onReplaced: (x) => {
-            rep.kind = x.reason
-            rep.hash = x.transaction.hash
+  const guarded = useCallback(
+    async (needsAccount: boolean, fn: (deps: RunnerDeps, account: Address) => Promise<unknown>) => {
+      if (running.current) return // taken synchronously: duplicate clicks cannot prepare or sign in parallel
+      running.current = true
+      try {
+        const a = getAccount(config) // the freshest connection state, not a possibly stale render value
+        const account = a.address
+        if (!account || (a.status !== 'connected' && a.status !== 'connecting' && a.status !== 'reconnecting')) {
+          setState({ phase: 'error', errorKind: 'wallet', message: needsAccount ? 'Your wallet is not connected. Press Connect wallet, then try again.' : 'Connect the wallet that sent the transaction to check on it.' })
+          return
+        }
+        const deps = makeRunnerDeps(config, account, {
+          refresh: refreshAfter,
+          persist: (i) => {
+            if (i) store().write(arcTestnet.id, account, { id, kind: i.kind, hash: i.hash, label: id, at: Date.now(), block: i.block?.toString() })
+            else store().clear(arcTestnet.id, account)
           },
         })
-        return { status: r.status, blockNumber: r.blockNumber, replacement: rep.kind && rep.hash ? { kind: rep.kind, hash: rep.hash } : undefined }
-      },
-      receipt: async (hash: Hex) => {
-        try {
-          const r = await pc.getTransactionReceipt({ hash })
-          return { status: r.status, blockNumber: r.blockNumber }
-        } catch {
-          return undefined // not mined yet (or the node cannot say): never resend
-        }
-      },
-      refresh: refreshAfter,
-      persist: (i) => {
-        if (i) store().write(arcTestnet.id, address, { id, kind: i.kind, hash: i.hash, label: id, at: Date.now(), block: i.block?.toString() })
-        else store().clear(arcTestnet.id, address)
-      },
-    }
-  }, [address, publicClient, walletClient, switchChainAsync, refreshAfter, id])
-
-  const guarded = useCallback(async (fn: (deps: RunnerDeps) => Promise<unknown>) => {
-    if (running.current) return // duplicate submission is ignored while one action runs or its receipt refreshes
-    const deps = makeDeps()
-    if (!deps) {
-      setState({ phase: 'error', errorKind: 'wallet', message: 'Connect a wallet first.' })
-      return
-    }
-    running.current = true
-    try {
-      await fn(deps)
-    } finally {
-      running.current = false
-    }
-  }, [makeDeps])
+        await fn(deps, account)
+      } finally {
+        running.current = false
+      }
+    },
+    [config, refreshAfter, id],
+  )
 
   const start = useCallback(
     (plan: ActionPlan) =>
-      guarded(async (deps) => {
-        const pending = address ? store().read(arcTestnet.id, address) : null
+      guarded(true, async (deps, account) => {
+        const pending = store().read(arcTestnet.id, account)
         if (pending) {
           // an earlier transaction of this wallet is unresolved (outcome unknown, or confirmed but data not refreshed)
           setState(stateFromIntent(pending, id))
@@ -117,10 +88,10 @@ export function useAction(id: string): ActionHandle {
         }
         await runAction(deps, plan, setState)
       }),
-    [guarded, address, id],
+    [guarded, id],
   )
-  const recoverFn = useCallback(() => guarded((deps) => recover(deps, view, setState)), [guarded, view])
-  const refresh = useCallback(() => guarded((deps) => retryRefresh(deps, view, setState)), [guarded, view])
+  const recoverFn = useCallback(() => guarded(false, (deps) => recover(deps, view, setState)), [guarded, view])
+  const refresh = useCallback(() => guarded(false, (deps) => retryRefresh(deps, view, setState)), [guarded, view])
   const reset = useCallback(() => {
     setState((s) => (s.phase === 'unconfirmed' || s.phase === 'refresh-failed' ? s : idle))
   }, [])
