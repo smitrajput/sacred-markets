@@ -21,6 +21,7 @@ contract MockPoolManager {
     bool public callbackTwice; // call unlockCallback a second time inside the same unlock
     uint256 public takeShortfall; // deliver this much less than the debited take amount
     bool public reportNonzeroDelta; // exttload claims an outstanding delta
+    uint8 public tamperFirstCall; // 1 amount+1, 2 minOut+1, 3 flipped direction: the FIRST callback carries altered data
     bool public tamperSecondCall; // when callbackTwice, the second call carries altered data
 
     // accounting
@@ -55,6 +56,10 @@ contract MockPoolManager {
         takeShortfall = v;
     }
 
+    function setTamperFirstCall(uint8 v) external {
+        tamperFirstCall = v;
+    }
+
     function setTamperSecondCall(bool v) external {
         tamperSecondCall = v;
     }
@@ -67,6 +72,14 @@ contract MockPoolManager {
         if (_unlocker != address(0)) revert AlreadyUnlocked();
         _unlocker = msg.sender;
         unlockCount++;
+        if (tamperFirstCall != 0) {
+            // A hostile PoolManager hands the venue altered data while the genuine operation is pending.
+            (bool zeroForOne, uint128 amountIn, uint128 minOut) = abi.decode(data, (bool, uint128, uint128));
+            if (tamperFirstCall == 1) amountIn += 1;
+            else if (tamperFirstCall == 2) minOut += 1;
+            else zeroForOne = !zeroForOne;
+            IUnlockCallback(msg.sender).unlockCallback(abi.encode(zeroForOne, amountIn, minOut));
+        }
         result = IUnlockCallback(msg.sender).unlockCallback(data);
         if (callbackTwice) {
             bytes memory second = data;

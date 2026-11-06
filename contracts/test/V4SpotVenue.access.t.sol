@@ -202,4 +202,28 @@ contract V4SpotVenueAccessTest is VenueUnitBase {
             assertEq(venue.buyCirBtc(1000, 1, deadline), 1500);
         }
     }
+
+    /// @dev While the genuine operation is pending, a hostile PoolManager calls back FIRST with altered data
+    /// (larger input, larger minOut, or the opposite direction). The authenticating hash rejects it, the whole swap
+    /// reverts, and nothing moves.
+    function test_callback_tamperedFirstCall_isRejectedAndNothingMoves() public {
+        for (uint8 variant = 1; variant <= 3; variant++) {
+            for (uint256 dir; dir < 2; dir++) {
+                pm.setTamperFirstCall(variant);
+                Balances memory b = _balances();
+                vm.prank(engine);
+                vm.expectRevert(V4SpotVenue.NoPendingOperation.selector);
+                if (dir == 0) venue.buyCirBtc(1000, 1, _deadline());
+                else venue.sellCirBtc(1000, 1, _deadline());
+                _assertUnchanged(b);
+                assertEq(usdc.allowance(engine, address(venue)), type(uint256).max, "approval untouched");
+            }
+        }
+        // The venue is not wedged: with the tampering off, the same calls succeed.
+        pm.setTamperFirstCall(0);
+        vm.startPrank(engine);
+        assertEq(venue.buyCirBtc(1000, 1, _deadline()), 1500);
+        assertEq(venue.sellCirBtc(900, 1, _deadline()), 600);
+        vm.stopPrank();
+    }
 }
