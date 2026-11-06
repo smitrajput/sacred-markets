@@ -1,0 +1,477 @@
+{
+  "checkedCommit": "1737996cee952e9cc653e08c93814a79c51f8c19",
+  "studioAppId": "37c6c8dc-b313-49c9-9cbb-fe5f61673ab3",
+  "studioThreadId": "868bf545-07ba-4ecd-a97c-b45762be5d3c",
+  "checkedAt": "2026-11-06T14:30:23.450760+00:00",
+  "scope": "Fresh scoped Arc Studio CLI download; source files only, excludes secrets. Local-owned documentation and hosting exclusions are outside this comparison.",
+  "files": [
+    {
+      "path": "api/activity.ts",
+      "match": "exact",
+      "studioSha256": "98543524fc9bd7ee46b344d44d73a26bfa9d53a1cb77d967c9ac0ce1a416bdb3",
+      "localSha256": "98543524fc9bd7ee46b344d44d73a26bfa9d53a1cb77d967c9ac0ce1a416bdb3"
+    },
+    {
+      "path": "api/config.ts",
+      "match": "exact",
+      "studioSha256": "4da72d4dea7442aaad135f6bfcb1bc45bb98c7251a1358aa5223765bc471598f",
+      "localSha256": "4da72d4dea7442aaad135f6bfcb1bc45bb98c7251a1358aa5223765bc471598f"
+    },
+    {
+      "path": "api/health.ts",
+      "match": "exact",
+      "studioSha256": "0adcd0cd719b45066d2c2f640806bacef50c722b3c21fb77bbd66d340afb5820",
+      "localSha256": "0adcd0cd719b45066d2c2f640806bacef50c722b3c21fb77bbd66d340afb5820"
+    },
+    {
+      "path": "api/positions.ts",
+      "match": "exact",
+      "studioSha256": "c9709140fe27d8d2ebb806eaec40c2f2c37ceb1dfe9ded24f00eaefb23d831d1",
+      "localSha256": "c9709140fe27d8d2ebb806eaec40c2f2c37ceb1dfe9ded24f00eaefb23d831d1"
+    },
+    {
+      "path": "api/vault.ts",
+      "match": "exact",
+      "studioSha256": "7d4631bef300bde6d99fa901fc9e2bc970e0a44ca5dbcbcf33a32deff255041d",
+      "localSha256": "7d4631bef300bde6d99fa901fc9e2bc970e0a44ca5dbcbcf33a32deff255041d"
+    },
+    {
+      "path": "contracts/src/.gitkeep",
+      "match": "exact",
+      "studioSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "localSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "contracts/src/DemoPriceGuard.sol",
+      "match": "exact",
+      "studioSha256": "0e27dd9b874c209ff0b125b556d634daa9abecda41ab16b4cf0efab73191271f",
+      "localSha256": "0e27dd9b874c209ff0b125b556d634daa9abecda41ab16b4cf0efab73191271f"
+    },
+    {
+      "path": "contracts/src/MarginVault.sol",
+      "match": "exact",
+      "studioSha256": "bc6132a9f473e3fb9ea16d8e7a2fd84cd44dbb6b848eaa4b273388179d42c5ce",
+      "localSha256": "bc6132a9f473e3fb9ea16d8e7a2fd84cd44dbb6b848eaa4b273388179d42c5ce"
+    },
+    {
+      "path": "contracts/src/TradeEngine.sol",
+      "match": "exact",
+      "studioSha256": "41930f5b67cfaa8c08dec85b11be514fd3da84093efbe1757b06ff2e751f2a52",
+      "localSha256": "41930f5b67cfaa8c08dec85b11be514fd3da84093efbe1757b06ff2e751f2a52"
+    },
+    {
+      "path": "contracts/src/V4SpotVenue.sol",
+      "match": "exact",
+      "studioSha256": "6455b8cb00ac90a1e6fe74612557ef7cfadcb494c428ef9d89c6d6061e0e1c4a",
+      "localSha256": "6455b8cb00ac90a1e6fe74612557ef7cfadcb494c428ef9d89c6d6061e0e1c4a"
+    },
+    {
+      "path": "contracts/src/interfaces/IDemoPriceGuard.sol",
+      "match": "exact",
+      "studioSha256": "149658bb91be89a343def3937967307275fde0ecad2f4be5d788544590231ae9",
+      "localSha256": "149658bb91be89a343def3937967307275fde0ecad2f4be5d788544590231ae9"
+    },
+    {
+      "path": "contracts/src/interfaces/IMarginVaultEngine.sol",
+      "match": "exact",
+      "studioSha256": "0d5f71ef55c7047b226964c74cea1f101e575f1ff72712503ee5fde1c087f020",
+      "localSha256": "0d5f71ef55c7047b226964c74cea1f101e575f1ff72712503ee5fde1c087f020"
+    },
+    {
+      "path": "contracts/src/interfaces/ISpotVenue.sol",
+      "match": "exact",
+      "studioSha256": "bd9e009e3ac6235abf27570f47dc91ca31f8796f120e52757345f5860ac76fc3",
+      "localSha256": "bd9e009e3ac6235abf27570f47dc91ca31f8796f120e52757345f5860ac76fc3"
+    },
+    {
+      "path": "contracts/src/libraries/EngineMath.sol",
+      "match": "exact",
+      "studioSha256": "92d3a49e9512888f8af2398e21d8bba885d7271caf54d0e56a68e25290326c7f",
+      "localSha256": "92d3a49e9512888f8af2398e21d8bba885d7271caf54d0e56a68e25290326c7f"
+    },
+    {
+      "path": "deployments/arc-testnet.json",
+      "match": "exact",
+      "studioSha256": "1ce68cbef6cf38cf173bf7c8361d90f13fa8588f052e203491122412562ae7ca",
+      "localSha256": "1ce68cbef6cf38cf173bf7c8361d90f13fa8588f052e203491122412562ae7ca"
+    },
+    {
+      "path": "package.json",
+      "match": "exact",
+      "studioSha256": "f67a396c084801f66a65b31922157aaaf3b1a6b38b61a03b8c563956361248aa",
+      "localSha256": "f67a396c084801f66a65b31922157aaaf3b1a6b38b61a03b8c563956361248aa"
+    },
+    {
+      "path": "scripts/check.sh",
+      "match": "exact",
+      "studioSha256": "b2f9dc0c31f73e21e4b6ed820b2caa0c2b8ed88b8ae69301abd010683a050011",
+      "localSha256": "b2f9dc0c31f73e21e4b6ed820b2caa0c2b8ed88b8ae69301abd010683a050011"
+    },
+    {
+      "path": "scripts/core/deploy.ts",
+      "match": "exact",
+      "studioSha256": "1ee733f0e7136acf93e145c141dfb57fdaf8489819af2f4b1a6df721829e2546",
+      "localSha256": "1ee733f0e7136acf93e145c141dfb57fdaf8489819af2f4b1a6df721829e2546"
+    },
+    {
+      "path": "scripts/core/journal.test.ts",
+      "match": "exact",
+      "studioSha256": "e9514f892551eb48dc693a7c1f17fe4f8eea9ee7cd30a47a9ea60ba2aff27d2f",
+      "localSha256": "e9514f892551eb48dc693a7c1f17fe4f8eea9ee7cd30a47a9ea60ba2aff27d2f"
+    },
+    {
+      "path": "scripts/core/journal.ts",
+      "match": "exact",
+      "studioSha256": "55c34ccf81e0f13598ae5aa0cda5b93f82393d041296e8ed2928efa85617eff6",
+      "localSha256": "55c34ccf81e0f13598ae5aa0cda5b93f82393d041296e8ed2928efa85617eff6"
+    },
+    {
+      "path": "scripts/core/lib.ts",
+      "match": "exact",
+      "studioSha256": "5aedcc26d38cec783be7f9e865aa1eee22a6e2498ed40d79280a7624907d792e",
+      "localSha256": "5aedcc26d38cec783be7f9e865aa1eee22a6e2498ed40d79280a7624907d792e"
+    },
+    {
+      "path": "scripts/core/rehearse.ts",
+      "match": "exact",
+      "studioSha256": "4ec41c2fe0136625ca40723fe9796526fdd6505e0eefc6c712163aa991f3b2d0",
+      "localSha256": "4ec41c2fe0136625ca40723fe9796526fdd6505e0eefc6c712163aa991f3b2d0"
+    },
+    {
+      "path": "scripts/core/run.ts",
+      "match": "exact",
+      "studioSha256": "3c0327cbff0ebf796b0c4083fb56cd81c4150589782df93b7d6c787325897052",
+      "localSha256": "3c0327cbff0ebf796b0c4083fb56cd81c4150589782df93b7d6c787325897052"
+    },
+    {
+      "path": "scripts/gen-abis.ts",
+      "match": "exact",
+      "studioSha256": "026f3918aee6d1f97f98aa7aa88509680d9a6b87bcc5cd8b9a02ea0bb14f99e6",
+      "localSha256": "026f3918aee6d1f97f98aa7aa88509680d9a6b87bcc5cd8b9a02ea0bb14f99e6"
+    },
+    {
+      "path": "scripts/install-arc-foundry.sh",
+      "match": "exact",
+      "studioSha256": "20f1358ad1d8f113e6cf7428af15e2f3b1a0ef3c1ccfb03963b1b7ae71fb7112",
+      "localSha256": "20f1358ad1d8f113e6cf7428af15e2f3b1a0ef3c1ccfb03963b1b7ae71fb7112"
+    },
+    {
+      "path": "scripts/install-v4-deps.sh",
+      "match": "exact",
+      "studioSha256": "617dbff6364b4a26c89b186238cb7bccbdc4655a4a91a742b2cecda3efdd41d9",
+      "localSha256": "617dbff6364b4a26c89b186238cb7bccbdc4655a4a91a742b2cecda3efdd41d9"
+    },
+    {
+      "path": "scripts/keeper.ts",
+      "match": "exact",
+      "studioSha256": "927002116126f376ee66d8c1e777cca135c6456c0f2201dba754af80822e0021",
+      "localSha256": "927002116126f376ee66d8c1e777cca135c6456c0f2201dba754af80822e0021"
+    },
+    {
+      "path": "scripts/push-price.ts",
+      "match": "exact",
+      "studioSha256": "dc458d937957d7c2a6917c1e3ae9d420d9b7f07a72c798a26e6274142bd14778",
+      "localSha256": "dc458d937957d7c2a6917c1e3ae9d420d9b7f07a72c798a26e6274142bd14778"
+    },
+    {
+      "path": "scripts/smoke/common.ts",
+      "match": "exact",
+      "studioSha256": "db3da50bbac1645e7fc879f180096efa12f17829703fba5f0768f156d1f4084f",
+      "localSha256": "db3da50bbac1645e7fc879f180096efa12f17829703fba5f0768f156d1f4084f"
+    },
+    {
+      "path": "scripts/smoke/run.ts",
+      "match": "exact",
+      "studioSha256": "fc636a9f4d3fb5903403e38362cb45e5c027dd510f95f0593c3d2e05e520abf2",
+      "localSha256": "fc636a9f4d3fb5903403e38362cb45e5c027dd510f95f0593c3d2e05e520abf2"
+    },
+    {
+      "path": "scripts/smoke/seed.ts",
+      "match": "exact",
+      "studioSha256": "d2c6da096faeffe4755a0107fdefb2ee7d798f0fe3b1df8898d4ea42f376e740",
+      "localSha256": "d2c6da096faeffe4755a0107fdefb2ee7d798f0fe3b1df8898d4ea42f376e740"
+    },
+    {
+      "path": "scripts/smoke/trade.ts",
+      "match": "exact",
+      "studioSha256": "d4a1de21663ddd164444ad9ec9b7438bdf33c2afc3713e09ed869698aaf4762f",
+      "localSha256": "d4a1de21663ddd164444ad9ec9b7438bdf33c2afc3713e09ed869698aaf4762f"
+    },
+    {
+      "path": "scripts/test-arc-fork.sh",
+      "match": "exact",
+      "studioSha256": "0ed7c9e0ea3bd8a90f493748bb76dc71709a2afeefe7f809a03301f95eb70f8b",
+      "localSha256": "0ed7c9e0ea3bd8a90f493748bb76dc71709a2afeefe7f809a03301f95eb70f8b"
+    },
+    {
+      "path": "scripts/verify-onchain.ts",
+      "match": "exact",
+      "studioSha256": "0987e70489c2466543fa0defd32f0141a32b5b4b08c519ffa20939fcaa097748",
+      "localSha256": "0987e70489c2466543fa0defd32f0141a32b5b4b08c519ffa20939fcaa097748"
+    },
+    {
+      "path": "server/api.test.ts",
+      "match": "exact",
+      "studioSha256": "e549ed0fbf0145c773a48bd44fce5aba39be168e5a7bbc099bdba50700d2f984",
+      "localSha256": "e549ed0fbf0145c773a48bd44fce5aba39be168e5a7bbc099bdba50700d2f984"
+    },
+    {
+      "path": "server/chain.ts",
+      "match": "exact",
+      "studioSha256": "389e085a2b602fff3667210ec98388d532f30257a8542618c757c8bfe792bc70",
+      "localSha256": "389e085a2b602fff3667210ec98388d532f30257a8542618c757c8bfe792bc70"
+    },
+    {
+      "path": "server/dev-plugin.ts",
+      "match": "exact",
+      "studioSha256": "ec3ba981a06668eb919012cba70c9d431999f533e1f4f23bf26b24ae39e3a95f",
+      "localSha256": "ec3ba981a06668eb919012cba70c9d431999f533e1f4f23bf26b24ae39e3a95f"
+    },
+    {
+      "path": "server/handlers/chainApi.ts",
+      "match": "exact",
+      "studioSha256": "2084114c5e2300ecf138b636308ab645875c3052c589ee2da235cf98c2925740",
+      "localSha256": "2084114c5e2300ecf138b636308ab645875c3052c589ee2da235cf98c2925740"
+    },
+    {
+      "path": "server/handlers/common.ts",
+      "match": "exact",
+      "studioSha256": "23836e6568e664fadc9731d1804e18a09b5049e34260e11a43c2a8a22b0ab316",
+      "localSha256": "23836e6568e664fadc9731d1804e18a09b5049e34260e11a43c2a8a22b0ab316"
+    },
+    {
+      "path": "server/handlers/health.ts",
+      "match": "exact",
+      "studioSha256": "b0c6a28abc5f276d4857de5fe710a38f627f590287ffb603bcdb69353653c00c",
+      "localSha256": "b0c6a28abc5f276d4857de5fe710a38f627f590287ffb603bcdb69353653c00c"
+    },
+    {
+      "path": "server/health.test.ts",
+      "match": "exact",
+      "studioSha256": "eee366fcb62306c8a1e1385872854aa5a8b2c7bad8db5acf6da2f1fcfb48012a",
+      "localSha256": "eee366fcb62306c8a1e1385872854aa5a8b2c7bad8db5acf6da2f1fcfb48012a"
+    },
+    {
+      "path": "server/http.ts",
+      "match": "exact",
+      "studioSha256": "264dbca3de0a9677016f8a4fecffde66c9c46c61b48abb3992ade8d6fac96300",
+      "localSha256": "264dbca3de0a9677016f8a4fecffde66c9c46c61b48abb3992ade8d6fac96300"
+    },
+    {
+      "path": "server/manifest.ts",
+      "match": "exact",
+      "studioSha256": "4c88b83be74560995e1cbb7a85757f43cdc3d983a80d6fbd81c8f81f8e358c9d",
+      "localSha256": "4c88b83be74560995e1cbb7a85757f43cdc3d983a80d6fbd81c8f81f8e358c9d"
+    },
+    {
+      "path": "server/reads.ts",
+      "match": "exact",
+      "studioSha256": "70cd1bf9af178b0efaa5b9faae9de470cbc14a5a01a8d4892285048728f9c24c",
+      "localSha256": "70cd1bf9af178b0efaa5b9faae9de470cbc14a5a01a8d4892285048728f9c24c"
+    },
+    {
+      "path": "server/routes.ts",
+      "match": "exact",
+      "studioSha256": "5ff4f132c8a5753b4c50b98b1c36a2c87759e51c174b27986458f7f0f6fd4160",
+      "localSha256": "5ff4f132c8a5753b4c50b98b1c36a2c87759e51c174b27986458f7f0f6fd4160"
+    },
+    {
+      "path": "server/rpc.ts",
+      "match": "exact",
+      "studioSha256": "ffaa268b21d9139f92e3463450b08215e3ee68367fabfd12e3d6b44a082a18a7",
+      "localSha256": "ffaa268b21d9139f92e3463450b08215e3ee68367fabfd12e3d6b44a082a18a7"
+    },
+    {
+      "path": "src/App.tsx",
+      "match": "exact",
+      "studioSha256": "ba695901ba4c2c8c3f2e5acc015e33ceb9852891e15a0ef9cf30e2d2f31eadf0",
+      "localSha256": "ba695901ba4c2c8c3f2e5acc015e33ceb9852891e15a0ef9cf30e2d2f31eadf0"
+    },
+    {
+      "path": "src/components/ActivityTab.tsx",
+      "match": "exact",
+      "studioSha256": "856c76b4ad4aa6a6da29d727c2499c7f975404076f5394a38c1a1c1c2712adf4",
+      "localSha256": "856c76b4ad4aa6a6da29d727c2499c7f975404076f5394a38c1a1c1c2712adf4"
+    },
+    {
+      "path": "src/components/EarnTab.tsx",
+      "match": "exact",
+      "studioSha256": "66b462f945423da4b158e1eb01a110de07101c88e445f490e68f468d5cce3932",
+      "localSha256": "66b462f945423da4b158e1eb01a110de07101c88e445f490e68f468d5cce3932"
+    },
+    {
+      "path": "src/components/Header.tsx",
+      "match": "exact",
+      "studioSha256": "12b40a41d6b5c004bd20f7d138790e811e8177964273ad97c5a3024100bf8d9e",
+      "localSha256": "12b40a41d6b5c004bd20f7d138790e811e8177964273ad97c5a3024100bf8d9e"
+    },
+    {
+      "path": "src/components/TradeTab.tsx",
+      "match": "exact",
+      "studioSha256": "0bb345070b11c104ede4696a65dd4f788e6939bf4138e51f5f157e558e6612ef",
+      "localSha256": "0bb345070b11c104ede4696a65dd4f788e6939bf4138e51f5f157e558e6612ef"
+    },
+    {
+      "path": "src/components/ui.tsx",
+      "match": "exact",
+      "studioSha256": "ea275ee2b97559c0249dfa6404378ad85d10494983cb6a03f7ded85887ed99b0",
+      "localSha256": "ea275ee2b97559c0249dfa6404378ad85d10494983cb6a03f7ded85887ed99b0"
+    },
+    {
+      "path": "src/config.ts",
+      "match": "exact",
+      "studioSha256": "e3816352d52dedaf26d268bb5bf538b4a40e23c5ebf1694433027c8ad3e7bb89",
+      "localSha256": "e3816352d52dedaf26d268bb5bf538b4a40e23c5ebf1694433027c8ad3e7bb89"
+    },
+    {
+      "path": "src/console-capture.ts",
+      "match": "exact",
+      "studioSha256": "d3ac226eed0f96fcbcb7b2d1d8998fc92ea43d173f26cdac4840d3e3d6ff2f66",
+      "localSha256": "d3ac226eed0f96fcbcb7b2d1d8998fc92ea43d173f26cdac4840d3e3d6ff2f66"
+    },
+    {
+      "path": "src/contracts/abis.ts",
+      "match": "exact",
+      "studioSha256": "1be65fde71a8e31a8a896c9943af61575cb6e62a9e0639b3890fc3e6f724028b",
+      "localSha256": "1be65fde71a8e31a8a896c9943af61575cb6e62a9e0639b3890fc3e6f724028b"
+    },
+    {
+      "path": "src/hooks/useAction.ts",
+      "match": "exact",
+      "studioSha256": "ddeecb2216464e3d0a43a3eff053d1d94bfe3f47f6905897784df93cf4e26f44",
+      "localSha256": "ddeecb2216464e3d0a43a3eff053d1d94bfe3f47f6905897784df93cf4e26f44"
+    },
+    {
+      "path": "src/hooks/useWallet.ts",
+      "match": "exact",
+      "studioSha256": "aa78ef6007d7f270158708d19a19619223cfb6ce22d3db3699ba20f24e724454",
+      "localSha256": "aa78ef6007d7f270158708d19a19619223cfb6ce22d3db3699ba20f24e724454"
+    },
+    {
+      "path": "src/index.css",
+      "match": "exact",
+      "studioSha256": "019d4e4e979f1870b9ebc02274e18bcc496b8b2ccdc14ed58ff15841e099f65a",
+      "localSha256": "019d4e4e979f1870b9ebc02274e18bcc496b8b2ccdc14ed58ff15841e099f65a"
+    },
+    {
+      "path": "src/lib/api.ts",
+      "match": "exact",
+      "studioSha256": "8c804564f2c5476d27e8502851acaedb056cd2dcfa4ea58985a48904e2faa8c2",
+      "localSha256": "8c804564f2c5476d27e8502851acaedb056cd2dcfa4ea58985a48904e2faa8c2"
+    },
+    {
+      "path": "src/lib/contracts.ts",
+      "match": "exact",
+      "studioSha256": "544e0d5cfe72903786e8832484078f1fec198c7ba21a22109ae4b19fd15939cb",
+      "localSha256": "544e0d5cfe72903786e8832484078f1fec198c7ba21a22109ae4b19fd15939cb"
+    },
+    {
+      "path": "src/lib/format.ts",
+      "match": "exact",
+      "studioSha256": "528e05282c17b59370ccd10ff7e7be2ff1ba656ccd0072ab5e02f6a2f03dbba5",
+      "localSha256": "528e05282c17b59370ccd10ff7e7be2ff1ba656ccd0072ab5e02f6a2f03dbba5"
+    },
+    {
+      "path": "src/lib/intent.ts",
+      "match": "exact",
+      "studioSha256": "b5dc8ace1468bcd280a35cff5a79c2c51013ed301b70e4e807f776cf2551077d",
+      "localSha256": "b5dc8ace1468bcd280a35cff5a79c2c51013ed301b70e4e807f776cf2551077d"
+    },
+    {
+      "path": "src/lib/policy.test.ts",
+      "match": "exact",
+      "studioSha256": "551ef94e86437501c7e7f558d39dbbbbe01567cda792d8d16c62712d78333bb6",
+      "localSha256": "551ef94e86437501c7e7f558d39dbbbbe01567cda792d8d16c62712d78333bb6"
+    },
+    {
+      "path": "src/lib/policy.ts",
+      "match": "exact",
+      "studioSha256": "259b98a4ec7271b9e170c4d5a5e9fccddad89a3b94677302546731affb5924a3",
+      "localSha256": "259b98a4ec7271b9e170c4d5a5e9fccddad89a3b94677302546731affb5924a3"
+    },
+    {
+      "path": "src/lib/refresh.test.ts",
+      "match": "exact",
+      "studioSha256": "85a998230df0ae826e3dfb2c489794060a6e03010a113f688ae181bbca0c1486",
+      "localSha256": "85a998230df0ae826e3dfb2c489794060a6e03010a113f688ae181bbca0c1486"
+    },
+    {
+      "path": "src/lib/sacred.ts",
+      "match": "exact",
+      "studioSha256": "8349be625cbf8bc9819fbfa9d243456d894fe2b8b92e57bb32ded762276da3e2",
+      "localSha256": "8349be625cbf8bc9819fbfa9d243456d894fe2b8b92e57bb32ded762276da3e2"
+    },
+    {
+      "path": "src/lib/share.ts",
+      "match": "exact",
+      "studioSha256": "fe7401b995cb8476761a551897cac873be63cbeb28d8c9ac34c154648dc0901d",
+      "localSha256": "fe7401b995cb8476761a551897cac873be63cbeb28d8c9ac34c154648dc0901d"
+    },
+    {
+      "path": "src/lib/text.ts",
+      "match": "exact",
+      "studioSha256": "3af691de9cb50dfacf1159ce71c1ce827d61493d5dfde0a5e1aaadcb908d4703",
+      "localSha256": "3af691de9cb50dfacf1159ce71c1ce827d61493d5dfde0a5e1aaadcb908d4703"
+    },
+    {
+      "path": "src/lib/txRunner.test.ts",
+      "match": "exact",
+      "studioSha256": "a4c0f4bd842cfed2ba527366a5424546cc719a394bdb0dc54287261884fb3e51",
+      "localSha256": "a4c0f4bd842cfed2ba527366a5424546cc719a394bdb0dc54287261884fb3e51"
+    },
+    {
+      "path": "src/lib/txRunner.ts",
+      "match": "exact",
+      "studioSha256": "47fb7d865b71139938ef5bb3387fd6773ab69552c3fdeac653604884cc609aa3",
+      "localSha256": "47fb7d865b71139938ef5bb3387fd6773ab69552c3fdeac653604884cc609aa3"
+    },
+    {
+      "path": "src/main.tsx",
+      "match": "trailing_whitespace_only",
+      "studioSha256": "c58c842a9fb63dc351f36a350d53ac97361cea8865ee1116c22a2e13c8c7c6b8",
+      "localSha256": "a91d718c832c1327e198eced137fed3e8870f038f0344f3e56358b183f184a38"
+    },
+    {
+      "path": "src/onchain-facts.ts",
+      "match": "exact",
+      "studioSha256": "c7c314ada2f6be684dcd24c703fee3fec68f8bc0a2c7c9d1bcf3633c33199abd",
+      "localSha256": "c7c314ada2f6be684dcd24c703fee3fec68f8bc0a2c7c9d1bcf3633c33199abd"
+    },
+    {
+      "path": "src/onchain-money.ts",
+      "match": "exact",
+      "studioSha256": "1ac379552459f345f429d85b6d3f9f5f052be0c62ab630c6b111ea6f7a78af4f",
+      "localSha256": "1ac379552459f345f429d85b6d3f9f5f052be0c62ab630c6b111ea6f7a78af4f"
+    },
+    {
+      "path": "src/onchain-wait.ts",
+      "match": "exact",
+      "studioSha256": "e6b89dcf266213adea50cd35dd761aa8adfc4fb121dd90c702fb635d98bb1577",
+      "localSha256": "e6b89dcf266213adea50cd35dd761aa8adfc4fb121dd90c702fb635d98bb1577"
+    },
+    {
+      "path": "src/tracing.ts",
+      "match": "exact",
+      "studioSha256": "b84056625447264048b618d924b640d9f24da57741e875c8ab6fb32e42c18713",
+      "localSha256": "b84056625447264048b618d924b640d9f24da57741e875c8ab6fb32e42c18713"
+    },
+    {
+      "path": "src/vite-env.d.ts",
+      "match": "exact",
+      "studioSha256": "65996936fbb042915f7b74a200fcdde7e410f32a669b1ab9597cfaa4b0faddb5",
+      "localSha256": "65996936fbb042915f7b74a200fcdde7e410f32a669b1ab9597cfaa4b0faddb5"
+    },
+    {
+      "path": "tailwind.config.js",
+      "match": "trailing_whitespace_only",
+      "studioSha256": "67c7afc4278158bbaf9a26c71c08fdcba245db3a4cd219b81fe394ae7fac52c4",
+      "localSha256": "7028d693179ebb169ffd194959d20d21e80efc960cdf64faac2d716d6ee661a2"
+    },
+    {
+      "path": "vite.config.ts",
+      "match": "exact",
+      "studioSha256": "93256f7e535a3f31bc2275cfa45b5f11a00b4ae9c0d47c12bab16573870d861d",
+      "localSha256": "93256f7e535a3f31bc2275cfa45b5f11a00b4ae9c0d47c12bab16573870d861d"
+    }
+  ]
+}
