@@ -1,0 +1,410 @@
+{
+  "checkedAt": "2026-11-07T02:51:03.061Z",
+  "chainId": 5042002,
+  "observedBlock": "71129628",
+  "episode": "recording-20261107",
+  "purpose": "Completed self-service rehearsal, Position 5. Independent public RPC verification; no transactions sent by this verifier.",
+  "browser": [
+    {
+      "hash": "0x522672b32d757a3a583a8714bf8e0f023861c20a7b74144ae8b74effcd912a59",
+      "block": "71128590",
+      "call": {
+        "functionName": "approve",
+        "args": [
+          "0xac836824231ae77874D0Ca293BD749ffE6c0d00f",
+          "100000"
+        ]
+      },
+      "gasWei": "1385950000000000"
+    },
+    {
+      "hash": "0x414496cecee0cfe7007be73bcf51462321119d6dac4adf4db9ce3f1d0480ce28",
+      "block": "71128606",
+      "call": {
+        "functionName": "open",
+        "args": [
+          "100000",
+          "247",
+          "1794019918",
+          "0xb3dc89d6be33479580f5bc183906c6d7d1b67559167252edd086af824733e8b7"
+        ]
+      },
+      "gasWei": "18274825000000000"
+    },
+    {
+      "hash": "0x2544bbdfd8361c6a2e41ddd6621dbdec277bff670c376ab81a135aa3eef30f19",
+      "block": "71128849",
+      "call": {
+        "functionName": "ownerClose",
+        "args": [
+          "5",
+          "239590",
+          "1794020050"
+        ]
+      },
+      "gasWei": "12084025000000000"
+    }
+  ],
+  "position": {
+    "trader": "0xAA46220DfD751f915d9c802412eDaBC0aB69dEcC",
+    "status": 2,
+    "openedAt": "1794019337",
+    "maturesAt": "1795228937",
+    "grossCost": "200000",
+    "principal0": "100000",
+    "principal": "0",
+    "markup0": "383",
+    "markup": "0",
+    "collateral": "0",
+    "collected": "383",
+    "lpAllocation": "294",
+    "termsHash": "0xb3dc89d6be33479580f5bc183906c6d7d1b67559167252edd086af824733e8b7"
+  },
+  "accounting": {
+    "contributionMicro": "100000",
+    "payoutMicro": "141889",
+    "profitBeforeGasMicro": "41889",
+    "totalTraderGasWei": "31744800000000000",
+    "profitAfterGasWei": "10144200000000000",
+    "balanceBeforeWei": "19788196548562500000",
+    "balanceAfterWei": "19798340748562500000",
+    "operatorGasWei": "13999950000000000",
+    "keeperGasWei": "3111950000000000",
+    "operatorCostsExcludedFromTraderProfit": true
+  },
+  "pool": {
+    "baseline": {
+      "sqrtPriceX96": "2801149132013731083344481011",
+      "tick": -66850,
+      "liquidity": "884452",
+      "priceMicroPerBtc": "79999395490"
+    },
+    "beforeBuy": {
+      "sqrtPriceX96": "2778998008002087618058627844",
+      "tick": -67009,
+      "liquidity": "884452",
+      "priceMicroPerBtc": "81279813145"
+    },
+    "afterBuy": {
+      "sqrtPriceX96": "2500697466934695663899884076",
+      "tick": -69119,
+      "liquidity": "316227",
+      "priceMicroPerBtc": "100377611901"
+    }
+  },
+  "operatorReceipts": [
+    {
+      "step": "demo20261107.prepare.restore.approve",
+      "hash": "0x2629740235f8bf897157b0306625eeaff46619f12a11468b29c6dd1f3d43be26",
+      "block": "71126213",
+      "signer": "0xbca3d93de6932535a117588744557537694a3e6c",
+      "gasWei": "1388075000000000",
+      "calldataVerified": true
+    },
+    {
+      "step": "demo20261107.prepare.restore.swap",
+      "hash": "0x4951518ab0fd3f0d6293389c25d406508084edbe586960b1429b6aea915d8a9c",
+      "block": "71126223",
+      "signer": "0xbca3d93de6932535a117588744557537694a3e6c",
+      "gasWei": "4618700000000000",
+      "calldataVerified": true
+    },
+    {
+      "step": "demo20261107.prepare.guard80",
+      "hash": "0x7d1933655c31dae68691fbe42b8b7634c59a79b449d7c9b12b0e313978bd5e00",
+      "block": "71126235",
+      "signer": "0xafc5b06665e9b99669027c18e82014916778734e",
+      "gasWei": "839000000000000",
+      "calldataVerified": true
+    },
+    {
+      "step": "demo20261107.rise.5.buy1.approve",
+      "hash": "0xcf0339e42ddbb1a461e4cdc8b689cb6fe2fa3715126e5cedcca93589cfecde9f",
+      "block": "71128741",
+      "signer": "0xbca3d93de6932535a117588744557537694a3e6c",
+      "gasWei": "1385950000000000",
+      "calldataVerified": true
+    },
+    {
+      "step": "demo20261107.rise.5.buy1",
+      "hash": "0x4b75982ddb9505c619315c2e7c849b46969fc9bb104d9a6ecd7b8e2cdc5636ee",
+      "block": "71128751",
+      "signer": "0xbca3d93de6932535a117588744557537694a3e6c",
+      "gasWei": "4929225000000000",
+      "calldataVerified": true
+    },
+    {
+      "step": "demo20261107.rise.5.guard100",
+      "hash": "0xbbfe2b25c43c299e978647c250e7e96bb1e3b784a73cdde203659c2f3e5eacae",
+      "block": "71128762",
+      "signer": "0xafc5b06665e9b99669027c18e82014916778734e",
+      "gasWei": "839000000000000",
+      "calldataVerified": true
+    },
+    {
+      "step": "demo20261107.process.1",
+      "hash": "0x1cd0faac22523bb6f7ad89a28017368bb0f39c2afefde54b156d848da64526d7",
+      "block": "71129134",
+      "signer": "0x60579fc93e6b7f2377dd952e1fd4c58c2e3ca373",
+      "gasWei": "3111950000000000",
+      "calldataVerified": true
+    }
+  ],
+  "withdrawal": {
+    "fill": {
+      "event": "WithdrawalFilled",
+      "args": {
+        "requestId": "2",
+        "owner": "0x5B935E09b4749efbE9AA9855ac049d7cacE32659",
+        "sharesBurned": "99908",
+        "payout": "100028"
+      },
+      "hash": "0x1cd0faac22523bb6f7ad89a28017368bb0f39c2afefde54b156d848da64526d7",
+      "block": "71129134",
+      "logIndex": 4
+    },
+    "claim": {
+      "event": "Claimed",
+      "args": {
+        "owner": "0x5B935E09b4749efbE9AA9855ac049d7cacE32659",
+        "amount": "100028"
+      },
+      "hash": "0xfef256a856f5d487b99fdb66e69a8c3a8a07d75d08328788daefc0ce40cd41bd",
+      "block": "71129193",
+      "logIndex": 9
+    }
+  },
+  "events": [
+    {
+      "event": "Approval",
+      "args": {
+        "owner": "0x5B935E09b4749efbE9AA9855ac049d7cacE32659",
+        "spender": "0xf3fbDa5C4354c9c3D384CfeED90aACdDe28C6450",
+        "value": "100000"
+      },
+      "hash": "0x7b272d3c7395bd1026aad20564995995644fee3514cf5a2b86c7a7f4c3ee4e10",
+      "block": "71128356",
+      "logIndex": 1
+    },
+    {
+      "event": "Transfer",
+      "args": {
+        "from": "0x5B935E09b4749efbE9AA9855ac049d7cacE32659",
+        "to": "0xf3fbDa5C4354c9c3D384CfeED90aACdDe28C6450",
+        "value": "100000"
+      },
+      "hash": "0xe2a7488fd90e690fdf4b1e1c123f6adf8bd1cfec6832fdba4a4bce99b87dbadb",
+      "block": "71128380",
+      "logIndex": 5
+    },
+    {
+      "event": "Deposited",
+      "args": {
+        "account": "0x5B935E09b4749efbE9AA9855ac049d7cacE32659",
+        "amount": "100000",
+        "shares": "99908",
+        "navBefore": "900825"
+      },
+      "hash": "0xe2a7488fd90e690fdf4b1e1c123f6adf8bd1cfec6832fdba4a4bce99b87dbadb",
+      "block": "71128380",
+      "logIndex": 6
+    },
+    {
+      "event": "Approval",
+      "args": {
+        "owner": "0xAA46220DfD751f915d9c802412eDaBC0aB69dEcC",
+        "spender": "0xac836824231ae77874D0Ca293BD749ffE6c0d00f",
+        "value": "100000"
+      },
+      "hash": "0x522672b32d757a3a583a8714bf8e0f023861c20a7b74144ae8b74effcd912a59",
+      "block": "71128590",
+      "logIndex": 2
+    },
+    {
+      "event": "OpenReserved",
+      "args": {
+        "id": "5",
+        "account": "0xAA46220DfD751f915d9c802412eDaBC0aB69dEcC",
+        "principal": "100000"
+      },
+      "hash": "0x414496cecee0cfe7007be73bcf51462321119d6dac4adf4db9ce3f1d0480ce28",
+      "block": "71128606",
+      "logIndex": 14
+    },
+    {
+      "event": "AssetAcquired",
+      "args": {
+        "id": "5",
+        "trader": "0xAA46220DfD751f915d9c802412eDaBC0aB69dEcC",
+        "cost": "200000",
+        "atoms": "247",
+        "referencePrice": "80000000000"
+      },
+      "hash": "0x414496cecee0cfe7007be73bcf51462321119d6dac4adf4db9ce3f1d0480ce28",
+      "block": "71128606",
+      "logIndex": 25
+    },
+    {
+      "event": "DisclosedSaleAgreed",
+      "args": {
+        "id": "5",
+        "trader": "0xAA46220DfD751f915d9c802412eDaBC0aB69dEcC",
+        "equity": "100000",
+        "principal": "100000",
+        "markup": "383",
+        "atoms": "247",
+        "termsHash": "0xb3dc89d6be33479580f5bc183906c6d7d1b67559167252edd086af824733e8b7"
+      },
+      "hash": "0x414496cecee0cfe7007be73bcf51462321119d6dac4adf4db9ce3f1d0480ce28",
+      "block": "71128606",
+      "logIndex": 26
+    },
+    {
+      "event": "Pledged",
+      "args": {
+        "id": "5",
+        "trader": "0xAA46220DfD751f915d9c802412eDaBC0aB69dEcC",
+        "atoms": "247",
+        "termsHash": "0xb3dc89d6be33479580f5bc183906c6d7d1b67559167252edd086af824733e8b7"
+      },
+      "hash": "0x414496cecee0cfe7007be73bcf51462321119d6dac4adf4db9ce3f1d0480ce28",
+      "block": "71128606",
+      "logIndex": 27
+    },
+    {
+      "event": "Transfer",
+      "args": {
+        "from": "0xAA46220DfD751f915d9c802412eDaBC0aB69dEcC",
+        "to": "0xac836824231ae77874D0Ca293BD749ffE6c0d00f",
+        "value": "100000"
+      },
+      "hash": "0x414496cecee0cfe7007be73bcf51462321119d6dac4adf4db9ce3f1d0480ce28",
+      "block": "71128606",
+      "logIndex": 29
+    },
+    {
+      "event": "OpenConfirmed",
+      "args": {
+        "id": "5"
+      },
+      "hash": "0x414496cecee0cfe7007be73bcf51462321119d6dac4adf4db9ce3f1d0480ce28",
+      "block": "71128606",
+      "logIndex": 33
+    },
+    {
+      "event": "Opened",
+      "args": {
+        "id": "5",
+        "trader": "0xAA46220DfD751f915d9c802412eDaBC0aB69dEcC",
+        "maturesAt": "1795228937"
+      },
+      "hash": "0x414496cecee0cfe7007be73bcf51462321119d6dac4adf4db9ce3f1d0480ce28",
+      "block": "71128606",
+      "logIndex": 34
+    },
+    {
+      "event": "PrincipalRepaid",
+      "args": {
+        "id": "5",
+        "amount": "100000",
+        "remaining": "0"
+      },
+      "hash": "0x2544bbdfd8361c6a2e41ddd6621dbdec277bff670c376ab81a135aa3eef30f19",
+      "block": "71128849",
+      "logIndex": 12
+    },
+    {
+      "event": "MarkupCollected",
+      "args": {
+        "id": "5",
+        "payment": "383",
+        "lpIncrement": "294",
+        "toPrimary": "0",
+        "toTail": "0",
+        "toManagerCash": "89"
+      },
+      "hash": "0x2544bbdfd8361c6a2e41ddd6621dbdec277bff670c376ab81a135aa3eef30f19",
+      "block": "71128849",
+      "logIndex": 16
+    },
+    {
+      "event": "PositionFinalized",
+      "args": {
+        "id": "5"
+      },
+      "hash": "0x2544bbdfd8361c6a2e41ddd6621dbdec277bff670c376ab81a135aa3eef30f19",
+      "block": "71128849",
+      "logIndex": 17
+    },
+    {
+      "event": "Transfer",
+      "args": {
+        "from": "0xac836824231ae77874D0Ca293BD749ffE6c0d00f",
+        "to": "0xAA46220DfD751f915d9c802412eDaBC0aB69dEcC",
+        "value": "141889"
+      },
+      "hash": "0x2544bbdfd8361c6a2e41ddd6621dbdec277bff670c376ab81a135aa3eef30f19",
+      "block": "71128849",
+      "logIndex": 19
+    },
+    {
+      "event": "Closed",
+      "args": {
+        "id": "5",
+        "kind": 0,
+        "atomsSold": "247",
+        "proceeds": "242272",
+        "surplusToTrader": "141889",
+        "grossPrincipalLoss": "0",
+        "writtenOffMarkup": "0"
+      },
+      "hash": "0x2544bbdfd8361c6a2e41ddd6621dbdec277bff670c376ab81a135aa3eef30f19",
+      "block": "71128849",
+      "logIndex": 20
+    },
+    {
+      "event": "WithdrawalRequested",
+      "args": {
+        "requestId": "2",
+        "owner": "0x5B935E09b4749efbE9AA9855ac049d7cacE32659",
+        "shares": "99908"
+      },
+      "hash": "0x755d016c8516c32ad5f2a49fc669960b5c80fead2586a6f64827e470e739dbf5",
+      "block": "71129014",
+      "logIndex": 6
+    },
+    {
+      "event": "WithdrawalFilled",
+      "args": {
+        "requestId": "2",
+        "owner": "0x5B935E09b4749efbE9AA9855ac049d7cacE32659",
+        "sharesBurned": "99908",
+        "payout": "100028"
+      },
+      "hash": "0x1cd0faac22523bb6f7ad89a28017368bb0f39c2afefde54b156d848da64526d7",
+      "block": "71129134",
+      "logIndex": 4
+    },
+    {
+      "event": "Transfer",
+      "args": {
+        "from": "0xf3fbDa5C4354c9c3D384CfeED90aACdDe28C6450",
+        "to": "0x5B935E09b4749efbE9AA9855ac049d7cacE32659",
+        "value": "100028"
+      },
+      "hash": "0xfef256a856f5d487b99fdb66e69a8c3a8a07d75d08328788daefc0ce40cd41bd",
+      "block": "71129193",
+      "logIndex": 8
+    },
+    {
+      "event": "Claimed",
+      "args": {
+        "owner": "0x5B935E09b4749efbE9AA9855ac049d7cacE32659",
+        "amount": "100028"
+      },
+      "hash": "0xfef256a856f5d487b99fdb66e69a8c3a8a07d75d08328788daefc0ce40cd41bd",
+      "block": "71129193",
+      "logIndex": 9
+    }
+  ]
+}

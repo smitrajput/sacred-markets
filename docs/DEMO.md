@@ -2,15 +2,19 @@
 
 Use the current presentation and a fresh browser flow. The operator CLI runs in **Arc Studio’s Terminal**, with the dedicated testnet keys already in its ignored environment. It does not run in the browser app or on Vercel. All amounts are test assets.
 
-## Prepared checkpoint
+## Completed rehearsal and fresh recording
 
-Verified November 7 at block 71126462: pool **79,999.395490 USDC/cirBTC**, reference **80,000**, 0.20 USDC acquisition quote **247 sats / 196.84% coverage**. The reference expires **November 8, 2026 at 07:52:09 IST**. All readiness checks passed; run status again before filming because live conditions can change. Preparation sold 3,067 sats for 2.710568 test USDC and spent 0.006845775 test USDC in gas. No price-rise command or new browser trade has run. [Independent receipt verification](review/RECORDING_PREP_VERIFICATION.json).
+The founder completed the self-service rehearsal with Position 5: 0.10 test USDC contribution, 0.141889 payout, 0.041889 trading profit before gas and 0.0101442 after all trader gas. The depositor claimed 0.100028 test USDC after the one-shot FIFO command. Operator spending and gas are separate. [Independent verification](review/SELF_SERVICE_REHEARSAL_VERIFICATION.json).
+
+The rehearsal remains preserved in `deployments/demo-recording-20261107.json` and is inspected with `bun run demo status`. The actual recording uses **`bun run demo:record`**, a separate fixed episode and journal. Both commands share the same operator lock. Recording preparation requires the completed rehearsal and closed Position 5, no active browser-trader position and an empty queue. It retains the same bounded operator limits.
+
+Final preparation succeeded: pool **79,999.39 USDC/cirBTC**, reference **80,000**, opening quote **247 sats / 196.84% coverage**. The reference expires **November 8 at 08:25:44 IST**. Preparation spent **0.006845775 test USDC** in gas. The recording price rise is unused. [Receipt verification](review/FINAL_RECORDING_PREP_VERIFICATION.json). Run `bun run demo:record status` immediately before filming because live conditions can change.
 
 ## Before recording
 
 1. Open the [app](https://sacred.markets/app), the presentation, and the signed-in [Studio continuation](https://studio.arc.io/app/37c6c8dc-b313-49c9-9cbb-fe5f61673ab3?thread=868bf545-07ba-4ecd-a97c-b45762be5d3c).
-2. In Studio, open Code → Terminal. Run `cd /home/user/app`, then `bun run demo status`.
-3. The recording episode is `recording-20261107`. Preparation must report **READY**, with the pool near 80,000, a fresh 80,000 reference, an empty withdrawal queue, and an opening quote at or above 190% coverage. Preparation is a separate step before filming: `bun run demo prepare --plan`, then `bun run demo prepare` and type `PREPARE` when requested. If already complete, it reports status without trading again.
+2. In Studio, open Code → Terminal. Run `cd /home/user/app`, then `bun run demo:record status`.
+3. The recording episode is `final-recording-20261107`. Preparation must report **READY**, with the pool near 80,000, a fresh 80,000 reference, an empty withdrawal queue, and an opening quote at or above 190% coverage. Preparation is a separate step before filming: `bun run demo:record prepare --plan`, then `bun run demo:record prepare` and type `PREPARE` when requested. If already complete, it reports status without trading again.
 4. Identify the two MetaMask accounts: depositor `0x5B93…2659`, trader `0xAA46…dEcC`. Verify the app header after switching accounts. The founder signs all browser approvals, deposits, openings, closes, withdrawal requests and claims.
 5. Keep Studio’s environment and secret files closed. The demo CLI’s output contains public amounts, addresses and explorer links. Show Studio’s code and working preview/runtime traces as build evidence.
 6. Keep the CLI terminal open beside the app. There is **no scheduled price move** and no need to ask an assistant during the recording.
@@ -26,10 +30,10 @@ Verified November 7 at block 71126462: pool **79,999.395490 USDC/cirBTC**, refer
 **Raise the actual pool price.** Switch to Studio Terminal and run:
 
 ```sh
-bun run demo rise POSITION_NUMBER
+bun run demo:record rise POSITION_NUMBER
 ```
 
-Replace `POSITION_NUMBER` with the number the app just showed, for example `bun run demo rise 5` only if the card actually says Position 5. Review the printed plan, then type `RISE 5` (using the same actual number) when prompted. No wallet popup is needed: this bounded command uses the dedicated testnet operator wallets, never your browser wallet.
+Replace `POSITION_NUMBER` with the number the app just showed, for example `bun run demo:record rise 6` only if the card actually says Position 6. Review the printed plan, then type `RISE 6` (using the same actual number) when prompted. No wallet popup is needed: this bounded command uses the dedicated testnet operator wallets, never your browser wallet.
 
 Say: “I’m simulating market demand with a separate operator buying cirBTC in our real Uniswap v4 test pool. After verifying the pool price, the command updates our separate test reference.” Hold the before/after pool price, percentage change and swap receipt link on screen. The target is approximately 80,000 → 100,000, not a guaranteed exact percentage or payout. The command separately labels the immediately-before-buy and prepared-starting-point comparisons.
 
@@ -40,7 +44,7 @@ Wait for the completed result and **Return to Trade → Sell collateral and clos
 **Withdraw (optional live ending).** Switch back to the depositor. In Earn, request the actual unlocked shares shown, not an old rehearsed number. After the request confirms, run in Studio Terminal:
 
 ```sh
-bun run demo process
+bun run demo:record process
 ```
 
 Review and type `PROCESS`. It makes one permissionless FIFO-processing call, reserving available payout. Then return to Earn and sign **Claim**. If the queue is empty, the command does nothing. The UI’s **Process queue** button is also available. This step demonstrates the keeper’s job without claiming an always-on service.
@@ -51,13 +55,13 @@ Review and type `PROCESS`. It makes one permissionless FIFO-processing call, res
 
 | When | Studio Terminal command |
 |---|---|
-| Before filming | `bun run demo status` |
-| Review preparation | `bun run demo prepare --plan` |
-| Prepare once, if not complete | `bun run demo prepare` → type `PREPARE` |
-| After your new position confirms | `bun run demo rise POSITION_NUMBER` → type `RISE POSITION_NUMBER` |
-| After a depositor withdrawal request | `bun run demo process` → type `PROCESS` |
+| Before filming | `bun run demo:record status` |
+| Review preparation | `bun run demo:record prepare --plan` |
+| Prepare once, if not complete | `bun run demo:record prepare` → type `PREPARE` |
+| After your new position confirms | `bun run demo:record rise POSITION_NUMBER` → type `RISE POSITION_NUMBER` |
+| After a depositor withdrawal request | `bun run demo:record process` → type `PROCESS` |
 
-The CLI is deliberately bound to one recording episode and one new trader position. Do not delete or edit `deployments/demo-recording-20261107.json` to replay it. Completed steps report saved receipts instead of spending again. After a network interruption, run status, then the **same command with the same position number**. A pending transaction is reconciled; never start a parallel command or a second position to work around it. An abnormal exit may leave a lock; follow the printed instructions only after confirming no other demo process is running.
+The CLI is deliberately bound to one recording episode and one new trader position. Do not delete or edit `deployments/demo-final-recording-20261107.json` to replay it. Completed steps report saved receipts instead of spending again. After a network interruption, run status, then the **same command with the same position number**. A pending transaction is reconciled; never start a parallel command or a second position to work around it. An abnormal exit may leave a lock; follow the printed instructions only after confirming no other demo process is running.
 
 The reference expires 24 hours after its update. If status reports stale or drifting conditions, resolve readiness before filming; a completed preparation is not a promise of perpetual readiness. No background keeper runs automatically. The existing keeper implementation is [`scripts/keeper.ts`](../scripts/keeper.ts); the self-service commands are [`scripts/demo.ts`](../scripts/demo.ts).
 

@@ -55,6 +55,78 @@
       "gasUsed": "33560",
       "effectiveGasPriceWei": "25000000000",
       "gasCostWei": "839000000000000"
+    },
+    "demo20261107.rise.5.buy1.approve": {
+      "label": "approve exact USDC to the smoke venue",
+      "role": "trader",
+      "signer": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+      "chainId": 5042002,
+      "nonce": 22,
+      "to": "0x3600000000000000000000000000000000000000",
+      "calldataHash": "0x7c680c55937ef20202d8e44873a67c86e116e134b79468d371c144b319ab3689",
+      "gas": "67489",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "5000000000",
+      "txHash": "0xcf0339e42ddbb1a461e4cdc8b689cb6fe2fa3715126e5cedcca93589cfecde9f",
+      "phase": "confirmed",
+      "blockNumber": "71128741",
+      "gasUsed": "55438",
+      "effectiveGasPriceWei": "25000000000",
+      "gasCostWei": "1385950000000000"
+    },
+    "demo20261107.rise.5.buy1": {
+      "label": "market buy 2761729 micro-USDC toward 100,000",
+      "role": "trader",
+      "signer": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+      "chainId": 5042002,
+      "nonce": 23,
+      "to": "0x1eaE39A746C49708696FBA57CE4a1948eA4337E4",
+      "calldataHash": "0xf108d72b65b0905cec555c9eabb9950942ed2b3c1535fb91e22612777a3c7964",
+      "gas": "293722",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "5000000000",
+      "txHash": "0x4b75982ddb9505c619315c2e7c849b46969fc9bb104d9a6ecd7b8e2cdc5636ee",
+      "phase": "confirmed",
+      "blockNumber": "71128751",
+      "gasUsed": "197169",
+      "effectiveGasPriceWei": "25000000000",
+      "gasCostWei": "4929225000000000"
+    },
+    "demo20261107.rise.5.guard100": {
+      "label": "guard.update(100,000) after the verified pool",
+      "role": "deployer",
+      "signer": "0xafC5b06665e9b99669027C18E82014916778734E",
+      "chainId": 5042002,
+      "nonce": 25,
+      "to": "0x4d84bf470b6916d97ec719a5398d534c1adb1d57",
+      "calldataHash": "0x371e4d7c7d2c1bcae09c8fa87585b0095123a732678cd45039aab8ce83306df8",
+      "gas": "40700",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "5000000000",
+      "txHash": "0xbbfe2b25c43c299e978647c250e7e96bb1e3b784a73cdde203659c2f3e5eacae",
+      "phase": "confirmed",
+      "blockNumber": "71128762",
+      "gasUsed": "33560",
+      "effectiveGasPriceWei": "25000000000",
+      "gasCostWei": "839000000000000"
+    },
+    "demo20261107.process.1": {
+      "label": "processWithdrawals(16)",
+      "role": "keeper",
+      "signer": "0x60579fc93E6B7f2377dd952e1FD4c58C2e3Ca373",
+      "chainId": 5042002,
+      "nonce": 3,
+      "to": "0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450",
+      "calldataHash": "0xb01f792330c46ea6b1e4670a11c7a57a8c4099372f500e6749cfffa63216d460",
+      "gas": "179366",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "5000000000",
+      "txHash": "0x1cd0faac22523bb6f7ad89a28017368bb0f39c2afefde54b156d848da64526d7",
+      "phase": "confirmed",
+      "blockNumber": "71129134",
+      "gasUsed": "124478",
+      "effectiveGasPriceWei": "25000000000",
+      "gasCostWei": "3111950000000000"
     }
   },
   "records": {
@@ -103,6 +175,66 @@
         "amount": "0",
         "side": "none",
         "maxGasWei": "2035020000000000"
+      },
+      "demo20261107.rise.5.buy1.approve": {
+        "step": "demo20261107.rise.5.buy1.approve",
+        "kind": "approve",
+        "role": "trader",
+        "to": "0x3600000000000000000000000000000000000000",
+        "data": "0x095ea7b30000000000000000000000001eae39a746c49708696fba57ce4a1948ea4337e400000000000000000000000000000000000000000000000000000000002a2401",
+        "label": "approve exact USDC to the smoke venue",
+        "usdcMicro": "0",
+        "sats": "0",
+        "minOut": "0",
+        "deadline": "0",
+        "amount": "2761729",
+        "side": "usdc",
+        "maxGasWei": "3374460000000000"
+      },
+      "demo20261107.rise.5.buy1": {
+        "step": "demo20261107.rise.5.buy1",
+        "kind": "buy",
+        "role": "trader",
+        "to": "0x1eaE39A746C49708696FBA57CE4a1948eA4337E4",
+        "data": "0xbc6758ef00000000000000000000000000000000000000000000000000000000002a24010000000000000000000000000000000000000000000000000000000000000bdd000000000000000000000000000000000000000000000000000000006aee93d5",
+        "label": "market buy 2761729 micro-USDC toward 100,000",
+        "usdcMicro": "2761729",
+        "sats": "0",
+        "minOut": "3037",
+        "deadline": "1794020309",
+        "amount": "0",
+        "side": "none",
+        "maxGasWei": "14686140000000000"
+      },
+      "demo20261107.rise.5.guard100": {
+        "step": "demo20261107.rise.5.guard100",
+        "kind": "guard",
+        "role": "deployer",
+        "to": "0x4d84bf470b6916d97ec719a5398d534c1adb1d57",
+        "data": "0x2fb565e8000000000000000000000000000000000000000000000000000000174876e800000000000000000000000000000000000000000000000000000000006aee9054",
+        "label": "guard.update(100,000) after the verified pool",
+        "usdcMicro": "0",
+        "sats": "0",
+        "minOut": "0",
+        "deadline": "0",
+        "amount": "0",
+        "side": "none",
+        "maxGasWei": "2035020000000000"
+      },
+      "demo20261107.process.1": {
+        "step": "demo20261107.process.1",
+        "kind": "process",
+        "role": "keeper",
+        "to": "0xf3fbda5c4354c9c3d384cfeed90aacdde28c6450",
+        "data": "0x152fcb0c0000000000000000000000000000000000000000000000000000000000000010",
+        "label": "processWithdrawals(16)",
+        "usdcMicro": "0",
+        "sats": "0",
+        "minOut": "0",
+        "deadline": "0",
+        "amount": "0",
+        "side": "none",
+        "maxGasWei": "8968320000000000"
       }
     },
     "demo.prepare": {
@@ -110,6 +242,22 @@
       "readyAtBlock": "71126241",
       "readyAtTimestamp": "1794018136",
       "poolPrice": "79999395490"
+    },
+    "demo.rise": {
+      "positionId": "5",
+      "beforePrice": "81279813145",
+      "preparedBaseline": "79999395490",
+      "done": true,
+      "result": {
+        "spotBefore": "81,279.81 USDC per cirBTC (immediately before the first buy)",
+        "spotAfter": "100,377.61 USDC per cirBTC (+23.49% vs immediately before; +25.47% vs the prepared baseline)",
+        "reference": "100,000.00 USDC per cirBTC fresh, expires 2026-11-08T02:43:32Z",
+        "saleQuote": "0.242272 USDC",
+        "debt": "0.100383 USDC",
+        "estimatedTraderPayoutBeforeGas": "0.141889 USDC",
+        "estimatedTraderProfitBeforeGas": "+0.041889 USDC",
+        "operatorGasSpentThisEpisode": "0.013999 USDC (market-maker side only; the trader's own open and close gas is separate and not included above)"
+      }
     }
   }
 }

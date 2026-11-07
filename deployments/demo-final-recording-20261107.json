@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "chainId": 5042002,
+  "steps": {
+    "demo20261107.prepare.restore.approve": {
+      "label": "approve exact amount to the smoke venue",
+      "role": "trader",
+      "signer": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+      "chainId": 5042002,
+      "nonce": 24,
+      "to": "0xf0C4a4CE82A5746AbAAd9425360Ab04fbBA432BF",
+      "calldataHash": "0x7fa195a2b5365b86e2c2f2430015c95f9ab64ee73b795c7c820bb5189e96b1d6",
+      "gas": "67591",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "5000000000",
+      "txHash": "0x5b350fed2a22f92991979f16068e0474fd8628a40b559bfa012b7ff49b68b645",
+      "phase": "confirmed",
+      "blockNumber": "71130180",
+      "gasUsed": "55523",
+      "effectiveGasPriceWei": "25000000000",
+      "gasCostWei": "1388075000000000"
+    },
+    "demo20261107.prepare.restore.swap": {
+      "label": "sell 3067 sats to restore the pool toward 80,000",
+      "role": "trader",
+      "signer": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+      "chainId": 5042002,
+      "nonce": 25,
+      "to": "0x1eaE39A746C49708696FBA57CE4a1948eA4337E4",
+      "calldataHash": "0x2d656ef1b1324b5d57832b97d3081cead2b10d68d037698133728cc7765b4c72",
+      "gas": "280410",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "5000000000",
+      "txHash": "0x260fc14ce0044dc1757270b5a4cc582dea4800113909954c3250aade006b993c",
+      "phase": "confirmed",
+      "blockNumber": "71130192",
+      "gasUsed": "184748",
+      "effectiveGasPriceWei": "25000000000",
+      "gasCostWei": "4618700000000000"
+    },
+    "demo20261107.prepare.guard80": {
+      "label": "guard.update(80,000) after the verified pool",
+      "role": "deployer",
+      "signer": "0xafC5b06665e9b99669027C18E82014916778734E",
+      "chainId": 5042002,
+      "nonce": 26,
+      "to": "0x4d84bf470b6916d97ec719a5398d534c1adb1d57",
+      "calldataHash": "0xe4c38c040b1d584d9126749c5a7edf9d18e400762d50a43adb4bba859976f85e",
+      "gas": "40700",
+      "maxFeePerGas": "40000000000",
+      "maxPriorityFeePerGas": "5000000000",
+      "txHash": "0xf5f7e9eb4ab03a681afefb93a7e450acd269ad80546b6e034f408e7ebaf09d7f",
+      "phase": "confirmed",
+      "blockNumber": "71130202",
+      "gasUsed": "33560",
+      "effectiveGasPriceWei": "25000000000",
+      "gasCostWei": "839000000000000"
+    }
+  },
+  "records": {
+    "demo.plans": {
+      "demo20261107.prepare.restore.approve": {
+        "step": "demo20261107.prepare.restore.approve",
+        "kind": "approve",
+        "role": "trader",
+        "to": "0xf0C4a4CE82A5746AbAAd9425360Ab04fbBA432BF",
+        "data": "0x095ea7b30000000000000000000000001eae39a746c49708696fba57ce4a1948ea4337e40000000000000000000000000000000000000000000000000000000000000bfb",
+        "label": "approve exact amount to the smoke venue",
+        "usdcMicro": "0",
+        "sats": "0",
+        "minOut": "0",
+        "deadline": "0",
+        "amount": "3067",
+        "side": "btc",
+        "maxGasWei": "3379560000000000"
+      },
+      "demo20261107.prepare.restore.swap": {
+        "step": "demo20261107.prepare.restore.swap",
+        "kind": "sell",
+        "role": "trader",
+        "to": "0x1eaE39A746C49708696FBA57CE4a1948eA4337E4",
+        "data": "0xcbf3582f0000000000000000000000000000000000000000000000000000000000000bfb0000000000000000000000000000000000000000000000000000000000292737000000000000000000000000000000000000000000000000000000006aee96b1",
+        "label": "sell 3067 sats to restore the pool toward 80,000",
+        "usdcMicro": "0",
+        "sats": "3067",
+        "minOut": "2697015",
+        "deadline": "1794021041",
+        "amount": "0",
+        "side": "none",
+        "maxGasWei": "14020500000000000"
+      },
+      "demo20261107.prepare.guard80": {
+        "step": "demo20261107.prepare.guard80",
+        "kind": "guard",
+        "role": "deployer",
+        "to": "0x4d84bf470b6916d97ec719a5398d534c1adb1d57",
+        "data": "0x2fb565e800000000000000000000000000000000000000000000000000000012a05f2000000000000000000000000000000000000000000000000000000000006aee9330",
+        "label": "guard.update(80,000) after the verified pool",
+        "usdcMicro": "0",
+        "sats": "0",
+        "minOut": "0",
+        "deadline": "0",
+        "amount": "0",
+        "side": "none",
+        "maxGasWei": "2035020000000000"
+      }
+    },
+    "demo.prepare": {
+      "ready": true,
+      "readyAtBlock": "71130208",
+      "readyAtTimestamp": "1794020151",
+      "poolPrice": "79999395490"
+    }
+  }
+}

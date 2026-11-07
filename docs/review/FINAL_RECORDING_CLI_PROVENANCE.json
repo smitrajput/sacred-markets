@@ -1,0 +1,56 @@
+{
+  "studioApp": "37c6c8dc-b313-49c9-9cbb-fe5f61673ab3",
+  "studioThread": "868bf545-07ba-4ecd-a97c-b45762be5d3c",
+  "sourceCommit": "afb3486",
+  "implementationTrace": "01a1b3e9-daef-75ae-b251-76f7ca1c3761",
+  "correctionTrace": "01a1b3ed-0232-778e-969b-06916e998b28",
+  "preparationTrace": "01a1b3ee-7be2-70f8-bcb9-fc2d27e4ec63",
+  "files": [
+    {
+      "path": "package.json",
+      "sha256": "0d59bcecaab92d24e25f00d5131fbe2b3c2b1877b78741e21363da19314ec98e",
+      "exactStudioMatch": true
+    },
+    {
+      "path": "scripts/demo.ts",
+      "sha256": "e5cd00fe4d7156aff8c4abfe59125e42d7a3e71bb58a90df7d6da27ca2ed58e3",
+      "exactStudioMatch": true
+    },
+    {
+      "path": "scripts/demo-record.ts",
+      "sha256": "dc67c78ea42ddd1acbc181a0dd77b06d9ab1f3aa096526e033febf583729555a",
+      "exactStudioMatch": true
+    },
+    {
+      "path": "scripts/core/demoProfiles.ts",
+      "sha256": "bd966a638f8f7cff8298a108641ed789b41ba94489fc1ceb7f8087efe047563a",
+      "exactStudioMatch": true
+    },
+    {
+      "path": "scripts/core/demoCore.ts",
+      "sha256": "c225a1afaef6388037678bb069b4b4a5de59baf0d096d9877d4d4ca29cac1b8d",
+      "exactStudioMatch": true
+    },
+    {
+      "path": "scripts/core/demoLive.ts",
+      "sha256": "13c247461c488f1b0e4c3b6aa77f49c3d6ecb6fdf62bc3c4dc62a6da49cf32f4",
+      "exactStudioMatch": true
+    },
+    {
+      "path": "scripts/core/demoArgs.ts",
+      "sha256": "d325ea9cc5d502bcb6313054119e0378a6fe8bbbf7a1d72c42e688407e66bc43",
+      "exactStudioMatch": true
+    },
+    {
+      "path": "scripts/core/demo.test.ts",
+      "sha256": "0cb6f81da8215cdf9b9ab15d8af9a6c5ad1b89399238ad1a398914a067eecd1e",
+      "exactStudioMatch": true
+    }
+  ],
+  "checks": {
+    "coreTests": "44 pass, 0 fail",
+    "typecheck": "pass",
+    "typeAwareLint": "pass",
+    "build": "pass; inherited dependency annotation and chunk-size warnings"
+  }
+}
