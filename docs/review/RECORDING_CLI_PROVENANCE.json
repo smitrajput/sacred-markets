@@ -1,0 +1,49 @@
+{
+  "studioApp": "37c6c8dc-b313-49c9-9cbb-fe5f61673ab3",
+  "studioThread": "868bf545-07ba-4ecd-a97c-b45762be5d3c",
+  "correctionTrace": "01a1b3ca-f8a3-7590-b969-58acf9180ff7",
+  "sourceCommit": "a503b78",
+  "files": [
+    {
+      "path": "package.json",
+      "sha256": "66bbd40b0bc89c9442210127e2d2659ed7b34e64b5a7912041a3f6fb71d0bd4a",
+      "exactStudioMatch": true
+    },
+    {
+      "path": "scripts/demo.ts",
+      "sha256": "7a49c0bb278e407e5351503d862dcc6f299005def93649a72e079f99f3134bd5",
+      "exactStudioMatch": true
+    },
+    {
+      "path": "scripts/core/demoArgs.ts",
+      "sha256": "bdf99052b78bc0f12dff0cf7d470864d78143d958e47b16a3f7993de2577ff3f",
+      "exactStudioMatch": true
+    },
+    {
+      "path": "scripts/core/demoCore.ts",
+      "sha256": "a95287f7aa9f00c280c124117e467218bfe838565c7fa4026f721d7f568c4430",
+      "exactStudioMatch": true
+    },
+    {
+      "path": "scripts/core/demoLive.ts",
+      "sha256": "1285f769afd6c2d43102c056c33daa428d9a66eefb60f0d553ca4c17b74a6882",
+      "exactStudioMatch": true
+    },
+    {
+      "path": "scripts/core/demoUnits.ts",
+      "sha256": "efaf9c3c8b964682f621327e04d1e24f766883f7518c72a42dd7cd50d3c502a1",
+      "exactStudioMatch": true
+    },
+    {
+      "path": "scripts/core/demo.test.ts",
+      "sha256": "0b7929a5796b1ff3b9cf2a687e35b8b1ca6f5e0db0e2e96b4e3913d853d42d96",
+      "exactStudioMatch": true
+    }
+  ],
+  "checks": {
+    "bunTestScriptsCore": "40 pass, 0 fail",
+    "typecheck": "pass",
+    "nonMutatingTypeAwareLint": "pass",
+    "viteBuild": "pass; dependency annotation and bundle-size warnings"
+  }
+}

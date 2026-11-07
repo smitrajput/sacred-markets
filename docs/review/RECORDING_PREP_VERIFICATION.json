@@ -1,0 +1,142 @@
+{
+  "checkedAt": "2026-11-07T02:24:10.573Z",
+  "chainId": 5042002,
+  "sourceCommit": "a503b78",
+  "episode": "recording-20261107",
+  "scope": "Read-only independent verification of preparation. No rise or browser transaction sent.",
+  "receipts": [
+    {
+      "step": "demo20261107.prepare.restore.approve",
+      "txHash": "0x2629740235f8bf897157b0306625eeaff46619f12a11468b29c6dd1f3d43be26",
+      "block": "71126213",
+      "signer": "0xbca3d93de6932535a117588744557537694a3e6c",
+      "to": "0xf0c4a4ce82a5746abaad9425360ab04fbba432bf",
+      "function": "approve",
+      "args": [
+        "0x1eaE39A746C49708696FBA57CE4a1948eA4337E4",
+        "3067"
+      ],
+      "gasWei": "1388075000000000",
+      "receiptVerified": true,
+      "calldataVerified": true
+    },
+    {
+      "step": "demo20261107.prepare.restore.swap",
+      "txHash": "0x4951518ab0fd3f0d6293389c25d406508084edbe586960b1429b6aea915d8a9c",
+      "block": "71126223",
+      "signer": "0xbca3d93de6932535a117588744557537694a3e6c",
+      "to": "0x1eae39a746c49708696fba57ce4a1948ea4337e4",
+      "function": "sellCirBtc",
+      "args": [
+        "3067",
+        "2697015",
+        "1794019025"
+      ],
+      "gasWei": "4618700000000000",
+      "receiptVerified": true,
+      "calldataVerified": true
+    },
+    {
+      "step": "demo20261107.prepare.guard80",
+      "txHash": "0x7d1933655c31dae68691fbe42b8b7634c59a79b449d7c9b12b0e313978bd5e00",
+      "block": "71126235",
+      "signer": "0xafc5b06665e9b99669027c18e82014916778734e",
+      "to": "0x4d84bf470b6916d97ec719a5398d534c1adb1d57",
+      "function": "update",
+      "args": [
+        "80000000000",
+        "1794018129"
+      ],
+      "gasWei": "839000000000000",
+      "receiptVerified": true,
+      "calldataVerified": true
+    }
+  ],
+  "transfers": [
+    {
+      "tx": "0x4951518ab0fd3f0d6293389c25d406508084edbe586960b1429b6aea915d8a9c",
+      "token": "0xf0c4a4ce82a5746abaad9425360ab04fbba432bf",
+      "from": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+      "to": "0x1eaE39A746C49708696FBA57CE4a1948eA4337E4",
+      "value": "3067"
+    },
+    {
+      "tx": "0x4951518ab0fd3f0d6293389c25d406508084edbe586960b1429b6aea915d8a9c",
+      "token": "0xf0c4a4ce82a5746abaad9425360ab04fbba432bf",
+      "from": "0x1eaE39A746C49708696FBA57CE4a1948eA4337E4",
+      "to": "0x8366a39CC670B4001A1121B8F6A443A643e40951",
+      "value": "3067"
+    },
+    {
+      "tx": "0x4951518ab0fd3f0d6293389c25d406508084edbe586960b1429b6aea915d8a9c",
+      "token": "0x3600000000000000000000000000000000000000",
+      "from": "0x8366a39CC670B4001A1121B8F6A443A643e40951",
+      "to": "0xbcA3D93DE6932535A117588744557537694A3e6c",
+      "value": "2710568"
+    }
+  ],
+  "totalGasWei": "6845775000000000",
+  "poolBefore": {
+    "sqrtPriceX96": "2527306693072888527701592696",
+    "tick": -68907,
+    "liquidity": "884452",
+    "priceMicroPerBtc": "98275049776"
+  },
+  "poolAfter": {
+    "sqrtPriceX96": "2801149132013731083344481011",
+    "tick": -66850,
+    "liquidity": "884452",
+    "priceMicroPerBtc": "79999395490"
+  },
+  "oracleAtPreparedBlock": [
+    "80000000000",
+    "1794018129",
+    true
+  ],
+  "liveObservedBlock": "71126462",
+  "quoteSats": "247",
+  "checks": [
+    {
+      "name": "pool near 80,000",
+      "ok": true,
+      "detail": "79,999.39 USDC per cirBTC (+0.00% vs 80,000)"
+    },
+    {
+      "name": "reference fresh at 80,000",
+      "ok": true,
+      "detail": "80,000.00 USDC per cirBTC, fresh, expires 2026-11-08T02:22:09Z"
+    },
+    {
+      "name": "0.20 USDC acquisition quote at the planned 80,000 reference",
+      "ok": true,
+      "detail": "247 sats (floor 242), coverage 196.84% (needs 190.00%)"
+    },
+    {
+      "name": "vault accepts financing",
+      "ok": true,
+      "detail": "open, queue empty"
+    },
+    {
+      "name": "vault cash and headroom",
+      "ok": true,
+      "detail": "idle 0.841437 USDC, can finance 0.420718 USDC"
+    },
+    {
+      "name": "browser account headroom",
+      "ok": true,
+      "detail": "0.100000 USDC left under the 0.100000 USDC cap"
+    },
+    {
+      "name": "browser wallet funds",
+      "ok": true,
+      "detail": "19.788196 USDC (needs the 0.10 contribution plus 0.10 gas reserve)"
+    },
+    {
+      "name": "existing positions safe at 80,000",
+      "ok": true,
+      "detail": "1 live position(s) stay healthy"
+    }
+  ],
+  "remainingBuyMicro": 4000000,
+  "remainingGasWei": "193154225000000000"
+}

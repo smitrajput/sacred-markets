@@ -1,33 +1,71 @@
 # Sacred demo runbook
 
-Target: three minutes. Use the redesigned public app and the existing six-slide presentation. The completed browser receipts below are the evidence; no new transaction is required for the recording. All amounts are test assets.
+Use the current presentation and a fresh browser flow. The operator CLI runs in **Arc Studio’s Terminal**, with the dedicated testnet keys already in its ignored environment. It does not run in the browser app or on Vercel. All amounts are test assets.
+
+## Prepared checkpoint
+
+Verified November 7 at block 71126462: pool **79,999.395490 USDC/cirBTC**, reference **80,000**, 0.20 USDC acquisition quote **247 sats / 196.84% coverage**. The reference expires **November 8, 2026 at 07:52:09 IST**. All readiness checks passed; run status again before filming because live conditions can change. Preparation sold 3,067 sats for 2.710568 test USDC and spent 0.006845775 test USDC in gas. No price-rise command or new browser trade has run. [Independent receipt verification](review/RECORDING_PREP_VERIFICATION.json).
 
 ## Before recording
 
-- Open the [public app](https://sacred-arc-mvp.vercel.app), the signed-in [Studio continuation](https://studio.arc.io/app/37c6c8dc-b313-49c9-9cbb-fe5f61673ab3?thread=868bf545-07ba-4ecd-a97c-b45762be5d3c) and the presentation.
-- Keep Studio's environment and secret files closed. Show the build conversation, current code, working preview and runtime traces.
-- Keep the two accounts identified: depositor `0x5B93…2659`, trader `0xAA46…dEcC`. The founder signed every browser transaction. Position 4 is now closed; show its actual receipts or the recorded before/after screens, not an invented active position.
-- The price-rise scenario was controlled: a separate operator traded in the real test pool, then updated the separate reference fixture. State this explicitly. Operator costs are excluded from trader P&L.
-- Keep slide 3 and the operator-buy explorer receipt ready for the price-rise segment. Show the prepared pool price and the price after the operator buy as historical checkpoints, not a live price ticker. The opening trade happened between those checkpoints.
-- The 60-check keeper ran in Studio's remote sandbox and stopped. Manual queue processing remains available. Do not claim continuous cloud hosting.
+1. Open the [app](https://sacred.markets/app), the presentation, and the signed-in [Studio continuation](https://studio.arc.io/app/37c6c8dc-b313-49c9-9cbb-fe5f61673ab3?thread=868bf545-07ba-4ecd-a97c-b45762be5d3c).
+2. In Studio, open Code → Terminal. Run `cd /home/user/app`, then `bun run demo status`.
+3. The recording episode is `recording-20261107`. Preparation must report **READY**, with the pool near 80,000, a fresh 80,000 reference, an empty withdrawal queue, and an opening quote at or above 190% coverage. Preparation is a separate step before filming: `bun run demo prepare --plan`, then `bun run demo prepare` and type `PREPARE` when requested. If already complete, it reports status without trading again.
+4. Identify the two MetaMask accounts: depositor `0x5B93…2659`, trader `0xAA46…dEcC`. Verify the app header after switching accounts. The founder signs all browser approvals, deposits, openings, closes, withdrawal requests and claims.
+5. Keep Studio’s environment and secret files closed. The demo CLI’s output contains public amounts, addresses and explorer links. Show Studio’s code and working preview/runtime traces as build evidence.
+6. Keep the CLI terminal open beside the app. There is **no scheduled price move** and no need to ask an assistant during the recording.
 
-## Three-minute narrative
+## Live recording sequence
 
-**0:00–0:30: Product and build.** “Sacred finances a real cirBTC spot purchase with fixed debt on Arc Testnet. Arc Studio implemented the contracts, app, API and operator scripts in this workspace. Codex reviewed and verified them; Opus directed the visual design. Our prior protocol design and brand predate this MVP.” Show the build history, current code and preview traces. Use both the Studio URL and public app URL in the submission. [Provenance](BUILD_PROVENANCE.md).
+**Introduce Sacred.** Briefly show the product and how it works slides. The current MVP supports USDC Earn and fixed 2x cirBTC financing; wider leverage and Borrow are future work. Describe interest-free as the intended fixed-markup sale structure, not a free product or a completed Shariah certification.
 
-**0:30–0:55: Earn.** Show the vault and the [0.10 USDC deposit](https://explorer.testnet.arc.io/tx/0xee5a1b2847299604da329322f857ed90fd3fe3d87822438a61c0edeac2b22baf). “Depositors receive shares at NAV and share collected markup. This is not a promised APY. We rehearsed with separate depositor and trader wallets.”
+**Earn.** Connect the depositor, enter `0.10` USDC, accept the mandate, and sign the exact approval and deposit. Wait for Confirmed. Explain shares at NAV and participation in collected markup; no promised APY.
 
-**0:55–1:15: Open the financed purchase.** Show [Position 4 opening](https://explorer.testnet.arc.io/tx/0x75b67561be287fad78b9af2baec55df4a5ebeb0ac30f307eb850d3fedd99c750). “The trader contributed 0.10; the vault acquired 0.20 of cirBTC through Uniswap v4. That bought 247 cirBTC sats, with fixed debt of 0.100383 USDC.”
+**Open Trade.** Switch to trader `0xAA46…dEcC`. Enter `0.10` USDC and check initial coverage is at least 190%. Explain the 0.20 USDC cirBTC purchase and fixed debt of 0.100383 USDC. Sign approval and opening. Wait for the new position card and note its number. Leave it open.
 
-**1:15–1:35: Show the price increase.** Hold slide 3's price comparison on screen, then show the successful [operator market buy](https://explorer.testnet.arc.io/tx/0x1e1a581514c172e13e43fbc693bbae677214d146595a0d226603db141569e4c5). “A separate operator bought cirBTC with 2.761982 test USDC to simulate demand. From our prepared starting point, the actual pool price rose from about 79,998 to 100,378 USDC per cirBTC: 25.47%. We then updated the separate test reference to 100,000.” Keep the label **Controlled testnet scenario** visible. The reference update alone would not increase the pool's sale proceeds.
+**Raise the actual pool price.** Switch to Studio Terminal and run:
 
-**1:35–1:55: Close and show the profit.** Show [owner close](https://explorer.testnet.arc.io/tx/0xe2f98645857130e922c46f053ea1444b5704e8a8dc6fc66bc5bdd40b79bd9ad0), followed by slide 3's results. “The sale returned 0.242270 USDC. After debt, the trader received 0.141887. That's 41.89% profit before gas, or 11.85% after all three wallet fees, on the original 0.10 contribution.” [Full accounting](review/PROFIT_CLOSE_VERIFICATION.json).
+```sh
+bun run demo rise POSITION_NUMBER
+```
 
-**1:55–2:25: Protection and withdrawal.** Show the earlier [coverage-sale receipt](https://explorer.testnet.arc.io/tx/0xc7afcee5e170601d01468b8acef07f62439b49404a31dbe553b770dd4a783f78): 52 cirBTC sats sold, restoring coverage to 191.39%. Label it the earlier operator rehearsal. Then show the depositor's [FIFO fill](https://explorer.testnet.arc.io/tx/0xcb4125096e937bad51fe05641370f2a5dc5c3c09e32fc4f979a18461034e3855) and [claim](https://explorer.testnet.arc.io/tx/0x72683156f818699601f9d43bf96118ebe38cc34018e120a2153dc9dcf04835c4): “The keeper reserved 0.100028 in FIFO order. The depositor claimed it without a second NAV charge.”
+Replace `POSITION_NUMBER` with the number the app just showed, for example `bun run demo rise 5` only if the card actually says Position 5. Review the printed plan, then type `RISE 5` (using the same actual number) when prompted. No wallet popup is needed: this bounded command uses the dedicated testnet operator wallets, never your browser wallet.
 
-**2:25–3:00: Architecture and boundaries.** Show the editable architecture. “The API reads; wallets sign. Sacred uses existing Uniswap v4 contracts and a pool we initialized and seeded. We have fixed 2x financing, a fourteen-day term and no late debt growth. This is a testnet prototype with an operator price fixture and limited liquidity, not an audit or Shariah certification.” The full repayment/BTC release path also passed in the earlier Position 3 rehearsal; maturity was tested with local time warp, not fourteen elapsed live days.
+Say: “I’m simulating market demand with a separate operator buying cirBTC in our real Uniswap v4 test pool. After verifying the pool price, the command updates our separate test reference.” Hold the before/after pool price, percentage change and swap receipt link on screen. The target is approximately 80,000 → 100,000, not a guaranteed exact percentage or payout. The command separately labels the immediately-before-buy and prepared-starting-point comparisons.
 
-## Price-rise recording reference
+Wait for the completed result and **Return to Trade → Sell collateral and close (owner)**. The command’s payout and profit are estimates **before gas**, unrealized until the close. The reference update alone does not raise the AMM’s sale proceeds.
+
+**Close.** Return to Trade, refresh if necessary, and choose **Sell collateral and close (owner)**. Sign and wait for confirmation. Do not choose “Repay and release” for this cash-profit demo: that returns cirBTC instead of selling it. Show Activity and the close transaction to establish actual sale proceeds, fixed-debt settlement and trader payout. Operator costs are separate from trader P&L; gas reduces the trader’s net return.
+
+**Withdraw (optional live ending).** Switch back to the depositor. In Earn, request the actual unlocked shares shown, not an old rehearsed number. After the request confirms, run in Studio Terminal:
+
+```sh
+bun run demo process
+```
+
+Review and type `PROCESS`. It makes one permissionless FIFO-processing call, reserving available payout. Then return to Earn and sign **Claim**. If the queue is empty, the command does nothing. The UI’s **Process queue** button is also available. This step demonstrates the keeper’s job without claiming an always-on service.
+
+**Finish.** Show the architecture, roadmap, live link and Thank you slide. Invite viewers to follow [@smit__rajput](https://x.com/smit__rajput) as you bring Sacred to the masses.
+
+## Commands to keep beside the recording
+
+| When | Studio Terminal command |
+|---|---|
+| Before filming | `bun run demo status` |
+| Review preparation | `bun run demo prepare --plan` |
+| Prepare once, if not complete | `bun run demo prepare` → type `PREPARE` |
+| After your new position confirms | `bun run demo rise POSITION_NUMBER` → type `RISE POSITION_NUMBER` |
+| After a depositor withdrawal request | `bun run demo process` → type `PROCESS` |
+
+The CLI is deliberately bound to one recording episode and one new trader position. Do not delete or edit `deployments/demo-recording-20261107.json` to replay it. Completed steps report saved receipts instead of spending again. After a network interruption, run status, then the **same command with the same position number**. A pending transaction is reconciled; never start a parallel command or a second position to work around it. An abnormal exit may leave a lock; follow the printed instructions only after confirming no other demo process is running.
+
+The reference expires 24 hours after its update. If status reports stale or drifting conditions, resolve readiness before filming; a completed preparation is not a promise of perpetual readiness. No background keeper runs automatically. The existing keeper implementation is [`scripts/keeper.ts`](../scripts/keeper.ts); the self-service commands are [`scripts/demo.ts`](../scripts/demo.ts).
+
+## Operator limits
+
+This episode uses only Arc Testnet (5042002). Preparation may sell at most 5,000 cirBTC sats. All preparation and rise purchases together may spend at most 4 test USDC in at most two buys. Operator gas is capped at 0.2 test USDC; one-shot queue calls have a separate cumulative 0.05 test USDC gas cap. Each signer retains a 2 test USDC reserve. Every write is journaled and simulated before signing. These are bounded demo operations, not continuous cloud hosting or a production oracle.
+
+## Previous rehearsal: Position 4 (historical evidence)
 
 | On-screen label | Verified value | Meaning |
 |---|---:|---|
@@ -37,8 +75,8 @@ Target: three minutes. Use the redesigned public app and the existing six-slide 
 | Trader profit before gas | +0.041887 USDC (+41.89%) | After fixed debt and original contribution |
 | Trader profit after gas | +0.011845 USDC (+11.85%) | Also deducts approval, opening and closing fees |
 
-Use a before/after comparison, not an invented continuous price chart. Price checkpoints are pool spot prices, not the trader's average entry or exit execution prices. The 25.47% pool move includes the intervening trader opening. Percentages are rounded; [raise verification](review/PROFIT_RAISE_VERIFICATION.json), [close verification](review/PROFIT_CLOSE_VERIFICATION.json) and [hosted checkpoint](checkpoints/04-hosted.md) retain the evidence. Operator funds and gas are separate from trader P&L. Recording this completed scenario requires no new trade or price update.
+Use a before/after comparison, not an invented continuous price chart. Price checkpoints are pool spot prices, not the trader's average entry or exit execution prices. The 25.47% pool move includes the intervening trader opening. Percentages are rounded; [raise verification](review/PROFIT_RAISE_VERIFICATION.json), [close verification](review/PROFIT_CLOSE_VERIFICATION.json) and [hosted checkpoint](checkpoints/04-hosted.md) retain the evidence. Operator funds and gas are separate from trader P&L. These receipts describe the completed November 6 rehearsal, not the new recording episode. Do not reuse its return figures as the result of a new trade.
 
 ## Submission checks
 
-Include the Studio and public app URLs, public repository, demo video, presentation and frontend/backend architecture. For Uniswap, [README source pointers](../README.md#uniswap-v4-integration) and [FEEDBACK.md](../FEEDBACK.md) are ready; the developer feedback form still needs submission. Judge access to the Studio conversation remains unverified; the founder selected the two URLs plus a direct Studio demonstration.
+Include the Studio and public app URLs, public repository, demo video, presentation and frontend/backend architecture. For Uniswap, [README source pointers](../README.md#uniswap-v4-integration) and [FEEDBACK.md](../FEEDBACK.md) are ready. Judge access to the Studio conversation remains unverified; the founder selected the two URLs plus a direct Studio demonstration. Keep the earlier Position 4 results explicitly historical if showing that evidence slide during the new run.
