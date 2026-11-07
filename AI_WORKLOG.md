@@ -174,3 +174,8 @@ The founder completed the self-service rehearsal as Position 5. Codex verified t
 For the requested actual recording, Studio added a second fixed `bun run demo:record` entrypoint, preserving the rehearsal journal and shared operator lock. It reuses the same planner, budgets and transaction recovery. Fresh preparation requires the completed rehearsal, closed Position 5, no active browser position and an empty queue. Codex corrected a test that depended on real journal contents and pinned prerequisite reads to one block. All 44 core tests, TypeScript, non-mutating lint and build passed. Source commit `afb3486`; eight files match Studio hashes in `docs/review/FINAL_RECORDING_CLI_PROVENANCE.json`.
 
 Studio prepared only the final episode (trace `01a1b3ee-7be2-70f8-bcb9-fc2d27e4ec63`): exact approval and sale of 3,067 sats, then guard update to 80,000. Three receipts cost 0.006845775 test USDC in gas, with earlier journals preserved and a second prepare a no-op. No final price rise, browser transaction or keeper loop ran. The runbook and presentation's demo notes now use `demo:record`; the founder will open the actual new position, trigger the price rise and sign the owner close.
+
+
+## November 7: shortened recording scope
+
+At the founder’s urgent request, the recording now shows depositor and trader transactions only. The runbook uses opening followed by repay-and-release, then withdrawal request, depositor-triggered permissionless queue processing and claim. Price-rise commands and profit claims were removed from the active recording sequence; historical journals remain intact. No new transactions, implementation changes or tests were needed.
