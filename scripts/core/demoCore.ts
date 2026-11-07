@@ -59,6 +59,10 @@ export interface Enc {
   process(max: bigint): Hex
 }
 export interface Env {
+  /** Displayed episode ID only (the journal path is fixed per profile in demoProfiles). */
+  episodeId: string
+  /** Final-recording prerequisites; returns the reasons it may NOT start (empty = ok). Undefined for the legacy rehearsal profile. */
+  prereq?: (s: Snapshot) => Promise<string[]>
   a: Addrs
   enc: Enc
   store: Store
@@ -258,7 +262,7 @@ export async function statusCmd(env: Env): Promise<void> {
   const led = ledger(env.store)
   const prep = getRec<{ ready?: boolean; readyAtTimestamp?: string }>(env.store, PREP)
   const rise = getRec<{ positionId?: string; done?: boolean }>(env.store, RISE)
-  o(`Sacred demo · episode ${EPISODE_ID} · Arc Testnet (5042002) · block ${s.block}`)
+  o(`Sacred demo · episode ${env.episodeId} · Arc Testnet (5042002) · block ${s.block}`)
   o(`Pool spot      ${U.price(s.pool.price)}  (${U.pct(devBps(s.pool.price, P80))} vs 80,000 · ${U.pct(devBps(s.pool.price, P100))} vs 100,000)`)
   o(`Reference      ${U.price(s.oracle.price)}  ${s.oracle.fresh ? 'fresh' : 'STALE'}  expires ${U.utc(s.oracle.expiresAt)} (testnet operator fixture)`)
   o(`Vault          idle ${U.usdc(s.vault.idle)} · can finance ${U.usdc(s.vault.headroom)} · queue ${s.vault.queueRequests} request(s) · ${s.vault.blockersFinancing.length ? 'blocked: ' + s.vault.blockersFinancing.join(', ') : 'financing open'}`)
@@ -272,6 +276,10 @@ export async function statusCmd(env: Env): Promise<void> {
   const gasOk = (w: bigint) => w >= reserve * 10n ** 12n + 10n ** 15n
   o(`Funding        market wallet needs up to ${U.usdc(needBuy)} for buys + ${U.usdc(reserve)} gas reserve (has ${U.usdc(s.operator.usdc)}): ${s.operator.usdc >= needBuy + reserve ? 'ok' : 'INSUFFICIENT, add testnet USDC by hand'}`)
   o(`               restore sell is capped at ${U.btc(LIMITS.maxRestoreSats)} (market wallet holds ${U.btc(s.operator.btc)}) · deployer gas ${gasOk(s.deployer.native) ? 'ok' : 'BELOW RESERVE'} · keeper gas ${gasOk(s.keeper.native) ? 'ok' : 'BELOW RESERVE'}`)
+  if (env.prereq) {
+    const bad = await env.prereq(s)
+    o(`Prerequisites ${bad.length ? 'NOT MET: ' + bad.join('; ') : 'met (rehearsal finished cleanly, position 5 closed, no active browser position, queue empty)'}`)
+  }
   const checks = readiness(s, q)
   o('Readiness for the browser open:')
   for (const c of checks) o(`  [${c.ok ? 'ok' : '--'}] ${c.name}: ${c.detail}`)
@@ -343,8 +351,12 @@ export async function prepareCmd(env: Env, opts: { planOnly: boolean }): Promise
   const s0 = await env.snapshot()
   const reserve = LIMITS.signerReserveMicro * 10n ** 12n
   const resuming = names.some((n) => livePlan(env.store, n))
+  if (!resuming && env.prereq) {
+    const bad = await env.prereq(s0)
+    if (bad.length) throw new Stop(`the final recording cannot be prepared yet: ${bad.join('; ')}`)
+  }
   let plan: PreparePlan = { restore: { kind: 'none' } }
-  o(`PREPARE PLAN  ${EPISODE_ID} · block ${s0.block} · pool ${U.price(s0.pool.price)} (${U.pct(devBps(s0.pool.price, P80))} vs 80,000)`)
+  o(`PREPARE PLAN  ${env.episodeId} · block ${s0.block} · pool ${U.price(s0.pool.price)} (${U.pct(devBps(s0.pool.price, P80))} vs 80,000)`)
   if (resuming) {
     o('  Existing saved intent is reconciled FIRST (exact bytes, no recomputation); no second restore is ever planned:')
     showSaved(env, names)
@@ -362,6 +374,10 @@ export async function prepareCmd(env: Env, opts: { planOnly: boolean }): Promise
   o(gasLine(env, 'operator'))
   if (opts.planOnly) return
   if (!env.flags.yes && !(await env.confirm('Type PREPARE to sign these testnet transactions with the dedicated operator wallets: ', 'PREPARE'))) throw new Cancelled()
+  if (!resuming && env.prereq) {
+    const bad = await env.prereq(await env.snapshot()) // re-checked after the prompt, immediately before anything is persisted or signed
+    if (bad.length) throw new Stop(`the final recording cannot be prepared yet: ${bad.join('; ')}`)
+  }
 
   // 1) restore: replay saved approval + swap byte-for-byte, or create them once
   const restoreWanted = plan.restore.kind !== 'none'
@@ -550,4 +566,30 @@ export async function processCmd(env: Env, opts: { planOnly: boolean }): Promise
   if (opts.planOnly) return
   if (!env.flags.yes && !(await env.confirm('Type PROCESS to sign this testnet transaction with the dedicated keeper wallet: ', 'PROCESS'))) throw new Cancelled()
   await step(env, `process.${lastN + 1}`, () => ({ kind: 'process', role: 'keeper', to: env.a.vault, data, label: 'processWithdrawals(16)', usdcMicro: '0', sats: '0', minOut: '0', deadline: '0' }))
+}
+
+// ------------------------------------------------------------------------------------------------ final-recording prerequisites
+/** Pure: why the final recording may not start. The rehearsal journal and position 5 are READ ONLY inputs. */
+export function checkFinalPrereqs(a: { rehearsal: { steps: Record<string, { phase: string }>; records: Record<string, unknown> } | undefined; pos5: PosV | undefined; snap: Snapshot }): string[] {
+  const bad: string[] = []
+  const r = a.rehearsal
+  if (!r) bad.push('the rehearsal journal does not exist')
+  else {
+    const rise = r.records['demo.rise'] as { done?: boolean; positionId?: string } | undefined
+    if (!rise?.done) bad.push('the rehearsal rise is not complete')
+    else if (rise.positionId !== '5') bad.push(`the rehearsal was bound to position ${rise.positionId}, expected 5`)
+    if (!(r.records['demo.prepare'] as { ready?: boolean } | undefined)?.ready) bad.push('the rehearsal prepare was never completed')
+    const open = Object.entries(r.steps).filter(([, s]) => s.phase !== 'confirmed').map(([k]) => k)
+    if (open.length) bad.push(`the rehearsal has unconfirmed step(s): ${open.join(', ')}`)
+  }
+  const p = a.pos5
+  if (!p) bad.push('position 5 could not be read')
+  else {
+    if (p.trader.toLowerCase() !== BROWSER_TRADER.toLowerCase()) bad.push('position 5 is not owned by the browser trader')
+    if (p.status !== 2) bad.push(`position 5 is not closed (status ${p.status})`)
+    if (p.principal !== 0n || p.markup !== 0n || p.collateral !== 0n) bad.push('position 5 still has principal, markup or collateral')
+  }
+  if (a.snap.positions.some((x) => x.status === 1 && x.trader.toLowerCase() === BROWSER_TRADER.toLowerCase())) bad.push('the browser wallet still owns an active position')
+  if (a.snap.vault.queueHead !== a.snap.vault.queueTail) bad.push('the vault withdrawal queue is not empty')
+  return bad
 }

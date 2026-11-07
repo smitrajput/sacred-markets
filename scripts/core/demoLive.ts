@@ -1,19 +1,19 @@
 // Live Env for the demo CLI: real chain reads (pinned block snapshots), the write-ahead journal runner, lock, prompts. Wallets load lazily, only on a real send.
 import { closeSync, existsSync, mkdirSync, openSync, readFileSync, unlinkSync, writeSync } from 'node:fs'
-import { dirname, join } from 'node:path'
+import { dirname } from 'node:path'
 import { createInterface } from 'node:readline'
 import { encodeFunctionData, getAddress, type Address } from 'viem'
 import { erc20Abi } from 'viem'
 
 import { blockers, readOracle, readPositions, readVault } from '../../server/reads'
 import { makeReader } from '../../server/chain'
-import { ADDR, ROOT, assertArcChain, loadAccount, publicAddress, publicClient } from '../smoke/common'
+import { ADDR, assertArcChain, loadAccount, publicAddress, publicClient } from '../smoke/common'
 import { ART, SMOKE_VENUE, addrs, erc20ApproveData, pool, quoteBuy, quoteSell, rd, snap } from './lib'
 import { Stop, fileStore, liveChain, makeRunner, type ChainLike, type SignerLike } from './journal'
-import { BROWSER_TRADER, type Addrs, type Env, type Snapshot } from './demoCore'
+import { BROWSER_TRADER, checkFinalPrereqs, type Addrs, type Env, type PosV, type Snapshot } from './demoCore'
+import { LEGACY_PATH, LOCK_PATH, PROFILES, type Profile } from './demoProfiles'
 
-export const EPISODE_PATH = join(ROOT, 'deployments', 'demo-recording-20261107.json')
-export const LOCK_PATH = join(ROOT, '.tools', 'demo-recording-20261107.lock')
+export { LEGACY_PATH as EPISODE_PATH, LOCK_PATH }
 
 /** Exclusive lock. A leftover/ambiguous lock FAILS CLOSED with instructions; it is never cleared automatically. */
 export function acquireLock(path: string): () => void {
@@ -74,7 +74,7 @@ export function boundedChain(chain: ChainLike, cap: () => bigint | undefined): C
   }
 }
 
-export function liveEnv(flags: { yes: boolean; replan: boolean }): Env {
+export function liveEnv(flags: { yes: boolean; replan: boolean }, profile: Profile = PROFILES.legacy): Env {
   const a: Addrs = {
     ...(({ guard, vault, engine }) => ({ guard, vault, engine }))(addrs()),
     smokeVenue: SMOKE_VENUE,
@@ -86,14 +86,26 @@ export function liveEnv(flags: { yes: boolean; replan: boolean }): Env {
   }
   const chain = liveChain()
   const reader = makeReader()
-  const store = fileStore(EPISODE_PATH)
+  const store = fileStore(profile.journalPath)
   let runner: ReturnType<typeof makeRunner> | undefined
   let currentCap: bigint | undefined
   const bal = async (who: Address, block: bigint) => {
     const s = await snap(who, block)
     return { native: BigInt(s.nativeWei), usdc: BigInt(s.usdc), btc: BigInt(s.cirBtc) }
   }
+  const position = async (id: bigint, block?: bigint): Promise<PosV | undefined> => {
+    try {
+      const p = await rd<Record<string, unknown>>(a.engine, ART.engine.abi, 'getPosition', [id], block)
+      return { id, trader: String(p.trader), status: Number(p.status), openedAt: BigInt(p.openedAt as bigint), principal0: BigInt(p.principal0 as bigint), principal: BigInt(p.principal as bigint), markup0: BigInt(p.markup0 as bigint), markup: BigInt(p.markup as bigint), collateral: BigInt(p.collateral as bigint) }
+    } catch {
+      return undefined
+    }
+  }
   return {
+    episodeId: profile.episodeId,
+    prereq: profile.requiresRehearsal
+      ? async (snapshot) => checkFinalPrereqs({ rehearsal: existsSync(LEGACY_PATH) ? (JSON.parse(readFileSync(LEGACY_PATH, 'utf8')) as { steps: Record<string, { phase: string }>; records: Record<string, unknown> }) : undefined, pos5: await position(5n, snapshot.block), snap: snapshot })
+      : undefined,
     a,
     store,
     flags,

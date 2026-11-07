@@ -9,16 +9,17 @@ const ALLOWED: Record<Cmd, string[]> = {
   process: ['--plan', '--yes'],
 }
 
-export const HELP = `Sacred demo operator (Arc Testnet only, dedicated testnet wallets only)
+export const helpFor = (cmd: string): string => `Sacred demo operator (Arc Testnet only, dedicated testnet wallets only)
 
-  bun run demo status                    read-only: pool, reference, vault, positions, funds, readiness
-  bun run demo prepare --plan            read-only plan for restoring the pool to ~80,000 and refreshing the reference
-  bun run demo prepare                   sign the plan after you type PREPARE
-  bun run demo rise <positionId>         raise the pool and reference to 100,000 for YOUR position (type RISE <id>); add --plan to preview
-  bun run demo process                   optional one-shot withdrawal-queue processing by the keeper wallet (type PROCESS)
+  ${cmd} status                    read-only: pool, reference, vault, positions, funds, readiness
+  ${cmd} prepare --plan            read-only plan for restoring the pool to ~80,000 and refreshing the reference
+  ${cmd} prepare                   sign the plan after you type PREPARE
+  ${cmd} rise <positionId>         raise the pool and reference to 100,000 for YOUR position (type RISE <id>); add --plan to preview
+  ${cmd} process                   optional one-shot withdrawal-queue processing by the keeper wallet (type PROCESS)
 
 Flags: --plan (never signs or writes)  --yes (skip the typed confirmation; authorised operators only)  --replan (replace ONE expired, never-signed plan)
-This tool never signs for the browser wallet and never loops or runs on a timer.`
+This tool never signs for the browser wallet and never loops or runs on a timer. There is no way to choose a journal path or reset an episode.`
+export const HELP = helpFor('bun run demo')
 
 export function parseArgs(argv: string[]): Parsed {
   const out: Parsed = { cmd: 'help', plan: false, yes: false, replan: false }

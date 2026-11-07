@@ -1,14 +1,18 @@
 #!/usr/bin/env bun
 /** `bun run demo ...` - bounded operator CLI for the live profit recording. See --help. Arc Testnet only; dedicated testnet wallets only. */
-import { HELP, parseArgs } from './core/demoArgs'
+import { helpFor, parseArgs } from './core/demoArgs'
 import { Cancelled, prepareCmd, processCmd, riseCmd, statusCmd } from './core/demoCore'
 import { LOCK_PATH, acquireLock, installCancel, liveEnv, verifyIdentity } from './core/demoLive'
+import { PROFILES, type ProfileId } from './core/demoProfiles'
 import { Stop } from './core/journal'
 
-async function main(): Promise<number> {
+/** Shared entry for both fixed episodes: `bun run demo` (legacy rehearsal recovery) and `bun run demo:record` (final recording). */
+export async function main(profileId: ProfileId = 'legacy', argv: string[] = process.argv.slice(2)): Promise<number> {
+  const profile = PROFILES[profileId]
+  const HELP = helpFor(profile.command)
   let p
   try {
-    p = parseArgs(process.argv.slice(2))
+    p = parseArgs(argv)
   } catch (e) {
     console.error(`${(e as Error).message}\n\n${HELP}`)
     return 2
@@ -19,7 +23,7 @@ async function main(): Promise<number> {
   }
   let release: (() => void) | undefined
   try {
-    const env = liveEnv({ yes: p.yes, replan: p.replan })
+    const env = liveEnv({ yes: p.yes, replan: p.replan }, profile)
     await verifyIdentity(env.a)
     if (p.cmd === 'status') {
       await statusCmd(env)
@@ -46,4 +50,4 @@ async function main(): Promise<number> {
   }
 }
 
-if (import.meta.main) process.exit(await main())
+if (import.meta.main) process.exit(await main('legacy'))

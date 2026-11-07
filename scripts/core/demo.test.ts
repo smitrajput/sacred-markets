@@ -6,9 +6,10 @@ import { join } from 'node:path'
 import type { Address, Hex } from 'viem'
 
 import { parseArgs } from './demoArgs'
-import { BROWSER_TRADER, Cancelled, LIMITS, P100, P80, PREFIX, getRec, ledger, positionsSafeAt, prepareCmd, processCmd, readiness, riseCmd, type Env, type PosV, type Snapshot } from './demoCore'
-import { acquireLock, boundedChain } from './demoLive'
-import { Stop, type ChainLike, type CoreState, type Plan, type Store } from './journal'
+import { BROWSER_TRADER, Cancelled, LIMITS, checkFinalPrereqs, P100, P80, PREFIX, getRec, ledger, positionsSafeAt, prepareCmd, processCmd, readiness, riseCmd, type Env, type PosV, type Snapshot } from './demoCore'
+import { acquireLock, boundedChain, liveEnv } from './demoLive'
+import { FINAL_PATH, LEGACY_PATH, LOCK_PATH, PROFILES } from './demoProfiles'
+import { Stop, fileStore, type ChainLike, type CoreState, type Plan, type Store } from './journal'
 import { sqrtForPrice } from './profitMath'
 import * as U from './demoUnits'
 
@@ -41,6 +42,7 @@ function fakeEnv(w: World, store = memStore(), flags = { yes: true, replan: fals
     operator: bal, deployer: bal, keeper: bal, browser: { native: bal.native, usdc: 5_000_000n, btc: 0n },
   })
   const env: Env = {
+    episodeId: 'recording-20261107',
     a: A, store, flags,
     enc: { approve: (_t, _s, amount) => hex({ k: 'approve', amount }), sell: (a, m, d) => hex({ k: 'sell', a, m, d }), buy: (u, m, d) => hex({ k: 'buy', u, m, d }), guardUpdate: (p, ts) => hex({ k: 'guard', p, ts }), process: (m) => hex({ k: 'process', m }) },
     snapshot: () => Promise.resolve(snapshot()),
@@ -443,4 +445,105 @@ test('the injected chain wrapper caps gas x fee inside the shared runner before 
   const roomy = boundedChain(base, () => 10n ** 18n)
   await roomy.estimateGas({ account: A.operator, data: '0x' })
   assert.equal((await roomy.fees()).maxFeePerGas, 400_000_000_000n)
+})
+
+// ============================================================================================ two fixed episodes
+const rehearsalOk = (): { steps: Record<string, { phase: string }>; records: Record<string, unknown> } => ({
+  steps: { 'demo20261107.rise.5.guard100': { phase: 'confirmed' } },
+  records: { 'demo.prepare': { ready: true }, 'demo.rise': { positionId: '5', done: true } },
+})
+const closed5 = (over: Partial<PosV> = {}): PosV => ({ id: 5n, trader: BROWSER_TRADER, status: 2, openedAt: 1n, principal0: 100_000n, principal: 0n, markup0: 383n, markup: 0n, collateral: 0n, ...over })
+const quiet = () => fakeEnv(newWorld()).env.snapshot()
+
+test('profiles: two fixed episodes, isolated journals, ONE shared exclusive lock, no user-chosen paths', async () => {
+  assert.equal(PROFILES.legacy.episodeId, 'recording-20261107')
+  assert.equal(PROFILES.final.episodeId, 'final-recording-20261107')
+  assert.ok(LEGACY_PATH.endsWith('deployments/demo-recording-20261107.json') && FINAL_PATH.endsWith('deployments/demo-final-recording-20261107.json'))
+  assert.notEqual(PROFILES.legacy.journalPath, PROFILES.final.journalPath)
+  assert.equal(Object.keys(PROFILES).length, 2)
+  assert.ok(LOCK_PATH.endsWith('.tools/demo-recording-20261107.lock'))
+  for (const flag of ['--journal', '--episode', '--path', '--profile', '--reset']) assert.throws(() => parseArgs(['status', flag, 'x']), Error, flag)
+  const legacy = liveEnv({ yes: false, replan: false })
+  const final = liveEnv({ yes: false, replan: false }, PROFILES.final)
+  assert.equal(legacy.episodeId, 'recording-20261107')
+  assert.equal(legacy.prereq, undefined, 'the legacy rehearsal commands are unchanged: no extra prerequisite')
+  assert.equal(final.episodeId, 'final-recording-20261107')
+  assert.ok(final.prereq)
+  // isolation, proven on independent TEMPORARY journals (never the real deployment journals)
+  const tmp = mkdtempSync(join(tmpdir(), 'demo-iso-'))
+  const one = fileStore(join(tmp, 'one.json'))
+  const two = fileStore(join(tmp, 'two.json'))
+  const sentinel = one.load()
+  sentinel.records.sentinel = 'only-in-one'
+  one.save(sentinel)
+  assert.equal(one.load().records.sentinel, 'only-in-one')
+  assert.deepEqual(two.load().records, {}, 'a write to one journal never appears in the other')
+  assert.equal(existsSync(join(tmp, 'two.json')), false, 'reading an untouched journal creates no file')
+  // both entrypoints use the same lock file: while one holds it the other fails closed
+  const dir = mkdtempSync(join(tmpdir(), 'demo-two-'))
+  const shared = join(dir, 'shared.lock')
+  const release = acquireLock(shared)
+  assert.throws(() => acquireLock(shared), /another demo run holds the lock/)
+  release()
+})
+
+test('final recording prerequisites fail closed on every unmet case', async () => {
+  const snap = await quiet()
+  assert.deepEqual(checkFinalPrereqs({ rehearsal: rehearsalOk(), pos5: closed5(), snap }), [])
+  const reasons = (over: Parameters<typeof checkFinalPrereqs>[0]) => checkFinalPrereqs(over).join(' | ')
+  assert.match(reasons({ rehearsal: undefined, pos5: closed5(), snap }), /rehearsal journal does not exist/)
+  const notDone = rehearsalOk(); notDone.records['demo.rise'] = { positionId: '5' }
+  assert.match(reasons({ rehearsal: notDone, pos5: closed5(), snap }), /rise is not complete/)
+  const wrongId = rehearsalOk(); wrongId.records['demo.rise'] = { positionId: '4', done: true }
+  assert.match(reasons({ rehearsal: wrongId, pos5: closed5(), snap }), /bound to position 4, expected 5/)
+  const pending = rehearsalOk(); pending.steps['demo20261107.rise.5.buy1'] = { phase: 'broadcast' }
+  assert.match(reasons({ rehearsal: pending, pos5: closed5(), snap }), /unconfirmed step/)
+  const noPrep = rehearsalOk(); delete (noPrep.records)['demo.prepare']
+  assert.match(reasons({ rehearsal: noPrep, pos5: closed5(), snap }), /prepare was never completed/)
+  assert.match(reasons({ rehearsal: rehearsalOk(), pos5: undefined, snap }), /could not be read/)
+  assert.match(reasons({ rehearsal: rehearsalOk(), pos5: closed5({ trader: '0x1111111111111111111111111111111111111111' }), snap }), /not owned by the browser/)
+  assert.match(reasons({ rehearsal: rehearsalOk(), pos5: closed5({ status: 1 }), snap }), /not closed/)
+  assert.match(reasons({ rehearsal: rehearsalOk(), pos5: closed5({ collateral: 1n }), snap }), /still has principal, markup or collateral/)
+  assert.match(reasons({ rehearsal: rehearsalOk(), pos5: closed5(), snap: { ...snap, positions: [pos({ id: 9n })] } }), /still owns an active position/)
+  assert.match(reasons({ rehearsal: rehearsalOk(), pos5: closed5(), snap: { ...snap, vault: { ...snap.vault, queueTail: 2n } } }), /queue is not empty/)
+})
+
+test('final prepare: unmet prerequisites stop BEFORE any write or signature, --plan included; resume of saved steps is not blocked', async () => {
+  for (const planOnly of [true, false]) {
+    const f = fakeEnv(newWorld())
+    f.env.prereq = () => Promise.resolve(['position 5 is not closed (status 1)'])
+    await assert.rejects(prepareCmd(f.env, { planOnly }), /final recording cannot be prepared yet/)
+    assert.equal(f.runCalls.length, 0)
+    assert.equal((f.store).saves, 0)
+    assert.doesNotMatch(f.out.join('\n'), /PREPARE PLAN/, 'no plan is shown while prerequisites fail')
+  }
+  // re-checked after the typed confirmation, immediately before anything is persisted
+  const g = fakeEnv(newWorld(), memStore(), { yes: false, replan: false })
+  let calls = 0
+  g.env.prereq = () => Promise.resolve(++calls === 1 ? [] : ['the browser wallet still owns an active position'])
+  await assert.rejects(prepareCmd(g.env, { planOnly: false }), /still owns an active position/)
+  assert.equal(calls, 2)
+  assert.equal(g.runCalls.length, 0)
+  assert.equal((g.store).saves, 0)
+  // satisfied prerequisites run the same planner and complete as before
+  const h = fakeEnv(newWorld())
+  h.env.prereq = () => Promise.resolve([])
+  await prepareCmd(h.env, { planOnly: false })
+  assert.equal(getRec<{ ready?: boolean }>(h.store, 'demo.prepare')?.ready, true)
+  // saved steps are recovered even if the world changed (prerequisites apply to a FRESH prepare only)
+  const r = fakeEnv(newWorld({ price: P80 }))
+  const s = r.store.load()
+  s.records['demo.plans'] = { [`${PREFIX}.prepare.guard80`]: { step: `${PREFIX}.prepare.guard80`, kind: 'guard', role: 'deployer', to: A.guard, data: hex({ k: 'guard', p: P80, ts: T0 }), label: 'guard', usdcMicro: '0', sats: '0', minOut: '0', deadline: '0', amount: '0', side: 'none', maxGasWei: '1000000000000000' } }
+  r.store.save(s)
+  r.env.prereq = () => Promise.reject(new Error('must not be consulted while resuming'))
+  await prepareCmd(r.env, { planOnly: true })
+  assert.match(r.out.join('\n'), /Existing saved intent is reconciled FIRST/)
+})
+
+test('status shows the prerequisite verdict for the final profile and stays read-only', async () => {
+  const f = fakeEnv(newWorld({ price: P80 }))
+  f.env.prereq = () => Promise.resolve(['the rehearsal rise is not complete'])
+  await (await import('./demoCore')).statusCmd(f.env)
+  assert.match(f.out.join('\n'), /Prerequisites NOT MET: the rehearsal rise is not complete/)
+  assert.equal((f.store).saves, 0)
 })
