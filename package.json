@@ -30,7 +30,8 @@
     "test:journal": "bun test scripts/core",
     "keeper": "bun scripts/keeper.ts",
     "keeper:dry": "bun scripts/keeper.ts --dry-run --once",
-    "test:app": "bun test server src/lib scripts/core"
+    "test:app": "bun test server src/lib scripts/core",
+    "demo": "bun scripts/demo.ts"
   },
   "dependencies": {
     "@circle-fin/adapter-viem-v2": "^1.19.2",
