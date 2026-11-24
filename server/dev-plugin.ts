@@ -10,6 +10,8 @@ export function apiDevPlugin(): Plugin {
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
         const url = new URL(req.url ?? '/', 'http://localhost')
+        // The app calls its API under the /app base path; production rewrites that prefix away, so do the same here.
+        if (url.pathname.startsWith('/app/api/')) url.pathname = url.pathname.slice(4)
         if (url.pathname !== '/health' && !url.pathname.startsWith('/api/')) return next()
         const serve = async () => {
           const mod = (await server.ssrLoadModule('/server/routes.ts')) as {

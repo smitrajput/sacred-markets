@@ -3,33 +3,25 @@ import { useState } from 'react'
 import { usePublicClient } from 'wagmi'
 import { arcTestnet } from 'viem/chains'
 
-import { ActionButton, Disclosure, Field, Notice, Panel, Row, Rows, Stat } from './ui'
+import { ActionButton, Amount, Card, Disclosure, Empty, Field, Notice, PageHead, PageSkeleton, Row, Rows, Skeleton, Stat, StatStrip } from './ui'
 import { tradeEngineAbi } from '@/contracts/abis'
 import { useAction } from '@/hooks/useAction'
 import { useWallet } from '@/hooks/useWallet'
 import { useApi, type OracleInfo, type PositionRow, type PositionsResponse, type VaultResponse } from '@/lib/api'
-import { CONTRACTS, POOL_KEY, QUOTER, TERMS_HASH, explorerAddr, quoterAbi } from '@/lib/contracts'
-import { bpsToPercent, btc, formatIst, formatTime, parseDecimal, shortAddr, toBig, usdc } from '@/lib/format'
+import { CONTRACTS, POOL_KEY, QUOTER, TERMS_HASH, quoterAbi } from '@/lib/contracts'
+import { bpsToPercent, btc, formatDate, formatTime, parseDecimal, shortAddr, shortHash, toBig, usdc } from '@/lib/format'
 import { PROBLEM_TEXT, checkOpen, saleFloor } from '@/lib/policy'
 import { BLOCKER_TEXT } from '@/lib/text'
 
 const now = () => BigInt(Math.floor(Date.now() / 1000))
+const TERM_DAYS = 14n
 
-function OracleBox({ o }: { o: OracleInfo }) {
-  return (
-    <Notice tone={o.fresh ? 'info' : 'warn'}>
-      <span className="block">
-        <span className="font-serif text-xl num text-ink">{usdc(BigInt(o.priceMicroUsdcPerBtc))} USDC per BTC</span> <span className="text-sm text-secondary">reference price</span>
-      </span>
-      <span className="block text-sm mt-1">
-        Testnet operator fixture, not a market oracle; you cannot update it. Set {formatTime(BigInt(o.observedAt))}, {o.fresh ? 'valid until' : 'expired at'} {formatTime(BigInt(o.expiresAt))} ({formatIst(BigInt(o.expiresAt))}).
-        {o.fresh ? '' : <strong> Opens, sales and rebalances are paused; repay and claim still work.</strong>}
-      </span>
-    </Notice>
-  )
+function Pill({ tone = 'plain', children }: { tone?: 'plain' | 'good' | 'alert'; children: string }) {
+  const cls = tone === 'good' ? 'border-up/40 text-up' : tone === 'alert' ? 'border-accent/50 text-accent' : 'border-rule-strong text-ink-2'
+  return <span className={`inline-flex items-center h-6 px-2 rounded border text-2xs uppercase tracking-[0.1em] ${cls}`}>{children}</span>
 }
 
-function OpenForm({ vault, positions, positionsState, oracle }: { vault: VaultResponse; positions: PositionRow[]; positionsState: 'ready' | 'loading' | 'error'; oracle: OracleInfo }) {
+function OrderTicket({ vault, positions, positionsState, oracle }: { vault: VaultResponse; positions: PositionRow[]; positionsState: 'ready' | 'loading' | 'error'; oracle: OracleInfo }) {
   const w = useWallet()
   const pc = usePublicClient({ chainId: arcTestnet.id })
   const [amount, setAmount] = useState('0.10')
@@ -54,46 +46,33 @@ function OpenForm({ vault, positions, positionsState, oracle }: { vault: VaultRe
   const check = checkOpen({ equity, price, priceFresh: oracle.fresh, quoteAtoms, accountHeadroom, vaultHeadroom: toBig(vault.financingHeadroom), spendable: w.spendable })
   const vaultBlock = vault.blockers.financing[0]
   const problems = check.problems.filter((p) => !(p === 'no_quote' && quote.isLoading))
-  const block = !w.isConnected ? 'Connect a wallet.' : positionsState === 'loading' ? 'Loading your current exposure so the account cap can be enforced…' : positionsState === 'error' ? 'Your current exposure could not be read, so the account cap cannot be checked. Retrying automatically.' : vaultBlock ? (BLOCKER_TEXT[vaultBlock] ?? 'Financing is closed.') : quote.isLoading ? 'Fetching a live swap quote…' : problems[0] ? PROBLEM_TEXT[problems[0]] : null
+  const block = !w.isConnected ? 'Connect a wallet to buy.' : vaultBlock ? 'New purchases are paused.' : positionsState === 'loading' ? 'Checking your account limit.' : positionsState === 'error' ? 'Your account limit could not be checked. Retrying.' : quote.isLoading ? 'Getting a quote.' : problems[0] ? PROBLEM_TEXT[problems[0]] : null
 
-  const covBelow = problems.includes('initial_coverage_below_190') || (quoteAtoms !== null && check.coverageBps < 19_000n)
-  const covOk = quoteAtoms !== null && !covBelow
-  const covText = quote.isLoading
-    ? 'Fetching a live quote. Coverage is measured on it and must be at least 190.00%.'
-    : quoteAtoms === null
-      ? 'No live quote is available, so coverage cannot be measured. Opening is blocked; retrying every 15 seconds.'
-      : covBelow
-        ? 'Below the required 190.00% at this quote. Opening is blocked.'
-        : 'Meets the 190.00% minimum, measured on the quoted output.'
+  const covOk = quoteAtoms !== null && check.coverageBps >= 19_000n
   return (
-    <Panel title="Open a 2x cirBTC position">
+    <Card title="Buy cirBTC" aside={<Pill>2× financing</Pill>}>
       <div className="space-y-5">
-        <Field id="eq" label="Your contribution" value={amount} onChange={setAmount} suffix="USDC" hint={w.isConnected ? `Spendable ${usdc(w.spendable)} USDC (0.10 kept for gas)` : undefined} />
-        <Rows>
-          <Row label="Principal P (sale financing)" value={usdc(check.principal)} />
-          <Row label="Markup M (fixed at open)" value={usdc(check.markup)} hint="10% annualized for 14 days; no growth, rollover or late fees" />
-          <Row label="Total debt D = P + M" value={usdc(check.debt)} strong />
-          <Row label="Maturity" value="14 days" hint="Zero early-repayment rebate" />
-          <Row label="Live pool quote" value={quote.isLoading ? 'quoting…' : quoteAtoms === null ? 'unavailable' : `${btc(quoteAtoms)} BTC`} hint="Actual Uniswap v4 quote for the full 2x purchase" />
-          <Row label="Execution minimum" value={`${btc(check.executionMin)} BTC`} hint="Stricter of quote and reference floor" strong />
-        </Rows>
-        <div className={`flex items-start justify-between gap-4 border rounded px-4 py-3 ${covOk ? 'border-ink bg-panel' : 'border-red bg-white'}`} aria-live="polite">
-          <div className="min-w-0">
-            <p className="text-sm font-bold">Initial coverage</p>
-            <p className="text-sm text-secondary">{covText}</p>
+        <Field id="eq" label="You pay" value={amount} onChange={setAmount} suffix="USDC" hint={w.isConnected ? `Available ${usdc(w.spendable)}` : undefined} />
+        <div>
+          <p className="label mb-2">You receive</p>
+          <div className="flex items-center justify-between h-14 px-4 border border-rule rounded bg-paper/60">
+            <span className="font-serif text-xl num">{quote.isLoading ? <Skeleton className="h-5 w-28" /> : quoteAtoms === null ? '—' : btc(quoteAtoms)}</span>
+            <span className="text-sm text-ink-3">cirBTC</span>
           </div>
-          <p className="font-serif text-2xl num shrink-0">{quoteAtoms === null ? '—' : bpsToPercent(check.coverageBps)}</p>
         </div>
-        <p className="text-sm text-secondary">Fixed 2x sale financing: you contribute P, the vault funds the full purchase first, and you pay your contribution after the BTC is acquired and pledged. Pressing the button accepts these terms.</p>
-        {problems.length > 1 ? (
-          <ul className="text-sm text-secondary list-disc pl-5 space-y-1">
-            {problems.slice(1).map((p) => (
-              <li key={p}>{PROBLEM_TEXT[p]}</li>
-            ))}
-          </ul>
-        ) : null}
+        <Rows>
+          <Row label="Purchase size" value={`${usdc(gross)} USDC`} />
+          <Row label="Financed by the vault" value={`${usdc(check.principal)} USDC`} />
+          <Row label="Fixed markup" value={`${usdc(check.markup)} USDC`} hint="10% a year, for 14 days. It never grows." />
+          <Row label="Total to repay" value={`${usdc(check.debt)} USDC`} hint={`Due ${formatDate(now() + TERM_DAYS * 86_400n)}`} strong />
+          <Row
+            label="Starting coverage"
+            value={quoteAtoms === null ? '—' : <span className={covOk ? 'text-up' : 'text-accent'}>{bpsToPercent(check.coverageBps)}</span>}
+            hint="Value of your BTC against what you owe. Minimum 190%."
+          />
+        </Rows>
         <ActionButton
-          label="Open position and accept terms"
+          label="Buy cirBTC"
           action={act}
           disabled={!!block}
           reason={block}
@@ -105,18 +84,19 @@ function OpenForm({ vault, positions, positionsState, oracle }: { vault: VaultRe
             })
           }
         />
-        <Disclosure summary="Limits and references">
-          <dl className="grid grid-cols-2 gap-x-6 gap-y-5">
-            <Stat label="Account cap / headroom" value={`${usdc(cap)} / ${usdc(accountHeadroom)}`} />
-            <Stat label="Vault can finance" value={`${usdc(toBig(vault.financingHeadroom))} USDC`} />
-            <Stat label="Reference floor" value={`${btc(check.referenceFloor)} BTC`} hint={`${btc(check.referenceAtoms)} BTC at reference less 3.00% friction`} />
-          </dl>
-          <p className="font-mono text-xs break-all">
-            Accepted terms hash {TERMS_HASH}. Engine {shortAddr(CONTRACTS.engine)}.
-          </p>
-        </Disclosure>
+        <p className="text-xs text-ink-3">The vault buys the BTC, sells it to you at cost plus the fixed markup, and holds it as security until you repay. Confirming accepts these terms. Repaying early does not reduce the markup.</p>
+        <div className="border-t border-rule pt-2">
+          <Disclosure summary="Limits and details">
+            <Rows>
+              <Row label="Minimum received" value={`${btc(check.executionMin)} cirBTC`} />
+              <Row label="Your financing limit" value={`${usdc(cap)} USDC`} hint={`${usdc(accountHeadroom)} USDC remaining`} />
+              <Row label="Vault can finance" value={`${usdc(toBig(vault.financingHeadroom))} USDC`} />
+              <Row label="Terms" value={<span className="font-mono text-xs" title={TERMS_HASH}>{shortHash(TERMS_HASH)}</span>} />
+            </Rows>
+          </Disclosure>
+        </div>
       </div>
-    </Panel>
+    </Card>
   )
 }
 
@@ -130,82 +110,88 @@ function PositionCard({ p, oracle }: { p: PositionRow; oracle: OracleInfo }) {
   const price = BigInt(oracle.priceMicroUsdcPerBtc)
   const payAmt = parseDecimal(pay, 6)
   const floor = saleFloor(BigInt(p.collateral), price)
-  const staleNote = oracle.fresh ? null : 'Needs a fresh reference price.'
-  const dl = () => now() + 600n
+  const short = 'Not enough USDC. 0.10 USDC is kept back for network fees.'
+  const coverage = BigInt(p.coverageBps)
   return (
-    <article className="bg-panel border border-rule rounded p-5 sm:p-6 space-y-5">
-      <div className="flex items-baseline justify-between gap-4">
-        <h3 className="text-lg">Position {p.id}</h3>
-        <span className="text-sm text-secondary text-right">{p.matured ? 'matured' : `matures ${formatTime(BigInt(p.maturesAt))}`}</span>
-      </div>
-      <dl className="grid grid-cols-2 gap-x-6 gap-y-5">
-        <Stat size="lg" label="Total debt" value={usdc(debt)} />
-        <Stat size="lg" label="Coverage" value={bpsToPercent(BigInt(p.coverageBps))} hint="Reference value over debt; rebalance at 160%, restores 190%" />
-      </dl>
-      <Rows>
-        <Row label="Remaining principal" value={usdc(BigInt(p.principal))} />
-        <Row label="Remaining markup" value={usdc(BigInt(p.markup))} />
-        <Row label="Pledged BTC" value={`${btc(BigInt(p.collateral))}`} />
-        <Row label="Price freshness" value={p.priceFresh ? 'fresh' : 'stale'} />
-      </Rows>
-      <ActionButton label={`Repay ${usdc(debt)} and release`} action={full} disabled={debt > w.spendable} reason={debt > w.spendable ? 'Not enough USDC after keeping the 0.10 USDC gas reserve.' : null} onClick={() => void full.start({ label: 'repayAndRelease', approvals: [{ token: CONTRACTS.usdc, spender: CONTRACTS.engine, amount: debt }], call: { address: CONTRACTS.engine, abi: tradeEngineAbi, functionName: 'repayAndRelease', args: [BigInt(p.id), debt] } })} />
-      <div className="flex items-end gap-3">
-        <div className="flex-1 min-w-0 sm:max-w-[12rem]">
-          <Field id={`pay${p.id}`} label="Partial repayment" value={pay} onChange={setPay} suffix="USDC" />
+    <article className="card">
+      <div className="flex items-center justify-between gap-4 px-5 sm:px-6 pt-5 pb-4 border-b border-rule">
+        <h3 className="text-lg">
+          cirBTC <span className="text-ink-3">#{p.id}</span>
+        </h3>
+        <div className="flex items-center gap-3">
+          <span className="text-xs text-ink-3">{p.matured ? `Was due ${formatDate(BigInt(p.maturesAt))}` : `Due ${formatTime(BigInt(p.maturesAt))}`}</span>
+          {p.matured ? <Pill tone="alert">Due</Pill> : <Pill tone="good">Active</Pill>}
         </div>
-        <ActionButton variant="plain" label="Repay" action={part} disabled={!payAmt || payAmt > debt || payAmt > w.spendable} reason={payAmt && payAmt > debt ? 'More than the debt.' : payAmt && payAmt > w.spendable ? 'Not enough USDC after keeping the 0.10 USDC gas reserve.' : null} onClick={() => payAmt && void part.start({ label: 'repay', approvals: [{ token: CONTRACTS.usdc, spender: CONTRACTS.engine, amount: payAmt }], call: { address: CONTRACTS.engine, abi: tradeEngineAbi, functionName: 'repay', args: [BigInt(p.id), payAmt] } })} />
       </div>
-      <p className="text-xs text-secondary">Repayment applies to principal first, then markup. Repay and release never need a fresh price.</p>
-      <div className="border-t border-rule pt-5 space-y-3">
-        <ActionButton variant="plain" label="Sell collateral and close (owner)" action={close} disabled={!oracle.fresh || floor === 0n} reason={staleNote} onClick={() => void close.start({ label: 'close', approvals: [], call: { address: CONTRACTS.engine, abi: tradeEngineAbi, functionName: 'ownerClose', args: [BigInt(p.id), floor, dl()] } })} />
-        <p className="text-xs text-secondary">Coverage rebalances and maturity settlement are permissionless; they are listed in the Keeper panel below for anyone to trigger.</p>
+      <div className="px-5 sm:px-6 py-5 space-y-5">
+        <dl className="grid grid-cols-2 sm:grid-cols-3 gap-4 [&>div]:py-0">
+          <Stat label="Holding" value={<Amount value={btc(BigInt(p.collateral))} unit="cirBTC" />} />
+          <Stat label="To repay" value={<Amount value={usdc(debt)} unit="USDC" />} />
+          <Stat label="Coverage" value={<span className={coverage <= 16_000n ? 'text-accent' : ''}>{bpsToPercent(coverage)}</span>} />
+        </dl>
+        <Rows>
+          <Row label="Financing outstanding" value={`${usdc(BigInt(p.principal))} USDC`} />
+          <Row label="Markup outstanding" value={`${usdc(BigInt(p.markup))} USDC`} />
+        </Rows>
+        <div className="grid gap-3 sm:grid-cols-2 items-start">
+          <ActionButton label="Repay in full" action={full} disabled={debt > w.spendable} reason={debt > w.spendable ? short : null} onClick={() => void full.start({ label: 'repayAndRelease', approvals: [{ token: CONTRACTS.usdc, spender: CONTRACTS.engine, amount: debt }], call: { address: CONTRACTS.engine, abi: tradeEngineAbi, functionName: 'repayAndRelease', args: [BigInt(p.id), debt] } })} />
+          <ActionButton variant="dark" label="Sell and close" action={close} disabled={!oracle.fresh || floor === 0n} reason={oracle.fresh ? null : 'Paused until the reference price is refreshed.'} onClick={() => void close.start({ label: 'close', approvals: [], call: { address: CONTRACTS.engine, abi: tradeEngineAbi, functionName: 'ownerClose', args: [BigInt(p.id), floor, now() + 600n] } })} />
+        </div>
+        <p className="text-xs text-ink-3">Repaying in full returns all your BTC. Selling repays what you owe from the proceeds and sends you the rest. If coverage falls to 160%, part of the BTC is sold to bring it back to 190%.</p>
+        <div className="border-t border-rule pt-2">
+          <Disclosure summary="Repay part">
+            <div className="flex items-end gap-3 pt-1">
+              <div className="flex-1 min-w-0">
+                <Field id={`pay${p.id}`} label="Amount" value={pay} onChange={setPay} suffix="USDC" />
+              </div>
+            </div>
+            <div className="mt-3">
+              <ActionButton variant="secondary" label="Repay" action={part} disabled={!payAmt || payAmt > debt || payAmt > w.spendable} reason={payAmt && payAmt > debt ? 'More than you owe.' : payAmt && payAmt > w.spendable ? short : null} onClick={() => payAmt && void part.start({ label: 'repay', approvals: [{ token: CONTRACTS.usdc, spender: CONTRACTS.engine, amount: payAmt }], call: { address: CONTRACTS.engine, abi: tradeEngineAbi, functionName: 'repay', args: [BigInt(p.id), payAmt] } })} />
+            </div>
+            <p className="text-xs text-ink-3 mt-3">Part payments reduce the financing first, then the markup. Your BTC stays pledged until everything is repaid.</p>
+          </Disclosure>
+        </div>
       </div>
     </article>
   )
 }
 
-function KeeperPanel({ oracle }: { oracle: OracleInfo }) {
-  const w = useWallet()
-  const all = useApi<PositionsResponse>(['positions', 'all'], '/api/positions')
-  return (
-    <Panel title="Keeper actions (anyone)" variant="plain" aside={<span>manual fallback</span>}>
-      <p className="text-sm text-secondary max-w-prose mb-4">Coverage rebalances and matured settlements are permissionless. A keeper may do them automatically, but nothing here depends on one. The engine, not the caller, chooses the quantity sold.</p>
-      {all.isLoading ? <Notice>Loading live positions…</Notice> : all.error || !all.data ? <Notice tone="error">Live positions are unavailable right now. Retrying automatically.</Notice> : <KeeperList rows={all.data.positions} oracle={oracle} connected={w.isConnected} />}
-    </Panel>
-  )
-}
-
-function KeeperRow({ p, oracle, connected }: { p: PositionRow; oracle: OracleInfo; connected: boolean }) {
+function SettleRow({ p, oracle, connected }: { p: PositionRow; oracle: OracleInfo; connected: boolean }) {
   const act = useAction(`keeper-${p.id}`)
   const price = BigInt(oracle.priceMicroUsdcPerBtc)
   const dl = now() + 600n
-  const matured = p.matured
-  const reason = !connected ? 'Connect a wallet.' : !oracle.fresh ? 'Needs a fresh reference price.' : null
-  const call = matured
+  const reason = !connected ? 'Connect a wallet.' : !oracle.fresh ? 'Paused until the reference price is refreshed.' : null
+  const call = p.matured
     ? { address: CONTRACTS.engine, abi: tradeEngineAbi, functionName: 'settleMatured', args: [BigInt(p.id), saleFloor(BigInt(p.collateral), price), dl] as const }
     : { address: CONTRACTS.engine, abi: tradeEngineAbi, functionName: 'rebalance', args: [BigInt(p.id), BigInt(p.rebalance.minUsdc), dl] as const }
   return (
-    <li className="py-4 grid gap-3 sm:grid-cols-[1fr_auto] sm:items-center">
+    <li className="py-4 grid gap-3 sm:grid-cols-[1fr_auto] sm:items-start">
       <div className="min-w-0">
-      <p className="text-base">
-        Position {p.id} · owner <span className="font-mono text-sm">{shortAddr(p.trader)}</span> · coverage {bpsToPercent(BigInt(p.coverageBps))}
-      </p>
-      <p className="text-sm text-secondary">{matured ? 'Matured: anyone may settle it.' : `Coverage is at or below 160%: the engine will sell ${btc(BigInt(p.rebalance.sellAtoms))} BTC to restore 190%.`}</p>
+        <p className="text-sm text-ink">
+          cirBTC #{p.id} <span className="text-ink-3">· {shortAddr(p.trader)} · coverage {bpsToPercent(BigInt(p.coverageBps))}</span>
+        </p>
+        <p className="text-sm text-ink-2 mt-0.5">{p.matured ? `Due date passed on ${formatDate(BigInt(p.maturesAt))}. The BTC is sold, the vault repaid and the rest returned to the owner.` : `Coverage is at or below 160%. ${btc(BigInt(p.rebalance.sellAtoms))} cirBTC is sold to restore 190%.`}</p>
       </div>
-      <ActionButton variant="plain" label={matured ? 'Settle matured position' : 'Rebalance coverage'} action={act} disabled={!!reason} reason={reason} onClick={() => void act.start({ label: 'permissionless', approvals: [], call })} />
+      <ActionButton block={false} variant="secondary" label={p.matured ? 'Settle' : 'Restore coverage'} action={act} disabled={!!reason} reason={reason} onClick={() => void act.start({ label: 'permissionless', approvals: [], call })} />
     </li>
   )
 }
 
-function KeeperList({ rows, oracle, connected }: { rows: PositionRow[]; oracle: OracleInfo; connected: boolean }) {
-  const eligible = rows.filter((p) => p.matured || p.rebalance.eligible)
-  if (eligible.length === 0) return <Notice>{rows.length} live position(s) checked: none is eligible for a permissionless rebalance or maturity settlement right now.</Notice>
+/** Positions past their due date or below the coverage trigger. Settling them is open to any wallet; the section is hidden when there are none. */
+function Settlements({ oracle }: { oracle: OracleInfo }) {
+  const w = useWallet()
+  const all = useApi<PositionsResponse>(['positions', 'all'], '/api/positions')
+  const eligible = (all.data?.positions ?? []).filter((p) => p.matured || p.rebalance.eligible)
+  if (eligible.length === 0) return null
   return (
-    <ul className="divide-y divide-rule border-y border-rule">
-      {eligible.map((p) => (
-        <KeeperRow key={p.id} p={p} oracle={oracle} connected={connected} />
-      ))}
-    </ul>
+    <Card title="Awaiting settlement" aside={`${eligible.length} position${eligible.length === 1 ? '' : 's'}`}>
+      <p className="text-sm text-ink-2">These are normally settled automatically. Any wallet can also settle them; the contract decides how much is sold.</p>
+      <ul className="mt-3 divide-y divide-rule border-t border-rule">
+        {eligible.map((p) => (
+          <SettleRow key={p.id} p={p} oracle={oracle} connected={w.isConnected} />
+        ))}
+      </ul>
+    </Card>
   )
 }
 
@@ -213,27 +199,58 @@ export function TradeTab() {
   const w = useWallet()
   const vault = useApi<VaultResponse>(['vault', w.address ?? ''], `/api/vault${w.address ? `?owner=${w.address}` : ''}`)
   const pos = useApi<PositionsResponse>(['positions', w.address ?? ''], w.address ? `/api/positions?owner=${w.address}` : null)
-  if (vault.isLoading) return <Notice>Loading market state from the chain…</Notice>
-  if (vault.error || !vault.data) return <Notice tone="error">{vault.error instanceof Error ? vault.error.message : 'Market state is unavailable.'} Retrying automatically.</Notice>
+  if (vault.isLoading) return <PageSkeleton />
+  if (vault.error || !vault.data)
+    return (
+      <Notice tone="error" title="The market could not be loaded">
+        {vault.error instanceof Error ? vault.error.message : 'Please try again.'} Retrying automatically.
+      </Notice>
+    )
   const oracle = vault.data.oracle
+  const blockers = vault.data.blockers.financing
   return (
-    <div className="space-y-8">
-      <OracleBox o={oracle} />
-      <div className="grid gap-8 lg:grid-cols-12 lg:gap-10">
-        <div className="lg:col-span-7">
-          <OpenForm vault={vault.data} positions={pos.data?.positions ?? []} positionsState={!w.isConnected || pos.isSuccess ? 'ready' : pos.isError ? 'error' : 'loading'} oracle={oracle} />
+    <>
+      <PageHead eyebrow="Trade" title="cirBTC / USDC">
+        Buy real BTC with twice your capital. The cost is one fixed markup, agreed up front: no interest, no funding payments.
+      </PageHead>
+
+      <StatStrip>
+        <Stat label="Reference price" value={<Amount value={usdc(BigInt(oracle.priceMicroUsdcPerBtc))} unit="USDC" />} hint={oracle.fresh ? `Updated ${formatTime(BigInt(oracle.observedAt))}` : <span className="text-accent">Expired {formatTime(BigInt(oracle.expiresAt))}</span>} />
+        <Stat label="Buying power" value="2×" hint="Half yours, half financed" />
+        <Stat label="Fixed markup" value="10%" hint="A year, over a 14-day term" />
+        <Stat label="Available financing" value={<Amount value={usdc(toBig(vault.data.financingHeadroom))} unit="USDC" />} />
+      </StatStrip>
+
+      {blockers.length > 0 ? (
+        <div className="mb-8 space-y-2">
+          {blockers.map((c) => (
+            <Notice key={c} tone="warn" title="New purchases are paused">
+              {BLOCKER_TEXT[c] ?? 'New purchases are temporarily unavailable.'}
+            </Notice>
+          ))}
         </div>
-        <div className="lg:col-span-5 space-y-5">
-          <h2 className="text-xl sm:text-2xl">Your positions</h2>
-          {!w.isConnected ? <Notice>Connect a wallet to see your positions.</Notice> : pos.isLoading ? <Notice>Loading your positions…</Notice> : pos.error ? <Notice tone="error">Positions are unavailable right now. Retrying automatically.</Notice> : pos.data && pos.data.positions.length === 0 ? <Notice>You have no open positions. Closed positions appear in Activity.</Notice> : pos.data?.positions.map((p) => <PositionCard key={p.id} p={p} oracle={pos.data.oracle} />)}
-          <p className="text-sm text-secondary">
-            Contracts: engine <a className="font-mono" href={explorerAddr(CONTRACTS.engine)} target="_blank" rel="noopener noreferrer">{shortAddr(CONTRACTS.engine)}</a>, vault <a className="font-mono" href={explorerAddr(CONTRACTS.vault)} target="_blank" rel="noopener noreferrer">{shortAddr(CONTRACTS.vault)}</a>.
-          </p>
+      ) : null}
+
+      <div className="grid gap-8 lg:grid-cols-12 lg:gap-10 items-start">
+        <div className="lg:col-span-7 space-y-6 order-2 lg:order-1">
+          <h2 className="text-xl">Your positions</h2>
+          {!w.isConnected ? (
+            <Empty title="No wallet connected">Connect a wallet to see your positions.</Empty>
+          ) : pos.isLoading ? (
+            <Skeleton className="h-64" />
+          ) : pos.error ? (
+            <Notice tone="error">Your positions could not be loaded. Retrying automatically.</Notice>
+          ) : pos.data && pos.data.positions.length === 0 ? (
+            <Empty title="No open positions">Positions you buy appear here. Closed positions are listed under Activity.</Empty>
+          ) : (
+            pos.data?.positions.map((p) => <PositionCard key={p.id} p={p} oracle={pos.data.oracle} />)
+          )}
+          <Settlements oracle={oracle} />
+        </div>
+        <div className="lg:col-span-5 order-1 lg:order-2 lg:sticky lg:top-24">
+          <OrderTicket vault={vault.data} positions={pos.data?.positions ?? []} positionsState={!w.isConnected || pos.isSuccess ? 'ready' : pos.isError ? 'error' : 'loading'} oracle={oracle} />
         </div>
       </div>
-      <div className="border-t border-rule pt-8">
-        <KeeperPanel oracle={oracle} />
-      </div>
-    </div>
+    </>
   )
 }

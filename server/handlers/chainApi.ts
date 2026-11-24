@@ -4,7 +4,7 @@ import { marginVaultAbi, tradeEngineAbi } from '../../src/contracts/abis.js'
 import { apiError, json } from '../http.js'
 import { EXPLORER, EXTERNAL, UNISWAP, core } from '../manifest.js'
 import { blockers, readOracle, readPositions, readVault } from '../reads.js'
-import { cached, envelope, guarded, mapLimit, observe, parseOwner, readerFor, type ApiDeps } from './common.js'
+import { cached, envelope, guarded, mapLimit, observe, parseOwner, readerFor, type ApiDeps, type IndexedLog } from './common.js'
 
 const TTL = (deps: ApiDeps, ms: number) => deps.cacheMs ?? ms
 
@@ -85,6 +85,36 @@ export function decodeCursor(raw: string): { block: bigint; logIndex: number } |
   }
 }
 
+const INDEX_PAGES = 3
+
+/** One contract's logs from the explorer's index, newest first. Scanning the chain by block range only reaches back about an hour per request, so the index is what makes older history visible. */
+async function explorerLogs(address: string): Promise<IndexedLog[]> {
+  const out: IndexedLog[] = []
+  let query = ''
+  for (let i = 0; i < INDEX_PAGES; i++) {
+    const res = await fetch(`${EXPLORER}/api/v2/addresses/${address}/logs${query}`, { headers: { accept: 'application/json' }, signal: AbortSignal.timeout(6000) })
+    if (!res.ok) throw new Error(`explorer index returned ${res.status}`)
+    const body = (await res.json()) as { items?: Array<{ transaction_hash: string; block_number: number; index: number; block_timestamp: string; data: string; topics: Array<string | null> }>; next_page_params?: Record<string, string | number> | null }
+    for (const l of body.items ?? []) {
+      out.push({ address, transactionHash: l.transaction_hash, blockNumber: BigInt(l.block_number), logIndex: l.index, timestamp: BigInt(Math.floor(Date.parse(l.block_timestamp) / 1000)), data: l.data as `0x${string}`, topics: l.topics.filter((t): t is string => t !== null) as `0x${string}`[] })
+    }
+    if (!body.next_page_params) break
+    query = '?' + new URLSearchParams(Object.entries(body.next_page_params).map(([k, v]) => [k, String(v)])).toString()
+  }
+  return out
+}
+
+function decodeRow(log: { address: string; transactionHash: string; blockNumber: bigint; logIndex: number; data: `0x${string}`; topics: readonly `0x${string}`[] }, engine: string) {
+  try {
+    const ev = decodeEventLog({ abi: eventsAbi, data: log.data, topics: log.topics as [`0x${string}`, ...`0x${string}`[]] })
+    const args: Record<string, string> = {}
+    for (const [n, v] of Object.entries((ev.args ?? {}) as Record<string, unknown>)) args[n] = String(v)
+    return { key: `5042002:${log.transactionHash}:${log.logIndex}`, event: ev.eventName, contract: log.address.toLowerCase() === engine.toLowerCase() ? 'engine' : 'vault', contractAddress: log.address, txHash: log.transactionHash, blockNumber: log.blockNumber, logIndex: log.logIndex, args }
+  } catch {
+    return null // not an event of the verified ABIs
+  }
+}
+
 export function activityHandler(request: Request, deps: ApiDeps = {}): Promise<Response> {
   return guarded(async () => {
     const url = new URL(request.url)
@@ -95,6 +125,23 @@ export function activityHandler(request: Request, deps: ApiDeps = {}): Promise<R
     const raw = url.searchParams.get('cursor')
     let to = obs.number
     let cut: { block: bigint; logIndex: number } | null = null
+    // First page: the explorer's index, which reaches the whole history in one request. If it is unavailable the block-range
+    // scan below still serves recent events. Tests inject a reader and no index, so they exercise the scan.
+    const indexed = deps.indexedLogs ?? (deps.reader ? null : explorerLogs)
+    if ((raw === null || raw === '') && indexed) {
+      try {
+        const logs = await cached(`${ns}index`, deps.cacheMs ?? 15_000, async () => (await Promise.all([indexed(k.vault), indexed(k.engine)])).flat())
+        const all = logs.flatMap((l) => {
+          const row = decodeRow(l, k.engine)
+          return row ? [{ ...row, timestamp: l.timestamp }] : []
+        })
+        all.sort((a, b) => (a.blockNumber === b.blockNumber ? b.logIndex - a.logIndex : a.blockNumber > b.blockNumber ? -1 : 1))
+        const page = all.slice(0, ACTIVITY_MAX_ROWS)
+        return json(envelope(obs, { range: { fromBlock: k.deployBlock, toBlock: obs.number, source: 'index' }, events: page, truncated: all.length > page.length, nextCursor: null, explorer: EXPLORER }))
+      } catch {
+        // fall through to the scan
+      }
+    }
     if (raw !== null && raw !== '') {
       cut = decodeCursor(raw)
       if (!cut) return apiError(400, 'invalid_cursor', 'cursor is not a valid continuation', 'Use the nextCursor value returned by this endpoint, unchanged.')
@@ -125,14 +172,8 @@ export function activityHandler(request: Request, deps: ApiDeps = {}): Promise<R
       const key = `5042002:${log.transactionHash}:${log.logIndex}`
       if (seen.has(key)) continue
       seen.add(key)
-      try {
-        const ev = decodeEventLog({ abi: eventsAbi, data: log.data, topics: log.topics as [`0x${string}`, ...`0x${string}`[]] })
-        const args: Record<string, string> = {}
-        for (const [n, v] of Object.entries((ev.args ?? {}) as Record<string, unknown>)) args[n] = String(v)
-        rows.push({ key, event: ev.eventName, contract: log.address.toLowerCase() === k.engine.toLowerCase() ? 'engine' : 'vault', contractAddress: log.address, txHash: log.transactionHash, blockNumber: log.blockNumber, logIndex: log.logIndex, args })
-      } catch {
-        // not an event of the verified ABIs: skip
-      }
+      const row = decodeRow(log, k.engine)
+      if (row) rows.push(row)
     }
     rows.sort((a, b) => (a.blockNumber === b.blockNumber ? b.logIndex - a.logIndex : a.blockNumber > b.blockNumber ? -1 : 1))
     const page = rows.slice(0, ACTIVITY_MAX_ROWS)

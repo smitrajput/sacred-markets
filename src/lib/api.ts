@@ -122,16 +122,19 @@ export interface ActivityResponse extends Envelope {
   explorer: string
 }
 
+/** The read API sits beneath the app's base path ("/app/api/..."), so it never collides with the host site's own routes. */
+const API_BASE = ((import.meta as unknown as { env?: { BASE_URL?: string } }).env?.BASE_URL ?? '/').replace(/\/+$/, '')
+
 export async function getJson<T>(path: string): Promise<T> {
   let res: Response
   try {
-    res = await fetch(path, { headers: { accept: 'application/json' } })
+    res = await fetch(API_BASE + path, { headers: { accept: 'application/json' } })
   } catch {
-    throw new ApiError(0, 'network', 'Could not reach the Sacred API.', 'Check your connection and retry.')
+    throw new ApiError(0, 'network', 'Could not reach Sacred.', 'Check your connection and retry.')
   }
   const type = res.headers.get('content-type') ?? ''
   if (!type.includes('application/json')) {
-    throw new ApiError(res.status, 'not_json', 'The API did not return JSON.', 'The read API may be unavailable on this host.')
+    throw new ApiError(res.status, 'not_json', 'Sacred is temporarily unavailable.', 'Retry shortly.')
   }
   const body = (await res.json()) as T | ApiErrorBody
   if (!res.ok) {

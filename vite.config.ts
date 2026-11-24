@@ -4,7 +4,10 @@ import path from 'path'
 import { nodePolyfills } from 'vite-plugin-node-polyfills'
 import { apiDevPlugin } from './server/dev-plugin'
 
+// The app is served under /app (sacred.markets/app), so assets, fonts and the read API all sit beneath that prefix.
 export default defineConfig({
+  base: '/app/',
+  build: { outDir: 'dist/app', emptyOutDir: true },
   plugins: [react(), nodePolyfills(), apiDevPlugin()],
   resolve: {
     alias: {

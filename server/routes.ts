@@ -20,7 +20,8 @@ export const routes: Readonly<Record<string, Handler>> = {
 export const ALLOWED_METHODS = ['GET', 'HEAD'] as const
 
 export async function handleRequest(request: Request): Promise<Response> {
-  const { pathname } = new URL(request.url)
+  // The app calls the API beneath its own base path ("/app/api/..."); the host rewrites that to the function, which still sees the original path.
+  const pathname = new URL(request.url).pathname.replace(/^\/app(?=\/)/, '')
   const handler = routes[pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname]
   if (!handler) return notFound()
   if (request.method !== 'GET' && request.method !== 'HEAD') return methodNotAllowed(ALLOWED_METHODS)

@@ -34,13 +34,27 @@ export const bpsToPercent = (bps: bigint) => `${bps / 100n}.${(bps % 100n).toStr
 export const shortHash = (h: string) => `${h.slice(0, 8)}…${h.slice(-6)}`
 export const shortAddr = (a: string) => `${a.slice(0, 6)}…${a.slice(-4)}`
 
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+const two = (n: number) => String(n).padStart(2, '0')
+
+/** "7 Nov, 02:55" in the reader's own time zone; the year is added only when it is not the current one. */
 export function formatTime(unixSeconds: bigint): string {
   const d = new Date(Number(unixSeconds) * 1000)
-  return `${d.toISOString().slice(0, 16).replace('T', ' ')} UTC`
+  const year = d.getFullYear() === new Date().getFullYear() ? '' : ` ${d.getFullYear()}`
+  return `${d.getDate()} ${MONTHS[d.getMonth()]}${year}, ${two(d.getHours())}:${two(d.getMinutes())}`
 }
 
-/** Same instant in India Standard Time (UTC+5:30), for operators reading expiry times. */
-export function formatIst(unixSeconds: bigint): string {
-  const d = new Date(Number(unixSeconds) * 1000 + 19_800_000)
-  return `${d.toISOString().slice(0, 16).replace('T', ' ')} IST`
+/** "7 Nov" (with the year when it differs from the current one). */
+export function formatDate(unixSeconds: bigint): string {
+  return formatTime(unixSeconds).split(',')[0]
+}
+
+/** "3 min ago", "2 h ago", "5 d ago"; falls back to the date after a month. */
+export function timeAgo(unixSeconds: bigint, nowMs: number = Date.now()): string {
+  const s = Math.max(0, Math.floor(nowMs / 1000) - Number(unixSeconds))
+  if (s < 60) return 'just now'
+  if (s < 3600) return `${Math.floor(s / 60)} min ago`
+  if (s < 86_400) return `${Math.floor(s / 3600)} h ago`
+  if (s < 30 * 86_400) return `${Math.floor(s / 86_400)} d ago`
+  return formatDate(unixSeconds)
 }

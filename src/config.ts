@@ -1,15 +1,7 @@
-/**
- * wagmi configuration: Arc Testnet only, injected wallet only (no WalletConnect project key, no mainnet or ENS).
- * Built with Arc Studio — https://studio.arc.io
- */
-
+/** wagmi configuration: Arc Testnet only, injected wallet only (no WalletConnect project key, no mainnet or ENS). */
 import { http, createConfig } from 'wagmi'
 import { arcTestnet } from 'viem/chains'
 import { injected } from 'wagmi/connectors'
-import { registerChain } from './tracing'
-
-// Pre-register chain RPC URLs so trace events show correct chain names immediately
-registerChain(arcTestnet.id, arcTestnet.rpcUrls.default.http[0])
 
 export const config = createConfig({
   chains: [arcTestnet],

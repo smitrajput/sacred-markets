@@ -7,5 +7,12 @@
   "functions": {
     "api/*.ts": { "maxDuration": 10 }
   },
-  "rewrites": [{ "source": "/health", "destination": "/api/health" }]
+  "redirects": [
+    { "source": "/", "destination": "/app", "permanent": false },
+    { "source": "/guide.html", "destination": "/app#guide", "permanent": false }
+  ],
+  "rewrites": [
+    { "source": "/health", "destination": "/api/health" },
+    { "source": "/app/api/:path*", "destination": "/api/:path*" }
+  ]
 }

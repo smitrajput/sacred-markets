@@ -2,12 +2,12 @@ import { btc, formatTime, usdc } from './format'
 import type { ActivityRow } from './api'
 
 export const BLOCKER_TEXT: Record<string, string> = {
-  funding_paused: 'New deposits and financing are paused by the guardian. Repayments, releases and claims still work.',
-  withdrawal_queue: 'Deposits and new financing wait while withdrawal requests are unfilled (first in, first out).',
-  pending_open: 'A financing open is in flight; deposits resume right after it settles.',
-  stale_price: 'The reference price is stale. Opens, sales and deposits are held until the operator refreshes it. Repay and claim are unaffected.',
-  unsettled_impairment: 'A live position is worth less than its remaining principal and has not been settled yet. Deposits and new financing wait.',
-  reserves_below_target: 'Protection reserves are below target, so new financing is closed until the treasury restores them.',
+  funding_paused: 'New deposits and purchases are paused. Repayments and claims work as normal.',
+  withdrawal_queue: 'New deposits and purchases resume once pending withdrawals have been paid.',
+  pending_open: 'A purchase is settling. Deposits resume in a moment.',
+  stale_price: 'New deposits and purchases are paused until the reference price is refreshed. Repayments and claims work as normal.',
+  unsettled_impairment: 'A position is being settled. New deposits and purchases resume once it closes.',
+  reserves_below_target: 'New purchases are paused while the protection reserves are topped up.',
 }
 
 const u = (s?: string) => usdc(BigInt(s ?? '0'))
@@ -16,48 +16,49 @@ const b = (s?: string) => btc(BigInt(s ?? '0'))
 /** Human line for a decoded event. Falls back to the raw event name and arguments. */
 export function describeEvent(e: ActivityRow): { title: string; detail: string } {
   const a = e.args
+  const pos = `Position #${a.id}`
   switch (e.event) {
     case 'AssetAcquired':
-      return { title: `Position ${a.id}: BTC acquired`, detail: `${b(a.atoms)} cirBTC bought for ${u(a.cost)} USDC (vault funded the full purchase first)` }
+      return { title: `${pos} · BTC purchased`, detail: `${b(a.atoms)} cirBTC for ${u(a.cost)} USDC` }
     case 'DisclosedSaleAgreed':
-      return { title: `Position ${a.id}: disclosed sale agreed`, detail: `Contribution ${u(a.equity)}, principal ${u(a.principal)}, fixed markup ${u(a.markup)} USDC` }
+      return { title: `${pos} · Terms agreed`, detail: `Contribution ${u(a.equity)}, financing ${u(a.principal)}, markup ${u(a.markup)} USDC` }
     case 'Pledged':
-      return { title: `Position ${a.id}: BTC pledged`, detail: `${b(a.atoms)} cirBTC held by the engine as collateral` }
+      return { title: `${pos} · BTC pledged`, detail: `${b(a.atoms)} cirBTC held as security` }
     case 'Opened':
-      return { title: `Position ${a.id}: opened`, detail: `Matures ${formatTime(BigInt(a.maturesAt ?? '0'))}` }
+      return { title: `${pos} · Opened`, detail: `Due ${formatTime(BigInt(a.maturesAt ?? '0'))}` }
     case 'Repaid':
-      return { title: `Position ${a.id}: repayment`, detail: `Principal ${u(a.principalPaid)} then markup ${u(a.markupPaid)} USDC` }
+      return { title: `${pos} · Repayment`, detail: `${u(a.principalPaid)} financing and ${u(a.markupPaid)} markup, in USDC` }
     case 'Released':
-      return { title: `Position ${a.id}: collateral released`, detail: `${b(a.atomsReturned)} cirBTC returned to the trader` }
+      return { title: `${pos} · BTC released`, detail: `${b(a.atomsReturned)} cirBTC returned to the owner` }
     case 'Rebalanced':
-      return { title: `Position ${a.id}: coverage rebalance`, detail: `Sold ${b(a.atomsSold)} cirBTC for ${u(a.proceeds)} USDC; principal now ${u(a.principalAfter)}, collateral ${b(a.collateralAfter)}` }
+      return { title: `${pos} · Coverage restored`, detail: `Sold ${b(a.atomsSold)} cirBTC for ${u(a.proceeds)} USDC` }
     case 'Closed':
-      return { title: `Position ${a.id}: closed`, detail: `Sold ${b(a.atomsSold)} cirBTC for ${u(a.proceeds)}; surplus ${u(a.surplusToTrader)}; principal loss ${u(a.grossPrincipalLoss)}` }
+      return { title: `${pos} · Closed`, detail: `Sold ${b(a.atomsSold)} cirBTC for ${u(a.proceeds)} USDC; ${u(a.surplusToTrader)} USDC paid to the owner` }
     case 'Deposited':
-      return { title: 'LP deposit', detail: `${u(a.amount)} USDC for ${u(a.shares)} shares` }
+      return { title: 'Deposit', detail: `${u(a.amount)} USDC for ${u(a.shares)} shares` }
     case 'WithdrawalRequested':
-      return { title: `Withdrawal request ${a.requestId}`, detail: `${u(a.shares)} shares queued` }
+      return { title: 'Withdrawal requested', detail: `${u(a.shares)} shares` }
     case 'WithdrawalFilled':
-      return { title: `Queue fill ${a.requestId}`, detail: `${u(a.sharesBurned)} shares burned, ${u(a.payout)} USDC reserved for claim` }
+      return { title: 'Withdrawal ready', detail: `${u(a.payout)} USDC set aside for ${u(a.sharesBurned)} shares` }
     case 'WithdrawalDustWrittenOff':
-      return { title: `Queue dust written off ${a.requestId}`, detail: `${u(a.sharesBurned)} shares of negligible value` }
+      return { title: 'Withdrawal remainder cleared', detail: `${u(a.sharesBurned)} shares of negligible value` }
     case 'Claimed':
-      return { title: 'Claim paid', detail: `${u(a.amount)} USDC claimed` }
+      return { title: 'Withdrawal claimed', detail: `${u(a.amount)} USDC` }
     case 'MarkupCollected':
-      return { title: `Position ${a.id}: markup collected`, detail: `Payment ${u(a.payment)}: LPs ${u(a.lpIncrement)}, reserves ${u(String(BigInt(a.toPrimary ?? '0') + BigInt(a.toTail ?? '0')))}, manager cash ${u(a.toManagerCash)}` }
+      return { title: `${pos} · Markup collected`, detail: `${u(a.lpIncrement)} USDC to depositors, ${u(String(BigInt(a.toPrimary ?? '0') + BigInt(a.toTail ?? '0')))} to reserves, ${u(a.toManagerCash)} to the manager` }
     case 'FinalLossSettled':
-      return { title: `Position ${a.id}: loss settled`, detail: `Gross ${u(a.grossLoss)}; primary ${u(a.fromPrimary)}, tail ${u(a.fromTail)}, backstop ${u(a.fromBackstop)}; LP loss ${u(a.uncoveredLpLoss)}` }
+      return { title: `${pos} · Loss settled`, detail: `${u(a.grossLoss)} USDC: reserves covered ${u(String(BigInt(a.fromPrimary ?? '0') + BigInt(a.fromTail ?? '0') + BigInt(a.fromBackstop ?? '0')))}, depositors ${u(a.uncoveredLpLoss)}` }
     case 'ProtectionSeeded':
-      return { title: 'Protection reserve seeded', detail: `${u(a.amount)} USDC added (bucket now ${u(a.bucketAfter)})` }
+      return { title: 'Protection reserve funded', detail: `${u(a.amount)} USDC added` }
     case 'PrincipalRepaid':
-      return { title: `Position ${a.id}: principal returned to vault`, detail: `${u(a.amount)} USDC, ${u(a.remaining)} remaining` }
+      return { title: `${pos} · Financing returned to the vault`, detail: `${u(a.amount)} USDC, ${u(a.remaining)} outstanding` }
     case 'OpenReserved':
-      return { title: `Position ${a.id}: vault reserved gross`, detail: `Principal ${u(a.principal)} USDC` }
+      return { title: `${pos} · Financing reserved`, detail: `${u(a.principal)} USDC` }
     case 'OpenConfirmed':
-      return { title: `Position ${a.id}: vault confirmed open`, detail: 'Trader contribution received' }
+      return { title: `${pos} · Contribution received`, detail: 'Purchase complete' }
     case 'PositionFinalized':
-      return { title: `Position ${a.id}: finalized in vault`, detail: 'No further collections' }
+      return { title: `${pos} · Settled`, detail: 'Nothing further is owed' }
     default:
-      return { title: e.event, detail: Object.entries(a).map(([k, v]) => `${k}=${v}`).join(' ') }
+      return { title: e.event.replace(/([a-z])([A-Z])/g, '$1 $2'), detail: Object.entries(a).map(([k, v]) => `${k} ${v}`).join(' · ') }
   }
 }

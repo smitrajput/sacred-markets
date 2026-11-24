@@ -12,6 +12,18 @@ export interface ApiDeps {
   cacheMs?: number
   /** Prefix for cache keys (tests use a unique one so they cannot see each other's entries). */
   cacheNs?: string
+  /** Indexed event logs of one contract, newest first. Defaults to the block explorer's index when no reader is injected. */
+  indexedLogs?: (address: Address) => Promise<IndexedLog[]>
+}
+
+export interface IndexedLog {
+  address: string
+  transactionHash: string
+  blockNumber: bigint
+  logIndex: number
+  timestamp: bigint
+  data: `0x${string}`
+  topics: `0x${string}`[]
 }
 
 const cache = new Map<string, { at: number; value: unknown }>()

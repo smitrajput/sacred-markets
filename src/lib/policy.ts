@@ -80,15 +80,15 @@ export function checkOpen(i: OpenInput): OpenCheck {
 }
 
 export const PROBLEM_TEXT: Record<OpenProblem, string> = {
-  invalid_amount: 'Enter a contribution greater than zero.',
-  below_dust: 'The contribution is below the 0.01 USDC minimum.',
-  over_account_cap: 'This is above your remaining per-account cap.',
-  over_vault_headroom: 'The vault has no room to finance this size right now.',
-  stale_reference: 'The reference price is stale, so opening is paused until the operator refreshes it.',
-  no_quote: 'No live swap quote yet. The pool may lack liquidity for this size; try a smaller amount.',
-  quote_below_reference_floor: 'The live swap quote is below the reference floor (price or liquidity moved). Re-quote or try a smaller size.',
-  initial_coverage_below_190: 'At this size the BTC the pool would deliver (after whole-atom rounding) gives under 190% initial coverage. Try a slightly larger or smaller contribution.',
-  insufficient_balance: 'Not enough USDC after keeping a 0.10 USDC gas reserve.',
+  invalid_amount: 'Enter an amount.',
+  below_dust: 'The minimum is 0.01 USDC.',
+  over_account_cap: 'This is above your remaining account limit.',
+  over_vault_headroom: 'The vault cannot finance this size right now. Try a smaller amount.',
+  stale_reference: 'Trading is paused until the reference price is refreshed.',
+  no_quote: 'No quote is available for this size. Try a smaller amount.',
+  quote_below_reference_floor: 'The pool price has moved away from the reference price. Try again shortly or use a smaller amount.',
+  initial_coverage_below_190: 'At this size the purchase would start below 190% coverage. Try a slightly different amount.',
+  insufficient_balance: 'Not enough USDC. 0.10 USDC is kept back for network fees.',
 }
 
 /** Shares minted for a deposit at current NAV (first deposit is 1:1). Contract rounds down. */
