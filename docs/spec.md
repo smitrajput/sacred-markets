@@ -281,4 +281,4 @@ Success means the complete core flow runs with real testnet transactions, tests 
 | seedProtection | treasury funds protection | new finance blocked until targets met |
 | push demo price | designated price operator maintains test scenario | price-dependent actions expire; direct repayment/claims remain |
 
-The implementation README must include this caller table and the actual deploy/verify/run commands, secret variable names, role destinations, refreshed-price instructions and small post-deployment transaction evidence.
+The implementation README must include this caller table and the actual deploy/verify/run commands, secret variable names, role destinations, refreshed-price instructions and small post-deployment transaction evidence.ßß
