@@ -39,10 +39,10 @@ export default function Nav({ signupHref = action.primary.href }) {
     setMore(false);
   };
 
-  // Launch app is a plain anchor: /app redirects off-site, so it needs a full navigation.
+  // Try the MVP is a plain anchor: /app redirects off-site, so it needs a full navigation.
   const primary = (
-    <a href={links.app} target="_blank" rel="noopener noreferrer" aria-label="Launch app (opens in a new tab)" className={`${shared.btn} ${shared.btnPrimary}`} onClick={close}>
-      Launch app
+    <a href={links.app} target="_blank" rel="noopener noreferrer" aria-label="Try the MVP on Arc Testnet (opens in a new tab)" className={`${shared.btn} ${shared.btnPrimary}`} onClick={close}>
+      Try the MVP
     </a>
   );
   const interest = (extra = "") => (

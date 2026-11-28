@@ -5,7 +5,7 @@
 import { BORROW, EARN, LADDER, LAUNCH_TIER, SIFT } from "../../lib/params";
 import { borrowQuote, pct, siftCeiling, usd } from "../../lib/quote";
 
-// Production access actions. The separate Launch app button opens the Arc Testnet demo.
+// Production access actions. The separate Try the MVP button opens the Arc Testnet MVP.
 export const launched = false;
 
 export const links = {
@@ -153,7 +153,7 @@ export const faq = [
   {
     group: "Getting started",
     items: [
-      { q: "Can I use Sacred today?", a: "The Arc Testnet demo is live: try USDC Earn and 2× cirBTC trading with test assets using Launch app. The broader products described here are planned for production. Get early access for launch updates.", link: { text: "Get early access", href: `/${links.signup}` } },
+      { q: "Can I use Sacred today?", a: "An MVP is live on Arc Testnet: try USDC Earn and 2× cirBTC trading with test assets using Try the MVP. It is a demo, not the product. The products described here are planned for production. Get early access for launch updates.", link: { text: "Get early access", href: `/${links.signup}` } },
       { q: "Where is Sacred available?", a: "Web first, with iOS and Android to follow. Availability will depend on your country and the product. Some products may not be offered everywhere." },
       { q: "Is there a minimum?", a: "No product minimum is planned for Earn or Trade. Very small positions pay a larger share of trading costs. Borrow is planned to start at $1,000." },
     ],

@@ -24,8 +24,8 @@ export default function Hero() {
         {after}
       </p>
       <div className={styles.ctas}>
-        <a href={links.app} target="_blank" rel="noopener noreferrer" aria-label="Launch app (opens in a new tab)" className={`${shared.btn} ${shared.btnPrimary}`}>
-          Launch app
+        <a href={links.app} target="_blank" rel="noopener noreferrer" aria-label="Try the MVP on Arc Testnet (opens in a new tab)" className={`${shared.btn} ${shared.btnPrimary}`}>
+          Try the MVP
         </a>
         <Link href={action.primary.href} className={`${shared.btn} ${shared.btnGhost}`} data-track="interest">
           {action.primary.label}
