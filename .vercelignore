@@ -22,5 +22,15 @@ AGENTS.md
 PLANS.md
 AI_WORKLOG.md
 
-# The marketing site is a separate deployment from the same repository.
-/protocol/
+# Keep the shared repository deployable for both projects.
+/protocol/_private/
+/protocol/contracts/
+/protocol/server/
+/protocol/demo/
+/protocol/reports/
+/protocol/research_notes/
+/protocol/output/
+/protocol/frontend/node_modules/
+/protocol/frontend/.next/
+/protocol/frontend/.vercel/
+/protocol/frontend/.env*
