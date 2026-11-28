@@ -1,0 +1,92 @@
+import { Engine, Vaults } from "../figures/architecture";
+
+export const metadata = { title: "Architecture" };
+
+# Architecture
+
+This page is the proposed system: two isolated vaults on Arc, with shared libraries. It is a specification. None of it is built on Arc. What exists today is the earlier term-mode system on Arbitrum One and Monad testnet, listed on the [contracts page](/docs/contracts).
+
+<Vaults />
+
+## The stack
+
+| Layer | Proposed | Note |
+| --- | --- | --- |
+| **Chain** | Arc, chain ID 5042 | USDC is native gas. Candidate assets WETH and cirBTC |
+| **Contracts** | Solidity, Arc Foundry | OpenZeppelin for tokens, ownership and reentrancy |
+| **Prices** | At least two independently operated sources | Fresh to 60 seconds for execution and new risk. Providers are not selected |
+| **Spot routes** | To be chosen | Depth on Arc is unmeasured |
+| **Accounts** | Embedded user-controlled wallet, or MetaMask and Rabby | Privy is the initial candidate. Arc capabilities must be checked one by one |
+| **Funding** | Direct Arc receipt and Circle bridging | [Add funds](/docs/funding) |
+| **Frontend** | Next.js, wagmi, viem | Web first |
+
+## Isolation
+
+Earn deposits fund both products, through two vault contracts. **MarginVault** holds the Earn deposits that fund Trade, BTC and ETH debt books, tier and vintage accounting, and protection cash. **CashFinanceVault** holds the Earn deposits that fund Borrow (its depositors are called investors), receivables, investor-owned reserves, queues, loss carry and its emergency permissions. A depositor chooses the vault for each allocation.
+
+Shared: reviewed libraries, token adapters, validated feeds, keeper and routing infrastructure, notifications, monitoring and UI. Neither vault gets spending approval over the other. No token or cross-product subsidy enters either forecast. Trade forecasts assume **zero** Borrow income.
+
+## Trade engine
+
+<Engine />
+
+1. **Margin engine** executes genuine purchases and sales, stores debt and pledges, and calls ledger hooks on every economic path.
+2. **Account ledger** keeps unitization, daily observations, exposure integrals, capital-days and a bounded 52-week ring.
+3. **Score engine** computes the weekly [SIFT](/docs/trade/sift) skill label from canonical state. A separate daily transition reads the published ceiling table and repayment checkpoints.
+4. **Capacity controller** enforces account and portfolio limits on every origination, counting pending commitments before external calls.
+5. **Permissionless keepers** supply deterministic checkpoints and trigger reviews and partial sales. They cannot choose a score or rewrite accounting.
+6. **Indexer and UI** only display results. They cannot allocate financing.
+
+Liquidation and settlement ignore the score. Coverage alone triggers a partial sale.
+
+**Vault accounting.** Approved financing, including commitments, is checked against the 95% NAV cap. Originations stop at the 5% idle floor. New financing needs temporary purchase cash of `L/(L−1)` times the financing. Queued withdrawals rank ahead. Risk capacity is weighted:
+
+```text
+eligible_cash ≥ Σ (approved_financing_i × stock_ratio_i)
+```
+
+Primary and tail requirements are checked separately. Protection is manager-owned cash, separate from depositor idle cash and trader capital. Each subscription belongs to a vintage with fixed income entitlements, so a new allocation affects accepted new vintages only.
+
+**Queues.** A bounded canonical request queue is registered per allocation epoch. Deterministic ordering runs through a gas-bounded batch or a proof binding the complete eligible queue, so an operator cannot omit competing requests.
+
+## Borrow engine
+
+Debt is integer **six-decimal USDC**. Arc's native USDC uses 18 decimals for the same balance, so values are normalized by 10¹² and never added together. WETH has 18 decimals and cirBTC 8, and each oracle's scale is normalized with checked arithmetic.
+
+- **Agreed terms are versioned.** A new quote, cap or LTV never changes an existing sale.
+- **Prices.** Feed-specific staleness is the documented heartbeat plus an approved grace. An hourly feed alone cannot meet the 60-second execution requirement.
+- **Freeze.** New risk and unsafe collateral withdrawals stop. Repayment and top-ups continue.
+- **Collateral is never reused**, and its surplus belongs to the borrower.
+
+## Who can do what
+
+| Role | Can | Cannot |
+| --- | --- | --- |
+| **Timelocked governance** | Change future policy within limits. Borrow risk increases wait 35 days | Change an existing sale or vintage entitlement |
+| **Emergency guardian** | Tighten limits or pause new risk | Award more credit, delete a loss, or stop repayment and safe exits |
+| **Keepers** | Checkpoints, reviews, partial sales, within quote limits | Set prices, choose scores, take surplus |
+| **Manager** | Run the vaults, set new offers | Spend protection on operations, or use depositor principal as protection |
+
+Rule and version hashes are persisted, and every capacity change emits a versioned event.
+
+## Implementation notes
+
+- Every arithmetic path is bounded and gas-tested. Available financing rounds down.
+- The fixed-point score needs golden-vector parity with the reference model, including boundary tests.
+- Stale or incomplete inputs fail closed. Safe exits survive origination pauses.
+- Deposits cannot repair reputation, open losers stay visible, and wallet splitting cannot evade aggregate caps.
+- Repayments and partial sales release usage exactly once. Reserve shortfalls block expansion.
+
+Acceptance: numbers and calculators agree with the canonical parameters, cash ownership and collection timing are explicit, changing depositor terms affects accepted new vintages only, queues and caps are enforced, and contract review, security review and live execution come before activation.
+
+## Repository
+
+```
+sacred/
+  contracts/  the earlier term-mode system
+  server/     keeper, indexer and API for that system
+  frontend/   app/ (landing, product pages, docs, /app demo)
+              lib/ (params.js, quote.js, math.js)
+```
+
+Two pieces of this repository are ahead of the contracts: `frontend/lib/params.js` holds the proposed parameters, and `frontend/lib/quote.js` the arithmetic the site and tests use.

@@ -1,0 +1,14 @@
+contracts/lib/
+contracts/out/
+contracts/cache/
+contracts/broadcast/
+node_modules/
+.next/
+__pycache__/
+.venv/
+*.sqlite
+.env
+.pytest_cache/
+deployments/e2e.json
+deployments/pytest.json
+deployments/test.json

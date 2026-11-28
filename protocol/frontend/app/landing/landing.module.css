@@ -1,0 +1,1117 @@
+/*
+  Styles for the landing and product pages. Tokens come from app/globals.css; buttons and the
+  sheet from app/shared/shared.module.css.
+
+  The page reads as one document: a 4px rhythm, hairlines between sections, serif for display
+  and prose, sans for labels, mono for every figure. One accent, used sparingly.
+*/
+
+/* ---- Layout primitives ---- */
+
+.wrap {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 2.5rem);
+}
+
+.section {
+  border-top: 1px solid var(--rule);
+  padding-block: clamp(4rem, 8vw, 6rem);
+}
+
+/* ---- Type roles ---- */
+
+.h1 {
+  font: 400 clamp(2.5rem, 1.5rem + 3.8vw, 4.5rem) / 1.04 var(--font-serif);
+  letter-spacing: -0.022em;
+  text-wrap: balance;
+}
+
+.h2 {
+  font: 400 clamp(1.8rem, 1.25rem + 2vw, 2.7rem) / 1.12 var(--font-serif);
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+  max-width: 26ch;
+}
+
+.h3 {
+  font: 600 1.3rem / 1.25 var(--font-serif);
+  letter-spacing: -0.01em;
+}
+
+.lead {
+  margin-top: 1.25rem;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: var(--ink-2);
+  max-width: var(--measure);
+  text-wrap: pretty;
+}
+
+.small {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--ink-3);
+  max-width: var(--measure);
+  text-wrap: pretty;
+}
+
+.afterList {
+  margin-top: 1.25rem;
+}
+
+/* ---- Nav ---- */
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  height: 4.25rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.brand {
+  font: 600 1.4rem / 1 var(--font-serif);
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.navLinks {
+  display: none;
+  align-items: center;
+  gap: 1.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  color: var(--ink-2);
+}
+
+.navLinks a,
+.navMore button {
+  text-decoration: none;
+  transition: color 0.2s var(--ease-out);
+}
+
+.navLinks a:hover,
+.navMore button:hover {
+  color: var(--ink);
+}
+
+.navMore {
+  position: relative;
+}
+
+.navMore button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.navCaret {
+  width: 0.4em;
+  height: 0.4em;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  rotate: 45deg;
+  translate: 0 -0.1em;
+  transition: rotate 0.2s var(--ease-out);
+}
+
+.navCaret[data-open] {
+  rotate: 225deg;
+  translate: 0 0.1em;
+}
+
+.navPanel {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  right: 0;
+  z-index: 20;
+  min-width: 10rem;
+  margin: 0;
+  padding: 0.4rem;
+  list-style: none;
+  background: var(--paper);
+  border: 1px solid var(--paper-edge);
+  border-radius: var(--radius);
+  box-shadow: 0 18px 40px -18px rgba(45, 35, 15, 0.28);
+}
+
+.navPanel[hidden] {
+  display: none;
+}
+
+.navPanel a {
+  display: block;
+  padding: 0.45rem 0.6rem;
+  color: var(--paper-ink);
+}
+
+.navPanel a:hover {
+  background: var(--paper-rule);
+}
+
+.navActions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.navActions > a {
+  height: 2.5rem;
+  padding-inline: 0.9rem;
+  font-size: 0.875rem;
+}
+
+.navActions > .navSecondary {
+  display: none;
+}
+
+.menuButton {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+  background: none;
+  cursor: pointer;
+}
+
+.menuButton span,
+.menuButton span::before,
+.menuButton span::after {
+  display: block;
+  width: 1rem;
+  height: 1.5px;
+  background: var(--ink);
+  transition:
+    transform 0.2s var(--ease-out),
+    background-color 0.2s var(--ease-out);
+}
+
+.menuButton span {
+  position: relative;
+}
+
+.menuButton span::before,
+.menuButton span::after {
+  content: "";
+  position: absolute;
+  left: 0;
+}
+
+.menuButton span::before {
+  transform: translateY(-5px);
+}
+
+.menuButton span::after {
+  transform: translateY(5px);
+}
+
+.menuButton span[data-open] {
+  background: transparent;
+}
+
+.menuButton span[data-open]::before {
+  transform: rotate(45deg);
+}
+
+.menuButton span[data-open]::after {
+  transform: rotate(-45deg);
+}
+
+.mobileMenu {
+  display: grid;
+  gap: 0.5rem;
+  padding-block: 0.75rem 1.25rem;
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--font-sans);
+}
+
+.mobileMenu[hidden] {
+  display: none;
+}
+
+.mobileMenu ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mobileMenu li a {
+  display: block;
+  padding-block: 0.7rem;
+  font: 400 1.25rem / 1.2 var(--font-serif);
+  text-decoration: none;
+}
+
+.mobileLabel {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+@media (min-width: 900px) {
+  .navLinks {
+    display: flex;
+  }
+  .navActions > .navSecondary {
+    display: inline-flex;
+  }
+  .menuButton,
+  .mobileMenu {
+    display: none;
+  }
+}
+
+/* ---- Hero: a ledger of three verbs, centred, with room around it on a wide screen ---- */
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-block: clamp(2rem, 5vh, 3.5rem);
+}
+
+@media (min-width: 720px) {
+  .hero {
+    min-height: calc(88svh - 4.25rem);
+  }
+}
+
+/*
+  The ledger. Three columns, one per verb: the verb at display size with the rest of its
+  sentence at reading size beneath, and a hairline between columns. The top row alone reads
+  "Earn. Trade. Borrow." On a phone each column becomes a row, the verb beside its sentence.
+*/
+.ledger {
+  display: grid;
+  width: 100%;
+  max-width: 64rem;
+  font: 400 clamp(2.4rem, 1.2rem + 3.6vw, 5.25rem) / 1 var(--font-serif);
+  letter-spacing: -0.03em;
+  text-align: left;
+}
+
+.ledgerCol {
+  display: grid;
+  grid-template-columns: 3.5em minmax(0, 1fr);
+  align-items: baseline;
+  column-gap: 0.4em;
+  padding-block: 0.4em;
+  border-top: 1px solid var(--rule);
+}
+
+.ledgerCol:last-child {
+  border-bottom: 1px solid var(--rule);
+}
+
+.ledgerVerb {
+  color: var(--ink);
+}
+
+.ledgerRest {
+  font-size: 0.42em;
+  line-height: 1.25;
+  letter-spacing: -0.012em;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+  text-wrap: pretty;
+}
+
+@media (min-width: 720px) {
+  .ledger {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: clamp(1.5rem, 3vw, 2.75rem);
+  }
+
+  .ledgerCol {
+    grid-template-columns: minmax(0, 1fr);
+    align-content: start;
+    row-gap: 0.35em;
+    padding-block: 0;
+    padding-left: clamp(1.5rem, 3vw, 2.75rem);
+    border-top: 0;
+    border-left: 1px solid var(--rule);
+  }
+
+  .ledgerCol:first-child {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .ledgerCol:last-child {
+    border-bottom: 0;
+  }
+
+  .ledgerRest {
+    max-width: 18ch;
+  }
+}
+
+/* The one thing the three lines share, set off by a short rule. */
+.heroClosing {
+  margin-top: clamp(2rem, 5vh, 3.25rem);
+  font: 400 clamp(1.8rem, 1.3rem + 1.9vw, 3rem) / 1.2 var(--font-serif);
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+
+.heroClosing::before {
+  content: "";
+  display: block;
+  width: 2.5rem;
+  height: 1px;
+  margin: 0 auto 1.25rem;
+  background: var(--rule-strong);
+}
+
+.heroClosing a {
+  font-style: italic;
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: color-mix(in srgb, var(--accent) 35%, transparent);
+  text-underline-offset: 0.14em;
+  transition: text-decoration-color 0.2s var(--ease-out);
+}
+
+.heroClosing a:hover {
+  text-decoration-color: var(--accent);
+}
+
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2.25rem;
+}
+
+.hero .ctas {
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+/* Each column of the ledger rises in turn, then the closing line, then the actions. */
+@media (prefers-reduced-motion: no-preference) {
+  .ledgerVerb,
+  .ledgerRest {
+    animation: rise 0.9s var(--ease-out) both;
+    animation-delay: calc(var(--i) * 0.12s);
+  }
+  .heroClosing,
+  .hero .ctas {
+    animation: rise 0.9s var(--ease-out) both;
+  }
+  .heroClosing {
+    animation-delay: 0.42s;
+  }
+  .hero .ctas {
+    animation-delay: 0.52s;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    translate: 0 10px;
+  }
+}
+
+/* ---- Waitlist: words left, the form on the sheet right ---- */
+
+.waitlist {
+  display: grid;
+  gap: 3rem;
+}
+
+@media (min-width: 960px) {
+  .waitlist {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 5rem;
+    align-items: start;
+  }
+}
+
+.waitlistForm {
+  display: grid;
+  gap: 1.1rem;
+}
+
+.waitlistPair {
+  display: grid;
+  gap: 1.1rem;
+}
+
+@media (min-width: 540px) {
+  .waitlistPair {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+.waitlistDone {
+  display: grid;
+  gap: 1rem;
+}
+
+.waitlistCopy {
+  color: var(--paper-mute);
+  text-wrap: pretty;
+}
+
+.waitlistShare {
+  display: grid;
+  gap: 0.4rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--paper-rule);
+}
+
+.multi {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.multi label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.5rem;
+  padding: 0.3rem 0.85rem;
+  border: 1px solid var(--paper-edge);
+  border-radius: var(--radius);
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.multi label:has(input:checked) {
+  border-color: var(--paper-ink);
+  background: var(--paper-rule);
+}
+
+.multi input {
+  margin: 0;
+  accent-color: var(--accent);
+}
+
+.otherLinks {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+}
+
+.waitlistLink {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.5rem;
+}
+
+.waitlistLink input {
+  font-weight: 400;
+  font-size: 0.95rem;
+  font-family: var(--font-mono);
+}
+
+/* ---- Footer ---- */
+
+.footer {
+  border-top: 1px solid var(--rule);
+  padding-block: 2.5rem 3.5rem;
+  display: grid;
+  gap: 1.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--ink-3);
+}
+
+.footer p {
+  max-width: 72ch;
+  text-wrap: pretty;
+}
+
+.footerLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.footerLinks a {
+  color: var(--ink-2);
+  text-decoration: none;
+}
+
+.footerLinks a:hover {
+  text-decoration: underline;
+}
+
+/* ---- Eyebrow: who a section is for ---- */
+
+.eyebrow {
+  display: block;
+  margin-bottom: 1rem;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* ---- Numbered steps: how money gets in, and each product page ---- */
+
+.flow {
+  list-style: none;
+  margin: 3rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0;
+  counter-reset: stop;
+  border-top: 1px solid var(--rule);
+}
+
+@media (min-width: 960px) {
+  .flow {
+    grid-template-columns: repeat(var(--steps, 3), minmax(0, 1fr));
+    gap: 2rem;
+  }
+}
+
+.stop {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 0.5rem;
+  padding-block: 1.5rem;
+  border-bottom: 1px solid var(--rule);
+  text-wrap: pretty;
+}
+
+@media (min-width: 960px) {
+  .stop {
+    border-bottom: 0;
+  }
+}
+
+.stop::before {
+  counter-increment: stop;
+  content: counter(stop);
+  font: 400 1.6rem / 1 var(--font-serif);
+  color: var(--accent);
+}
+
+.stopTitle {
+  font: 600 1.15rem / 1.3 var(--font-serif);
+}
+
+.stopText {
+  color: var(--ink-2);
+  font-size: 0.975rem;
+  line-height: 1.5;
+}
+
+/* ---- FAQ: the heading held left, four folded lists right ---- */
+
+.faq {
+  display: grid;
+  gap: 2.5rem;
+}
+
+@media (min-width: 960px) {
+  .faq {
+    grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .faqIntro {
+    position: sticky;
+    top: 2rem;
+  }
+}
+
+.faqIntro .small {
+  margin-top: 1.25rem;
+}
+
+.faqIntro a,
+.faqA a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.faqGroup + .faqGroup {
+  margin-top: 2.5rem;
+}
+
+.faqLabel {
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--rule-strong);
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.faqItem {
+  border-bottom: 1px solid var(--rule);
+}
+
+.faqQ {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 1rem;
+  gap: 1rem;
+  align-items: baseline;
+  padding-block: 1rem;
+  list-style: none;
+  cursor: pointer;
+  font: 600 1.1rem / 1.35 var(--font-serif);
+  color: var(--ink);
+  text-wrap: pretty;
+  transition: color 0.2s var(--ease-out);
+}
+
+.faqQ::-webkit-details-marker {
+  display: none;
+}
+
+/* A plus that turns into a cross when the answer is open. */
+.faqQ::after {
+  content: "+";
+  justify-self: end;
+  font: 400 1.35rem / 1 var(--font-sans);
+  color: var(--accent);
+  transition: transform 0.25s var(--ease-out);
+}
+
+.faqItem[open] > .faqQ::after {
+  transform: rotate(45deg);
+}
+
+.faqQ:hover {
+  color: var(--accent-deep);
+}
+
+.faqA {
+  padding: 0 2rem 1.25rem 0;
+  max-width: var(--measure);
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .faqItem[open] > .faqA {
+    animation: rise 0.4s var(--ease-out) both;
+  }
+}
+
+/* ---- Products: copy and four answers beside a worked example ---- */
+
+.product {
+  display: grid;
+  gap: 3rem;
+}
+
+@media (min-width: 960px) {
+  .product {
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .product[data-reverse] {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  }
+
+  .product[data-reverse] > :first-child {
+    order: 2;
+  }
+
+  .productPanel {
+    position: sticky;
+    top: 2rem;
+  }
+}
+
+.facts {
+  margin: 2rem 0 0;
+  border-top: 1px solid var(--rule);
+}
+
+.facts > div {
+  display: grid;
+  gap: 0.15rem 1.5rem;
+  padding-block: 0.9rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+@media (min-width: 540px) {
+  .facts > div {
+    grid-template-columns: 9.5rem minmax(0, 1fr);
+  }
+}
+
+.facts dt {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  color: var(--ink-3);
+}
+
+.facts dd {
+  margin: 0;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+.facts dd a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.quoteTable {
+  width: 100%;
+  margin-block: 1rem;
+  border-collapse: collapse;
+}
+
+.quoteTable th {
+  padding-bottom: 0.5rem;
+  font-weight: 400;
+  font-size: 0.85rem;
+  text-align: right;
+  color: var(--paper-mute);
+}
+
+.quoteTable td {
+  padding-block: 0.65rem;
+  border-top: 1px solid var(--paper-rule);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.quoteTable th:first-child,
+.quoteTable td:first-child {
+  text-align: left;
+}
+
+.flowList {
+  list-style: none;
+  margin: 1rem 0;
+  padding: 0;
+}
+
+.flowList li {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0 1rem;
+  padding: 0.7rem 0 0.7rem 1.5rem;
+}
+
+.flowList li::before {
+  content: "";
+  position: absolute;
+  left: 0.2rem;
+  top: 1.05rem;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.flowList li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: calc(0.475rem - 0.5px);
+  top: 1.6rem;
+  bottom: -1.05rem;
+  width: 1px;
+  background: var(--paper-edge);
+}
+
+.flowList b {
+  font-variant-numeric: tabular-nums;
+}
+
+.flowList small {
+  grid-column: 1 / -1;
+  font-size: 0.85rem;
+  color: var(--paper-mute);
+}
+
+.assetChoice {
+  padding-inline: 0.9rem;
+}
+
+label.slider {
+  margin-top: 1.1rem;
+}
+
+.slider input {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+.sliderHead {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--paper-mute);
+  font-size: 0.9rem;
+}
+
+.sliderHead b {
+  color: var(--paper-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.quoteLine {
+  margin-bottom: 0.5rem;
+  text-wrap: pretty;
+}
+
+/* ---- SIFT: a raised panel inside Trade ---- */
+
+.sift {
+  margin-top: clamp(3rem, 6vw, 4.5rem);
+  padding: clamp(1.5rem, 4vw, 2.75rem);
+  border-radius: var(--radius);
+  background: var(--ground-raised);
+}
+
+.siftHead {
+  display: grid;
+  gap: 1.25rem;
+}
+
+@media (min-width: 960px) {
+  .siftHead {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: 4rem;
+    align-items: center;
+  }
+}
+
+.siftHead .eyebrow {
+  margin-bottom: 0.75rem;
+}
+
+.siftTitle {
+  font: 400 clamp(1.7rem, 1.25rem + 1.6vw, 2.4rem) / 1.12 var(--font-serif);
+  letter-spacing: -0.015em;
+}
+
+.siftLead {
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+.stages {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+  margin: 2.25rem 0 0;
+  padding: 0;
+}
+
+@media (min-width: 720px) {
+  .stages {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2rem;
+  }
+}
+
+.stages li {
+  display: grid;
+  align-content: start;
+  gap: 0.2rem;
+  padding-top: 0.9rem;
+  border-top: 2px solid var(--accent);
+}
+
+.stages b {
+  font: 400 clamp(1.6rem, 1.3rem + 1vw, 2.1rem) / 1.15 var(--font-serif);
+  letter-spacing: -0.015em;
+}
+
+.stageRule {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--accent-deep);
+}
+
+.stageNote {
+  margin-top: 1rem;
+  max-width: 72ch;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--ink-3);
+  text-wrap: pretty;
+}
+
+.cuts {
+  margin-top: 1.5rem;
+  max-width: 72ch;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+.sift .textLink {
+  margin-top: 1.25rem;
+}
+
+/* ---- Funding routes ---- */
+
+.routes {
+  display: grid;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+@media (min-width: 720px) {
+  .routes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 3rem;
+  }
+}
+
+.routeLabel {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.chips {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.6rem 0;
+  padding: 0;
+}
+
+.chips li {
+  padding: 0.35rem 0.8rem;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  background: var(--paper);
+}
+
+.textLink {
+  margin-top: 2rem;
+  font-family: var(--font-sans);
+}
+
+.textLink a,
+.otherLinks a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+/* ---- Product pages ---- */
+
+.twoUp {
+  display: grid;
+  gap: 2.5rem;
+  margin-top: 2.5rem;
+}
+
+@media (min-width: 960px) {
+  .twoUp {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 5rem;
+    align-items: start;
+  }
+}
+
+
+.pageHero {
+  display: grid;
+  gap: 2.5rem;
+  padding-block: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+@media (min-width: 960px) {
+  .pageHero {
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    gap: 4.5rem;
+    align-items: center;
+  }
+}
+
+.notice {
+  display: inline-block;
+  margin-top: 1.25rem;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  color: var(--ink-3);
+}
+
+.detailTable {
+  width: 100%;
+  margin-top: 2rem;
+  border-collapse: collapse;
+}
+
+.detailTable th {
+  width: 34%;
+  padding: 0.85rem 1.5rem 0.85rem 0;
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 400;
+  text-align: left;
+  vertical-align: top;
+  color: var(--ink-3);
+}
+
+.detailTable td {
+  padding-block: 0.85rem;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+.riskList {
+  margin: 1.5rem 0 0;
+  padding-left: 1.1rem;
+  max-width: var(--measure);
+  color: var(--ink-2);
+}
+
+.riskList li + li {
+  margin-top: 0.4rem;
+}
+
+.riskList li::marker {
+  color: var(--accent);
+}

@@ -1,0 +1,74 @@
+import { Penetration } from "../figures/thesis";
+
+export const metadata = { title: "Thesis" };
+
+# Thesis
+
+Most onchain yield, leverage and credit runs on interest. That leaves out Muslims who won't use interest, and gives everyone else costs that can change after they commit. Sacred replaces the loan with a sale at a fixed price. That's useful for anyone who wants a known cost, and for Muslims it may also be permitted.
+
+Fixed-price financing is not always cheaper, and its returns depend on demand that hasn't been proven yet.
+
+## The market
+
+- **Leverage.** Perps and margin run on interest, funding payments and selling what you do not own. In 2006 the Muslim World League's Fiqh Council ruled against margin trading on four grounds: fees for delay, a loan tied to a sale, selling what is not owned, and excessive risk.
+- **Yield.** Most stablecoin yield in DeFi comes from lending at interest.
+- **Credit.** Holders who want cash without selling usually need an interest-bearing loan.
+
+The whole of Islamic DeFi held under 50 million dollars in mid-2026, and the largest halal protocol tracked by DefiLlama holds 4 million. Demand is unproven on chain, and that is the bet.
+
+### How far behind Islamic DeFi is
+
+<Penetration />
+
+DeFi holds about 93 billion dollars against the 468 trillion the world's financial system intermediates (DefiLlama, October 2026; McKinsey, 2025): a penetration of 0.02%, plus another 313 billion in stablecoins. Islamic DeFi holds under 50 million against 5.98 trillion of Islamic finance assets (ICD-LSEG, 2024): 0.0008%. Islamic DeFi is about 25 times further behind its parent than DeFi is behind its own.
+
+| Layer | Islamic DeFi catching up to | What closing it means | Size today |
+| --- | --- | --- | --- |
+| **1** | DeFi's metrics | Islamic DeFi reaches DeFi's share of its parent market | 1.2 billion at parity of share |
+| **2** | Islamic finance's assets | Deposits, financing and sukuk move on chain | 5.98 trillion, projected 9.7 trillion by 2029 (ICD-LSEG) |
+| **3** | Finance in general | Muslims hold the same share of financial assets as their share of the population | 26% of 468 trillion, about 120 trillion |
+
+Layer 1 is the one Sacred must prove first.
+
+## The primitive
+
+Sacred sells instead of lending. A vault of capital buys a real asset and sells it to the buyer at a fixed price, with the asset pledged as security until paid.
+
+- **Earn** supplies the capital for both products and receives a share of the markup. It uses two vault contracts, one per product, so a loss in one can't reach the other.
+- **Trade** sells BTC or ETH to a trader who adds their own capital.
+- **Borrow** sells USDC to a holder against collateral.
+- **SIFT** decides who gets how much financing, based on real results: built at Sacred from zero, or brought as a verified record from another venue.
+
+| A perp | A Sacred position |
+| --- | --- |
+| Funding paid over time, set by how crowded one side is. Total cost is unknown until you close | One dollar cost, fixed at the sale |
+| A contract against another trader; no asset is owned | The trader owns a real spot asset, pledged |
+| Liquidation closes in full | A partial sale restores coverage and the rest stays yours |
+| Perp vaults earn from trader losses, spreads and liquidations | Depositors earn markup, whichever way price moves |
+
+## The tradeoffs, measured
+
+**Traders.** At 2× and 10%, a $10,000 position costs $30.18 over 14 days. Across 2,446 historical windows that was 54.1% cheaper than Hyperliquid in aggregate, 71.3% in bull conditions and 44.2% in sideways ones, but 7.0% more expensive in bear conditions, and 3.0% more expensive across 2026. You get a known price, and it is not always the lowest.
+
+**Depositors.** Fixed markup is still paid when prices fall: at 90% use, income is about 7.14% in every market regime. Demand decides the rest. The modeled range at $10m NAV is 3.55% to 7.14% APY. There is no minimum return.
+
+**Borrowers.** At the 8% reference, a 30-day sale costs more than dated Aave and Morpho rates. What it offers is a fixed price and a different structure. New offers are priced against the market.
+
+## Why the revenue depends on curation
+
+Sacred earns fixed markup, so it earns only when financing is in use and repaid. Trader PnL pays it nothing. That makes allocation the core of the business: too strict and capital stays idle, too loose and losses come. [SIFT](/docs/trade/sift) is the proposed answer, adapted from how prop firms scale traders, but using real capital from the first trade. Traders can build a record at Sacred with no permission, or bring a verified one from Hyperliquid, Binance, Bybit and other venues to start higher. The moat would be the repayment and execution history it builds up.
+
+## What it needs to work
+
+At $10m NAV and 90% use, the vault pays depositors about $691,000 a year and the manager about $206,000, leaving about $77,000 after $125,000 of costs and a loss budget. Break-even NAV is about $6.2m at that use. Smaller vaults are a research stage and don't pay for the company on their own. See [Returns and allocation](/docs/earn/economics).
+
+## Who it is for
+
+Sacred is designed around Islamic finance, and open to everyone. The first demand tests are in markets where crypto use and Muslim-majority reach overlap, starting with Indonesia, and in saver messages in Türkiye. These are research priorities. Sacred is not yet cleared to operate in any of them.
+
+## Why now
+
+- **Stablecoins and spot assets are on chain at scale**, so the thing being sold is real, liquid and provable.
+- **Arc** gives USDC a role as gas, which opens the commodity argument behind Borrow.
+- **Under 50 million dollars in Islamic DeFi**, and no live, fixed-price leverage product in it.
+- **Islamic finance grows at about 10% a year** toward 9.7 trillion by 2029, and almost none of that growth has a place to go on chain.

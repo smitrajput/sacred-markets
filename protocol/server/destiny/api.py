@@ -1,0 +1,70 @@
+"""Read-only HTTP API for the frontend. It serves convenience data only: every action a
+trader, depositor, staker or SCR buyer needs in order to act or exit is a direct
+contract call and works with this server switched off."""
+from dataclasses import asdict
+
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+
+from .points import all_points
+
+
+def create_app(chain, indexer) -> FastAPI:
+    app = FastAPI(title="Sacred")
+    app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["GET"])
+
+    @app.get("/health")
+    def health():
+        return {"ok": True, "block": chain.head(), "indexed": indexer.cursor()}
+
+    @app.get("/bucket")
+    def bucket():
+        return chain.bucket()
+
+    @app.get("/fund")
+    def fund():
+        return _or_404(chain.backstop(), "no staking fund in this deployment")
+
+    @app.get("/sale")
+    def sale():
+        return _or_404(chain.reserve_sale(), "no reserve sale in this deployment")
+
+    @app.get("/positions")
+    def positions(owner: str | None = None):
+        out = [asdict(chain.position(i)) for i in range(1, chain.position_count() + 1)]
+        if owner:
+            out = [t for t in out if t["owner"].lower() == owner.lower()]
+        return out
+
+    @app.get("/positions/{position_id}")
+    def position(position_id: int):
+        if position_id < 1 or position_id > chain.position_count():
+            raise HTTPException(404, "no such position")
+        return asdict(chain.position(position_id))
+
+    @app.get("/points")
+    def points():
+        indexer.sync(chain)
+        return all_points(indexer.events())
+
+    @app.get("/points/{address}")
+    def points_for(address: str):
+        indexer.sync(chain)
+        return all_points(indexer.events()).get(address.lower(), {"trading": 0.0, "depositing": 0.0, "total": 0.0})
+
+    return app
+
+
+def _or_404(figures, detail):
+    if figures is None:
+        raise HTTPException(404, detail)
+    return figures
+
+
+def app_from_env() -> FastAPI:
+    from .chain import Chain
+    from .config import Config
+    from .indexer import Indexer
+
+    config = Config.from_env()
+    return create_app(Chain(config), Indexer(config.db_path))

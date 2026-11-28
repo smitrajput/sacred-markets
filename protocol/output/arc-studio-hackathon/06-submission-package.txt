@@ -1,0 +1,18 @@
+Build Sacred: a testnet cirBTC spot-financing app with Earn, Trade and Activity. Work in this same Arc Studio app. This message contains the requirements for the selected checkpoint; no attachment is needed. Generate and test through Studio, preserve working files, and use real testnet evidence. External deadline November 7, 2026, 9:30 AM IST. Build/demo hard finish: November 6, 10:30 PM IST; submission package ready by 10:00 PM.
+
+CHECKPOINT 06a. Produce accurate README/setup/runbook/prior-work disclosure, architecture diagram, manifest references, integration file/line links and FEEDBACK.md based on actual experience. Local PLANS.md/AI_WORKLOG.md/review documents are preserved; propose updates for local merge.
+
+**Demo:** rehearse a core version of about three minutes inside the organisers’ **4-minute finalist demo slot**, followed by **3 minutes of Q&A**. Use a live deployment and a video **≤4 minutes, without speed-up**, as reported by Fable from the current submission form. Check upload acceptance before the submission buffer.
+
+1. Show Studio project, generated contracts and passing tests; explain sale-based spot financing in one sentence.
+2. Show funded Earn vault; open 2× cirBTC position. Follow the real purchase → fixed sale → pledge trace and explorer link.
+3. Let a second wallet deposit at current NAV; show that the live Earn flow remains available. Repay and release. Show exact fixed debt and collected 77/23 allocation.
+4. Show a second prepared position at about155% coverage after a real scenario swap and explicit reference-fixture update; execute a partial sale; coverage restores toward 190%. Show a queued withdrawal filling from returned liquidity. Prepared accounts are fine; transaction evidence must be real.
+5. If rehearsed, show released cirBTC bridging to Sepolia. Close with architecture and repository.
+
+**Submission files:** PLANS.md, AI_WORKLOG.md, actual review findings/dispositions, milestone prompts, and sequential Git history; README with setup, demo script, prior-work disclosure and integration documentation; Studio share URL accessible to judges; live app/API URLs; deployment manifest and explorer links; architecture diagram; test results; short video and minimal presentation; project-page descriptions and screenshots; source repository with licenses. For Uniswap add `FEEDBACK.md`, submit the [developer feedback form](https://developers.uniswap.org/hackathon-feedback), and link exact integration files/lines in README. Use the selected event track's requirements.
+
+Success means the complete core flow runs with real testnet transactions, tests pass, backend is reachable, and a fresh reviewer can reproduce the demo. Keep proposed sale-based financing and testnet status visible; current Sacred design still has open review questions. [Sacred status](https://sacred.markets/docs), [review questions](https://sacred.markets/docs/shariah).
+Include the actual deploy/verify/API/keeper commands, role destinations, secret variable names without values, the independent admin testnet-price fixture and daily refresh responsibility. Show actual scheduling state and manual fallback. Describe what works with real evidence. Do not invent submitted forms, video uploads, deployments or tests. Return a concise <=4minute unspeeded demo outline and actual live app/API/Studio/repository links.
+
+Stop after the selected checkpoint. Codex reviews and commits locally before issuing the next CLI turn. Return at most 150 words: changed paths, actual checks, blockers and transaction hashes; save detailed evidence in a checkpoint file. Do not claim an unexecuted check passed.

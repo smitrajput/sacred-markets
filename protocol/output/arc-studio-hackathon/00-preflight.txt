@@ -1,0 +1,16 @@
+Build Sacred, a testnet app for USDC Earn and cirBTC spot financing on Arc. Use Vite, React, TypeScript and Foundry.
+
+CHECKPOINT 00a — scaffold only.
+
+Create the project/build configuration, a minimal working app shell, contracts/foundry.toml and deployments/arc-testnet.json. The manifest must distinguish verified addresses from undeployed Sacred contracts. Leave unknown roles/addresses unset.
+
+Network: Arc Testnet, chain ID 5042002.
+RPC: https://rpc.testnet.arc.io
+Explorer: https://explorer.testnet.arc.io
+USDC ERC20: 0x3600000000000000000000000000000000000000, 6 decimals.
+cirBTC: 0xf0C4a4CE82A5746AbAAd9425360Ab04fbBA432BF, 8 decimals.
+Native gas is USDC with 18 decimals: it is the same USDC balance, not additional funds. Use ERC20 units for protocol accounting.
+
+Verify chain ID, token bytecode and decimals with read-only calls. Run the scaffold's build/typecheck and Foundry compilation. No application contracts, swaps or liquidity funding are needed in this checkpoint.
+
+Stop after 00a. Report changed files, exact checks and observed results. The next checkpoint will arrive as a separate message. No attachment is needed.

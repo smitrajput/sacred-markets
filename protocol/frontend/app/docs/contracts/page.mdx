@@ -1,0 +1,171 @@
+import LiveChain from "./LiveChain";
+
+export const metadata = { title: "Contracts and code" };
+export const revalidate = 60;
+
+# Contracts and code
+
+These docs describe two systems. Only one of them exists today.
+
+| | Proposed | Existing |
+| --- | --- | --- |
+| **What** | MarginVault, SIFT ledger and capacity controller, CashFinanceVault | Term-mode vault, desk, price reader, funds, token side |
+| **Where** | Arc, not deployed | Arbitrum One, Monad testnet |
+| **Economics** | Everything in these docs | The first design's dials, listed below |
+| **Status** | Specified, not built | Verified on block explorers. Not audited |
+
+**The proposed engine is not built yet.** It has no addresses, no tests and no audit. The controls in [Architecture](/docs/architecture) are written requirements with no code behind them yet. `contracts/src/Desk.sol` is the existing term-mode implementation, a different system. None of the test counts below apply to the proposed engine.
+
+The rest of this page documents the existing deployment.
+
+## Existing addresses
+
+### Arbitrum One
+
+Token side, from the earlier design. It has no role in the current product. The token is a placeholder and is not for sale.
+
+| Contract | Address |
+| --- | --- |
+| Token (`SacredTokenDummy`, SRD) | [`0x65660a41C634cDD8246c3a6f9816d35D2a29df21`](https://arbiscan.io/address/0x65660a41C634cDD8246c3a6f9816d35D2a29df21#code) |
+| Minter | [`0xdc36Cb2E3be465aC31D06745283cD3420BB52F03`](https://arbiscan.io/address/0xdc36Cb2E3be465aC31D06745283cD3420BB52F03#code) |
+| Pool hook (`TaxHook`) | [`0xcE431e351252ba84aFDAFa556887e20524FA2dCD`](https://arbiscan.io/address/0xcE431e351252ba84aFDAFa556887e20524FA2dCD#code) |
+| Liquidity manager | [`0x42E3735DF423fD006E10A3d97B9C83438d828193`](https://arbiscan.io/address/0x42E3735DF423fD006E10A3d97B9C83438d828193#code) |
+| Liquidity reserve | [`0xe8d09aB2342b1DfA7BE38b3Af5929D55D054C7b3`](https://arbiscan.io/address/0xe8d09aB2342b1DfA7BE38b3Af5929D55D054C7b3#code) |
+| Staking fund (`StakedBackstopFund`) | [`0x29E61dB6f53b4bCA6B9F838b3452c9054d8A446c`](https://arbiscan.io/address/0x29E61dB6f53b4bCA6B9F838b3452c9054d8A446c#code) |
+| Fee splitter | [`0xCBf479Cd35325d69236c26400ec06B764A38a98a`](https://arbiscan.io/address/0xCBf479Cd35325d69236c26400ec06B764A38a98a#code) |
+| Reserve sale | [`0x158181DCC72FEF6870AA6460b14f826A3A4bA6e5`](https://arbiscan.io/address/0x158181DCC72FEF6870AA6460b14f826A3A4bA6e5#code) |
+| Address registry | [`0x92c9ce1a970E1CEc443018FB121A3b5015138a96`](https://arbiscan.io/address/0x92c9ce1a970E1CEc443018FB121A3b5015138a96#code) |
+| Time-lock | [`0xe408f23305cAc5719880597D36a811854A01d0c9`](https://arbiscan.io/address/0xe408f23305cAc5719880597D36a811854A01d0c9#code) |
+
+BTC desk and its vault (WBTC, 3x max)
+
+| Contract | Address |
+| --- | --- |
+| Vault | [`0xbbB8891463EB7ac9DF3d81947491A733a1C3a916`](https://arbiscan.io/address/0xbbB8891463EB7ac9DF3d81947491A733a1C3a916#code) |
+| Desk | [`0x527ca589937A35504A5535fa1A89a0C8d42c667b`](https://arbiscan.io/address/0x527ca589937A35504A5535fa1A89a0C8d42c667b#code) |
+| Oracle | [`0xd49Be92294e17db719625766142655346c60543D`](https://arbiscan.io/address/0xd49Be92294e17db719625766142655346c60543D#code) |
+
+ETH desk and its vault (WETH, 2x max)
+
+| Contract | Address |
+| --- | --- |
+| Vault | [`0x87e1D4Bc94c932124E856963dE1a7Dc0E3E5Ed37`](https://arbiscan.io/address/0x87e1D4Bc94c932124E856963dE1a7Dc0E3E5Ed37#code) |
+| Desk | [`0x054738143B3126D943f97b4572bcDa155A9Af71d`](https://arbiscan.io/address/0x054738143B3126D943f97b4572bcDa155A9Af71d#code) |
+| Oracle | [`0xB3D58e5F9D1C862CE88641C52DC43c2693C5f61F`](https://arbiscan.io/address/0xB3D58e5F9D1C862CE88641C52DC43c2693C5f61F#code) |
+
+### Monad testnet
+
+Monad testnet (chain 10143): the same contracts, deployed by `script/DeployMonadTestnet.s.sol` on 2026-10-14 and verified on MonadScan. Every SCR-side contract except the pool hook has the same address as on Arbitrum One. The testnet has no native USDC, WBTC or WETH, no Chainlink feeds and no Uniswap v3, so the desks trade against test stand-ins: tokens anyone can mint, price feeds anyone can set (seeded at BTC $83,180 and ETH $2,499 from Chainlink on Arbitrum One), and a router that swaps at the set price. The oracles accept a year-old price, since the feeds only move when someone sets them. The SCR pool runs on the Monad-maintained Uniswap v4 `PoolManager`. Don't use testnet prices as a reference.
+
+Token side, from the earlier design
+
+| Contract | Address |
+| --- | --- |
+| Token (`SacredTokenDummy`, SRD) | [`0x65660a41C634cDD8246c3a6f9816d35D2a29df21`](https://testnet.monadscan.com/address/0x65660a41C634cDD8246c3a6f9816d35D2a29df21#code) |
+| Minter | [`0xdc36Cb2E3be465aC31D06745283cD3420BB52F03`](https://testnet.monadscan.com/address/0xdc36Cb2E3be465aC31D06745283cD3420BB52F03#code) |
+| Pool hook (`TaxHook`) | [`0x9278DF35400c9868eCa463f53c2D60525279ADCD`](https://testnet.monadscan.com/address/0x9278DF35400c9868eCa463f53c2D60525279ADCD#code) |
+| Liquidity manager | [`0x42E3735DF423fD006E10A3d97B9C83438d828193`](https://testnet.monadscan.com/address/0x42E3735DF423fD006E10A3d97B9C83438d828193#code) |
+| Liquidity reserve | [`0xe8d09aB2342b1DfA7BE38b3Af5929D55D054C7b3`](https://testnet.monadscan.com/address/0xe8d09aB2342b1DfA7BE38b3Af5929D55D054C7b3#code) |
+| Staking fund (`StakedBackstopFund`) | [`0x29E61dB6f53b4bCA6B9F838b3452c9054d8A446c`](https://testnet.monadscan.com/address/0x29E61dB6f53b4bCA6B9F838b3452c9054d8A446c#code) |
+| Fee splitter | [`0xCBf479Cd35325d69236c26400ec06B764A38a98a`](https://testnet.monadscan.com/address/0xCBf479Cd35325d69236c26400ec06B764A38a98a#code) |
+| Reserve sale | [`0x158181DCC72FEF6870AA6460b14f826A3A4bA6e5`](https://testnet.monadscan.com/address/0x158181DCC72FEF6870AA6460b14f826A3A4bA6e5#code) |
+| Address registry | [`0x92c9ce1a970E1CEc443018FB121A3b5015138a96`](https://testnet.monadscan.com/address/0x92c9ce1a970E1CEc443018FB121A3b5015138a96#code) |
+| Time-lock | [`0xe408f23305cAc5719880597D36a811854A01d0c9`](https://testnet.monadscan.com/address/0xe408f23305cAc5719880597D36a811854A01d0c9#code) |
+
+BTC bucket (test WBTC, 3x max)
+
+| Contract | Address |
+| --- | --- |
+| Vault | [`0xf4623B09196469b02e287EA34B2e87DC6F948019`](https://testnet.monadscan.com/address/0xf4623B09196469b02e287EA34B2e87DC6F948019#code) |
+| Desk | [`0x8A324a2925A50a0212532df28C972fD211068529`](https://testnet.monadscan.com/address/0x8A324a2925A50a0212532df28C972fD211068529#code) |
+| Oracle | [`0x4a23B639aaaD509FdB52533C054621C259a510d9`](https://testnet.monadscan.com/address/0x4a23B639aaaD509FdB52533C054621C259a510d9#code) |
+
+ETH bucket (test WETH, 2x max)
+
+| Contract | Address |
+| --- | --- |
+| Vault | [`0x38a0772EE7f7EcA7cbc181814Abc0a187895722f`](https://testnet.monadscan.com/address/0x38a0772EE7f7EcA7cbc181814Abc0a187895722f#code) |
+| Desk | [`0x08c0F0699Ef17A44a6Ded158EdcA8F68338A312C`](https://testnet.monadscan.com/address/0x08c0F0699Ef17A44a6Ded158EdcA8F68338A312C#code) |
+| Oracle | [`0x1d8ebCf436EF2EB9286574CFEF559e86f1a36Db2`](https://testnet.monadscan.com/address/0x1d8ebCf436EF2EB9286574CFEF559e86f1a36Db2#code) |
+
+Test stand-ins
+
+| Contract | Address |
+| --- | --- |
+| USDC (open mint, 6 decimals) | [`0xdBEeb5EFf47054F3fF29aF08fb0D3E8EdE80E191`](https://testnet.monadscan.com/address/0xdBEeb5EFf47054F3fF29aF08fb0D3E8EdE80E191#code) |
+| WBTC (open mint, 8 decimals) | [`0x3D3EfDa1eC1Cc36C66606b945594bc38d7b45C03`](https://testnet.monadscan.com/address/0x3D3EfDa1eC1Cc36C66606b945594bc38d7b45C03#code) |
+| WETH (open mint, 18 decimals) | [`0x9046D6eA476a4ce6A0A6Da6b2087739833e69F13`](https://testnet.monadscan.com/address/0x9046D6eA476a4ce6A0A6Da6b2087739833e69F13#code) |
+| BTC / USD feed | [`0x0eAEe278AB79933A587efF9f99FF19926200C2D0`](https://testnet.monadscan.com/address/0x0eAEe278AB79933A587efF9f99FF19926200C2D0#code) |
+| ETH / USD feed | [`0x1Dc53908efe3346F6a5a87aB1aC4C0C477D28fA7`](https://testnet.monadscan.com/address/0x1Dc53908efe3346F6a5a87aB1aC4C0C477D28fA7#code) |
+| BTC swap router | [`0x4BEe51748Dff0466B08bC292E3CbE30893Af2639`](https://testnet.monadscan.com/address/0x4BEe51748Dff0466B08bC292E3CbE30893Af2639#code) |
+| ETH swap router | [`0x8F03D8e00248AC02657e6b21d8934d9340bcAb6c`](https://testnet.monadscan.com/address/0x8F03D8e00248AC02657e6b21d8934d9340bcAb6c#code) |
+| Uniswap v4 `PoolManager` (Monad-maintained) | [`0x451D64ab3b650040d2aE1886602b97ed6eDc643d`](https://testnet.monadscan.com/address/0x451D64ab3b650040d2aE1886602b97ed6eDc643d) |
+
+### Live on-chain state
+
+<LiveChain />
+
+The deployed version pairs a vault with each desk, so two vaults exist.
+
+Ownership is an OpenZeppelin `TimelockController` with a 2-day delay that only a multisig can propose to and execute from. A guardian can pause new positions and new deposits but cannot unpause them. No one can pause exits.
+
+## The rules the existing code keeps, and where each is tested
+
+| Rule | How | Test |
+| --- | --- | --- |
+| The vault owns the asset before it sells it | `open` lends the full cost and swaps before it records the sale or takes the down payment | `test_open_recordsTheDesignExample` |
+| A balance never increases | No function adds to `financed` or `markup`, or subtracts from `repaid` | `invariant_aBalanceNeverIncreases` |
+| The vault never receives more than the settlement amount | `_payVault` pays `settlementAmount` on close and pay off, `min(net, balance)` on settlement | `invariant_vaultNeverReceivesMoreThanTheBalance` |
+| The trader never owes more than the pledged asset | `settle` never pulls from the trader; a short sale closes the debt | `invariant_settlementNeverChargesTheTrader` |
+| Only the trader can sell before the due date | `settle` reverts until the due date; there is no other sale path | `test_noOneCanSellBeforeDueExceptTheTrader` |
+| A pledged asset leaves only to its owner or the market | `payOff` and `_swap` are the only asset transfers | `invariant_deskHoldsOnlyPledgesAndOwedSurpluses` |
+| Exits cannot be paused | Only `open` and `requestDeposit` check the pause flag | `test_deposit_pausedByGuardian_withdrawalsStillWork` |
+| Shares cannot be transferred | `transfer`, `transferFrom` and `approve` always revert | `test_shares_cannotBeTransferredOrApproved` |
+| Every USDC is counted exactly once | Four counters; the vault never reads its own balance, so donations cannot move the share price | `invariant_vaultIsFullyBacked` |
+| The admin cannot leave coded limits or touch live positions | Bounds in every setter; position terms are stored at opening | `test_admin_cannotExceedHardLimits` |
+
+## Deployed dials
+
+The values set in the existing code. Current design parameters are on the product pages and in `frontend/lib/params.js`.
+
+| Dial | Deployed |
+| --- | --- |
+| Base rate | 10% a year |
+| Surcharge above 2x | 1% a year |
+| Leverage ceiling | BTC 3x, ETH 2x |
+| Term | 7 or 14 days |
+| Position size | 100,000 USDC |
+| Minimum down payment | 100 USDC |
+| Profit share | 30% of each winning position, to the fund |
+| Markup split | 100% to depositors |
+| Cut-off period | 7 days |
+| Utilisation cap | 85% |
+| Stablecoins accepted | USDC |
+
+## Tests of the existing code
+
+| Suite | What it covers | Result |
+| --- | --- | --- |
+| `Desk.t.sol`, `Vault.t.sol` | Every function, every revert, the worked examples, a fuzzed full lifecycle (1,000 runs) | 68 passed |
+| `Invariant.t.sol` | Nine system invariants under random deposits, withdrawals, cut-offs, positions, prices and time (64 × 120) | 9 passed |
+| `TaxHook.t.sol`, `SacredSystem.t.sol` | The pool fee for all swap shapes; the whole SCR side wired to the real vault on a real Uniswap v4 `PoolManager` | 184 passed |
+| `ArbitrumFork.t.sol` | Both deploy scripts; a 3x BTC position on the real Uniswap v3 pool at the real Chainlink price; a shortfall sale on the real `PoolManager` | 5 passed |
+| Halmos `check_*` | Eight arithmetic properties for all inputs in stated ranges | 2 proved, 6 timed out |
+| `server/tests` | Keeper, points, indexer, API, one end-to-end run against anvil | 18 passed |
+| `frontend/lib`, `frontend/e2e` | Arithmetic to the unit; four browser flows with a real keeper and API | 24 passed |
+
+Not done: no audit; no full formal verification of the stateful contracts; the fork test covers the WBTC desk only; MetaMask itself was not driven.
+
+## Run it
+
+```sh
+anvil                                                                           # 1
+cd contracts && forge script script/DeployLocal.s.sol --rpc-url http://127.0.0.1:8545 --broadcast
+cd .. && python3 export_abi.py
+cd server && KEEPER_KEY=<anvil key> .venv/bin/python -m destiny.keeper          # 2
+cd server && .venv/bin/uvicorn --factory destiny.api:app_from_env               # 3
+cd frontend && npm run dev                                                      # 4
+```
+
+The local deployment is the whole system with mocks for USDC, WBTC, the feed and the spot market, and a real `PoolManager`. The deployer holds 1,000,000 USDC and the genesis SCR, and must deposit 5% into the vault before anyone else can. Tests: `forge test` in `contracts/` (libraries cloned per the README), `pytest` in `server/`, `npm test && npm run test:e2e` in `frontend/`.
+
