@@ -1,0 +1,11 @@
+{
+  "source_repository": "https://github.com/smitrajput/sacred-protocol",
+  "source_branch": "codex/hackathon-spec-review",
+  "source_commit": "81294ab65e4e402e7bae7463294d508c0d60491d",
+  "canonical_repository": "https://github.com/smitrajput/sacred-markets",
+  "imported_on": "2026-11-28",
+  "local_tracked_overlays": [
+    "frontend/app/earn/opengraph-image.alt.txt",
+    "frontend/app/landing/productPages.js"
+  ]
+}

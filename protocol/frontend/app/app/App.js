@@ -59,7 +59,7 @@ export default function App({ spotPrice, renderedAt }) {
 
       {preview && (
         <p className={styles.preview}>
-          Preview. The contracts are not deployed yet, so the figures below are sample values and transactions
+          Preview. This historical sandbox uses sample values and transactions
           are switched off. Quotes use the real arithmetic.
         </p>
       )}

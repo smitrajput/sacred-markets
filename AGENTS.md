@@ -2,6 +2,10 @@
 
 Sacred is deployed on Arc Testnet with Earn, Trade, Activity, a read-only API and four contracts. The founder completed the browser lifecycle with separate depositor and trader wallets. Current app implementation checkpoint: 9bf75bd (Opus-directed brand refinement); wallet behavior was previously verified at d71ddbd. Read `README.md` for public links, `docs/checkpoints/04-hosted.md` for the nine browser/keeper receipts and `docs/BUILD_PROVENANCE.md` for Studio/source evidence.
 
+## Consolidated source layout
+
+The repository now owns both the root Arc MVP and `protocol/`, imported from the latest sacred-protocol branch. The `protocol/frontend/` website/docs and earlier protocol implementation predate Studio. Maintain these directly; the Studio-authorship rule below applies to the root MVP implementation. Preserve `protocol/` when pulling Studio changes. Public source belongs here; private investor packages and corporate documents stay outside the public repo.
+
 ## Working rules
 
 - Implementation is authored through the same Arc Studio app. Codex directs scoped prompts, pulls, reviews, tests, documents and records small sequential commits on main. Before implementation, read `docs/STUDIO_GIT_WORKFLOW.md` and the relevant checkpoint in `docs/checkpoints/`.

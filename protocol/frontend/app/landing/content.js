@@ -171,6 +171,7 @@ export const faq = [
     items: [
       { q: "What will I earn?", a: `It depends on demand. Modeled at $10m of deposits the range is ${pct(weak.apy, 2)} to ${pct(strong.apy, 2)} APY. A small first pilot would earn less. Returns are variable and not guaranteed.` },
       { q: "Where does the return come from?", a: "Traders pay a fixed markup to finance purchases of BTC and ETH. Depositors receive 77% of base markup. Idle cash earns nothing." },
+      { q: "What is planned with 1inch Aqua?", a: "We plan to evaluate shared available liquidity across Trade, Borrow and later approved strategies, including tokenised sukuk, halal LPing and staking. The 100x capital-efficiency goal is an ambition with no validated benchmark. It is not live and our yield models include no Aqua uplift.", link: { text: "Shared-liquidity plan", href: "/docs/architecture#planned-shared-liquidity" } },
       { q: "What fees does Earn charge?", a: "Sacred's 23% share of base markup. No other Earn fee is proposed." },
       { q: "How do withdrawals work?", a: "They rank ahead of new financing. Money comes from idle cash first, then a daily queue filled as 14-day positions settle. Half the vault could leave in about 7 days and all of it in about 14, if positions settle as expected." },
       { q: "Can I lose money?", a: "Your funds are protected by 4 layers of backstops before a loss touches your principal: the trader's capital, primary protection, tail protection and a pilot backstop. If a loss is bigger than all four, depositors take the rest. These layers don't cover smart contract, oracle, USDC-peg or chain failures.", link: { text: "4 layers of backstops", href: protection } },
@@ -197,7 +198,7 @@ export const faq = [
   {
     group: "Trust",
     items: [
-      { q: "Is Sacred halal?", a: "Sacred is designed around Islamic sale and profit-sharing contracts, but no Shariah board has reviewed it yet. Until one does, we don't claim it is certified halal.", link: { text: "Islamic sale and profit-sharing contracts", href: shariahDocs } },
+      { q: "Is Sacred halal?", a: "Sacred is designed around Islamic sale and profit-sharing contracts. Preliminary scholar feedback has identified changes needed before final Shariah approval. Formal certification remains pending.", link: { text: "Islamic sale and profit-sharing contracts", href: shariahDocs } },
       { q: "Do I have to be Muslim?", a: "No. Sacred is open to anyone in a supported country." },
       { q: "Has Sacred been audited?", a: "Not yet. The Arc Testnet prototype is deployed, but has not had an independent audit. Production contracts will be independently reviewed before launch.", link: { text: "independently reviewed", href: "/docs/risk#reviews-and-audits" } },
     ],
@@ -225,7 +226,7 @@ export const signup = {
 };
 
 export const footer = {
-  note: "Sacred is pre-launch. No Shariah board has reviewed the design, so nothing here is certified halal. Every number is a proposal, a model or a backtest. None of them is a promise. This page is not an offer to sell anything, and products may not be available in your country.",
+  note: "The Arc Testnet demo is live. Production launch, independent audits and final Shariah approval remain pending. Figures describe proposals, models or backtests. This page is not an offer to sell anything, and products may not be available in your country.",
   links: [
     { label: "Earn", href: "/earn" },
     { label: "Trade", href: "/trade" },

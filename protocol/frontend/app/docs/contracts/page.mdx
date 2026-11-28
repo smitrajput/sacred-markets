@@ -5,20 +5,21 @@ export const revalidate = 60;
 
 # Contracts and code
 
-These docs describe two systems. Only one of them exists today.
+The current public demo runs on **Arc Testnet (5042002)**. It supports USDC Earn and 2x cirBTC Trade through `MarginVault`, `TradeEngine`, `V4SpotVenue` and `DemoPriceGuard`.
 
-| | Proposed | Existing |
+| Component | Current status | Source |
 | --- | --- | --- |
-| **What** | MarginVault, SIFT ledger and capacity controller, CashFinanceVault | Term-mode vault, desk, price reader, funds, token side |
-| **Where** | Arc, not deployed | Arbitrum One, Monad testnet |
-| **Economics** | Everything in these docs | The first design's dials, listed below |
-| **Status** | Specified, not built | Verified on block explorers. Not audited |
+| Arc MVP app and read API | Live testnet demo | [Application code](https://github.com/smitrajput/sacred-markets) |
+| Arc MVP contracts | Four deployed testnet contracts; independent audit pending | [Deployment manifest](https://github.com/smitrajput/sacred-markets/blob/main/deployments/arc-testnet.json) |
+| Production terms, SIFT and higher tiers | Additional implementation and review required | [Architecture](/docs/architecture) |
+| Borrow, Aqua integration and later term mode | Planned | [Borrow](/docs/borrow), [shared liquidity](/docs/architecture#planned-shared-liquidity) |
+| Earlier term/token system | Historical implementation | [Earlier protocol source](https://github.com/smitrajput/sacred-markets/tree/main/protocol/contracts) |
 
-**The proposed engine is not built yet.** It has no addresses, no tests and no audit. The controls in [Architecture](/docs/architecture) are written requirements with no code behind them yet. `contracts/src/Desk.sol` is the existing term-mode implementation, a different system. None of the test counts below apply to the proposed engine.
+All maintained code, landing pages, docs and public research now live in [sacred-markets](https://github.com/smitrajput/sacred-markets). The original source repository is retained for history.
 
-The rest of this page documents the existing deployment.
+The demo uses test assets and an operator-maintained price guard. Production oracles, independent audits and final Shariah approval are still required. Historical test counts and addresses below belong to the earlier design.
 
-## Existing addresses
+## Earlier design addresses
 
 ### Arbitrum One
 

@@ -8,7 +8,7 @@
     "build": "vite build",
     "test:api": "bun test server",
     "verify:onchain": "bun run ./scripts/verify-onchain.ts",
-    "lint": "oxlint --type-aware src scripts server api --fix; s=$?; oxlint --fix .; exit $((s>0?s:$?))",
+    "lint": "oxlint --type-aware src scripts server api --fix; s=$?; oxlint --fix src scripts server api vite.config.ts tailwind.config.js postcss.config.js; exit $((s>0?s:$?))",
     "typecheck": "tsc --noEmit",
     "check": "bash scripts/check.sh",
     "contracts:build": "forge build",
@@ -32,7 +32,10 @@
     "keeper:dry": "bun scripts/keeper.ts --dry-run --once",
     "test:app": "bun test server src/lib scripts/core",
     "demo": "bun scripts/demo.ts",
-    "demo:record": "bun scripts/demo-record.ts"
+    "demo:record": "bun scripts/demo-record.ts",
+    "site:dev": "bun --cwd protocol/frontend run dev",
+    "site:build": "bun --cwd protocol/frontend run build",
+    "site:test": "bun --cwd protocol/frontend run test"
   },
   "dependencies": {
     "@circle-fin/adapter-viem-v2": "^1.19.2",

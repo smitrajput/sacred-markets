@@ -13,7 +13,7 @@ export function Vaults() {
       h={300}
       min={680}
       label="Earn deposits fund both vaults. MarginVault funds Trade and holds depositors, debts, vintages and protection cash. CashFinanceVault funds Borrow and holds its 12-month depositors, sales, investor reserves and loss carry. Both use shared libraries, adapters, keepers and UI, but neither can spend from the other."
-      caption="One Earn, two isolated balance sheets. The vaults share code, losses stay in the vault that made them, and neither can spend from the other."
+      caption="Current model: Earn uses two separate balance sheets. The vaults share code, losses stay in the vault that made them, and neither can spend from the other."
     >
       <rect x={10} y={10} width={350} height={150} rx="2" className={styles.ghost} />
       <text x={24} y={30} className={styles.big}>

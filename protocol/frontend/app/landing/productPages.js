@@ -10,9 +10,9 @@ export const pages = {
       description: "Put USDC to work through real asset financing. Modeled 3.55% to 7.14% APY at $10m of deposits, variable and not guaranteed. Grounded in Shariah.",
     },
     eyebrow: "Sacred Earn",
-    heading: "Put your stablecoins to work.",
+    heading: "Market-bending returns on stablecoins.",
     lead: "Your USDC finances real BTC and ETH purchases. Traders pay a fixed markup, and you receive 77% of it. You can see where every dollar of return comes from.",
-    notice: "Proposed design. Not live. Your funds are protected by 4 layers of backstops before a loss touches your principal.",
+    notice: "USDC Earn is available in the Arc Testnet demo. Production terms and funded protection remain planned; depositor capital can take losses.",
     cta: "Get early access to Earn",
     steps: {
       heading: "How your USDC earns",

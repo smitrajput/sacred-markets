@@ -4,9 +4,9 @@ export const metadata = { title: "How Earn works" };
 
 Earn is where USDC is deposited to fund both Trade and Borrow. It does so through two vault contracts that are kept apart, so a loss in one can't touch the other. Traders and borrowers pay a fixed markup, and depositors receive a share of it. The return is variable and depends on how much of a vault is in use. Your funds are protected by 4 layers of backstops before a loss touches your principal.
 
-This is a proposed design. It is not live, audited or Shariah-approved.
+USDC Earn is available in the Arc Testnet demo. The production terms below remain proposed, with independent audits and final Shariah approval pending.
 
-## One Earn, two vaults
+## Production baseline: two product books
 
 | | Trade vault | Borrow vault |
 | --- | --- | --- |
@@ -17,13 +17,15 @@ This is a proposed design. It is not live, audited or Shariah-approved.
 
 You choose the vault when you allocate a deposit, and each allocation sits in one vault only. Each vault keeps its own ownership records, receivables, reserves, loss carry, withdrawals and emergency permissions, and neither contract can spend from the other.
 
-The rest of this page covers the Trade vault, which opens first. The Borrow vault's terms are on [Funding Borrow](/docs/borrow/investors).
+The latest plan also evaluates 1inch Aqua for shared available liquidity across eligible strategies, while retaining explicit product ownership and loss accounting. Tokenised sukuk, halal liquidity provision and staking are later candidates. The 100x capital-efficiency goal is an ambition without a validated benchmark. See [planned shared liquidity](/docs/architecture#planned-shared-liquidity).
+
+The rest of this page describes the isolated Trade baseline used in the existing models. Borrow terms are on [Funding Borrow](/docs/borrow/investors).
 
 ## Where the return comes from
 
 The vault buys BTC or ETH on the spot market and sells it to a trader at cost plus a fixed markup. Whether the trader wins or loses, the markup is the same. Depositors receive income from that markup, never a share of trader profit, and never interest on a loan.
 
-Idle cash earns nothing. It waits in the vault, unlent and outside any pool.
+Idle cash earns nothing in the current financing model. Any future income from additional Aqua-connected strategies would need its own approved mandate, risk assessment and measured economics.
 
 ## What you can expect
 

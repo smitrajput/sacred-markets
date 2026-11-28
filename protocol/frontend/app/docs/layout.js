@@ -31,8 +31,8 @@ export default function DocsLayout({ children }) {
           <article className={styles.prose}>{children}</article>
           <DocsPager />
           <p className={styles.foot}>
-            Sacred is pre-launch. No Shariah board has reviewed it, nothing is audited, and every number is a proposal,
-            a model or a backtest result, not a promise. These pages are not an offer to sell anything.
+            The Arc Testnet demo is live. Production launch, independent audits and final Shariah approval remain
+            pending. Research figures are assumptions and modeled outcomes. These pages are not an offer to sell anything.
           </p>
         </main>
       </div>

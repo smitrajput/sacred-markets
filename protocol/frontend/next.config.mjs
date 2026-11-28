@@ -1,4 +1,5 @@
 import createMDX from "@next/mdx";
+import { fileURLToPath } from "node:url";
 
 // Old hosts forward to the one canonical domain. destiny-term-mode.vercel.app is left alone:
 // it was submitted on a hackathon form and should keep serving the site as it is.
@@ -21,6 +22,7 @@ const MOVED_DOCS = [
 const APP_ORIGIN = "https://sacred-arc-mvp.vercel.app";
 
 const nextConfig = {
+  outputFileTracingRoot: fileURLToPath(new URL(".", import.meta.url)),
   // The docs under app/docs are written in MDX; mdx-components.js maps their elements.
   pageExtensions: ["js", "jsx", "mdx"],
   async rewrites() {

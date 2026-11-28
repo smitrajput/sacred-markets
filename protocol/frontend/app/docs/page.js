@@ -12,13 +12,13 @@ const paths = [
   { who: "Prop trader", go: "trade/sift", title: "SIFT: financing grows with your results", line: "Real trades from day one. Build to $100,000 of financing in 12 weeks, or bring a verified record and start at up to $50,000." },
   { who: "Investor", go: "thesis", title: "Thesis", line: "The market, the one new primitive, and the tradeoffs of fixed-price financing, with numbers." },
   { who: "Scholar", go: "shariah", title: "The contracts and what needs approval", line: "Each sale, pledge and partnership, the Arc and USDC premise, and the open questions." },
-  { who: "Engineer", go: "architecture", title: "How it is built", line: "Separate vaults, a canonical account ledger, the existing deployment and the proposed engine." },
+  { who: "Engineer", go: "architecture", title: "How it is built", line: "The live Arc Testnet MVP, planned product controls and shared-liquidity research." },
   { who: "Getting started", go: "funding", title: "Add funds", line: "Exchange and wallet routes onto Arc, with the exact tokens and networks." },
 ];
 
 const products = [
-  { name: "Earn", status: "Proposed. First release.", line: "Deposits fund Trade and Borrow through two separate vaults. 77% of Trade's base markup goes to depositors." },
-  { name: "Trade", status: "Proposed. First release.", line: "A 14-day fixed sale of BTC or ETH, up to 5×. From 10% annualized on financing, 0% of your profit." },
+  { name: "Earn", status: "USDC testnet demo live. Production planned.", line: "Stablecoin deposits finance spot purchases. The production design allocates 77% of base Trade markup to depositors." },
+  { name: "Trade", status: "2x cirBTC testnet demo live. Broader tiers planned.", line: "A 14-day fixed sale of BTC or ETH, up to 5×. From 10% annualized on financing, 0% of your profit." },
   { name: "Borrow", status: "Proposed. After Trade.", line: "A 30-day fixed sale of USDC against collateral, funded by Earn's 12-month Borrow vault." },
 ];
 
@@ -52,8 +52,16 @@ export default function DocsOverview() {
       </table>
 
       <p>
-        Everything on these pages describes a proposed design unless it says otherwise. The numbers are research
-        parameters as of 2 November 2026. Nothing here is deployed on Arc, audited or approved by a Shariah board.
+        The USDC Earn and 2x cirBTC Trade demo is live on Arc Testnet. Production terms, Borrow, SIFT and Aqua
+        integration remain planned. Preliminary scholar feedback has identified changes to address before final
+        Shariah approval. Independent security audits and formal certification remain pending.
+      </p>
+
+      <h2>Planned shared liquidity</h2>
+      <p>
+        We plan to evaluate 1inch Aqua so available Earn liquidity can serve Trade, Borrow and later approved
+        strategies. Our 100x capital-efficiency ambition has no validated benchmark yet. Existing forecasts
+        include no Aqua uplift. See <Link href="/docs/architecture#planned-shared-liquidity">the architecture</Link>.
       </p>
 
       <h2>Start where your question is</h2>

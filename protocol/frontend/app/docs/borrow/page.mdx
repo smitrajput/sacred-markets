@@ -8,6 +8,8 @@ Borrow gives you spendable USDC against crypto you already hold. Trade pays for 
 
 Borrow comes after Trade and stays disabled until its contracts are approved and its collateral routes are proven. Its capacity today is zero, and the launch price is not set. Figures below use an **8% annualized reference**, which is an audited model input. It is not a quote.
 
+The planned [1inch Aqua integration](/docs/architecture#planned-shared-liquidity) could route available Earn cash into Borrow under an approved mandate. Borrow keeps explicit ownership, income and loss accounting. Its pledged collateral is excluded from shared liquidity. Current models assume no Aqua uplift.
+
 <BorrowFlow />
 
 ## A worked example

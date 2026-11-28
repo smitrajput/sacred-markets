@@ -1,3 +1,11 @@
+Run the historical setup commands below from `protocol/`. The maintained Arc app lives at the repository root.
+
+# Sacred protocol and website source
+
+This tree is maintained inside [sacred-markets](https://github.com/smitrajput/sacred-markets). `frontend/` serves the landing pages and docs. `contracts/`, `server/` and `demo/` preserve the earlier protocol implementation. The current Arc Testnet MVP lives at the repository root; its deployed contracts and economics are documented there.
+
+## Earlier implementation record
+
 # Sacred: term mode
 
 Halal leverage for traders and real yield for depositors, with no interest anywhere.

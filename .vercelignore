@@ -21,3 +21,6 @@ recovery_file*
 AGENTS.md
 PLANS.md
 AI_WORKLOG.md
+
+# The marketing site is a separate deployment from the same repository.
+/protocol/

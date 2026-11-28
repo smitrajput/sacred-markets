@@ -51,3 +51,8 @@ recovery_file*
 /broadcast/
 traces.jsonl
 *.log
+
+# Local/private fundraising material is never public source.
+investor-package*/
+tier-packages*/
+_private/

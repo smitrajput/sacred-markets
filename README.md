@@ -1,3 +1,17 @@
+# Sacred Markets
+
+This is the canonical repository for Sacred's Arc Testnet app, protocol code, landing pages, docs and public research. The existing `sacred-protocol` repository is retained for history.
+
+| Path | Contents |
+| --- | --- |
+| `src/`, `api/`, `server/` | Current Arc Testnet app and read API |
+| `contracts/`, `deployments/` | Current MVP contracts, tests and deployment evidence |
+| `protocol/frontend/` | Next.js landing pages, product documentation and quote models |
+| `protocol/contracts/`, `protocol/server/`, `protocol/demo/` | Earlier protocol implementation and reference tooling |
+| `protocol/research_notes/`, `protocol/reports/`, `protocol/output/` | Previously published research and build records |
+
+Run the app with `bun run dev` and the website with `bun run site:dev`. The existing app deployment remains rooted here; the website deployment uses `protocol/frontend` from this same repository. See [source consolidation](docs/SOURCE_CONSOLIDATION.md) for revisions and hosting paths.
+
 # Sacred
 USDC liquidity and fixed-markup cirBTC financing on Arc Testnet.
 
